@@ -1,0 +1,7 @@
+Our test device is the HT-03A (aka "HTC Magic")
+The firmware version is 1.6, and since official Bluetooth support was added 
+in 2.0, we are using an unofficial backport.
+
+Project homepage: 
+http://code.google.com/p/backport-android-bluetooth/
+
