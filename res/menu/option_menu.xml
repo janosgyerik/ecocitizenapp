@@ -13,17 +13,11 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-    <ListView android:id="@+id/in"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:stackFromBottom="true"
-        android:transcriptMode="alwaysScroll"
-        android:layout_weight="1"
-    />
-</LinearLayout>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/scan"
+          android:icon="@android:drawable/ic_menu_search"
+          android:title="@string/connect" />
+    <item android:id="@+id/disconnect"
+          android:title="@string/disconnect" />
+    
+</menu>

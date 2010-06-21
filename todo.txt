@@ -1,0 +1,9 @@
+confirm that disconnect works
+change scan button to disconnect while connected, 
+	change it back to scan after disconnect
+how to generate a unique UUID, for BluetoothSenspodService
+interpret senspod data while reading, display lat,lon,quality,co2
+add nice tree images, swap image according to co2 levels
+add nice colored scale for co2 level
+add connect button on tree (home) page when disconnected
+add map and graph menu items, page should show 'coming soon...'
