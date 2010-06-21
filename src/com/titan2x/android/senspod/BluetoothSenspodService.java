@@ -17,8 +17,12 @@
 package com.titan2x.android.senspod;
 
 import java.io.IOException;
+
 import java.io.InputStream;
 import java.util.UUID;
+import java.io.*;
+
+import com.titan2x.envdata.formats.Format_1_GPS_CO2;
 
 import backport.android.bluetooth.BluetoothAdapter;
 import backport.android.bluetooth.BluetoothDevice;
@@ -261,6 +265,32 @@ public class BluetoothSenspodService {
 
         public void run() {
             Log.i(TAG, "BEGIN mConnectedThread");
+
+			BufferedReader reader = new BufferedReader(new InputStreamReader(mmInStream));
+
+			String prevGPS = null;
+
+			while (true) {
+				try {
+	            	String line = reader.readLine();
+	            	if (line.startsWith("$GP")) {
+	            		prevGPS = line;
+	            	}
+	            	else if (line.startsWith("$PSEN,CO2")) {
+	            		Format_1_GPS_CO2 format = new Format_1_GPS_CO2(prevGPS, line);
+	                    // Send the obtained bytes to the UI Activity
+	            		byte[] buffer = format.toString().getBytes();
+	                    mHandler.obtainMessage(MessageProtocol.MESSAGE_READ, buffer.length, -1, buffer)
+	                            .sendToTarget();
+	            	}		            
+				} catch (IOException e) {
+	                Log.e(TAG, "disconnected", e);
+	                connectionLost();
+	                break;			
+				}
+			}
+            
+            /*
             byte[] buffer = new byte[1024];
             int bytes;
 
@@ -279,6 +309,7 @@ public class BluetoothSenspodService {
                     break;
                 }
             }
+            */
         }
 
         public void cancel() {
