@@ -274,6 +274,7 @@ public class BluetoothSenspodService {
 				try {
 	            	String line = reader.readLine();
 	            	if (line != null) {
+	            		line = line.substring(18);
 	            		if (line.startsWith("$GP")) {
 	            			prevGPS = line;
 	            		}
@@ -291,27 +292,6 @@ public class BluetoothSenspodService {
 	                break;			
 				}
 			}
-            
-            /*
-            byte[] buffer = new byte[1024];
-            int bytes;
-
-            // Keep listening to the InputStream while connected
-            while (true) {
-                try {
-                    // Read from the InputStream
-                    bytes = mmInStream.read(buffer);
-
-                    // Send the obtained bytes to the UI Activity
-                    mHandler.obtainMessage(MessageProtocol.MESSAGE_READ, bytes, -1, buffer)
-                            .sendToTarget();
-                } catch (IOException e) {
-                    Log.e(TAG, "disconnected", e);
-                    connectionLost();
-                    break;
-                }
-            }
-            */
         }
 
         public void cancel() {
