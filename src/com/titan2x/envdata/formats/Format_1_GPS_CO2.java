@@ -10,6 +10,8 @@ package com.titan2x.envdata.formats;
 
 public class Format_1_GPS_CO2 {
 	public String datestr;
+	public String timestr;
+	public String datetimestr;
 	public String gpsType;
 	public String gpsFlag;
 	public float lat;
@@ -21,8 +23,11 @@ public class Format_1_GPS_CO2 {
 		String[] co2Cols = co2Line.split(",");
 		String ddmmyy = gpsCols[9];
 		datestr = "20" + ddmmyy.substring(4, 6) + ddmmyy.substring(2,4) + ddmmyy.substring(0,2);
+		timestr = gpsCols[1];
+		datetimestr = datestr + '.' + timestr;
 		gpsType = gpsCols[0];
-		gpsFlag = gpsCols[2];
+		String[] gpsFlagCols = gpsCols[12].split("\\*");
+		gpsFlag = gpsFlagCols[0];
 		lat = Float.parseFloat(gpsCols[3]);
 		lon = Float.parseFloat(gpsCols[5]);
 		co2 = Float.parseFloat(co2Cols[3]);
@@ -30,8 +35,7 @@ public class Format_1_GPS_CO2 {
 	
 	public String toString() {
 		String str = "";
-		str += datestr + ",";
-		str += gpsType + ",";
+		str += datetimestr + ",";
 		str += gpsFlag + ",";
 		str += lat + ",";
 		str += lon + ",";

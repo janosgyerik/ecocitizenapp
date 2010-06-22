@@ -1,4 +1,4 @@
-confirm that disconnect works
+set cap to messages, so android does not run out of memory
 change scan button to disconnect while connected, 
 	change it back to scan after disconnect
 how to generate a unique UUID, for BluetoothSenspodService
@@ -11,3 +11,4 @@ add map and graph menu items, page should show 'coming soon...'
 bugs
 	bt scan shows two macbooks with the same mac address
 	connect to paired senspod appears to succeed even though senspod is off
+	shows 'connection lost' error when disconnect is triggered (it should disconnect quietly)
