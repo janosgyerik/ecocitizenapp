@@ -7,3 +7,7 @@ add nice tree images, swap image according to co2 levels
 add nice colored scale for co2 level
 add connect button on tree (home) page when disconnected
 add map and graph menu items, page should show 'coming soon...'
+
+bugs
+	bt scan shows two macbooks with the same mac address
+	connect to paired senspod appears to succeed even though senspod is off

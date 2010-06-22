@@ -273,16 +273,18 @@ public class BluetoothSenspodService {
 			while (true) {
 				try {
 	            	String line = reader.readLine();
-	            	if (line.startsWith("$GP")) {
-	            		prevGPS = line;
+	            	if (line != null) {
+	            		if (line.startsWith("$GP")) {
+	            			prevGPS = line;
+	            		}
+	            		else if (line.startsWith("$PSEN,CO2")) {
+	            			Format_1_GPS_CO2 format = new Format_1_GPS_CO2(prevGPS, line);
+	            			// Send the obtained bytes to the UI Activity
+	            			byte[] buffer = format.toString().getBytes();
+	            			mHandler.obtainMessage(MessageProtocol.MESSAGE_READ, buffer.length, -1, buffer)
+	            			.sendToTarget();
+	            		}
 	            	}
-	            	else if (line.startsWith("$PSEN,CO2")) {
-	            		Format_1_GPS_CO2 format = new Format_1_GPS_CO2(prevGPS, line);
-	                    // Send the obtained bytes to the UI Activity
-	            		byte[] buffer = format.toString().getBytes();
-	                    mHandler.obtainMessage(MessageProtocol.MESSAGE_READ, buffer.length, -1, buffer)
-	                            .sendToTarget();
-	            	}		            
 				} catch (IOException e) {
 	                Log.e(TAG, "disconnected", e);
 	                connectionLost();
