@@ -16,22 +16,20 @@
 
 package com.titan2x.android.senspod;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.UUID;
-import java.io.*;
 
-import com.titan2x.envdata.formats.Format_1_GPS_CO2;
-
+import android.content.Context;
+import android.os.Handler;
+import android.util.Log;
 import backport.android.bluetooth.BluetoothAdapter;
 import backport.android.bluetooth.BluetoothDevice;
 import backport.android.bluetooth.BluetoothSocket;
-import android.content.Context;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
+
+import com.titan2x.envdata.formats.Format_1_GPS_CO2;
 
 /**
  * This class does all the work for setting up and managing Bluetooth
@@ -39,9 +37,9 @@ import android.util.Log;
  * incoming connections, a thread for connecting with a device, and a
  * thread for performing data transmissions when connected.
  */
-public class BluetoothSenspodService {
+public class CitySenspodService extends BluetoothSensorService {
     // Debugging
-    private static final String TAG = "BluetoothService";
+    private static final String TAG = "CitySenspodService";
     private static final boolean D = true;
 
     // Unique UUID for this application
@@ -49,44 +47,18 @@ public class BluetoothSenspodService {
 
     // Member fields
     private final BluetoothAdapter mAdapter;
-    private final Handler mHandler;
     private ConnectThread mConnectThread;
     private ConnectedThread mConnectedThread;
-    private int mState;
-
-    // Constants that indicate the current connection state
-    public static final int STATE_NONE = 0;       // we're doing nothing
-    public static final int STATE_LISTEN = 1;     // now listening for incoming connections
-    public static final int STATE_CONNECTING = 2; // now initiating an outgoing connection
-    public static final int STATE_CONNECTED = 3;  // now connected to a remote device
 
     /**
      * Constructor. Prepares a new Bluetooth session.
      * @param context  The UI Activity Context
      * @param handler  A Handler to send messages back to the UI Activity
      */
-    public BluetoothSenspodService(Context context, Handler handler) {
+    public CitySenspodService(Context context, Handler handler) {
         mAdapter = BluetoothAdapter.getDefaultAdapter();
         mState = STATE_NONE;
         mHandler = handler;
-    }
-
-    /**
-     * Set the current state of the connection
-     * @param state  An integer defining the current connection state
-     */
-    private synchronized void setState(int state) {
-        if (D) Log.d(TAG, "setState() " + mState + " -> " + state);
-        mState = state;
-
-        // Give the new state to the Handler so the UI Activity can update
-        mHandler.obtainMessage(MessageProtocol.MESSAGE_STATE_CHANGE, state, -1).sendToTarget();
-    }
-
-    /**
-     * Return the current connection state. */
-    public synchronized int getState() {
-        return mState;
     }
 
     /**
@@ -128,52 +100,15 @@ public class BluetoothSenspodService {
         mConnectedThread = new ConnectedThread(socket);
         mConnectedThread.start();
 
-        // Send the name of the connected device back to the UI Activity
-        Message msg = mHandler.obtainMessage(MessageProtocol.MESSAGE_DEVICE_NAME);
-        Bundle bundle = new Bundle();
-        bundle.putString(MessageProtocol.DEVICE_NAME, device.getName());
-        msg.setData(bundle);
-        mHandler.sendMessage(msg);
-
-        setState(STATE_CONNECTED);
+        sendConnectedDeviceName(device.getName());
     }
 
     /**
      * Stop all threads
      */
-    public synchronized void stop() {
-        if (D) Log.d(TAG, "stop");
+    public synchronized void stopAllThreads() {
         if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
         if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
-        setState(STATE_NONE);
-    }
-
-    /**
-     * Indicate that the connection attempt failed and notify the UI Activity.
-     */
-    private void connectionFailed() {
-        setState(STATE_LISTEN);
-
-        // Send a failure message back to the Activity
-        Message msg = mHandler.obtainMessage(MessageProtocol.MESSAGE_TOAST);
-        Bundle bundle = new Bundle();
-        bundle.putString(MessageProtocol.TOAST, "Unable to connect device");
-        msg.setData(bundle);
-        mHandler.sendMessage(msg);
-    }
-
-    /**
-     * Indicate that the connection was lost and notify the UI Activity.
-     */
-    private void connectionLost() {
-        setState(STATE_LISTEN);
-
-        // Send a failure message back to the Activity
-        Message msg = mHandler.obtainMessage(MessageProtocol.MESSAGE_TOAST);
-        Bundle bundle = new Bundle();
-        bundle.putString(MessageProtocol.TOAST, "Device connection was lost");
-        msg.setData(bundle);
-        mHandler.sendMessage(msg);
     }
 
     /**
@@ -223,7 +158,7 @@ public class BluetoothSenspodService {
             }
 
             // Reset the ConnectThread because we're done
-            synchronized (BluetoothSenspodService.this) {
+            synchronized (CitySenspodService.this) {
                 mConnectThread = null;
             }
 

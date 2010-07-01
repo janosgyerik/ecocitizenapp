@@ -37,7 +37,7 @@ public class CitySenspod extends Activity {
     // Local Bluetooth adapter
     private BluetoothAdapter mBluetoothAdapter = null;
     // Member object for the senspod services
-    private BluetoothSenspodService mBluetoothSenspodService = null;
+    private BluetoothSensorService mBluetoothSensorService = null;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,8 +59,10 @@ public class CitySenspod extends Activity {
 
         // If the adapter is null, then Bluetooth is not supported
         if (mBluetoothAdapter == null) {
-            Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
-            finish();
+            //Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Bluetooth is not available, starting simulator instead", Toast.LENGTH_LONG).show();
+            //finish();
+        	setupSimulatorService();
             return;
         }
     }
@@ -72,12 +74,14 @@ public class CitySenspod extends Activity {
 
         // If BT is not on, request that it be enabled.
         // setupSenspodService() will then be called during onActivityResult
-        if (!mBluetoothAdapter.isEnabled()) {
-            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-        // Otherwise, setup the senspod service
-        } else {
-            if (mBluetoothSenspodService == null) setupSenspodService();
+        if (mBluetoothAdapter != null) {
+        	if (!mBluetoothAdapter.isEnabled()) {
+        		Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+        		startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+        		// Otherwise, setup the senspod service
+        	} else {
+        		if (mBluetoothSensorService == null) setupSenspodService();
+        	}
         }
     }
 
@@ -89,25 +93,37 @@ public class CitySenspod extends Activity {
         // Performing this check in onResume() covers the case in which BT was
         // not enabled during onStart(), so we were paused to enable it...
         // onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
-        if (mBluetoothSenspodService != null) {
+        if (mBluetoothSensorService != null) {
             // Only if the state is STATE_NONE, do we know that we haven't started already
-            if (mBluetoothSenspodService.getState() == BluetoothSenspodService.STATE_NONE) {
+            if (mBluetoothSensorService.getState() == BluetoothSensorService.STATE_NONE) {
             	// Start the Bluetooth services
-            	//mBluetoothSenspodService.start();
+            	//mBluetoothSensorService.start();
             }
         }
     }
 
     private void setupSenspodService() {
-        Log.d(TAG, "setupBluetoothService()");
+        Log.d(TAG, "setupSenspodService()");
 
         // Initialize the array adapter for the incoming data
         mInputStreamArrayAdapter = new ArrayAdapter<String>(this, R.layout.message);
         mDeviceInputStreamView = (ListView) findViewById(R.id.in);
         mDeviceInputStreamView.setAdapter(mInputStreamArrayAdapter);
 
-        // Initialize the BluetoothSenspodService to perform bluetooth connections
-        mBluetoothSenspodService = new BluetoothSenspodService(this, mHandler);
+        // Initialize the BluetoothSensorService to perform bluetooth connections
+        mBluetoothSensorService = new CitySenspodService(this, mHandler);
+    }
+
+    private void setupSimulatorService() {
+        Log.d(TAG, "setupSimulatorService()");
+
+        // Initialize the array adapter for the incoming data
+        mInputStreamArrayAdapter = new ArrayAdapter<String>(this, R.layout.message);
+        mDeviceInputStreamView = (ListView) findViewById(R.id.in);
+        mDeviceInputStreamView.setAdapter(mInputStreamArrayAdapter);
+
+        // Initialize the BluetoothSensorService to perform bluetooth connections
+        mBluetoothSensorService = new SampleSenspodService(this, mHandler);
     }
 
     @Override
@@ -126,11 +142,11 @@ public class CitySenspod extends Activity {
     public void onDestroy() {
         super.onDestroy();
         // Stop the Bluetooth services
-        if (mBluetoothSenspodService != null) mBluetoothSenspodService.stop();
+        if (mBluetoothSensorService != null) mBluetoothSensorService.stopAllThreads();
         if(D) Log.e(TAG, "--- ON DESTROY ---");
     }
 
-    // The Handler that gets information back from the BluetoothSenspodService
+    // The Handler that gets information back from the BluetoothSensorService
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -138,16 +154,15 @@ public class CitySenspod extends Activity {
             case MessageProtocol.MESSAGE_STATE_CHANGE:
                 if(D) Log.i(TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
                 switch (msg.arg1) {
-                case BluetoothSenspodService.STATE_CONNECTED:
+                case BluetoothSensorService.STATE_CONNECTED:
                     mTitle.setText(R.string.title_connected_to);
                     mTitle.append(mConnectedDeviceName);
                     mInputStreamArrayAdapter.clear();
                     break;
-                case BluetoothSenspodService.STATE_CONNECTING:
+                case BluetoothSensorService.STATE_CONNECTING:
                     mTitle.setText(R.string.title_connecting);
                     break;
-                case BluetoothSenspodService.STATE_LISTEN:
-                case BluetoothSenspodService.STATE_NONE:
+                case BluetoothSensorService.STATE_NONE:
                     mTitle.setText(R.string.title_not_connected);
                     break;
                 }
@@ -184,7 +199,7 @@ public class CitySenspod extends Activity {
                 // Get the BLuetoothDevice object
                 BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
                 // Attempt to connect to the device
-                mBluetoothSenspodService.connect(device);
+                mBluetoothSensorService.connect(device);
             }
             break;
         case REQUEST_ENABLE_BT:
@@ -218,7 +233,7 @@ public class CitySenspod extends Activity {
             return true;
         case R.id.disconnect:
             // Disconnect any connected devices
-        	if (mBluetoothSenspodService != null) mBluetoothSenspodService.stop();
+        	if (mBluetoothSensorService != null) mBluetoothSensorService.stop();
             return true;
         }
         return false;

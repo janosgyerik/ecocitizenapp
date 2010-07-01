@@ -1,12 +1,16 @@
-set cap to messages, so android does not run out of memory
-change scan button to disconnect while connected, 
-	change it back to scan after disconnect
-how to generate a unique UUID, for BluetoothSenspodService
-interpret senspod data while reading, display lat,lon,quality,co2
-add nice tree images, swap image according to co2 levels
-add nice colored scale for co2 level
-add connect button on tree (home) page when disconnected
-add map and graph menu items, page should show 'coming soon...'
+core
+	set cap to messages, so android does not run out of memory
+	change scan button to disconnect while connected, 
+		change it back to scan after disconnect
+	how to generate a unique UUID, for BluetoothSensorService
+
+tree page
+	deconstruct message from SenspodService, in preparation to show co2
+	add nice tree images, swap image according to co2 levels
+	show co2 value in the middle of the screen
+	add nice colored scale for co2 level
+	add connect button on tree (home) page when disconnected
+	add map and graph menu items, page should show 'coming soon...'
 
 bugs
 	bt scan shows two macbooks with the same mac address
