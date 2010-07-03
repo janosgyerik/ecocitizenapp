@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -172,6 +173,12 @@ public class CitySenspod extends Activity {
                 // construct a string from the valid bytes in the buffer
                 String readMessage = new String(readBuf, 0, msg.arg1);
                 mInputStreamArrayAdapter.add(readMessage);
+                
+                int co2Level = Integer.parseInt(readMessage.substring(readMessage.lastIndexOf(',') + 1).trim());
+                String imgname = "co2level_" + co2Level;
+                int resID = getResources().getIdentifier(imgname, "drawable", "com.titan2x.android.senspod");
+                LinearLayout treepage = (LinearLayout) findViewById(R.id.treepage);
+                treepage.setBackgroundResource(resID);
                 break;
             case MessageProtocol.MESSAGE_DEVICE_NAME:
                 // save the connected device's name

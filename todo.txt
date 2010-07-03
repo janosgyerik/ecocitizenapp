@@ -3,14 +3,20 @@ core
 	change scan button to disconnect while connected, 
 		change it back to scan after disconnect
 	how to generate a unique UUID, for BluetoothSensorService
+	when the sample file is finished, shutdown the service
 
 tree page
-	deconstruct message from SenspodService, in preparation to show co2
-	add nice tree images, swap image according to co2 levels
-	show co2 value in the middle of the screen
+	show co2 value in the middle of the screen in large white font
+	implement serialize/deserialize to send objects instead of messages
 	add nice colored scale for co2 level
 	add connect button on tree (home) page when disconnected
 	add map and graph menu items, page should show 'coming soon...'
+
+utility package for stratifying data
+	can convert a numeric value to "level" indicator using various schemes
+		linear
+		exponential
+		custom ranged
 
 bugs
 	bt scan shows two macbooks with the same mac address
