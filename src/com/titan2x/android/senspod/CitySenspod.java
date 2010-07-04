@@ -11,9 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import backport.android.bluetooth.BluetoothAdapter;
@@ -30,12 +28,10 @@ public class CitySenspod extends Activity {
 
     // Layout Views
     private TextView mTitle;
-    private ListView mDeviceInputStreamView;
+    private TextView mCo2View;
 
     // Name of the connected device
     private String mConnectedDeviceName = null;
-    // Array adapter for the conversation thread
-    private ArrayAdapter<String> mInputStreamArrayAdapter;
     // Local Bluetooth adapter
     private BluetoothAdapter mBluetoothAdapter = null;
     // Member object for the senspod services
@@ -107,11 +103,6 @@ public class CitySenspod extends Activity {
     private void setupSenspodService() {
         Log.d(TAG, "setupSenspodService()");
 
-        // Initialize the array adapter for the incoming data
-        mInputStreamArrayAdapter = new ArrayAdapter<String>(this, R.layout.message);
-        mDeviceInputStreamView = (ListView) findViewById(R.id.in);
-        mDeviceInputStreamView.setAdapter(mInputStreamArrayAdapter);
-
         // Initialize the BluetoothSensorService to perform bluetooth connections
         mBluetoothSensorService = new CitySenspodService(this, mHandler);
     }
@@ -119,11 +110,9 @@ public class CitySenspod extends Activity {
     private void setupSimulatorService() {
         Log.d(TAG, "setupSimulatorService()");
 
-        // Initialize the array adapter for the incoming data
-        mInputStreamArrayAdapter = new ArrayAdapter<String>(this, R.layout.message);
-        mDeviceInputStreamView = (ListView) findViewById(R.id.in);
-        mDeviceInputStreamView.setAdapter(mInputStreamArrayAdapter);
-
+        mCo2View = (TextView) findViewById(R.id.co2value);
+        mCo2View.setGravity(Gravity.CENTER);
+        
         // Initialize the BluetoothSensorService to perform bluetooth connections
         mBluetoothSensorService = new SampleSenspodService(this, mHandler);
     }
@@ -159,7 +148,7 @@ public class CitySenspod extends Activity {
                 case BluetoothSensorService.STATE_CONNECTED:
                     mTitle.setText(R.string.title_connected_to);
                     mTitle.append(mConnectedDeviceName);
-                    mInputStreamArrayAdapter.clear();
+                    mCo2View.setText("");
                     break;
                 case BluetoothSensorService.STATE_CONNECTING:
                     mTitle.setText(R.string.title_connecting);
@@ -185,9 +174,8 @@ public class CitySenspod extends Activity {
                 treepage.setBackgroundResource(resID);
 
                 String co2val = String.valueOf((int)Float.parseFloat(val_co2));                
-                TextView co2 = (TextView) findViewById(R.id.co2value);
-                co2.setText(co2val);
-                co2.setGravity(Gravity.CENTER);
+                mCo2View.setText(co2val);
+                mCo2View.setGravity(Gravity.CENTER);
 
                 break;
             case MessageProtocol.MESSAGE_DEVICE_NAME:

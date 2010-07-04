@@ -1,17 +1,26 @@
-core
+core: functionality
+	implement serialize/deserialize to send objects instead of messages
+	collect measurements in a queue
+		submit when connected, in batches of N
+		define cap, stop storing when full
+	detect when internet is available, start/stop queue processing
+
+core: optimization
 	clean up Format_*
-	change scan button to disconnect while connected, 
-		change it back to scan after disconnect
-		also change menu icons accordingly
 	generate a UUID for BluetoothSensorService using any generator software
 	when the sample file is finished, shutdown the service
 
+menu
+	change scan button to disconnect while connected, 
+		change it back to scan after disconnect
+		also change menu icons accordingly
+	map page: coming soon
+	graph page: coming soon
+
 tree page
 	remove listview
-	implement serialize/deserialize to send objects instead of messages
-	add nice colored scale for co2 level
 	add connect button on tree (home) page when disconnected
-	add map and graph menu items, page should show 'coming soon...'
+	add nice colored scale for co2 level
 
 utility package for stratifying data
 	can convert a numeric value to "level" indicator using various schemes
