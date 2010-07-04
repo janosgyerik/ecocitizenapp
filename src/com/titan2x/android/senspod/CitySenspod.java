@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -172,13 +173,22 @@ public class CitySenspod extends Activity {
                 byte[] readBuf = (byte[]) msg.obj;
                 // construct a string from the valid bytes in the buffer
                 String readMessage = new String(readBuf, 0, msg.arg1);
-                mInputStreamArrayAdapter.add(readMessage);
+                //mInputStreamArrayAdapter.add(readMessage);
                 
-                int co2Level = Integer.parseInt(readMessage.substring(readMessage.lastIndexOf(',') + 1).trim());
-                String imgname = "co2level_" + co2Level;
+                String[] vals = readMessage.trim().split(",");
+                String val_co2level = vals[vals.length - 1];
+                String val_co2 = vals[vals.length - 2];
+                
+                String imgname = "co2level_" + Integer.parseInt(val_co2level);
                 int resID = getResources().getIdentifier(imgname, "drawable", "com.titan2x.android.senspod");
                 LinearLayout treepage = (LinearLayout) findViewById(R.id.treepage);
                 treepage.setBackgroundResource(resID);
+
+                String co2val = String.valueOf((int)Float.parseFloat(val_co2));                
+                TextView co2 = (TextView) findViewById(R.id.co2value);
+                co2.setText(co2val);
+                co2.setGravity(Gravity.CENTER);
+
                 break;
             case MessageProtocol.MESSAGE_DEVICE_NAME:
                 // save the connected device's name

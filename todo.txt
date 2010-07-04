@@ -1,12 +1,13 @@
 core
-	set cap to messages, so android does not run out of memory
+	clean up Format_*
 	change scan button to disconnect while connected, 
 		change it back to scan after disconnect
-	how to generate a unique UUID, for BluetoothSensorService
+		also change menu icons accordingly
+	generate a UUID for BluetoothSensorService using any generator software
 	when the sample file is finished, shutdown the service
 
 tree page
-	show co2 value in the middle of the screen in large white font
+	remove listview
 	implement serialize/deserialize to send objects instead of messages
 	add nice colored scale for co2 level
 	add connect button on tree (home) page when disconnected

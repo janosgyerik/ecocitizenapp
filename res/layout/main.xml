@@ -21,6 +21,9 @@
     android:background="@drawable/background1"
     android:id="@+id/treepage"
     >
+    <TextView android:id="@+id/co2value"
+    	style="@style/co2value"
+    />
     <ListView android:id="@+id/in"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
