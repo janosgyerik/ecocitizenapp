@@ -6,19 +6,16 @@ core: functionality
 	detect when internet is available, start/stop queue processing
 
 core: optimization
+	when the sample file is finished, shutdown the service
+	make connect/disconnect work with simulator
 	clean up Format_*
 	generate a UUID for BluetoothSensorService using any generator software
-	when the sample file is finished, shutdown the service
 
 menu
-	change scan button to disconnect while connected, 
-		change it back to scan after disconnect
-		also change menu icons accordingly
-	map page: coming soon
-	graph page: coming soon
+	add a method that should be called after successful connect/disconnect,
+	and make it update the menu accordingly (hide/show connect/disconnect)
 
 tree page
-	remove listview
 	add connect button on tree (home) page when disconnected
 	add nice colored scale for co2 level
 

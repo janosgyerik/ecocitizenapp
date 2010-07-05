@@ -225,21 +225,34 @@ public class CitySenspod extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.option_menu, menu);
+        //MenuItem disconnectMenuItem = menu.findItem(R.id.menu_disconnect);
+        //disconnectMenuItem.setVisible(false);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.scan:
+        case R.id.menu_connect:
             // Launch the DeviceListActivity to see devices and do scan
             Intent serverIntent = new Intent(this, DeviceListActivity.class);
             startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
             return true;
-        case R.id.disconnect:
+        case R.id.menu_disconnect:
             // Disconnect any connected devices
         	if (mBluetoothSensorService != null) mBluetoothSensorService.stop();
             return true;
+        case R.id.menu_home:
+        	// go to home page (showing current pollution level, illustrated)
+        	break;
+        case R.id.menu_graph:
+        	// go to graph page (pollution graph showing past N minutes)
+            Toast.makeText(this, R.string.msg_coming_soon, Toast.LENGTH_SHORT).show();
+        	break;
+        case R.id.menu_map:
+        	// go to map page (pollution map showing past N minutes)
+            Toast.makeText(this, R.string.msg_coming_soon, Toast.LENGTH_SHORT).show();
+        	break;
         }
         return false;
     }

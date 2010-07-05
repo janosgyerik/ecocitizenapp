@@ -14,10 +14,20 @@
      limitations under the License.
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/scan"
+    <item android:id="@+id/menu_connect"
           android:icon="@android:drawable/ic_menu_search"
-          android:title="@string/connect" />
-    <item android:id="@+id/disconnect"
-          android:title="@string/disconnect" />
+          android:title="@string/menu_connect" />
+    <item android:id="@+id/menu_disconnect"
+          android:icon="@android:drawable/ic_menu_search"
+          android:title="@string/menu_disconnect" />
+    <item android:id="@+id/menu_home"
+          android:icon="@android:drawable/ic_menu_search"
+          android:title="@string/menu_home" />
+    <item android:id="@+id/menu_graph"
+          android:icon="@android:drawable/star_off"
+          android:title="@string/menu_graph" />
+    <item android:id="@+id/menu_map"
+          android:icon="@android:drawable/star_big_off"
+          android:title="@string/menu_map" />
     
 </menu>
