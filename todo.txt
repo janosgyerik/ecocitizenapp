@@ -5,6 +5,7 @@ core: functionality
 		submit when connected, in batches of N
 		define cap, stop storing when full
 	detect when internet is available, start/stop queue processing
+	automaticaly try to connect to last senspod
 
 core: optimization
 	when the sample file is finished, shutdown the service

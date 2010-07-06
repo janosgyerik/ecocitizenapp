@@ -256,6 +256,9 @@ public class CitySenspod extends Activity {
         	// go to map page (pollution map showing past N minutes)
             Toast.makeText(this, R.string.msg_coming_soon, Toast.LENGTH_SHORT).show();
         	break;
+        case R.id.menu_quit:
+        	finish();
+        	break;
         }
         return false;
     }
