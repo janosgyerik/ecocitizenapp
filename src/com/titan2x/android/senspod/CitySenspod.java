@@ -103,6 +103,9 @@ public class CitySenspod extends Activity {
     private void setupSenspodService() {
         Log.d(TAG, "setupSenspodService()");
 
+        mCo2View = (TextView) findViewById(R.id.co2value);
+        mCo2View.setGravity(Gravity.CENTER);
+        
         // Initialize the BluetoothSensorService to perform bluetooth connections
         mBluetoothSensorService = new CitySenspodService(this, mHandler);
     }

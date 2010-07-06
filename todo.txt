@@ -1,4 +1,5 @@
 core: functionality
+	disable landscape orientation
 	implement serialize/deserialize to send objects instead of messages
 	collect measurements in a queue
 		submit when connected, in batches of N
@@ -26,6 +27,7 @@ utility package for stratifying data
 		custom ranged
 
 bugs
+	bluetooth connection gets lost when orientation changes to horizontal
 	bt scan shows two macbooks with the same mac address
 	connect to paired senspod appears to succeed even though senspod is off
 	shows 'connection lost' error when disconnect is triggered (it should disconnect quietly)
