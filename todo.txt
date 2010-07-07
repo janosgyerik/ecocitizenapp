@@ -2,9 +2,9 @@ Vika
 	find/create suitable menu icons
 
 confirm with real android device
-	disable landscape orientation
 
 core: functionality
+	disable landscape orientation
 	implement serialize/deserialize to send objects instead of messages
 	collect measurements in a queue
 		submit when connected, in batches of N
