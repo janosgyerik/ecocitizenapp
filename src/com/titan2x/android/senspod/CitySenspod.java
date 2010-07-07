@@ -160,6 +160,7 @@ public class CitySenspod extends Activity {
                     mTitle.setText(R.string.title_not_connected);
                     break;
                 }
+                onBluetoothStateChanged();
                 break;
             case MessageProtocol.MESSAGE_READ:
                 byte[] readBuf = (byte[]) msg.obj;
@@ -223,13 +224,36 @@ public class CitySenspod extends Activity {
             }
         }
     }
+    
+    private MenuItem connectMenuItem = null;
+    private MenuItem disconnectMenuItem = null;
+    
+    private void onBluetoothStateChanged() {
+        if (mBluetoothSensorService != null) {
+        	if (connectMenuItem != null && disconnectMenuItem != null) {
+        		switch (mBluetoothSensorService.getState()) {
+        		case BluetoothSensorService.STATE_CONNECTED:
+        			connectMenuItem.setEnabled(false);
+        			disconnectMenuItem.setEnabled(true);
+        			break;
+        		case BluetoothSensorService.STATE_NONE:
+        		case BluetoothSensorService.STATE_CONNECTING:
+        		default:
+        			connectMenuItem.setEnabled(true);
+        			disconnectMenuItem.setEnabled(false);
+        			break;
+        		}
+        	}
+        }    	
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.option_menu, menu);
-        //MenuItem disconnectMenuItem = menu.findItem(R.id.menu_disconnect);
-        //disconnectMenuItem.setVisible(false);
+        connectMenuItem = menu.findItem(R.id.menu_connect);
+        disconnectMenuItem = menu.findItem(R.id.menu_disconnect);
+        onBluetoothStateChanged();
         return true;
     }
 

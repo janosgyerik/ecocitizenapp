@@ -1,3 +1,6 @@
+Vika
+	find/create suitable menu icons
+
 core: functionality
 	disable landscape orientation
 	implement serialize/deserialize to send objects instead of messages
@@ -12,10 +15,6 @@ core: optimization
 	make connect/disconnect work with simulator
 	clean up Format_*
 	generate a UUID for BluetoothSensorService using any generator software
-
-menu
-	add a method that should be called after successful connect/disconnect,
-	and make it update the menu accordingly (hide/show connect/disconnect)
 
 tree page
 	add connect button on tree (home) page when disconnected
