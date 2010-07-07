@@ -233,14 +233,14 @@ public class CitySenspod extends Activity {
         	if (connectMenuItem != null && disconnectMenuItem != null) {
         		switch (mBluetoothSensorService.getState()) {
         		case BluetoothSensorService.STATE_CONNECTED:
-        			connectMenuItem.setEnabled(false);
-        			disconnectMenuItem.setEnabled(true);
+        			connectMenuItem.setVisible(false);
+        			disconnectMenuItem.setVisible(true);
         			break;
         		case BluetoothSensorService.STATE_NONE:
         		case BluetoothSensorService.STATE_CONNECTING:
         		default:
-        			connectMenuItem.setEnabled(true);
-        			disconnectMenuItem.setEnabled(false);
+        			connectMenuItem.setVisible(true);
+        			disconnectMenuItem.setVisible(false);
         			break;
         		}
         	}
