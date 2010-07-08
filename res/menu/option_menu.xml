@@ -21,13 +21,13 @@
           android:icon="@android:drawable/ic_menu_search"
           android:title="@string/menu_disconnect" />
     <item android:id="@+id/menu_home"
-          android:icon="@android:drawable/ic_menu_search"
+          android:icon="@android:drawable/star_big_off"
           android:title="@string/menu_home" />
     <item android:id="@+id/menu_graph"
-          android:icon="@android:drawable/star_off"
+          android:icon="@drawable/chart"
           android:title="@string/menu_graph" />
     <item android:id="@+id/menu_map"
-          android:icon="@android:drawable/star_big_off"
+          android:icon="@android:drawable/ic_menu_mapmode"
           android:title="@string/menu_map" />
     <item android:id="@+id/menu_quit"
           android:icon="@android:drawable/ic_lock_power_off"
