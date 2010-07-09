@@ -29,7 +29,8 @@ import backport.android.bluetooth.BluetoothAdapter;
 import backport.android.bluetooth.BluetoothDevice;
 import backport.android.bluetooth.BluetoothSocket;
 
-import com.titan2x.envdata.formats.Format_1_GPS_CO2;
+import com.titan2x.envdata.sentences.CO2Sentence;
+import com.titan2x.envdata.sentences.GPRMCSentence;
 
 /**
  * This class does all the work for setting up and managing Bluetooth
@@ -214,9 +215,13 @@ public class CitySenspodService extends BluetoothSensorService {
 	            			prevGPS = line;
 	            		}
 	            		else if (line.startsWith("$PSEN,CO2")) {
-	            			Format_1_GPS_CO2 format = new Format_1_GPS_CO2(prevGPS, line);
+	            			GPRMCSentence gprmc = new GPRMCSentence(prevGPS);
+	            			CO2Sentence co2 = new CO2Sentence(line);
+	            			EnvDataMessage msg = new EnvDataMessage();
+	            			msg.gprmc = gprmc;
+	            			msg.co2 = co2;
 	            			// Send the obtained bytes to the UI Activity
-	            			byte[] buffer = format.toString().getBytes();
+	            			byte[] buffer = msg.toByteArray();
 	            			mHandler.obtainMessage(MessageProtocol.MESSAGE_READ, buffer.length, -1, buffer)
 	            			.sendToTarget();
 	            		}
