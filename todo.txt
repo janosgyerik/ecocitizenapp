@@ -14,7 +14,6 @@ core: functionality
 core: optimization
 	when the sample file is finished, shutdown the service
 	make connect/disconnect work with simulator
-	generate a UUID for BluetoothSensorService using any generator software
 
 tree page
 	add gps coordinates

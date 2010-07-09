@@ -3,7 +3,8 @@ package com.titan2x.envdata.sentences;
 import java.io.Serializable;
 
 public class GPRMCSentence implements Serializable {
-	
+	private static final long serialVersionUID = 3937903951172274070L;
+
 	public String datestr;
 	public String timestr;
 	public String datetimestr;

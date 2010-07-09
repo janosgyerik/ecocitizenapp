@@ -3,7 +3,8 @@ package com.titan2x.envdata.sentences;
 import java.io.Serializable;
 
 public class CO2Sentence implements Serializable {
-	
+	private static final long serialVersionUID = 2762248368761766763L;
+
 	public float co2;
 	
 	public enum Co2Level {
