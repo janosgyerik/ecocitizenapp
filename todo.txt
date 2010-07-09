@@ -1,10 +1,6 @@
-Vika
-	find/create suitable menu icons
-
 confirm with real android device
 
 core: functionality
-	change home icon to the one Vika found
 	collect measurements in a queue
 		submit when connected, in batches of N
 		define cap, stop storing when full
