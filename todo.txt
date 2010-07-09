@@ -14,10 +14,11 @@ core: functionality
 core: optimization
 	when the sample file is finished, shutdown the service
 	make connect/disconnect work with simulator
-	clean up Format_*
 	generate a UUID for BluetoothSensorService using any generator software
 
 tree page
+	add gps coordinates
+	add battery level
 	add connect button on tree (home) page when disconnected
 	add nice colored scale for co2 level
 
@@ -28,7 +29,9 @@ utility package for stratifying data
 		custom ranged
 
 bugs
-	bluetooth connection gets lost when orientation changes to horizontal
 	bt scan shows two macbooks with the same mac address
-	connect to paired senspod appears to succeed even though senspod is off
+	app crashes sometimes when starting
+	app crashes sometimes when pressing connect
+	app crashes sometimes after connect
+	connect to paired senspod appears to succeed even when senspod is off
 	shows 'connection lost' error when disconnect is triggered (it should disconnect quietly)
