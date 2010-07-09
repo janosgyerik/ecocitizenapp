@@ -16,8 +16,7 @@ core: optimization
 	make connect/disconnect work with simulator
 
 tree page
-	add gps coordinates
-	add battery level
+	add battery level, aligned to the right on the same line as lat
 	add connect button on tree (home) page when disconnected
 	add nice colored scale for co2 level
 

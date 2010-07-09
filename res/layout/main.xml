@@ -24,4 +24,10 @@
     <TextView android:id="@+id/co2value"
     	style="@style/co2value"
     />
+    <TextView android:id="@+id/lat"
+    	style="@style/latlon"
+    />
+    <TextView android:id="@+id/lon"
+    	style="@style/latlon"
+    />
 </LinearLayout>

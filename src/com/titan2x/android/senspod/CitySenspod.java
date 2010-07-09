@@ -1,5 +1,7 @@
 package com.titan2x.android.senspod;
 
+import java.text.DecimalFormat;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,6 +31,8 @@ public class CitySenspod extends Activity {
     // Layout Views
     private TextView mTitle;
     private TextView mCo2View;
+    private TextView mLatView;
+    private TextView mLonView;
 
     // Name of the connected device
     private String mConnectedDeviceName = null;
@@ -37,6 +41,8 @@ public class CitySenspod extends Activity {
     // Member object for the senspod services
     private BluetoothSensorService mBluetoothSensorService = null;
     
+    private static DecimalFormat latlonFormat = new DecimalFormat("* ###.00000");
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,11 +106,18 @@ public class CitySenspod extends Activity {
         }
     }
 
+    private void setupCommonService() {
+        mCo2View = (TextView) findViewById(R.id.co2value);
+        mCo2View.setGravity(Gravity.CENTER);
+        
+        mLatView = (TextView) findViewById(R.id.lat);
+        mLonView = (TextView) findViewById(R.id.lon);
+    }
+    
     private void setupSenspodService() {
         Log.d(TAG, "setupSenspodService()");
 
-        mCo2View = (TextView) findViewById(R.id.co2value);
-        mCo2View.setGravity(Gravity.CENTER);
+        setupCommonService();
         
         // Initialize the BluetoothSensorService to perform bluetooth connections
         mBluetoothSensorService = new CitySenspodService(this, mHandler);
@@ -113,10 +126,9 @@ public class CitySenspod extends Activity {
     private void setupSimulatorService() {
         Log.d(TAG, "setupSimulatorService()");
 
-        mCo2View = (TextView) findViewById(R.id.co2value);
-        mCo2View.setGravity(Gravity.CENTER);
+        setupCommonService();
         
-        // Initialize the BluetoothSensorService to perform bluetooth connections
+        // Initialize the BluetoothSensorService to replay a logfile
         mBluetoothSensorService = new SampleSenspodService(this, mHandler);
     }
 
@@ -139,6 +151,10 @@ public class CitySenspod extends Activity {
         if (mBluetoothSensorService != null) mBluetoothSensorService.stopAllThreads();
         if(D) Log.e(TAG, "--- ON DESTROY ---");
     }
+    
+    private static float convertNMEA(float nmea) {
+        return (int)(nmea / 100) + (nmea % 100) / 60;
+    }
 
     // The Handler that gets information back from the BluetoothSensorService
     private final Handler mHandler = new Handler() {
@@ -152,6 +168,8 @@ public class CitySenspod extends Activity {
                     mTitle.setText(R.string.title_connected_to);
                     mTitle.append(mConnectedDeviceName);
                     mCo2View.setText("");
+                    mLatView.setText("");
+                    mLonView.setText("");
                     break;
                 case BluetoothSensorService.STATE_CONNECTING:
                     mTitle.setText(R.string.title_connecting);
@@ -177,6 +195,9 @@ public class CitySenspod extends Activity {
                 String co2val = String.valueOf((int)Float.parseFloat(val_co2));                
                 mCo2View.setText(co2val);
                 mCo2View.setGravity(Gravity.CENTER);
+                
+                mLatView.setText(latlonFormat.format(convertNMEA(envmsg.gprmc.lat)));
+                mLonView.setText(latlonFormat.format(convertNMEA(envmsg.gprmc.lon)));
 
                 break;
             case MessageProtocol.MESSAGE_DEVICE_NAME:
