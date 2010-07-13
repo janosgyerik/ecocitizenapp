@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class GPRMCSentence implements Serializable {
 	private static final long serialVersionUID = 3937903951172274070L;
+	
+	public String str;
 
 	public String datestr;
 	public String timestr;
@@ -31,6 +33,7 @@ public class GPRMCSentence implements Serializable {
 	 * @param str
 	 */
 	public GPRMCSentence(String str) {
+		this.str = str;
 		String[] cols = str.split(",");
 		String ddmmyy = cols[9];
 		datestr = "20" + ddmmyy.substring(4, 6) + ddmmyy.substring(2,4) + ddmmyy.substring(0,2);

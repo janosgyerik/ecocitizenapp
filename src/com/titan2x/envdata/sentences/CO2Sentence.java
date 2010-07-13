@@ -5,6 +5,8 @@ import java.io.Serializable;
 public class CO2Sentence implements Serializable {
 	private static final long serialVersionUID = 2762248368761766763L;
 
+	public String str;
+	
 	public float ppm;
 	
 	public enum Level {
@@ -24,6 +26,8 @@ public class CO2Sentence implements Serializable {
 	public final float co2_max = 600;
 	
 	public CO2Sentence(String str) {
+		this.str = str;
+		
 		String[] cols = str.split(",");
 		ppm = Float.parseFloat(cols[3]);
 
