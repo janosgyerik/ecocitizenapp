@@ -184,8 +184,8 @@ public class CitySenspod extends Activity {
                 byte[] readBuf = (byte[]) msg.obj;
                 EnvDataMessage envmsg = new EnvDataMessage(readBuf);
 
-                String val_co2level = "" + envmsg.co2.co2Level.ordinal();
-                String val_co2 = String.valueOf(envmsg.co2.co2);
+                String val_co2level = "" + envmsg.co2.level.ordinal();
+                String val_co2 = String.valueOf(envmsg.co2.ppm);
                 
                 String imgname = "co2level_" + Integer.parseInt(val_co2level);
                 int resID = getResources().getIdentifier(imgname, "drawable", "com.titan2x.android.senspod");
