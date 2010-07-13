@@ -245,6 +245,8 @@ public class CitySenspod extends Activity {
     
     private MenuItem connectMenuItem = null;
     private MenuItem disconnectMenuItem = null;
+    private MenuItem debugOnMenuItem = null;
+    private MenuItem debugOffMenuItem = null;
     
     private void onBluetoothStateChanged() {
         if (mBluetoothSensorService != null) {
@@ -264,14 +266,35 @@ public class CitySenspod extends Activity {
         	}
         }    	
     }
+    
+    private boolean debugMode = false;
+
+    private void onDebugModeChanged() {
+    	if (debugOnMenuItem != null && debugOffMenuItem != null) {
+    		if (debugMode) {
+    			debugOnMenuItem.setVisible(false);
+    			debugOffMenuItem.setVisible(true);
+    		}
+    		else {
+    			debugOnMenuItem.setVisible(true);
+    			debugOffMenuItem.setVisible(false);
+    		}
+    	}
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.option_menu, menu);
+        
         connectMenuItem = menu.findItem(R.id.menu_connect);
         disconnectMenuItem = menu.findItem(R.id.menu_disconnect);
         onBluetoothStateChanged();
+        
+        debugOnMenuItem = menu.findItem(R.id.menu_debug_on);
+        debugOffMenuItem = menu.findItem(R.id.menu_debug_off);
+        onDebugModeChanged();
+        
         return true;
     }
 
@@ -300,6 +323,14 @@ public class CitySenspod extends Activity {
         	break;
         case R.id.menu_quit:
         	finish();
+        	break;
+        case R.id.menu_debug_on:
+        	debugMode = true;
+        	onDebugModeChanged();
+        	break;
+        case R.id.menu_debug_off:
+        	debugMode = false;
+        	onDebugModeChanged();
         	break;
         }
         return false;
