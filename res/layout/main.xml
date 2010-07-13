@@ -30,4 +30,11 @@
     <TextView android:id="@+id/lon"
     	style="@style/latlon"
     />
+    <ListView android:id="@+id/rawsentences"
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll"
+        android:layout_weight="1"
+    />
 </LinearLayout>

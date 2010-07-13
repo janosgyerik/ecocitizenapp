@@ -9,10 +9,12 @@ import java.io.StreamCorruptedException;
 
 import com.titan2x.envdata.sentences.CO2Sentence;
 import com.titan2x.envdata.sentences.GPRMCSentence;
+import com.titan2x.envdata.sentences.Sentence;
 
 public class EnvDataMessage {
 	final static int version = 1;
 	
+	public Sentence sentence = null;
 	public GPRMCSentence gprmc = null;
 	public CO2Sentence co2 = null;
 	
@@ -24,6 +26,7 @@ public class EnvDataMessage {
 		try {
 			ObjectInputStream ois = new ObjectInputStream(bais);
 			ois.readInt(); // version, for future use
+			sentence = (Sentence)ois.readObject();
 			gprmc = (GPRMCSentence)ois.readObject();
 			co2 = (CO2Sentence)ois.readObject();
 		} catch (StreamCorruptedException e) {
@@ -40,6 +43,7 @@ public class EnvDataMessage {
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(baos);
 			oos.writeInt(version);
+			oos.writeObject(sentence);
 			oos.writeObject(gprmc);
 			oos.writeObject(co2);
 		} catch (IOException e) {

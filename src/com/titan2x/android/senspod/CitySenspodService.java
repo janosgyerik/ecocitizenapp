@@ -31,6 +31,7 @@ import backport.android.bluetooth.BluetoothSocket;
 
 import com.titan2x.envdata.sentences.CO2Sentence;
 import com.titan2x.envdata.sentences.GPRMCSentence;
+import com.titan2x.envdata.sentences.Sentence;
 
 /**
  * This class does all the work for setting up and managing Bluetooth
@@ -210,13 +211,20 @@ public class CitySenspodService extends BluetoothSensorService {
 				try {
 	            	String line = reader.readLine();
 	            	if (line != null) {
-	            		line = line.substring(18);
-	            		if (line.startsWith("$GP")) {
-	            			prevGPS = line;
+	            		{
+	            			Sentence sentence = new Sentence(line);
+	            			EnvDataMessage msg = new EnvDataMessage();
+	            			msg.sentence = sentence;
+	            			byte[] buffer = msg.toByteArray();
+	            			mHandler.obtainMessage(MessageProtocol.MESSAGE_READ, buffer.length, -1, buffer).sendToTarget();
 	            		}
-	            		else if (line.startsWith("$PSEN,CO2")) {
+	            		//line = line.substring(18);
+	            		if (line.indexOf("$GPRMC") > -1) {
+	            			prevGPS = line.substring(line.indexOf("$GPRMC"));
+	            		}
+	            		else if (line.indexOf("$PSEN,") > -1) {
 	            			GPRMCSentence gprmc = new GPRMCSentence(prevGPS);
-	            			CO2Sentence co2 = new CO2Sentence(line);
+	            			CO2Sentence co2 = new CO2Sentence(line.substring(line.indexOf("$PSEN,")));
 	            			EnvDataMessage msg = new EnvDataMessage();
 	            			msg.gprmc = gprmc;
 	            			msg.co2 = co2;

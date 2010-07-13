@@ -13,7 +13,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import backport.android.bluetooth.BluetoothAdapter;
@@ -33,6 +35,8 @@ public class CitySenspod extends Activity {
     private TextView mCo2View;
     private TextView mLatView;
     private TextView mLonView;
+    private ListView mSentencesView;
+    private ArrayAdapter<String> mSentencesArrayAdapter;
 
     // Name of the connected device
     private String mConnectedDeviceName = null;
@@ -57,6 +61,10 @@ public class CitySenspod extends Activity {
         mTitle = (TextView) findViewById(R.id.title_left_text);
         mTitle.setText(R.string.app_name);
         mTitle = (TextView) findViewById(R.id.title_right_text);
+        
+        mSentencesArrayAdapter = new ArrayAdapter<String>(this, R.layout.message);
+        mSentencesView = (ListView) findViewById(R.id.rawsentences);
+        mSentencesView.setAdapter(mSentencesArrayAdapter);
 
         // Get local Bluetooth adapter
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -170,6 +178,7 @@ public class CitySenspod extends Activity {
                     mCo2View.setText("");
                     mLatView.setText("");
                     mLonView.setText("");
+                    mSentencesArrayAdapter.clear();
                     break;
                 case BluetoothSensorService.STATE_CONNECTING:
                     mTitle.setText(R.string.title_connecting);
@@ -184,20 +193,28 @@ public class CitySenspod extends Activity {
                 byte[] readBuf = (byte[]) msg.obj;
                 EnvDataMessage envmsg = new EnvDataMessage(readBuf);
 
-                String val_co2level = "" + envmsg.co2.level.ordinal();
-                String val_co2 = String.valueOf(envmsg.co2.ppm);
-                
-                String imgname = "co2level_" + Integer.parseInt(val_co2level);
-                int resID = getResources().getIdentifier(imgname, "drawable", "com.titan2x.android.senspod");
-                LinearLayout treepage = (LinearLayout) findViewById(R.id.treepage);
-                treepage.setBackgroundResource(resID);
+                if (envmsg.co2 != null) {
+                	String val_co2level = "" + envmsg.co2.level.ordinal();
+                	String val_co2 = String.valueOf(envmsg.co2.ppm);
 
-                String co2val = String.valueOf((int)Float.parseFloat(val_co2));                
-                mCo2View.setText(co2val);
-                mCo2View.setGravity(Gravity.CENTER);
+                	String imgname = "co2level_" + Integer.parseInt(val_co2level);
+                	int resID = getResources().getIdentifier(imgname, "drawable", "com.titan2x.android.senspod");
+                	LinearLayout treepage = (LinearLayout) findViewById(R.id.treepage);
+                	treepage.setBackgroundResource(resID);
+
+                	String co2val = String.valueOf((int)Float.parseFloat(val_co2));                
+                	mCo2View.setText(co2val);
+                	mCo2View.setGravity(Gravity.CENTER);
+                }
                 
-                mLatView.setText(latlonFormat.format(convertNMEA(envmsg.gprmc.lat)));
-                mLonView.setText(latlonFormat.format(convertNMEA(envmsg.gprmc.lon)));
+                if (envmsg.gprmc != null) {
+                	mLatView.setText(latlonFormat.format(convertNMEA(envmsg.gprmc.lat)));
+                	mLonView.setText(latlonFormat.format(convertNMEA(envmsg.gprmc.lon)));
+                }
+                
+                if (envmsg.sentence != null && debugMode) {
+                	mSentencesArrayAdapter.add(envmsg.sentence.str);
+                }
 
                 break;
             case MessageProtocol.MESSAGE_DEVICE_NAME:
@@ -278,6 +295,7 @@ public class CitySenspod extends Activity {
     		else {
     			debugOnMenuItem.setVisible(true);
     			debugOffMenuItem.setVisible(false);
+    			mSentencesArrayAdapter.clear();
     		}
     	}
     }
