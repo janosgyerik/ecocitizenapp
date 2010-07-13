@@ -134,6 +134,7 @@ public class CitySenspod extends Activity {
     private void setupSimulatorService() {
         Log.d(TAG, "setupSimulatorService()");
 
+        debugMode = true;
         setupCommonService();
         
         // Initialize the BluetoothSensorService to replay a logfile

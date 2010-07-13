@@ -111,10 +111,10 @@ public class SampleSenspodService extends BluetoothSensorService {
 	            			byte[] buffer = msg.toByteArray();
 	            			mHandler.obtainMessage(MessageProtocol.MESSAGE_READ, buffer.length, -1, buffer).sendToTarget();
 	            		}
-	            		if (line.startsWith("$GP")) {
+	            		if (line.startsWith("$GPRMC,")) {
 	            			prevGPS = line;
 	            		}
-	            		else if (line.startsWith("$PSEN,CO2")) {
+	            		else if (line.startsWith("$PSEN,CO2,")) {
 	            			GPRMCSentence gprmc = new GPRMCSentence(prevGPS);
 	            			CO2Sentence co2 = new CO2Sentence(line);
 	            			EnvDataMessage msg = new EnvDataMessage();

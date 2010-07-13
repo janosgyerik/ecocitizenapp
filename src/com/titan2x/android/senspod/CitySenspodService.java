@@ -219,10 +219,10 @@ public class CitySenspodService extends BluetoothSensorService {
 	            			mHandler.obtainMessage(MessageProtocol.MESSAGE_READ, buffer.length, -1, buffer).sendToTarget();
 	            		}
 	            		//line = line.substring(18);
-	            		if (line.indexOf("$GPRMC") > -1) {
-	            			prevGPS = line.substring(line.indexOf("$GPRMC"));
+	            		if (line.indexOf("$GPRMC,") > -1) {
+	            			prevGPS = line.substring(line.indexOf("$GPRMC,"));
 	            		}
-	            		else if (line.indexOf("$PSEN,") > -1) {
+	            		else if (line.indexOf("$PSEN,CO2,") > -1) {
 	            			GPRMCSentence gprmc = new GPRMCSentence(prevGPS);
 	            			CO2Sentence co2 = new CO2Sentence(line.substring(line.indexOf("$PSEN,")));
 	            			EnvDataMessage msg = new EnvDataMessage();
