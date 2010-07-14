@@ -215,7 +215,7 @@ public class CitySenspod extends Activity {
                 }
                 
                 if (envmsg.sentence != null && debugMode) {
-                	mSentencesArrayAdapter.add(envmsg.sentence.str);
+                	mSentencesArrayAdapter.add(envmsg.sentence.str + ";l=" + readBuf.length);
                 }
 
                 break;
