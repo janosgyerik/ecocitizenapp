@@ -207,6 +207,9 @@ public class CitySenspod extends Activity {
                 	String co2val = String.valueOf((int)Float.parseFloat(val_co2));                
                 	mCo2View.setText(co2val);
                 	mCo2View.setGravity(Gravity.CENTER);
+                	if (debugMode) {
+                		mSentencesArrayAdapter.add("CO2;l=" + readBuf.length);
+                	}
                 }
                 
                 if (envmsg.gprmc != null) {
