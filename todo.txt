@@ -1,4 +1,7 @@
 confirm with real android device
+	bt scan improvements
+		no more duplicated mac addresses
+		scan button does not disapper, scan can be repeated
 	-
 
 core: functionality
@@ -13,6 +16,8 @@ networking
 	add queue state indicator on tree page: # of messages in queue
 
 optimization
+	send Sentence only in debug mode
+		add new method to BluetoothSensorService to toggle
 	simulator
 		when the sample file is finished, shutdown the service
 		make connect/disconnect work
@@ -28,6 +33,5 @@ utility package for stratifying data
 		custom ranged
 
 bugs
-	bt scan shows two macbooks with the same mac address
 	connect to paired senspod appears to succeed even when senspod is off
 	shows 'connection lost' error when disconnect is triggered (it should disconnect quietly)

@@ -16,11 +16,10 @@
 
 package com.titan2x.android.senspod;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import android.app.Activity;
-import backport.android.bluetooth.BluetoothAdapter;
-import backport.android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -36,6 +35,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+import backport.android.bluetooth.BluetoothAdapter;
+import backport.android.bluetooth.BluetoothDevice;
 
 /**
  * This Activity appears as a dialog. It lists any paired devices and
@@ -55,6 +56,7 @@ public class DeviceListActivity extends Activity {
     private BluetoothAdapter mBtAdapter;
     private ArrayAdapter<String> mPairedDevicesArrayAdapter;
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
+    private Set<String> mNewDevicesSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +74,7 @@ public class DeviceListActivity extends Activity {
         scanButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 doDiscovery();
-                v.setVisibility(View.GONE);
+                //v.setVisibility(View.GONE);
             }
         });
 
@@ -80,6 +82,7 @@ public class DeviceListActivity extends Activity {
         // one for newly discovered devices
         mPairedDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.device_name);
         mNewDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.device_name);
+        mNewDevicesSet = new HashSet<String>();
 
         // Find and set up the ListView for paired devices
         ListView pairedListView = (ListView) findViewById(R.id.paired_devices);
@@ -135,6 +138,10 @@ public class DeviceListActivity extends Activity {
      */
     private void doDiscovery() {
         if (D) Log.d(TAG, "doDiscovery()");
+        
+        // clear results of a previous discovery
+        mNewDevicesArrayAdapter.clear();
+        mNewDevicesSet.clear();
 
         // Indicate scanning in the title
         setProgressBarIndeterminateVisibility(true);
@@ -185,13 +192,17 @@ public class DeviceListActivity extends Activity {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 // If it's already paired, skip it, because it's been listed already
                 if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
-                    mNewDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
+                	String address = device.getAddress();
+                	if (! mNewDevicesSet.contains(address)) {
+                		mNewDevicesSet.add(address);
+                		mNewDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
+                	}
                 }
             // When discovery is finished, change the Activity title
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
                 setProgressBarIndeterminateVisibility(false);
                 setTitle(R.string.select_device);
-                if (mNewDevicesArrayAdapter.getCount() == 0) {
+                if (mNewDevicesSet.isEmpty()) {
                     String noDevices = getResources().getText(R.string.none_found).toString();
                     mNewDevicesArrayAdapter.add(noDevices);
                 }
