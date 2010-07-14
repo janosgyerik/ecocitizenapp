@@ -2,21 +2,24 @@ confirm with real android device
 	-
 
 core: functionality
+	automaticaly try to connect to last senspod
+	add a blinking dot or something every time a message is received from the senspod, in case the values don't change for a long time, making the app look as if frozen
+
+networking
 	collect measurements in a queue
 		submit when connected, in batches of N
 		define cap, stop storing when full
 	detect when internet is available, start/stop queue processing
-	automaticaly try to connect to last senspod
-	add an indicator of updates, useful when the values are don't change for a while making the app appear frozen
+	add queue state indicator on tree page: # of messages in queue
 
-core: optimization
-	when the sample file is finished, shutdown the service
-	make connect/disconnect work with simulator
-
-tree page
-	add battery level, aligned to the right on the same line as lat
-	add connect button on tree (home) page when disconnected
-	add nice colored scale for co2 level
+optimization
+	simulator
+		when the sample file is finished, shutdown the service
+		make connect/disconnect work
+	tree page
+		add battery level, aligned to the right on the same line as lat
+		add connect button on tree (home) page when disconnected
+		add nice colored scale for co2 level
 
 utility package for stratifying data
 	can convert a numeric value to "level" indicator using various schemes
@@ -26,6 +29,5 @@ utility package for stratifying data
 
 bugs
 	bt scan shows two macbooks with the same mac address
-	app crashes sometimes when starting
 	connect to paired senspod appears to succeed even when senspod is off
 	shows 'connection lost' error when disconnect is triggered (it should disconnect quietly)
