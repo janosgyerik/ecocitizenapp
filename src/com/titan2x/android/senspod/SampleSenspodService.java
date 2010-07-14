@@ -114,7 +114,7 @@ public class SampleSenspodService extends BluetoothSensorService {
 	            		if (line.startsWith("$GPRMC,")) {
 	            			prevGPS = line;
 	            		}
-	            		else if (line.startsWith("$PSEN,CO2,")) {
+	            		else if (line.startsWith("$PSEN,CO2,") && prevGPS != null) {
 	            			GPRMCSentence gprmc = new GPRMCSentence(prevGPS);
 	            			CO2Sentence co2 = new CO2Sentence(line);
 	            			EnvDataMessage msg = new EnvDataMessage();

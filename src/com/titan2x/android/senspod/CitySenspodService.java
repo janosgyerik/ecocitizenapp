@@ -222,7 +222,7 @@ public class CitySenspodService extends BluetoothSensorService {
 	            		if (line.indexOf("$GPRMC,") > -1) {
 	            			prevGPS = line.substring(line.indexOf("$GPRMC,"));
 	            		}
-	            		else if (line.indexOf("$PSEN,CO2,") > -1) {
+	            		else if (line.indexOf("$PSEN,CO2,") > -1 && prevGPS != null) {
 	            			GPRMCSentence gprmc = new GPRMCSentence(prevGPS);
 	            			CO2Sentence co2 = new CO2Sentence(line.substring(line.indexOf("$PSEN,")));
 	            			EnvDataMessage msg = new EnvDataMessage();
