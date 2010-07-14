@@ -1,6 +1,7 @@
 package com.titan2x.android.senspod;
 
 import java.text.DecimalFormat;
+import java.util.LinkedList;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -62,7 +63,7 @@ public class CitySenspod extends Activity {
         mTitle.setText(R.string.app_name);
         mTitle = (TextView) findViewById(R.id.title_right_text);
         
-        mSentencesArrayAdapter = new ArrayAdapter<String>(this, R.layout.message);
+        mSentencesArrayAdapter = new DequeArrayAdapter<String>(new LinkedList<String>(), this, R.layout.message);
         mSentencesView = (ListView) findViewById(R.id.rawsentences);
         mSentencesView.setAdapter(mSentencesArrayAdapter);
 
