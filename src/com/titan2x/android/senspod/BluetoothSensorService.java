@@ -61,7 +61,7 @@ public abstract class BluetoothSensorService {
     public void stop() {
         if (D) Log.d(TAG, "stop");
         stopAllThreads();
-        setState(STATE_NONE);    	
+        connectionClosed();
     }
 
     
@@ -85,6 +85,21 @@ public abstract class BluetoothSensorService {
     }
 
 
+    /**
+     * Indicate that the connection was successfully closed and notify the UI Activity.
+     */
+    protected void connectionClosed() {
+        setState(STATE_NONE);
+
+        // Send a message back to the Activity
+        Message msg = mHandler.obtainMessage(MessageProtocol.MESSAGE_TOAST);
+        Bundle bundle = new Bundle();
+        bundle.putString(MessageProtocol.TOAST, "Disconnected");
+        msg.setData(bundle);
+        mHandler.sendMessage(msg);
+    }
+
+    
     /**
      * Indicate that the connection attempt failed and notify the UI Activity.
      */

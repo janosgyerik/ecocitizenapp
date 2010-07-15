@@ -109,6 +109,7 @@ public class CitySenspodService extends BluetoothSensorService {
      * Stop all threads
      */
     public synchronized void stopAllThreads() {
+    	mConnectedThread.shutdown();
         if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
         if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
     }
@@ -187,6 +188,8 @@ public class CitySenspodService extends BluetoothSensorService {
     private class ConnectedThread extends Thread {
         private final BluetoothSocket mmSocket;
         private final InputStream mmInStream;
+        
+        private boolean stop = false;
 
         public ConnectedThread(BluetoothSocket socket) {
             Log.d(TAG, "create ConnectedThread");
@@ -210,7 +213,7 @@ public class CitySenspodService extends BluetoothSensorService {
 
 			String prevGPS = null;
 
-			while (true) {
+			while (! stop) {
 				try {
 	            	String line = reader.readLine();
 	            	if (line != null) {
@@ -243,6 +246,17 @@ public class CitySenspodService extends BluetoothSensorService {
 	                break;			
 				}
 			}
+        }
+        
+        public void shutdown() {
+        	stop = true;
+        	if (mmInStream != null) {
+        		try {
+					mmInStream.close();
+				} catch (IOException e) {
+					Log.e(TAG, "close() of InputStream failed.");
+				}
+        	}
         }
 
         public void cancel() {

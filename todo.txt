@@ -2,6 +2,7 @@ confirm with real android device
 	bt scan improvements
 		no more duplicated mac addresses
 		scan button does not disapper, scan can be repeated
+	check logcat when connecting to paired device that is actually off
 	-
 
 core: functionality
@@ -35,4 +36,3 @@ utility package for stratifying data
 bugs
 	connect to paired senspod appears to succeed even when senspod is off
 		done: added debug messages, look for getRemoteDevice= in logcat
-	shows 'connection lost' error when disconnect is triggered (it should disconnect quietly)
