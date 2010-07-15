@@ -163,7 +163,10 @@ public class CitySenspodService extends BluetoothSensorService {
             synchronized (CitySenspodService.this) {
                 mConnectThread = null;
             }
-
+            
+            Log.d(TAG, "mmDevice=" + mmDevice.toString());
+            Log.d(TAG, "getRemoteDevice=" + mmSocket.getRemoteDevice());
+            
             // Start the connected thread
             connected(mmSocket, mmDevice);
         }
