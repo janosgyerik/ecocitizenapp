@@ -4,13 +4,17 @@ import java.io.Serializable;
 
 public class GPRMCSentence implements Serializable {
 	private static final long serialVersionUID = 3937903951172274070L;
-	
-	public String datestr;
-	public String timestr;
-	public String datetimestr;
-	public String gpsFlag;
-	public float lat;
-	public float lon;
+
+	public float utctimeFLOAT;
+	public char statusAV;
+	public float latitude;
+	public char latitudeNS;
+	public float longitude;
+	public char longitudeEW;
+	public float groundSpeedKnots;
+	public float trackDegrees;
+	public float utcdateFLOAT;
+	public String checksum;
 
 	/**
 	 * Generate Sentence object from GPRMC Sentence.
@@ -32,13 +36,15 @@ public class GPRMCSentence implements Serializable {
 	 */
 	public GPRMCSentence(String str) {
 		String[] cols = str.split(",");
-		String ddmmyy = cols[9];
-		datestr = "20" + ddmmyy.substring(4, 6) + ddmmyy.substring(2,4) + ddmmyy.substring(0,2);
-		timestr = cols[1];
-		datetimestr = datestr + '.' + timestr;
-		String[] gpsFlagCols = cols[12].split("\\*");
-		gpsFlag = gpsFlagCols[0];
-		lat = Float.parseFloat(cols[3]);
-		lon = Float.parseFloat(cols[5]);
+		this.utctimeFLOAT = Float.parseFloat(cols[1]);
+		this.statusAV = cols[2].charAt(0);
+		this.latitude = Float.parseFloat(cols[3]);
+		this.latitudeNS = cols[4].charAt(0);
+		this.longitude = Float.parseFloat(cols[5]);
+		this.longitudeEW = cols[6].charAt(0);
+		this.groundSpeedKnots = Float.parseFloat(cols[7]);
+		this.trackDegrees = Float.parseFloat(cols[8]);
+		this.utctimeFLOAT = Float.parseFloat(cols[9]);
+		this.checksum = cols[cols.length-1].substring(2);
 	}
 }

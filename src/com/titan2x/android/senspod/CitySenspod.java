@@ -213,8 +213,8 @@ public class CitySenspod extends Activity {
                 }
                 
                 if (envmsg.gprmc != null) {
-                	mLatView.setText(latlonFormat.format(convertNMEA(envmsg.gprmc.lat)));
-                	mLonView.setText(latlonFormat.format(convertNMEA(envmsg.gprmc.lon)));
+                	mLatView.setText(latlonFormat.format(convertNMEA(envmsg.gprmc.latitude)));
+                	mLonView.setText(latlonFormat.format(convertNMEA(envmsg.gprmc.longitude)));
                 }
                 
                 if (envmsg.sentence != null && debugMode) {
