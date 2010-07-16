@@ -190,6 +190,7 @@ public class CitySenspodService extends BluetoothSensorService {
         private final InputStream mmInStream;
         
         private boolean stop = false;
+        private boolean hasReadAnything = false;
 
         public ConnectedThread(BluetoothSocket socket) {
             Log.d(TAG, "create ConnectedThread");
@@ -217,6 +218,7 @@ public class CitySenspodService extends BluetoothSensorService {
 				try {
 	            	String line = reader.readLine();
 	            	if (line != null) {
+	            		hasReadAnything = true;
 	            		{
 	            			Sentence sentence = new Sentence(line);
 	            			EnvDataMessage msg = new EnvDataMessage();
@@ -250,6 +252,7 @@ public class CitySenspodService extends BluetoothSensorService {
         
         public void shutdown() {
         	stop = true;
+        	if (! hasReadAnything) return;
         	if (mmInStream != null) {
         		try {
 					mmInStream.close();

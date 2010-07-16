@@ -1,5 +1,4 @@
 confirm with real android device
-	check logcat when connecting to paired device that is actually off
 	-
 
 core: functionality
@@ -31,6 +30,8 @@ utility package for stratifying data
 		custom ranged
 
 bugs
-	connect to paired senspod appears to succeed even when senspod is off
-		done: added debug messages, look for getRemoteDevice= in logcat
-		disconnect at this point crashes the application
+	-
+
+possibly bluetooth backport bugs
+	cannot detect connection failure to paired device, when the paired device is out of range or off
+	when calling mmInStream.close(), keyDispatchingTimedOut happens, dumping CPU usage and other debug infos and eventually kill the application itself
