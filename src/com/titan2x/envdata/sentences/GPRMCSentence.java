@@ -5,6 +5,8 @@ import java.io.Serializable;
 public class GPRMCSentence implements Serializable {
 	private static final long serialVersionUID = 3937903951172274070L;
 
+	// standard GPRMC sentence fields
+	
 	public float utctimeFLOAT;
 	public char statusAV;
 	public float latitude;
@@ -15,6 +17,10 @@ public class GPRMCSentence implements Serializable {
 	public float trackDegrees;
 	public float utcdateFLOAT;
 	public String checksum;
+	
+	// extra fields added for convenience
+	
+	public String datetimeSTR;
 
 	/**
 	 * Generate Sentence object from GPRMC Sentence.
@@ -44,7 +50,14 @@ public class GPRMCSentence implements Serializable {
 		this.longitudeEW = cols[6].charAt(0);
 		this.groundSpeedKnots = Float.parseFloat(cols[7]);
 		this.trackDegrees = Float.parseFloat(cols[8]);
-		this.utctimeFLOAT = Float.parseFloat(cols[9]);
+		this.utcdateFLOAT = Float.parseFloat(cols[9]);
 		this.checksum = cols[cols.length-1].substring(2);
+
+		this.datetimeSTR = "20" 
+			+ cols[9].substring(4, 6) 
+			+ cols[9].substring(2, 4)
+			+ cols[9].substring(0, 2)
+			+ cols[1]
+			       ;
 	}
 }
