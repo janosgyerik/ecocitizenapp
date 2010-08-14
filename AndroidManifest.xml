@@ -52,6 +52,7 @@
     
     <uses-permission android:name="android.permission.BLUETOOTH"></uses-permission>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>
-    <uses-permission android:name="com.titan2x.android.senspod.PERMISSION"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
 
 </manifest> 

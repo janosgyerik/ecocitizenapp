@@ -47,6 +47,9 @@ public class CitySenspod extends Activity {
     private BluetoothSensorService mBluetoothSensorService = null;
     
     private static DecimalFormat latlonFormat = new DecimalFormat("* ###.00000");
+    
+    // Member object for uploading measurements to the map server
+    private SensormapUploaderService mSensormapUploaderService = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -121,6 +124,8 @@ public class CitySenspod extends Activity {
         
         mLatView = (TextView) findViewById(R.id.lat);
         mLonView = (TextView) findViewById(R.id.lon);
+        
+        mSensormapUploaderService = new SensormapUploaderService();
     }
     
     private void setupSenspodService() {
@@ -210,6 +215,8 @@ public class CitySenspod extends Activity {
                 	if (debugMode) {
                 		mSentencesArrayAdapter.add("CO2;l=" + readBuf.length);
                 	}
+                	
+                	mSensormapUploaderService.received_GPRMC_CO2(envmsg.gprmc, envmsg.co2);
                 }
                 
                 if (envmsg.gprmc != null) {
