@@ -31,12 +31,6 @@ optimization
 		add connect button on tree (home) page when disconnected
 		add nice colored scale for co2 level
 
-utility package for stratifying data
-	can convert a numeric value to "level" indicator using various schemes
-		linear
-		exponential
-		custom ranged
-
 bugs
 	-
 

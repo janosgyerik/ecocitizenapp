@@ -201,7 +201,7 @@ public class CitySenspod extends Activity {
                 EnvDataMessage envmsg = new EnvDataMessage(readBuf);
 
                 if (envmsg.co2 != null) {
-                	String val_co2level = "" + envmsg.co2.level.ordinal();
+                	String val_co2level = "" + envmsg.co2.level;
                 	String val_co2 = String.valueOf(envmsg.co2.ppm);
 
                 	String imgname = "co2level_" + Integer.parseInt(val_co2level);
