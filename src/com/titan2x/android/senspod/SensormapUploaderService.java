@@ -28,7 +28,11 @@ public class SensormapUploaderService {
 	
 	// Constants
 	public static final int HTTP_STATUS_OK = 200;
-
+	public static final int QUEUE_CYCLE_SLEEP = 3000; // 3 seconds
+	public static final int QUEUE_NOSENSORMAP_SLEEP = 30000;
+	public static final int QUEUE_LOGINERROR_SLEEP = 10000;
+	public static final int QUEUE_STOREERROR_SLEEP = 10000;
+	
 	// Todo: it would be good to get this from a properties file
 	public static final String SENSORMAP_BASE_URL = "http://10.0.2.2:8000/api/"; 
 	public static final String SENSORMAP_STATUS_URL = SENSORMAP_BASE_URL + "status/";
@@ -172,47 +176,55 @@ public class SensormapUploaderService {
 		}
 		
 		public void run() {
-			Log.i(TAG, "BEGIN mQueueProcessorThread");
+			if (D) Log.i(TAG, "BEGIN mQueueProcessorThread");
 			setName("QueueProcessorThread");
 			
 			sessionId = 0;
 						
 			while (! stop) {
-				if (! queue.isEmpty()) {
-					if (isSensormapReachable()) {
-						if (! (sessionId > 0)) {
-							if (! login(username, sensorId, formatstr)) {
-								Log.e(TAG, "login ERR");
-								break;
+				try {
+					if (! queue.isEmpty()) {
+						if (isSensormapReachable()) {
+							if (! (sessionId > 0)) {
+								if (! login(username, sensorId, formatstr)) {
+									if (D) Log.e(TAG, "login ERR");
+									Thread.sleep(QUEUE_LOGINERROR_SLEEP);
+									continue;
+								}
 							}
 						}
-					}
-					else {
-						try {
-							Thread.sleep(10000);
+						else {
+							if (D) Log.e(TAG, "sensormap UNREACHABLE");
+							Thread.sleep(QUEUE_NOSENSORMAP_SLEEP);
+							continue;
 						}
-						catch (Exception e) {
-							break;
-						}
-						continue;
-					}
-					
-					if (D) Log.d(TAG, "queue size = " + queue.size());
 
-					while (queue.size() > 0) {
-						synchronized (queue) {
-							String item = queue.elementAt(0);
-							if (! store(item)) return;
-							queue.remove(0);
+						if (D) Log.d(TAG, "queue size = " + queue.size());
+
+						boolean was_store_error = false;
+						
+						while (queue.size() > 0) {
+							synchronized (queue) {
+								String item = queue.elementAt(0);
+								if (! store(item)) {
+									was_store_error = true;
+									break;
+								}
+								queue.remove(0);
+							}
+						}
+						
+						if (was_store_error) {
+							if (D) Log.e(TAG, "store ERR");
+							Thread.sleep(QUEUE_STOREERROR_SLEEP);
+							continue;
 						}
 					}
+
+					Thread.sleep(QUEUE_CYCLE_SLEEP);
 				}
-				
-				try {
-					Thread.sleep(10000);
-				}
-				catch (Exception e) {
-					break;
+				catch (InterruptedException e) {
+					// ignore it 
 				}
 			}
 		}		

@@ -7,6 +7,8 @@ tasks when connected to internet
 core: functionality
 	automaticaly try to connect to last senspod
 	add a blinking dot or something every time a message is received from the senspod, in case the values don't change for a long time, making the app look as if frozen
+	add queue state indicator on tree page: # of messages in queue
+	add sensormap state indicator
 
 send data to server
 	put server name and details in properties file
@@ -14,13 +16,8 @@ send data to server
 	update status bar when data sending succeeded or failed
 	send both AndroidGPS and GPRMC
 
-cache data while disconnected
-	collect measurements in a queue
-		submit when connected, in batches of N (or 1-by-1 at first)
-	detect when internet is available, start/stop queue processing
-	add queue state indicator on tree page: # of messages in queue
-
 optimization
+	change queue implementation to use linked list instead of vector
 	send Sentence only in debug mode
 		add new method to BluetoothSensorService to toggle
 	simulator
