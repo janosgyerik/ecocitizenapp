@@ -45,8 +45,9 @@ public class SampleSenspodService extends BluetoothSensorService {
     private InputStream mmInStream = null;
     private ConnectedThread mConnectedThread;
     
+    // todo: these should come from properties file
     private final int messageInterval = 1000;
-    private final String sampleFileName = "CitySenspodSample1.txt";
+    private final String sampleFileName = "CitySenspodSample2.txt";
 
     /**
      * Constructor. Prepares a new session.
