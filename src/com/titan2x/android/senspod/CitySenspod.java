@@ -4,7 +4,11 @@ import java.text.DecimalFormat;
 import java.util.LinkedList;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,7 +26,7 @@ import android.widget.Toast;
 import backport.android.bluetooth.BluetoothAdapter;
 import backport.android.bluetooth.BluetoothDevice;
 
-public class CitySenspod extends Activity {
+public class CitySenspod extends Activity implements LocationListener {
     // Debugging
     private static final String TAG = "CitySenspod";
     private static final boolean D = true;
@@ -51,6 +55,8 @@ public class CitySenspod extends Activity {
     // Member object for uploading measurements to the map server
     private SensormapUploaderService mSensormapUploaderService = null;
 
+    private Location lastKnownLocation = null;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +75,14 @@ public class CitySenspod extends Activity {
         mSentencesArrayAdapter = new DequeArrayAdapter<String>(new LinkedList<String>(), this, R.layout.message);
         mSentencesView = (ListView) findViewById(R.id.rawsentences);
         mSentencesView.setAdapter(mSentencesArrayAdapter);
+
+		LocationManager locationmanager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
+		for (String provider : locationmanager.getAllProviders()) {
+			Log.d(TAG, "provider=" + provider);
+			Log.d(TAG, "provider=" + provider + ", isEnabled=" + locationmanager.isProviderEnabled(provider));
+		}
+		lastKnownLocation = locationmanager.getLastKnownLocation("gps");
+		locationmanager.requestLocationUpdates("gps", 1000, 0.1f, this);
 
         // Get local Bluetooth adapter
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -125,7 +139,7 @@ public class CitySenspod extends Activity {
         mLatView = (TextView) findViewById(R.id.lat);
         mLonView = (TextView) findViewById(R.id.lon);
         
-        mSensormapUploaderService = new SensormapUploaderService();
+        mSensormapUploaderService = new SensormapUploaderService(this);
     }
     
     private void setupSenspodService() {
@@ -216,7 +230,7 @@ public class CitySenspod extends Activity {
                 		mSentencesArrayAdapter.add("CO2;l=" + readBuf.length);
                 	}
                 	
-                	mSensormapUploaderService.received_GPRMC_CO2(envmsg.gprmc, envmsg.co2);
+                	mSensormapUploaderService.received_GPRMC_CO2(envmsg.gprmc, envmsg.co2, lastKnownLocation);
                 }
                 
                 if (envmsg.gprmc != null) {
@@ -366,4 +380,18 @@ public class CitySenspod extends Activity {
         return false;
     }
 
+
+	public void onLocationChanged(Location location) {
+		lastKnownLocation = location;
+	}
+
+	public void onProviderDisabled(String provider) {
+	}
+
+	public void onProviderEnabled(String provider) {
+	}
+
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		Log.d(TAG, "status changed");
+	}
 }

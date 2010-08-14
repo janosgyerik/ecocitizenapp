@@ -11,6 +11,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationManager;
 import android.util.Log;
 
 import com.titan2x.envdata.sentences.CO2Sentence;
@@ -34,7 +37,7 @@ public class SensormapUploaderService {
 	public static final int QUEUE_STOREERROR_SLEEP = 10000;
 	
 	// Todo: it would be good to get this from a properties file
-	public static final String SENSORMAP_BASE_URL = "http://10.0.2.2:8000/api/"; 
+	public static final String SENSORMAP_BASE_URL = "http://192.168.2.2:8000/api/"; 
 	public static final String SENSORMAP_STATUS_URL = SENSORMAP_BASE_URL + "status/";
 	public static final String SENSORMAP_LOGIN_URL = SENSORMAP_BASE_URL + "login/";
 	public static final String SENSORMAP_STORE_URL = SENSORMAP_BASE_URL + "store/";
@@ -57,7 +60,9 @@ public class SensormapUploaderService {
 		
 	private QueueProcessorThread mQueueProcessorThread;
 	
-	public SensormapUploaderService() {
+	private LocationManager locationmanager;
+	
+	public SensormapUploaderService(Context context) {
 		start();
 	}
 	
@@ -65,15 +70,15 @@ public class SensormapUploaderService {
 		return queue.size() < maxQueueSize;
 	}
 
-	public void received_GPRMC_CO2(GPRMCSentence gprmc, CO2Sentence co2) {
+	public void received_GPRMC_CO2(GPRMCSentence gprmc, CO2Sentence co2, Location lastKnownLocation) {
 		if (! hasCapacity()) return;
 		
 		Formatter formatter = new Formatter();
 		String item = formatter.format(
 				"%s,%f,%f,%f,%f,%f", 
-				gprmc.datetimeSTR, 
-				0.,
-				0.,
+				gprmc.datetimeSTR,
+				(lastKnownLocation == null ? 0 : lastKnownLocation.getLatitude()),
+				(lastKnownLocation == null ? 0 : lastKnownLocation.getLongitude()),
 				gprmc.latitude,
 				gprmc.longitude,
 				co2.ppm
