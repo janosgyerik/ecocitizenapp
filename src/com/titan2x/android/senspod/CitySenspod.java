@@ -238,8 +238,8 @@ public class CitySenspod extends Activity implements LocationListener {
                 }
                 
                 if (envmsg.gprmc != null) {
-                	mLatView.setText(latlonFormat.format(convertNMEA(envmsg.gprmc.latitude)));
-                	mLonView.setText(latlonFormat.format(convertNMEA(envmsg.gprmc.longitude)));
+                	//mLatView.setText(latlonFormat.format(convertNMEA(envmsg.gprmc.latitude)));
+                	//mLonView.setText(latlonFormat.format(convertNMEA(envmsg.gprmc.longitude)));
                 }
                 
                 if (envmsg.sentence != null && debugMode) {
@@ -387,6 +387,10 @@ public class CitySenspod extends Activity implements LocationListener {
 
 	public void onLocationChanged(Location location) {
 		lastKnownLocation = location;
+		if (location != null) {
+			mLatView.setText(latlonFormat.format(location.getLatitude()));
+			mLonView.setText(latlonFormat.format(location.getLongitude()));
+		}
 	}
 
 	public void onProviderDisabled(String provider) {
