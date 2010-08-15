@@ -55,7 +55,9 @@ public class CitySenspod extends Activity implements LocationListener {
     // Member object for uploading measurements to the map server
     private SensormapUploaderService mSensormapUploaderService = null;
 
+    private LocationManager locationmanager = null;
     private Location lastKnownLocation = null;
+    private LocationListener locationListener = this;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,13 +78,12 @@ public class CitySenspod extends Activity implements LocationListener {
         mSentencesView = (ListView) findViewById(R.id.rawsentences);
         mSentencesView.setAdapter(mSentencesArrayAdapter);
 
-		LocationManager locationmanager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
+		locationmanager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
 		for (String provider : locationmanager.getAllProviders()) {
 			Log.d(TAG, "provider=" + provider);
 			Log.d(TAG, "provider=" + provider + ", isEnabled=" + locationmanager.isProviderEnabled(provider));
 		}
 		lastKnownLocation = locationmanager.getLastKnownLocation("gps");
-		locationmanager.requestLocationUpdates("gps", 1000, 0.1f, this);
 
         // Get local Bluetooth adapter
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -200,12 +201,15 @@ public class CitySenspod extends Activity implements LocationListener {
                     mLatView.setText("");
                     mLonView.setText("");
                     mSentencesArrayAdapter.clear();
+            		locationmanager.requestLocationUpdates("gps", 1000, 0.1f, locationListener);
+
                     break;
                 case BluetoothSensorService.STATE_CONNECTING:
                     mTitle.setText(R.string.title_connecting);
                     break;
                 case BluetoothSensorService.STATE_NONE:
                     mTitle.setText(R.string.title_not_connected);
+            		if (locationListener != null) locationmanager.removeUpdates(locationListener);
                     break;
                 }
                 onBluetoothStateChanged();
