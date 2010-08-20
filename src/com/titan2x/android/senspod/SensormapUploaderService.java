@@ -36,7 +36,8 @@ public class SensormapUploaderService {
 	public static final int QUEUE_STOREERROR_SLEEP = 10000;
 	
 	// Todo: it would be good to get this from a properties file
-	public static final String SENSORMAP_BASE_URL = "http://10.0.2.2:8000/api/"; 
+	//public static final String SENSORMAP_BASE_URL = "http://10.0.2.2:8000/api/"; 
+	public static final String SENSORMAP_BASE_URL = "http://sensormap.titan2x.com/api/"; 
 	public static final String SENSORMAP_STATUS_URL = SENSORMAP_BASE_URL + "status/";
 	public static final String SENSORMAP_LOGIN_URL = SENSORMAP_BASE_URL + "login/";
 	public static final String SENSORMAP_STORE_URL = SENSORMAP_BASE_URL + "store/";
@@ -46,7 +47,7 @@ public class SensormapUploaderService {
 	public String username = "janos";
 	public String sensorId = "00:07:80:93:54:5b"; // Mr. SENSPOD_3002
 	// Todo: make this dynamic, depending on the data available from the device
-	public String formatstr = "AndroidGPS,GPRMC,co2";
+	public String formatstr = "GPS,co2";
 	
 	private int sessionId = 0;
 	
@@ -72,12 +73,10 @@ public class SensormapUploaderService {
 		
 		Formatter formatter = new Formatter();
 		String item = formatter.format(
-				"%s,%f,%f,%f,%f,%f", 
+				"%s,%f,%f,%f", 
 				gprmc.datetimeSTR,
 				(lastKnownLocation == null ? 0 : lastKnownLocation.getLatitude()),
 				(lastKnownLocation == null ? 0 : lastKnownLocation.getLongitude()),
-				gprmc.latitude,
-				gprmc.longitude,
 				co2.ppm
 				).toString();
 		queue.add(item);

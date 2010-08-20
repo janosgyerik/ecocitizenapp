@@ -3,8 +3,13 @@ confirm with real android device
 
 tasks when connected to internet
 	register more tasks in launchpad
+	sort out tasks in this todo file, and grep -i todo in src/
 
 core: functionality
+	make bluetooth thread send co2 without gprmc
+	app crashes on exit
+	stop sending gprmc, send only AndroidGPS
+	send more AndroidGPS details
 	automaticaly try to connect to last senspod
 	add a blinking dot or something every time a message is received from the senspod, in case the values don't change for a long time, making the app look as if frozen
 	add queue state indicator on tree page: # of messages in queue
