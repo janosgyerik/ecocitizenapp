@@ -13,7 +13,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.content.Context;
 import android.location.Location;
-import android.location.LocationManager;
 import android.util.Log;
 
 import com.titan2x.envdata.sentences.CO2Sentence;
@@ -37,7 +36,7 @@ public class SensormapUploaderService {
 	public static final int QUEUE_STOREERROR_SLEEP = 10000;
 	
 	// Todo: it would be good to get this from a properties file
-	public static final String SENSORMAP_BASE_URL = "http://sensormap.titan2x.com/api/"; 
+	public static final String SENSORMAP_BASE_URL = "http://10.0.2.2:8000/api/"; 
 	public static final String SENSORMAP_STATUS_URL = SENSORMAP_BASE_URL + "status/";
 	public static final String SENSORMAP_LOGIN_URL = SENSORMAP_BASE_URL + "login/";
 	public static final String SENSORMAP_STORE_URL = SENSORMAP_BASE_URL + "store/";
@@ -59,8 +58,6 @@ public class SensormapUploaderService {
 	private int bufferSize = 5;
 		
 	private QueueProcessorThread mQueueProcessorThread;
-	
-	private LocationManager locationmanager;
 	
 	public SensormapUploaderService(Context context) {
 		start();
