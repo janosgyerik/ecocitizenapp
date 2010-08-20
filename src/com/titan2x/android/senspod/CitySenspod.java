@@ -219,15 +219,12 @@ public class CitySenspod extends Activity implements LocationListener {
                 EnvDataMessage envmsg = new EnvDataMessage(readBuf);
 
                 if (envmsg.co2 != null) {
-                	String val_co2level = "" + envmsg.co2.level;
-                	String val_co2 = String.valueOf(envmsg.co2.ppm);
-
-                	String imgname = "co2level_" + Integer.parseInt(val_co2level);
+                	String imgname = "co2level_" + envmsg.co2.level;
                 	int resID = getResources().getIdentifier(imgname, "drawable", "com.titan2x.android.senspod");
                 	LinearLayout treepage = (LinearLayout) findViewById(R.id.treepage);
                 	treepage.setBackgroundResource(resID);
 
-                	String co2val = String.valueOf((int)Float.parseFloat(val_co2));                
+                	String co2val = String.valueOf((int)envmsg.co2.ppm);                
                 	mCo2View.setText(co2val);
                 	mCo2View.setGravity(Gravity.CENTER);
                 	if (debugMode) {
