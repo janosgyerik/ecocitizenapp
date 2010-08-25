@@ -1,6 +1,8 @@
 package com.titan2x.android.senspod;
 
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Formatter;
 import java.util.Vector;
 
@@ -29,15 +31,16 @@ public class SensormapUploaderService {
 	public static final boolean D = true;
 	
 	// Constants
-	public static final int HTTP_STATUS_OK = 200;
+    public static final SimpleDateFormat dateformatter = new SimpleDateFormat("yyyyMMddhhmmss.S");
+    public static final int HTTP_STATUS_OK = 200;
 	public static final int QUEUE_CYCLE_SLEEP = 3000; // 3 seconds
 	public static final int QUEUE_NOSENSORMAP_SLEEP = 30000;
 	public static final int QUEUE_LOGINERROR_SLEEP = 10000;
 	public static final int QUEUE_STOREERROR_SLEEP = 10000;
 	
 	// Todo: it would be good to get this from a properties file
-	//public static final String SENSORMAP_BASE_URL = "http://10.0.2.2:8000/api/"; 
-	public static final String SENSORMAP_BASE_URL = "http://sensormap.titan2x.com/api/"; 
+	public static final String SENSORMAP_BASE_URL = "http://10.0.2.2:8000/api/"; 
+	//public static final String SENSORMAP_BASE_URL = "http://sensormap.titan2x.com/api/"; 
 	public static final String SENSORMAP_STATUS_URL = SENSORMAP_BASE_URL + "status/";
 	public static final String SENSORMAP_LOGIN_URL = SENSORMAP_BASE_URL + "login/";
 	public static final String SENSORMAP_STORE_URL = SENSORMAP_BASE_URL + "store/";
@@ -68,13 +71,27 @@ public class SensormapUploaderService {
 		return queue.size() < maxQueueSize;
 	}
 
-	public void received_GPRMC_CO2(GPRMCSentence gprmc, CO2Sentence co2, Location lastKnownLocation) {
+	public void receivedCO2(CO2Sentence co2, GPRMCSentence gprmc) {
 		if (! hasCapacity()) return;
 		
 		Formatter formatter = new Formatter();
 		String item = formatter.format(
 				"%s,%f,%f,%f", 
 				gprmc.datetimeSTR,
+				CitySenspod.convertNMEA(gprmc.latitude),
+				CitySenspod.convertNMEA(gprmc.longitude),
+				co2.ppm
+				).toString();
+		queue.add(item);
+	}
+	
+	public void receivedCO2(CO2Sentence co2, Location lastKnownLocation) {
+		if (! hasCapacity()) return;
+		
+		Formatter formatter = new Formatter();
+		String item = formatter.format(
+				"%s,%f,%f,%f", 
+				dateformatter.format(new Date()),
 				(lastKnownLocation == null ? 0 : lastKnownLocation.getLatitude()),
 				(lastKnownLocation == null ? 0 : lastKnownLocation.getLongitude()),
 				co2.ppm
@@ -154,11 +171,16 @@ public class SensormapUploaderService {
 	
 	public boolean login(String username, String sensor_id, String formatstr) {        
 		sessionId = getIntResponse(SENSORMAP_LOGIN_URL + username + "/" + sensor_id + "/" + formatstr);
-		return sessionId > 0;
+		if (sessionId > 0) return true;
+		Log.d(TAG, "login returned " + sessionId);
+		return false;
 	}
 	
 	public boolean store(String data) {
-		return getIntResponse(SENSORMAP_STORE_URL + sessionId + "/" + data) == 0;
+		int ret = getIntResponse(SENSORMAP_STORE_URL + sessionId + "/" + data);
+		if (ret == 0) return true;
+		Log.d(TAG, "store returned " + ret);
+		return false;
 	}
 
 	private class QueueProcessorThread extends Thread {

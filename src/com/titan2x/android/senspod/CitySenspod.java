@@ -30,6 +30,8 @@ public class CitySenspod extends Activity implements LocationListener {
     // Debugging
     private static final String TAG = "CitySenspod";
     private static final boolean D = true;
+    private boolean debugMode = false;
+    private boolean simulatorMode = false;
 
     // Intent request codes
     private static final int REQUEST_CONNECT_DEVICE = 1;
@@ -156,6 +158,7 @@ public class CitySenspod extends Activity implements LocationListener {
         Log.d(TAG, "setupSimulatorService()");
 
         debugMode = true;
+        simulatorMode = true;
         setupCommonService();
         
         // Initialize the BluetoothSensorService to replay a logfile
@@ -182,7 +185,7 @@ public class CitySenspod extends Activity implements LocationListener {
         if(D) Log.e(TAG, "--- ON DESTROY ---");
     }
     
-    private static float convertNMEA(float nmea) {
+    public static float convertNMEA(float nmea) {
         return (int)(nmea / 100) + (nmea % 100) / 60;
     }
 
@@ -231,13 +234,20 @@ public class CitySenspod extends Activity implements LocationListener {
                 		mSentencesArrayAdapter.add("CO2;l=" + readBuf.length);
                 	}
                 	
-                	mSensormapUploaderService.received_GPRMC_CO2(envmsg.gprmc, envmsg.co2, lastKnownLocation);
+                	if (simulatorMode) {
+                    	mSensormapUploaderService.receivedCO2(envmsg.co2, envmsg.gprmc);
+                	}
+                	else {
+                    	mSensormapUploaderService.receivedCO2(envmsg.co2, lastKnownLocation);
+                	}
                 }
-                
+
+                /*
                 if (envmsg.gprmc != null) {
-                	//mLatView.setText(latlonFormat.format(convertNMEA(envmsg.gprmc.latitude)));
-                	//mLonView.setText(latlonFormat.format(convertNMEA(envmsg.gprmc.longitude)));
+                	mLatView.setText(latlonFormat.format(convertNMEA(envmsg.gprmc.latitude)));
+                	mLonView.setText(latlonFormat.format(convertNMEA(envmsg.gprmc.longitude)));
                 }
+                */
                 
                 if (envmsg.sentence != null && debugMode) {
                 	mSentencesArrayAdapter.add(envmsg.sentence.str + ";l=" + readBuf.length);
@@ -311,8 +321,6 @@ public class CitySenspod extends Activity implements LocationListener {
         }    	
     }
     
-    private boolean debugMode = false;
-
     private void onDebugModeChanged() {
     	if (debugOnMenuItem != null && debugOffMenuItem != null) {
     		if (debugMode) {
