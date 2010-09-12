@@ -185,10 +185,6 @@ public class CitySenspod extends Activity implements LocationListener {
         if(D) Log.e(TAG, "--- ON DESTROY ---");
     }
     
-    public static float convertNMEA(float nmea) {
-        return (int)(nmea / 100) + (nmea % 100) / 60;
-    }
-
     // The Handler that gets information back from the BluetoothSensorService
     private final Handler mHandler = new Handler() {
         @Override

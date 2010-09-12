@@ -78,8 +78,8 @@ public class SensormapUploaderService {
 		String item = formatter.format(
 				"%s,%f,%f,%f", 
 				gprmc.datetimeSTR,
-				CitySenspod.convertNMEA(gprmc.latitude),
-				CitySenspod.convertNMEA(gprmc.longitude),
+				Util.convertNmeaToGps(gprmc.latitude),
+				Util.convertNmeaToGps(gprmc.longitude),
 				co2.ppm
 				).toString();
 		queue.add(item);
