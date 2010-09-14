@@ -9,12 +9,6 @@ package com.senspodapp.data;
  */
 public abstract class SensorData {
 	/**
-	 * Name of the sensor that collected the measurement.
-	 * Example: CitySenspod, Android, ...
-	 */
-	public String sensorName = null;
-	
-	/**
 	 * Name of the measurement.
 	 * Example: Co2, AndroidGPS, ...
 	 */
