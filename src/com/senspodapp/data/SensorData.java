@@ -9,10 +9,18 @@ package com.senspodapp.data;
  */
 public abstract class SensorData {
 	/**
-	 * Name of the measurement.
-	 * Example: Co2, AndroidGPS, ...
+	 * Initialize SensorData object from sentence string.
+	 * @param sentence
 	 */
-	public String name = null;
+	public abstract void initFromSentence(String sentence);
+	
+	/**
+	 * Return the simple name of the class, for example "Co2Data".
+	 * @return
+	 */
+	public final String getName() {
+		return getClass().getSimpleName();
+	}
 
 	/**
 	 * Level indicator, when applicable.
@@ -34,10 +42,4 @@ public abstract class SensorData {
 			if (val < levelboundaries[level]) break;
 		}
 	}
-
-	/**
-	 * Initialize SensorData object from sentence string.
-	 * @param sentence
-	 */
-	public abstract void initFromSentence(String sentence);
 }
