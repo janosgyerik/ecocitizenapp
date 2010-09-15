@@ -9,6 +9,11 @@ package com.senspodapp.data;
  */
 public abstract class SensorData {
 	/**
+	 * The original sentence the object was created from.
+	 */
+	public String sentence = null;
+	
+	/**
 	 * Initialize SensorData object from sentence string.
 	 * @param sentence
 	 */

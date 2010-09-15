@@ -11,6 +11,8 @@ public class Co2Data extends SensorData implements Serializable {
 	
 	@Override
 	public void initFromSentence(String sentence) {
+		this.sentence = sentence;
+		
 		String[] cols = sentence.split(",");
 		ppm = Float.parseFloat(cols[3]);
 		setLevel(ppm);
