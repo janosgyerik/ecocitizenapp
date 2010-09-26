@@ -12,13 +12,7 @@ public abstract class SensorData {
 	 * The original sentence the object was created from.
 	 */
 	public String sentence = null;
-	
-	/**
-	 * Initialize SensorData object from sentence string.
-	 * @param sentence
-	 */
-	public abstract void initFromSentence(String sentence);
-	
+
 	/**
 	 * Return the simple name of the class, for example "Co2Data".
 	 * @return
@@ -26,6 +20,8 @@ public abstract class SensorData {
 	public final String getName() {
 		return getClass().getSimpleName();
 	}
+	
+	public abstract SensorDataType getType();
 
 	/**
 	 * Level indicator, when applicable.
