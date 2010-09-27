@@ -49,8 +49,6 @@ public class SensormapUploaderService {
 	// Todo: make these configurable in the App
 	public String username = "janos";
 	public String sensorId = "00:07:80:93:54:5b"; // Mr. SENSPOD_3002
-	// Todo: make this dynamic, depending on the data available from the device
-	public String formatstr = "GPS,co2";
 	
 	private int sessionId = 0;
 	
@@ -76,7 +74,7 @@ public class SensormapUploaderService {
 		
 		Formatter formatter = new Formatter();
 		String item = formatter.format(
-				"%s,%f,%f,%f", 
+				"%s,gps,%f,%f,co2,%f,END", 
 				gprmc.datetimeSTR,
 				Util.convertNmeaToGps(gprmc.latitude),
 				Util.convertNmeaToGps(gprmc.longitude),
@@ -90,7 +88,7 @@ public class SensormapUploaderService {
 		
 		Formatter formatter = new Formatter();
 		String item = formatter.format(
-				"%s,%f,%f,%f", 
+				"%s,gps,%f,%f,co2,%f,END", 
 				dateformatter.format(new Date()),
 				(lastKnownLocation == null ? 0 : lastKnownLocation.getLatitude()),
 				(lastKnownLocation == null ? 0 : lastKnownLocation.getLongitude()),
@@ -114,7 +112,7 @@ public class SensormapUploaderService {
     public void stopAllThreads() {
     	mQueueProcessorThread.shutdown();
     	if (mQueueProcessorThread != null) {
-    		mQueueProcessorThread.cancel();
+     		mQueueProcessorThread.cancel();
     		mQueueProcessorThread = null;
     	}
     }
@@ -169,8 +167,8 @@ public class SensormapUploaderService {
         }
 	}
 	
-	public boolean login(String username, String sensor_id, String formatstr) {        
-		sessionId = getIntResponse(SENSORMAP_LOGIN_URL + username + "/" + sensor_id + "/" + formatstr);
+	public boolean login(String username, String sensor_id) {        
+		sessionId = getIntResponse(SENSORMAP_LOGIN_URL + username + "/" + sensor_id);
 		if (sessionId > 0) return true;
 		Log.d(TAG, "login returned " + sessionId);
 		return false;
@@ -209,7 +207,7 @@ public class SensormapUploaderService {
 					if (! queue.isEmpty()) {
 						if (isSensormapReachable()) {
 							if (! (sessionId > 0)) {
-								if (! login(username, sensorId, formatstr)) {
+								if (! login(username, sensorId)) {
 									if (D) Log.e(TAG, "login ERR");
 									Thread.sleep(QUEUE_LOGINERROR_SLEEP);
 									continue;
