@@ -109,7 +109,7 @@ public class CitySenspodService extends BluetoothSensorService {
      * Stop all threads
      */
     public synchronized void stopAllThreads() {
-    	mConnectedThread.shutdown();
+    	if (mConnectedThread != null) mConnectedThread.shutdown();
         if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
         if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
     }
