@@ -39,8 +39,8 @@ public class SensormapUploaderService {
 	public static final int QUEUE_STOREERROR_SLEEP = 10000;
 	
 	// Todo: it would be good to get this from a properties file
-	public static final String SENSORMAP_BASE_URL = "http://10.0.2.2:8000/api/"; 
-	//public static final String SENSORMAP_BASE_URL = "http://sensormap.titan2x.com/api/"; 
+	//public static final String SENSORMAP_BASE_URL = "http://10.0.2.2:8000/api/"; 
+	public static final String SENSORMAP_BASE_URL = "http://sensormap.titan2x.com/api/"; 
 	public static final String SENSORMAP_STATUS_URL = SENSORMAP_BASE_URL + "status/";
 	public static final String SENSORMAP_LOGIN_URL = SENSORMAP_BASE_URL + "login/";
 	public static final String SENSORMAP_STORE_URL = SENSORMAP_BASE_URL + "store/";
@@ -130,6 +130,7 @@ public class SensormapUploaderService {
 	public static boolean isSensormapReachable() {
         HttpClient client = new DefaultHttpClient();
         HttpGet request = new HttpGet(SENSORMAP_STATUS_URL);
+        if (D) Log.d(TAG, SENSORMAP_STATUS_URL);
         
         try {
         	HttpResponse response = client.execute(request);
