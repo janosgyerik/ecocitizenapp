@@ -9,7 +9,6 @@ import java.io.StreamCorruptedException;
 
 import com.titan2x.envdata.sentences.CO2Sentence;
 import com.titan2x.envdata.sentences.GPRMCSentence;
-import com.titan2x.envdata.sentences.Sentence;
 
 /**
  * A class to encapsulate all kinds of environmental data,
@@ -22,7 +21,7 @@ public class EnvDataMessage {
 	/**
 	 * A raw sentence object that can be useful for debugging.
 	 */
-	public Sentence sentence = null;
+	public String sentence = null;
 	
 	public GPRMCSentence gprmc = null;
 	public CO2Sentence co2 = null;
@@ -64,7 +63,7 @@ public class EnvDataMessage {
 		ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
 		try {
 			ObjectInputStream ois = new ObjectInputStream(bais);
-			sentence = (Sentence)ois.readObject();
+			sentence = (String)ois.readObject();
 			gprmc = (GPRMCSentence)ois.readObject();
 			hasUsableFields = true;
 			co2 = (CO2Sentence)ois.readObject();

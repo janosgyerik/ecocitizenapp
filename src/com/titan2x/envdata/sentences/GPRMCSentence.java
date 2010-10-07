@@ -5,6 +5,8 @@ import java.io.Serializable;
 public class GPRMCSentence implements Serializable {
 	private static final long serialVersionUID = 3937903951172274070L;
 
+	public String sentence = null;
+	
 	// standard GPRMC sentence fields
 	
 	public float utctimeFLOAT;
@@ -41,6 +43,8 @@ public class GPRMCSentence implements Serializable {
 	 * @param str
 	 */
 	public GPRMCSentence(String str) {
+		sentence = str;
+		
 		String[] cols = str.split(",");
 		this.utctimeFLOAT = Float.parseFloat(cols[1]);
 		this.statusAV = cols[2].charAt(0);

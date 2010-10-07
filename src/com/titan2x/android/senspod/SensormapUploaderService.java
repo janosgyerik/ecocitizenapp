@@ -1,6 +1,7 @@
 package com.titan2x.android.senspod;
 
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Formatter;
@@ -39,16 +40,17 @@ public class SensormapUploaderService {
 	public static final int QUEUE_STOREERROR_SLEEP = 10000;
 	
 	// Todo: it would be good to get this from a properties file
-	//public static final String SENSORMAP_BASE_URL = "http://10.0.2.2:8000/api/"; 
-	public static final String SENSORMAP_BASE_URL = "http://sensormap.titan2x.com/api/"; 
+	public static final String SENSORMAP_BASE_URL = "http://10.0.2.2:8000/api/"; 
+	//public static final String SENSORMAP_BASE_URL = "http://sensormap.titan2x.com/api/"; 
 	public static final String SENSORMAP_STATUS_URL = SENSORMAP_BASE_URL + "status/";
-	public static final String SENSORMAP_LOGIN_URL = SENSORMAP_BASE_URL + "login/";
+	public static final String SENSORMAP_STARTSESSION_URL = SENSORMAP_BASE_URL + "startsession/";
 	public static final String SENSORMAP_STORE_URL = SENSORMAP_BASE_URL + "store/";
+	public static final String SENSORMAP_ENDSESSION_URL = SENSORMAP_BASE_URL + "endsession/";
 	
 	// Member variables
 	// Todo: make these configurable in the App
-	public String username = "janos";
-	public String sensorId = "00:07:80:93:54:5b"; // Mr. SENSPOD_3002
+	public String username = "dummy1";
+	public String sensorId = "ff:ff:ff:93:54:5b"; // Mr. SENSPOD_3002
 	
 	private int sessionId = 0;
 	
@@ -68,17 +70,23 @@ public class SensormapUploaderService {
 	private boolean hasCapacity() {
 		return queue.size() < maxQueueSize;
 	}
+	
+	private int loc_id = 0;
 
 	public void receivedCO2(CO2Sentence co2, GPRMCSentence gprmc) {
 		if (! hasCapacity()) return;
 		
+		++loc_id;
+		
 		Formatter formatter = new Formatter();
 		String item = formatter.format(
-				"%s,gps,%f,%f,co2,%f,END", 
+				"%s,GPS,%d,%f,%f,ENDGPS,%s,%s,ENDSENTENCE",
 				gprmc.datetimeSTR,
+				loc_id,
 				Util.convertNmeaToGps(gprmc.latitude),
 				Util.convertNmeaToGps(gprmc.longitude),
-				co2.ppm
+				dateformatter.format(new Date()),
+				co2.sentence
 				).toString();
 		queue.add(item);
 	}
@@ -86,13 +94,17 @@ public class SensormapUploaderService {
 	public void receivedCO2(CO2Sentence co2, Location lastKnownLocation) {
 		if (! hasCapacity()) return;
 		
+		++loc_id;
+		
 		Formatter formatter = new Formatter();
 		String item = formatter.format(
-				"%s,gps,%f,%f,co2,%f,END", 
+				"%s,GPS,%d,%f,%f,ENDGPS,%s,%s,ENDSENTENCE",
 				dateformatter.format(new Date()),
+				(lastKnownLocation == null ? 0 : loc_id),
 				(lastKnownLocation == null ? 0 : lastKnownLocation.getLatitude()),
 				(lastKnownLocation == null ? 0 : lastKnownLocation.getLongitude()),
-				co2.ppm
+				dateformatter.format(new Date()),
+				co2.sentence
 				).toString();
 		queue.add(item);
 	}
@@ -168,18 +180,23 @@ public class SensormapUploaderService {
         }
 	}
 	
-	public boolean login(String username, String sensor_id) {        
-		sessionId = getIntResponse(SENSORMAP_LOGIN_URL + username + "/" + sensor_id);
+	public boolean startsession(String username, String sensor_id) {        
+		sessionId = getIntResponse(SENSORMAP_STARTSESSION_URL + username + "/" + sensor_id);
 		if (sessionId > 0) return true;
-		Log.d(TAG, "login returned " + sessionId);
+		Log.d(TAG, "startsession returned " + sessionId);
 		return false;
 	}
 	
 	public boolean store(String data) {
-		int ret = getIntResponse(SENSORMAP_STORE_URL + sessionId + "/" + data);
+		int ret = getIntResponse(SENSORMAP_STORE_URL + sessionId + "/" + URLEncoder.encode(data));
 		if (ret == 0) return true;
 		Log.d(TAG, "store returned " + ret);
 		return false;
+	}
+
+	public void endsession() {
+		getIntResponse(SENSORMAP_ENDSESSION_URL + sessionId);
+		Log.d(TAG, "endsession DONE");
 	}
 
 	private class QueueProcessorThread extends Thread {
@@ -208,7 +225,7 @@ public class SensormapUploaderService {
 					if (! queue.isEmpty()) {
 						if (isSensormapReachable()) {
 							if (! (sessionId > 0)) {
-								if (! login(username, sensorId)) {
+								if (! startsession(username, sensorId)) {
 									if (D) Log.e(TAG, "login ERR");
 									Thread.sleep(QUEUE_LOGINERROR_SLEEP);
 									continue;

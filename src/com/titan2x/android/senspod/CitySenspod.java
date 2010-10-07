@@ -238,15 +238,8 @@ public class CitySenspod extends Activity implements LocationListener {
                 	}
                 }
 
-                /*
-                if (envmsg.gprmc != null) {
-                	mLatView.setText(latlonFormat.format(convertNMEA(envmsg.gprmc.latitude)));
-                	mLonView.setText(latlonFormat.format(convertNMEA(envmsg.gprmc.longitude)));
-                }
-                */
-                
                 if (envmsg.sentence != null && debugMode) {
-                	mSentencesArrayAdapter.add(envmsg.sentence.str + ";l=" + readBuf.length);
+                	mSentencesArrayAdapter.add(envmsg.sentence + ";l=" + readBuf.length);
                 }
 
                 break;

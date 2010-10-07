@@ -1,30 +1,44 @@
 confirm with real android device
-	-
+	API v3 works
+
+blocker: best practice of android apps with multiple screens
 
 tasks when connected to internet
-	register more tasks in launchpad
-	sort out tasks in this todo file, and grep -i todo in src/
+	migrate tasks from launchpad to redmine
 
-core: functionality
-	make bluetooth thread send co2 without gprmc
-	app crashes on exit
-	stop sending gprmc, send only AndroidGPS
+IMPORTANT: test message uploader queue with handler
+	how to check the number of pending messages on the handler's queue
+		-> compare a counter in the sender and the handler
+	implement uploader using handler
+	prepare receiver website (localhost), but do not start
+	start simulator, observe messages sent to queue but not sent to web
+		track messages with seq id
+	start web server
+	observe all messages getting sent from first seq id
+
+implement new architecture
+	add SentenceConsumer interface, make the activity implement it
+	add SentenceProvider interface, hook up to the activity
+
+next
+	send time in UTC
+	send location time instead of current time
+		record time when gps is received
+		use recorded time in GPS part of the data
+	grep -i todo in src/
+	fix session management
+		consumer should receive device connect/disconnect messages
+		on connect: startsession
+		on sentence: store
+		on disconnect: endsession
+		application should also notify, and trigger endsession
+
+core functionality
 	send more AndroidGPS details
-	automaticaly try to connect to last senspod
-	add a blinking dot or something every time a message is received from the senspod, in case the values don't change for a long time, making the app look as if frozen
-	add queue state indicator on tree page: # of messages in queue
-	add sensormap state indicator
-
-send data to server
-	put server name and details in properties file
-	if server is not reachable, fail silently
-	update status bar when data sending succeeded or failed
-	send both AndroidGPS and GPRMC
+	add status indicator of data uploading
+	add status indicator of incoming sensor data (already in Redmine)
 
 optimization
-	change queue implementation to use linked list instead of vector
-	send Sentence only in debug mode
-		add new method to BluetoothSensorService to toggle
 	simulator
 		when the sample file is finished, shutdown the service
 		make connect/disconnect work
@@ -37,5 +51,5 @@ bugs
 	-
 
 possibly bluetooth backport bugs
-	cannot detect connection failure to paired device, when the paired device is out of range or off
+	cannot detect connection failure to paired device, when the paired device is off (and also when out of range?)
 	when calling mmInStream.close(), keyDispatchingTimedOut happens, dumping CPU usage and other debug infos and eventually kill the application itself

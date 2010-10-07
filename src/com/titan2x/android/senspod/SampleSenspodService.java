@@ -28,7 +28,6 @@ import backport.android.bluetooth.BluetoothDevice;
 
 import com.titan2x.envdata.sentences.CO2Sentence;
 import com.titan2x.envdata.sentences.GPRMCSentence;
-import com.titan2x.envdata.sentences.Sentence;
 
 /**
  * This class does all the work for setting up and managing Bluetooth
@@ -106,7 +105,7 @@ public class SampleSenspodService extends BluetoothSensorService {
 	            	String line = reader.readLine();
 	            	if (line != null) {
 	            		{
-	            			Sentence sentence = new Sentence(line);
+	            			String sentence = line;
 	            			EnvDataMessage msg = new EnvDataMessage();
 	            			msg.sentence = sentence;
 	            			byte[] buffer = msg.toByteArray();
