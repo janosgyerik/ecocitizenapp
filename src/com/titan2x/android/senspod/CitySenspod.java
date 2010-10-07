@@ -1,6 +1,8 @@
 package com.titan2x.android.senspod;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 
 import android.app.Activity;
@@ -58,7 +60,8 @@ public class CitySenspod extends Activity implements LocationListener {
     private SensormapUploaderService mSensormapUploaderService = null;
 
     private LocationManager locationmanager = null;
-    private Location lastKnownLocation = null;
+    private Location lastLocation = null;
+    private Date lastLocationDate = null;
     private LocationListener locationListener = this;
     
     @Override
@@ -75,6 +78,14 @@ public class CitySenspod extends Activity implements LocationListener {
         mTitle = (TextView) findViewById(R.id.title_left_text);
         mTitle.setText(R.string.app_name);
         mTitle = (TextView) findViewById(R.id.title_right_text);
+
+        /*
+	    SimpleDateFormat dateformatter = new SimpleDateFormat("yyyyMMddhhmmss.SZ");
+	    String ddd = dateformatter.format(new Date());
+
+        mTitle.setText(ddd);
+        if (true) return;
+        */
         
         mSentencesArrayAdapter = new DequeArrayAdapter<String>(new LinkedList<String>(), this, R.layout.message);
         mSentencesView = (ListView) findViewById(R.id.rawsentences);
@@ -85,7 +96,6 @@ public class CitySenspod extends Activity implements LocationListener {
 			Log.d(TAG, "provider=" + provider);
 			Log.d(TAG, "provider=" + provider + ", isEnabled=" + locationmanager.isProviderEnabled(provider));
 		}
-		lastKnownLocation = locationmanager.getLastKnownLocation("gps");
 
         // Get local Bluetooth adapter
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -234,7 +244,7 @@ public class CitySenspod extends Activity implements LocationListener {
                     	mSensormapUploaderService.receivedCO2(envmsg.co2, envmsg.gprmc);
                 	}
                 	else {
-                    	mSensormapUploaderService.receivedCO2(envmsg.co2, lastKnownLocation);
+                    	mSensormapUploaderService.receivedCO2(envmsg.co2, lastLocation, lastLocationDate);
                 	}
                 }
 
@@ -380,10 +390,15 @@ public class CitySenspod extends Activity implements LocationListener {
 
 
 	public void onLocationChanged(Location location) {
-		lastKnownLocation = location;
+		lastLocation = location;
+		lastLocationDate = new Date();
 		if (location != null) {
 			mLatView.setText(latlonFormat.format(location.getLatitude()));
 			mLonView.setText(latlonFormat.format(location.getLongitude()));
+		}
+		else {
+			mLatView.setText("N.A.");
+			mLonView.setText("N.A.");
 		}
 	}
 

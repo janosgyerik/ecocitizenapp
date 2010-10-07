@@ -91,7 +91,7 @@ public class SensormapUploaderService {
 		queue.add(item);
 	}
 	
-	public void receivedCO2(CO2Sentence co2, Location lastKnownLocation) {
+	public void receivedCO2(CO2Sentence co2, Location lastLocation, Date lastLocationDate) {
 		if (! hasCapacity()) return;
 		
 		++loc_id;
@@ -99,10 +99,10 @@ public class SensormapUploaderService {
 		Formatter formatter = new Formatter();
 		String item = formatter.format(
 				"%s,GPS,%d,%f,%f,ENDGPS,%s,%s,ENDSENTENCE",
-				dateformatter.format(new Date()),
-				(lastKnownLocation == null ? 0 : loc_id),
-				(lastKnownLocation == null ? 0 : lastKnownLocation.getLatitude()),
-				(lastKnownLocation == null ? 0 : lastKnownLocation.getLongitude()),
+				dateformatter.format(lastLocationDate),
+				(lastLocation == null ? 0 : loc_id),
+				(lastLocation == null ? 0 : lastLocation.getLatitude()),
+				(lastLocation == null ? 0 : lastLocation.getLongitude()),
 				dateformatter.format(new Date()),
 				co2.sentence
 				).toString();

@@ -22,9 +22,6 @@ implement new architecture
 
 next
 	send time in UTC
-	send location time instead of current time
-		record time when gps is received
-		use recorded time in GPS part of the data
 	grep -i todo in src/
 	fix session management
 		consumer should receive device connect/disconnect messages
