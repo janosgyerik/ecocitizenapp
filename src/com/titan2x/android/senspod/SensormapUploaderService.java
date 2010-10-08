@@ -97,15 +97,31 @@ public class SensormapUploaderService {
 		++loc_id;
 		
 		Formatter formatter = new Formatter();
-		String item = formatter.format(
-				"%s,GPS,%d,%f,%f,ENDGPS,%s,%s,ENDSENTENCE",
-				dateformatter.format(lastLocationDate),
-				(lastLocation == null ? 0 : loc_id),
-				(lastLocation == null ? 0 : lastLocation.getLatitude()),
-				(lastLocation == null ? 0 : lastLocation.getLongitude()),
-				dateformatter.format(new Date()),
-				co2.sentence
-				).toString();
+		String format = "%s,AndroidGps,%d,%f,%f,%f,%f,%f,ENDGPS,%s,%s,ENDSENTENCE";
+		String item;
+		if (lastLocation == null) {
+			item = formatter.format(
+					format,
+					dateformatter.format(lastLocationDate),
+					0, 0, 0, 0, 0,
+					dateformatter.format(new Date()),
+					co2.sentence
+			).toString();
+		}
+		else {
+			item = formatter.format(
+					format,
+					dateformatter.format(lastLocationDate),
+					loc_id,
+					lastLocation.getLatitude(),
+					lastLocation.getLongitude(),
+					lastLocation.getAccuracy(),
+					lastLocation.getAltitude(),
+					lastLocation.getSpeed(),
+					dateformatter.format(new Date()),
+					co2.sentence
+			).toString();
+		}
 		queue.add(item);
 	}
 	

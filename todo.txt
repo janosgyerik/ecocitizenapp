@@ -1,10 +1,14 @@
 confirm with real android device
 	API v3 works
+	test if Android times are indeed UTC
+		use the commented out sample code in CitySenspod.java
+	sending more AndroidGps details works
 
 blocker: best practice of android apps with multiple screens
 
 tasks when connected to internet
 	migrate tasks from launchpad to redmine
+	add to the wiki about emulator slowness and eclipse tips
 
 IMPORTANT: test message uploader queue with handler
 	how to check the number of pending messages on the handler's queue
@@ -21,7 +25,6 @@ implement new architecture
 	add SentenceProvider interface, hook up to the activity
 
 next
-	send time in UTC
 	grep -i todo in src/
 	fix session management
 		consumer should receive device connect/disconnect messages
@@ -31,7 +34,6 @@ next
 		application should also notify, and trigger endsession
 
 core functionality
-	send more AndroidGPS details
 	add status indicator of data uploading
 	add status indicator of incoming sensor data (already in Redmine)
 
