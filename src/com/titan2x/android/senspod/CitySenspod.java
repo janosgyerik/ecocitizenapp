@@ -196,6 +196,7 @@ public class CitySenspod extends Activity implements LocationListener {
                 case BluetoothSensorService.STATE_CONNECTED:
                     mTitle.setText(R.string.title_connected_to);
                     mTitle.append(mConnectedDeviceName);
+                    mTitle.append("test");
                     mCo2View.setText("");
                     mLatView.setText("");
                     mLonView.setText("");

@@ -16,7 +16,11 @@
 
 <resources>
     <string name="app_name">CitySenspod</string>
-
+    
+    <!--  add by liu -->
+     <string name="user_name">janos</string>
+     <string name="map_server_url">http://sensormap.titan2x.com/api/</string>
+     
     <!--  BluetoothChat -->
     
     <string name="not_connected">You are not connected to a device</string>
@@ -24,7 +28,7 @@
     <string name="title_connecting">connecting...</string>
     <string name="title_connected_to">connected: </string>
     <string name="title_not_connected">not connected</string>
-
+    
     <!--  DeviceListActivity -->
     <string name="scanning">scanning for devices...</string>
     <string name="select_device">select a device to connect</string>

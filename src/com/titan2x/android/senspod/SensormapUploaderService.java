@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Formatter;
+import java.util.Properties;
 import java.util.Vector;
 
 import org.apache.http.HttpEntity;
@@ -14,6 +15,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.location.Location;
 import android.util.Log;
 
@@ -40,14 +42,14 @@ public class SensormapUploaderService {
 	
 	// Todo: it would be good to get this from a properties file
 	//public static final String SENSORMAP_BASE_URL = "http://10.0.2.2:8000/api/"; 
-	public static final String SENSORMAP_BASE_URL = "http://sensormap.titan2x.com/api/"; 
-	public static final String SENSORMAP_STATUS_URL = SENSORMAP_BASE_URL + "status/";
-	public static final String SENSORMAP_LOGIN_URL = SENSORMAP_BASE_URL + "login/";
-	public static final String SENSORMAP_STORE_URL = SENSORMAP_BASE_URL + "store/";
+	public static  String SENSORMAP_BASE_URL = "";
+	public static  String SENSORMAP_STATUS_URL ="";
+	public static  String SENSORMAP_LOGIN_URL = "";
+	public static  String SENSORMAP_STORE_URL = "";
 	
 	// Member variables
 	// Todo: make these configurable in the App
-	public String username = "janos";
+	public String username = "";
 	public String sensorId = "00:07:80:93:54:5b"; // Mr. SENSPOD_3002
 	
 	private int sessionId = 0;
@@ -61,8 +63,21 @@ public class SensormapUploaderService {
 		
 	private QueueProcessorThread mQueueProcessorThread;
 	
+	public static  void loadConfig(){
+		
+	    
+	}
+	
+	
 	public SensormapUploaderService(Context context) {
+		
+		username = context.getString(R.string.user_name);
+		SENSORMAP_BASE_URL=context.getString(R.string.map_server_url);
+	    SENSORMAP_STATUS_URL = SENSORMAP_BASE_URL + "status/";
+	    SENSORMAP_LOGIN_URL = SENSORMAP_BASE_URL + "login/";
+	    SENSORMAP_STORE_URL = SENSORMAP_BASE_URL + "store/";
 		start();
+		
 	}
 	
 	private boolean hasCapacity() {
