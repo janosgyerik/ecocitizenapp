@@ -44,7 +44,10 @@ public class CitySenspod extends Activity implements LocationListener {
     private TextView mLonView;
     private ListView mSentencesView;
     private ArrayAdapter<String> mSentencesArrayAdapter;
-
+    
+    //Count of the ReceivedData
+    private int count = 1;
+    
     // Name of the connected device
     private String mConnectedDeviceName = null;
     // Local Bluetooth adapter
@@ -196,7 +199,6 @@ public class CitySenspod extends Activity implements LocationListener {
                 case BluetoothSensorService.STATE_CONNECTED:
                     mTitle.setText(R.string.title_connected_to);
                     mTitle.append(mConnectedDeviceName);
-                    mTitle.append("test");
                     mCo2View.setText("");
                     mLatView.setText("");
                     mLonView.setText("");
@@ -224,7 +226,24 @@ public class CitySenspod extends Activity implements LocationListener {
                 	LinearLayout treepage = (LinearLayout) findViewById(R.id.treepage);
                 	treepage.setBackgroundResource(resID);
 
-                	String co2val = String.valueOf((int)envmsg.co2.ppm);                
+                	String co2val = String.valueOf((int)envmsg.co2.ppm);   
+                	// add Very simple one-letter indicator: . -> o -> O -> . ->
+                	
+                	mTitle.setText(R.string.title_connected_to);
+                    mTitle.append(mConnectedDeviceName);
+                	switch(count%3){
+                	case 1:
+                		mTitle.append("->o");
+                		break;
+                	case 2:
+                		mTitle.append("->O");
+                		break;
+                	case 0:
+                	    mTitle.append("->.");
+                	break;
+                	
+                	}
+                	count++;
                 	mCo2View.setText(co2val);
                 	mCo2View.setGravity(Gravity.CENTER);
                 	if (debugMode) {
