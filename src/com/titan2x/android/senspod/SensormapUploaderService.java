@@ -29,7 +29,7 @@ public class SensormapUploaderService {
 	public static final boolean D = true;
 	
 	// Constants
-    public static final SimpleDateFormat dateformatter = new SimpleDateFormat("yyyyMMddhhmmss.S");
+    public static final SimpleDateFormat dateformatter = new SimpleDateFormat("yyyyMMddHHmmss.S");
     public static final int HTTP_STATUS_OK = 200;
 	public static final int QUEUE_CYCLE_SLEEP = 3000; // 3 seconds
 	public static final int QUEUE_NOSENSORMAP_SLEEP = 30000;
@@ -38,7 +38,9 @@ public class SensormapUploaderService {
 	
 	// Todo: it would be good to get this from a properties file
 	public static final String SENSORMAP_BASE_URL = "http://10.0.2.2:8000/api/"; 
+	//public static final String SENSORMAP_BASE_URL = "http://dev.sensormap.titan2x.com/api/"; 
 	//public static final String SENSORMAP_BASE_URL = "http://sensormap.titan2x.com/api/"; 
+	//public static final String SENSORMAP_BASE_URL = "http://black:8000/api/"; 
 	public static final String SENSORMAP_STATUS_URL = SENSORMAP_BASE_URL + "status/";
 	public static final String SENSORMAP_STARTSESSION_URL = SENSORMAP_BASE_URL + "startsession/";
 	public static final String SENSORMAP_STORE_URL = SENSORMAP_BASE_URL + "store/";
