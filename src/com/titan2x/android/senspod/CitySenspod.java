@@ -83,14 +83,6 @@ public class CitySenspod extends Activity implements LocationListener {
         mTitle.setText(R.string.app_name);
         mTitle = (TextView) findViewById(R.id.title_right_text);
 
-        /*
-	    SimpleDateFormat dateformatter = new SimpleDateFormat("yyyyMMddhhmmss.SZ");
-	    String ddd = dateformatter.format(new Date());
-
-        mTitle.setText(ddd);
-        if (true) return;
-        */
-        
         mSentencesArrayAdapter = new DequeArrayAdapter<String>(new LinkedList<String>(), this, R.layout.message);
         mSentencesView = (ListView) findViewById(R.id.rawsentences);
         mSentencesView.setAdapter(mSentencesArrayAdapter);
@@ -229,8 +221,12 @@ public class CitySenspod extends Activity implements LocationListener {
                 break;
             case MessageProtocol.MESSAGE_READ:
                 String line = new String((byte[])msg.obj);
-                if (line.indexOf("$PSEN,CO2") > -1) {
-                	CO2Sentence co2 = new CO2Sentence(line.substring(line.indexOf("$PSEN,")));
+                int indexOf_dollar = line.indexOf('$'); 
+                if (indexOf_dollar > -1) {
+                	line = line.substring(indexOf_dollar);
+                }
+                if (line.startsWith("$PSEN,CO2")) {
+                	CO2Sentence co2 = new CO2Sentence(line);
                 	String imgname = "co2level_" + co2.level;
                 	int resID = getResources().getIdentifier(imgname, "drawable", "com.titan2x.android.senspod");
                 	LinearLayout treepage = (LinearLayout) findViewById(R.id.treepage);
