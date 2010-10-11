@@ -18,9 +18,6 @@ import android.content.Context;
 import android.location.Location;
 import android.util.Log;
 
-import com.titan2x.envdata.sentences.CO2Sentence;
-import com.titan2x.envdata.sentences.GPRMCSentence;
-
 /**
  * This class is responsible for uploading measurements to the *sensormap*.
  * When the *sensormap* is unreachable, measurements should be stored
@@ -73,25 +70,7 @@ public class SensormapUploaderService {
 	
 	private int loc_id = 0;
 
-	public void receivedCO2(CO2Sentence co2, GPRMCSentence gprmc) {
-		if (! hasCapacity()) return;
-		
-		++loc_id;
-		
-		Formatter formatter = new Formatter();
-		String item = formatter.format(
-				"%s,GPS,%d,%f,%f,ENDGPS,%s,%s,ENDSENTENCE",
-				gprmc.datetimeSTR,
-				loc_id,
-				Util.convertNmeaToGps(gprmc.latitude),
-				Util.convertNmeaToGps(gprmc.longitude),
-				dateformatter.format(new Date()),
-				co2.sentence
-				).toString();
-		queue.add(item);
-	}
-	
-	public void receivedCO2(CO2Sentence co2, Location lastLocation, Date lastLocationDate) {
+	public void receivedSentence(String sentence, Location lastLocation, Date lastLocationDate) {
 		if (! hasCapacity()) return;
 		
 		++loc_id;
@@ -103,9 +82,9 @@ public class SensormapUploaderService {
 			item = formatter.format(
 					format,
 					dateformatter.format(lastLocationDate),
-					0, 0, 0, 0, 0,
+					0, 0f, 0f, 0f, 0f, 0f,
 					dateformatter.format(new Date()),
-					co2.sentence
+					sentence
 			).toString();
 		}
 		else {
@@ -119,7 +98,7 @@ public class SensormapUploaderService {
 					lastLocation.getAltitude(),
 					lastLocation.getSpeed(),
 					dateformatter.format(new Date()),
-					co2.sentence
+					sentence
 			).toString();
 		}
 		queue.add(item);

@@ -29,9 +29,6 @@ import backport.android.bluetooth.BluetoothAdapter;
 import backport.android.bluetooth.BluetoothDevice;
 import backport.android.bluetooth.BluetoothSocket;
 
-import com.titan2x.envdata.sentences.CO2Sentence;
-import com.titan2x.envdata.sentences.GPRMCSentence;
-
 /**
  * This class does all the work for setting up and managing Bluetooth
  * connections with other devices. It has a thread that listens for
@@ -211,35 +208,13 @@ public class CitySenspodService extends BluetoothSensorService {
 
 			BufferedReader reader = new BufferedReader(new InputStreamReader(mmInStream));
 
-			String prevGPS = null;
-
 			while (! stop) {
 				try {
 	            	String line = reader.readLine();
 	            	if (line != null) {
 	            		hasReadAnything = true;
-	            		{
-	            			String sentence = line;
-	            			EnvDataMessage msg = new EnvDataMessage();
-	            			msg.sentence = sentence;
-	            			byte[] buffer = msg.toByteArray();
-	            			mHandler.obtainMessage(MessageProtocol.MESSAGE_READ, buffer.length, -1, buffer).sendToTarget();
-	            		}
-	            		//line = line.substring(18);
-	            		if (line.indexOf("$GPRMC,") > -1) {
-	            			prevGPS = line.substring(line.indexOf("$GPRMC,"));
-	            		}
-	            		else if (line.indexOf("$PSEN,CO2,") > -1 && prevGPS != null) {
-	            			GPRMCSentence gprmc = new GPRMCSentence(prevGPS);
-	            			CO2Sentence co2 = new CO2Sentence(line.substring(line.indexOf("$PSEN,")));
-	            			EnvDataMessage msg = new EnvDataMessage();
-	            			msg.gprmc = gprmc;
-	            			msg.co2 = co2;
-	            			// Send the obtained bytes to the UI Activity
-	            			byte[] buffer = msg.toByteArray();
-	            			mHandler.obtainMessage(MessageProtocol.MESSAGE_READ, buffer.length, -1, buffer)
-	            			.sendToTarget();
-	            		}
+	            		byte[] buffer = line.getBytes();
+	            		mHandler.obtainMessage(MessageProtocol.MESSAGE_READ, buffer.length, -1, buffer).sendToTarget();
 	            	}
 				} catch (IOException e) {
 	                Log.e(TAG, "disconnected", e);

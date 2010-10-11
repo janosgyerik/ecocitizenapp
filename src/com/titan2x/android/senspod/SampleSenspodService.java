@@ -26,9 +26,6 @@ import android.os.Handler;
 import android.util.Log;
 import backport.android.bluetooth.BluetoothDevice;
 
-import com.titan2x.envdata.sentences.CO2Sentence;
-import com.titan2x.envdata.sentences.GPRMCSentence;
-
 /**
  * This class does all the work for setting up and managing Bluetooth
  * connections with other devices. It has a thread that listens for
@@ -46,7 +43,7 @@ public class SampleSenspodService extends BluetoothSensorService {
     
     // todo: these should come from properties file
     private final int messageInterval = 1000;
-    private final String sampleFileName = "CitySenspodSample2.txt";
+    private final String sampleFileName = "CitySenspodSample1.txt";
 
     /**
      * Constructor. Prepares a new session.
@@ -77,6 +74,7 @@ public class SampleSenspodService extends BluetoothSensorService {
 
 	@Override
 	public void stopAllThreads() {
+    	if (mConnectedThread != null) mConnectedThread.shutdown();
         if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
 	}
 
@@ -85,8 +83,9 @@ public class SampleSenspodService extends BluetoothSensorService {
      * It handles all incoming transmissions.
      */
     private class ConnectedThread extends Thread {
-    	private boolean shouldStop = false;
-    	
+        private boolean stop = false;
+        private boolean hasReadAnything = false;
+
         public ConnectedThread() {
             Log.d(TAG, "create ConnectedThread");
         }
@@ -98,37 +97,17 @@ public class SampleSenspodService extends BluetoothSensorService {
 	        
 	        sendConnectedDeviceName("Simulator");
 	        
-			String prevGPS = null;
-
-			while (! shouldStop) {
+			while (! stop) {
 				try {
 	            	String line = reader.readLine();
 	            	if (line != null) {
-	            		{
-	            			String sentence = line;
-	            			EnvDataMessage msg = new EnvDataMessage();
-	            			msg.sentence = sentence;
-	            			byte[] buffer = msg.toByteArray();
-	            			mHandler.obtainMessage(MessageProtocol.MESSAGE_READ, buffer.length, -1, buffer).sendToTarget();
+	            		hasReadAnything = true;
+	            		byte[] buffer = line.getBytes();
+	            		mHandler.obtainMessage(MessageProtocol.MESSAGE_READ, buffer.length, -1, buffer).sendToTarget();
+	            		try {
+	            			Thread.sleep(messageInterval);
 	            		}
-	            		if (line.startsWith("$GPRMC,")) {
-	            			prevGPS = line;
-	            		}
-	            		else if (line.startsWith("$PSEN,CO2,") && prevGPS != null) {
-	            			GPRMCSentence gprmc = new GPRMCSentence(prevGPS);
-	            			CO2Sentence co2 = new CO2Sentence(line);
-	            			EnvDataMessage msg = new EnvDataMessage();
-	            			msg.gprmc = gprmc;
-	            			msg.co2 = co2;
-	            			// Send the obtained bytes to the UI Activity
-	            			byte[] buffer = msg.toByteArray();
-	            			mHandler.obtainMessage(MessageProtocol.MESSAGE_READ, buffer.length, -1, buffer)
-	            			.sendToTarget();
-		            		try {
-								Thread.sleep(messageInterval);
-							} catch (InterruptedException e) {
-								//e.printStackTrace();
-							}
+	            		catch (InterruptedException e) {
 	            		}
 	            	}
 				} catch (IOException e) {
@@ -139,9 +118,20 @@ public class SampleSenspodService extends BluetoothSensorService {
 			}
         }
 
+        public void shutdown() {
+        	stop = true;
+        	if (! hasReadAnything) return;
+        	if (mmInStream != null) {
+        		try {
+        			mmInStream.close();
+        		} catch (IOException e) {
+        			Log.e(TAG, "close() of InputStream failed.");
+        		}
+        	}
+        }
+
         public void cancel() {
         	try {
-        		shouldStop = true;
         		mmInStream.close();
         	} catch (IOException e) {
         		Log.e(TAG, "close() of input stream failed", e);

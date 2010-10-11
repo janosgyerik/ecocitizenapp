@@ -28,6 +28,8 @@ import android.widget.Toast;
 import backport.android.bluetooth.BluetoothAdapter;
 import backport.android.bluetooth.BluetoothDevice;
 
+import com.titan2x.envdata.sentences.CO2Sentence;
+
 public class CitySenspod extends Activity implements LocationListener {
     // Debugging
     private static final String TAG = "CitySenspod";
@@ -61,7 +63,7 @@ public class CitySenspod extends Activity implements LocationListener {
 
     private LocationManager locationmanager = null;
     private Location lastLocation = null;
-    private Date lastLocationDate = null;
+    private Date lastLocationDate = new Date();
     private LocationListener locationListener = this;
     
     @Override
@@ -226,33 +228,24 @@ public class CitySenspod extends Activity implements LocationListener {
                 onBluetoothStateChanged();
                 break;
             case MessageProtocol.MESSAGE_READ:
-                byte[] readBuf = (byte[]) msg.obj;
-                EnvDataMessage envmsg = new EnvDataMessage(readBuf);
-
-                if (envmsg.co2 != null) {
-                	String imgname = "co2level_" + envmsg.co2.level;
+                String line = new String((byte[])msg.obj);
+                if (line.indexOf("$PSEN,CO2") > -1) {
+                	CO2Sentence co2 = new CO2Sentence(line.substring(line.indexOf("$PSEN,")));
+                	String imgname = "co2level_" + co2.level;
                 	int resID = getResources().getIdentifier(imgname, "drawable", "com.titan2x.android.senspod");
                 	LinearLayout treepage = (LinearLayout) findViewById(R.id.treepage);
                 	treepage.setBackgroundResource(resID);
 
-                	String co2val = String.valueOf((int)envmsg.co2.ppm);                
+                	String co2val = String.valueOf((int)co2.ppm);                
                 	mCo2View.setText(co2val);
                 	mCo2View.setGravity(Gravity.CENTER);
-                	if (debugMode) {
-                		mSentencesArrayAdapter.add("CO2;l=" + readBuf.length);
-                	}
-                	
-                	if (simulatorMode) {
-                    	mSensormapUploaderService.receivedCO2(envmsg.co2, envmsg.gprmc);
-                	}
-                	else {
-                    	mSensormapUploaderService.receivedCO2(envmsg.co2, lastLocation, lastLocationDate);
-                	}
                 }
 
-                if (envmsg.sentence != null && debugMode) {
-                	mSentencesArrayAdapter.add(envmsg.sentence + ";l=" + readBuf.length);
-                }
+                mSensormapUploaderService.receivedSentence(line, lastLocation, lastLocationDate);
+
+                if (debugMode) {
+            		mSentencesArrayAdapter.add(line + ";l=" + line.length());
+            	}
 
                 break;
             case MessageProtocol.MESSAGE_DEVICE_NAME:
