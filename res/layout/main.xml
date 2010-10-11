@@ -24,6 +24,11 @@
     <TextView android:id="@+id/co2value"
     	style="@style/co2value"
     />
+    <Button android:text ="connect to sensor"
+            android:id="@+id/Button1"
+            style="@style/connectButton"
+            >
+    </Button>
     <TextView android:id="@+id/lat"
     	style="@style/latlon"
     />

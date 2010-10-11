@@ -17,8 +17,10 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -56,7 +58,7 @@ public class CitySenspod extends Activity implements LocationListener {
     private BluetoothSensorService mBluetoothSensorService = null;
     
     private static DecimalFormat latlonFormat = new DecimalFormat("* ###.00000");
-    
+    private Button button01;
     // Member object for uploading measurements to the map server
     private SensormapUploaderService mSensormapUploaderService = null;
 
@@ -73,7 +75,12 @@ public class CitySenspod extends Activity implements LocationListener {
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.main);
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
+        
+        //Set up the button to connect to the sensor
+        button01 =(Button)findViewById(R.id.Button1);
 
+        button01.setVisibility(4);
+        
         // Set up the custom title
         mTitle = (TextView) findViewById(R.id.title_left_text);
         mTitle.setText(R.string.app_name);
@@ -372,12 +379,22 @@ public class CitySenspod extends Activity implements LocationListener {
         switch (item.getItemId()) {
         case R.id.menu_connect:
             // Launch the DeviceListActivity to see devices and do scan
+        	Toast.makeText(this, R.string.msg_coming_soon, Toast.LENGTH_SHORT).show();
             Intent serverIntent = new Intent(this, DeviceListActivity.class);
             startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
             return true;
         case R.id.menu_disconnect:
             // Disconnect any connected devices
         	if (mBluetoothSensorService != null) mBluetoothSensorService.stop();
+        	//set the connect to sensor button visible
+        	button01.setVisibility(0);
+        	
+        	final Intent serverNewIntent = new Intent(this, DeviceListActivity.class);
+            button01.setOnClickListener(new View.OnClickListener(){   
+                public void onClick(View v) {   
+                     startActivityForResult(serverNewIntent, REQUEST_CONNECT_DEVICE);
+                }  
+            });  
             return true;
         case R.id.menu_home:
         	// go to home page (showing current pollution level, illustrated)
