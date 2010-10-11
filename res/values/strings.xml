@@ -41,7 +41,7 @@
     <!-- Options Menu -->
     <string name="menu_connect">Connect a device</string>
     
-
+<string name="menu_settings">senspodapp settings</string>
 <string name="menu_home">Home</string>
 <string name="menu_graph">Graph</string>
 <string name="menu_map">Map</string>

@@ -389,13 +389,21 @@ public class CitySenspod extends Activity implements LocationListener {
         	//set the connect to sensor button visible
         	button01.setVisibility(0);
         	
-        	final Intent serverNewIntent = new Intent(this, DeviceListActivity.class);
-            button01.setOnClickListener(new View.OnClickListener(){   
-                public void onClick(View v) {   
+        	button01.setOnClickListener(new View.OnClickListener(){   
+                public void onClick(View v) {
+                     Intent serverNewIntent = new Intent(CitySenspod.this, DeviceListActivity.class);
                      startActivityForResult(serverNewIntent, REQUEST_CONNECT_DEVICE);
                 }  
-            });  
+            }); 
             return true;
+            
+            
+        case R.id.menu_settingActivity:
+        	// go to home page (showing current pollution level, illustrated)
+        	 Toast.makeText(this, R.string.msg_coming_soon, Toast.LENGTH_SHORT).show();
+        	 startActivity(new Intent(this, SettingsActivity.class));
+        	break;    
+            
         case R.id.menu_home:
         	// go to home page (showing current pollution level, illustrated)
         	break;

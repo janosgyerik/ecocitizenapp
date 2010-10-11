@@ -13,6 +13,12 @@
 	    </intent-filter>
 	</activity>
 
+	<activity android:name=".SettingsActivity"
+	    android:label="@string/menu_settings"
+		android:exported="true"
+		>
+	</activity>
+
         <activity android:name=".DeviceListActivity"
                   android:label="@string/select_device"
                   android:theme="@android:style/Theme.Dialog"
