@@ -35,7 +35,6 @@ public class CitySenspod extends Activity implements LocationListener {
     private static final String TAG = "CitySenspod";
     private static final boolean D = true;
     private boolean debugMode = false;
-    private boolean simulatorMode = false;
 
     // Intent request codes
     private static final int REQUEST_CONNECT_DEVICE = 1;
@@ -98,8 +97,7 @@ public class CitySenspod extends Activity implements LocationListener {
 
         // If the adapter is null, then Bluetooth is not supported
         if (mBluetoothAdapter == null) {
-            //Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
-            Toast.makeText(this, "Bluetooth is not available, starting simulator instead", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
             //finish();
         	setupSimulatorService();
             return;
@@ -164,10 +162,11 @@ public class CitySenspod extends Activity implements LocationListener {
     }
 
     private void setupSimulatorService() {
+        Toast.makeText(this, "Starting simulator service...", Toast.LENGTH_LONG).show();
+        
         Log.d(TAG, "setupSimulatorService()");
 
         debugMode = true;
-        simulatorMode = true;
         setupCommonService();
         
         // Initialize the BluetoothSensorService to replay a logfile
