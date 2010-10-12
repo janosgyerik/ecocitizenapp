@@ -36,4 +36,13 @@
         android:textColor="#fff"
         android:layout_weight="1" 
     />
+    <!-- 
+        android:layout_toRightOf="@id/title_right_text"
+     -->
+    <TextView android:id="@+id/title_message_indicator"
+        android:layout_toLeftOf="@id/title_right_text"
+        android:layout_width="wrap_content" 
+        android:layout_height="fill_parent"
+        android:layout_centerHorizontal="true"
+    />
 </RelativeLayout>

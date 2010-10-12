@@ -49,7 +49,10 @@ public class CitySenspod extends Activity implements LocationListener {
     private TextView mLonView;
     private ListView mSentencesView;
     private ArrayAdapter<String> mSentencesArrayAdapter;
-
+    
+    // Count of received data messages
+    private int mMessageCount = 1;
+    
     // Name of the connected device
     private String mConnectedDeviceName = null;
     // Local Bluetooth adapter
@@ -246,6 +249,7 @@ public class CitySenspod extends Activity implements LocationListener {
                 	treepage.setBackgroundResource(resID);
 
                 	String co2val = String.valueOf((int)co2.ppm);                
+                	
                 	mCo2View.setText(co2val);
                 	mCo2View.setGravity(Gravity.CENTER);
                 }
@@ -255,6 +259,10 @@ public class CitySenspod extends Activity implements LocationListener {
                 if (debugMode) {
             		mSentencesArrayAdapter.add(line + ";l=" + line.length());
             	}
+
+            	++mMessageCount;
+                TextView messageIndicator = (TextView) findViewById(R.id.title_message_indicator);
+                messageIndicator.setText("Msg#" + mMessageCount + " ");
 
                 break;
             case MessageProtocol.MESSAGE_DEVICE_NAME:
