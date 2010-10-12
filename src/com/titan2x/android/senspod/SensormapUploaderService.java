@@ -14,7 +14,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import android.content.Context;
 import android.location.Location;
 import android.util.Log;
 
@@ -36,33 +35,29 @@ public class SensormapUploaderService {
 	public static final int QUEUE_LOGINERROR_SLEEP = 10000;
 	public static final int QUEUE_STOREERROR_SLEEP = 10000;
 	
-	// Todo: it would be good to get this from a properties file
-	public static final String SENSORMAP_BASE_URL = "http://10.0.2.2:8000/api/"; 
-	//public static final String SENSORMAP_BASE_URL = "http://dev.sensormap.titan2x.com/api/"; 
-	//public static final String SENSORMAP_BASE_URL = "http://sensormap.titan2x.com/api/"; 
-	//public static final String SENSORMAP_BASE_URL = "http://black:8000/api/"; 
-	public static final String SENSORMAP_STATUS_URL = SENSORMAP_BASE_URL + "status/";
-	public static final String SENSORMAP_STARTSESSION_URL = SENSORMAP_BASE_URL + "startsession/";
-	public static final String SENSORMAP_STORE_URL = SENSORMAP_BASE_URL + "store/";
-	public static final String SENSORMAP_ENDSESSION_URL = SENSORMAP_BASE_URL + "endsession/";
+	final String SENSORMAP_STATUS_URL;
+	final String SENSORMAP_STARTSESSION_URL;
+	final String SENSORMAP_STORE_URL;
+	final String SENSORMAP_ENDSESSION_URL;
 	
 	// Member variables
-	// Todo: make these configurable in the App
-	public String username = "dummy1";
-	public String sensorId = "ff:ff:ff:93:54:5b"; // Mr. SENSPOD_3002
+	public String username;
+	public String sensorId;
 	
 	private int sessionId = 0;
 	
 	private int maxQueueSize = (int)1e+5; // 0.1kb * 1e+5 ~~ 10mb 
 	private Vector<String> queue = new Vector<String>(maxQueueSize / 10);
 
-	// The number of messages to send at once
-	// Todo: make this configurable in the App
-	private int bufferSize = 5;
-		
 	private QueueProcessorThread mQueueProcessorThread;
 	
-	public SensormapUploaderService(Context context) {
+	public SensormapUploaderService(String username, String map_server_url, String sensorId) {
+		this.username = username;
+		this.sensorId = sensorId;
+		SENSORMAP_STATUS_URL = map_server_url + "status/";
+		SENSORMAP_STARTSESSION_URL = map_server_url + "startsession/";
+		SENSORMAP_STORE_URL = map_server_url + "store/";
+		SENSORMAP_ENDSESSION_URL = map_server_url + "endsession/";
 		start();
 	}
 	
@@ -136,7 +131,7 @@ public class SensormapUploaderService {
     }
     
 	
-	public static boolean isSensormapReachable() {
+	public boolean isSensormapReachable() {
         HttpClient client = new DefaultHttpClient();
         HttpGet request = new HttpGet(SENSORMAP_STATUS_URL);
         if (D) Log.d(TAG, SENSORMAP_STATUS_URL);

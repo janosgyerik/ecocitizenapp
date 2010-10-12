@@ -148,7 +148,10 @@ public class CitySenspod extends Activity implements LocationListener {
         mLatView = (TextView) findViewById(R.id.lat);
         mLonView = (TextView) findViewById(R.id.lon);
         
-        mSensormapUploaderService = new SensormapUploaderService(this);
+        String username = getString(R.string.username);
+        String map_server_url = getString(R.string.map_server_url);
+        String sensorId = "apiv3";
+        mSensormapUploaderService = new SensormapUploaderService(username, map_server_url, sensorId);
     }
     
     private void setupSenspodService() {
