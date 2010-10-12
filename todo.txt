@@ -1,27 +1,8 @@
 confirm with real android device
-	API v3 works
-	test if Android times are indeed UTC
-		use the commented out sample code in CitySenspod.java
-	sending more AndroidGps details works
+	-
 
 tasks when connected to internet
 	migrate tasks from launchpad to redmine
-
-IMPORTANT: test message uploader queue with handler
-	how to check the number of pending messages on the handler's queue
-		-> compare a counter in the sender and the handler
-	implement uploader using handler
-	prepare receiver website (localhost), but do not start
-	start simulator, observe messages sent to queue but not sent to web
-		track messages with seq id
-	start web server
-	observe all messages getting sent from first seq id
-
-notes
-	another technique for posting messages:
-		update a member variable
-		post a Runnable to the handler
-		http://developer.android.com/resources/faq/commontasks.html
 
 implement new architecture
 	add SentenceConsumer interface, make the activity implement it
@@ -45,7 +26,6 @@ optimization
 		make connect/disconnect work
 	tree page
 		add battery level, aligned to the right on the same line as lat
-		add connect button on tree (home) page when disconnected
 		add nice colored scale for co2 level
 
 bugs
