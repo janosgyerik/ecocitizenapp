@@ -54,9 +54,12 @@ public class SampleSenspodService extends BluetoothSensorService {
     	mMessageInterval = messageInterval;
     	mmInStream = instream;
         
-        setState(STATE_CONNECTING);
-        
-        // Start the thread sending dummy data
+        setState(STATE_NONE);
+    }
+    
+    public void start() {
+    	if (mConnectedThread != null) return;
+    	
         mConnectedThread = new ConnectedThread();
         mConnectedThread.start();
     }

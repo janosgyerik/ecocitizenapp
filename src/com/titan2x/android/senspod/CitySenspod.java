@@ -21,8 +21,10 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -61,7 +63,7 @@ public class CitySenspod extends Activity implements LocationListener {
     private BluetoothSensorService mBluetoothSensorService = null;
     
     private static DecimalFormat latlonFormat = new DecimalFormat("* ###.00000");
-    
+    private Button mBtnConnect;
     // Member object for uploading measurements to the map server
     private SensormapUploaderService mSensormapUploaderService = null;
 
@@ -81,7 +83,15 @@ public class CitySenspod extends Activity implements LocationListener {
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.main);
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
-
+        
+        //Set up the button to connect to the sensor
+        mBtnConnect = (Button)findViewById(R.id.button_connect);
+        mBtnConnect.setOnClickListener(new View.OnClickListener(){   
+            public void onClick(View v) {   
+            	launchDeviceListActivity();
+            }  
+        });  
+        
         // Set up the custom title
         mTitle = (TextView) findViewById(R.id.title_left_text);
         mTitle.setText(R.string.app_name);
@@ -103,9 +113,6 @@ public class CitySenspod extends Activity implements LocationListener {
         // If the adapter is null, then Bluetooth is not supported
         if (mBluetoothAdapter == null) {
             Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
-            //finish();
-        	setupSimulatorService();
-            return;
         }
     }
 
@@ -120,10 +127,13 @@ public class CitySenspod extends Activity implements LocationListener {
         	if (!mBluetoothAdapter.isEnabled()) {
         		Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
         		startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-        		// Otherwise, setup the senspod service
-        	} else {
-        		if (mBluetoothSensorService == null) setupSenspodService();
+        	} 
+        	else {
+        		setupSenspodService();
         	}
+        }
+        else {
+        	setupSimulatorService();
         }
     }
 
@@ -183,6 +193,7 @@ public class CitySenspod extends Activity implements LocationListener {
             mBluetoothSensorService = new SampleSenspodService(mHandler, sensorId, instream, messageInterval);
         }
         catch (IOException e) {
+        	mBluetoothSensorService = null;
             Toast.makeText(this, "Logfile does not exist, cannot start Simulator", Toast.LENGTH_LONG).show();
         }
     }
@@ -329,6 +340,17 @@ public class CitySenspod extends Activity implements LocationListener {
         			break;
         		}
         	}
+        	
+    		switch (mBluetoothSensorService.getState()) {
+    		case BluetoothSensorService.STATE_CONNECTED:
+    		case BluetoothSensorService.STATE_CONNECTING:
+    			mBtnConnect.setVisibility(View.GONE);
+    			break;
+    		case BluetoothSensorService.STATE_NONE:
+    		default:
+    			mBtnConnect.setVisibility(View.VISIBLE);
+    			break;
+    		}
         }    	
     }
     
@@ -361,19 +383,31 @@ public class CitySenspod extends Activity implements LocationListener {
         
         return true;
     }
+    
+    public void launchDeviceListActivity() {
+    	if (mBluetoothAdapter == null) {
+    		if (mBluetoothSensorService != null) {
+    			((SampleSenspodService)mBluetoothSensorService).start(); 
+    		}
+    	}
+    	else {
+            // Launch the DeviceListActivity to see devices and do scan
+        	Toast.makeText(this, R.string.msg_coming_soon, Toast.LENGTH_SHORT).show();
+            Intent serverIntent = new Intent(this, DeviceListActivity.class);
+            startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
+    	}
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.menu_connect:
-            // Launch the DeviceListActivity to see devices and do scan
-            Intent serverIntent = new Intent(this, DeviceListActivity.class);
-            startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
+        	launchDeviceListActivity();
             return true;
         case R.id.menu_disconnect:
             // Disconnect any connected devices
         	if (mBluetoothSensorService != null) mBluetoothSensorService.stop();
-            return true;
+        	break;
         case R.id.menu_home:
         	// go to home page (showing current pollution level, illustrated)
         	break;

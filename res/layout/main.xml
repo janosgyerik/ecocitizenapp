@@ -23,7 +23,7 @@
     >
     <TextView android:id="@+id/co2value"
     	style="@style/co2value"
-    />
+	/>
     <TextView android:id="@+id/lat"
     	style="@style/latlon"
     />
@@ -36,5 +36,10 @@
     	android:stackFromBottom="true"
         android:transcriptMode="alwaysScroll"
         android:layout_weight="1"
+    />
+    <Button android:id="@+id/button_connect"
+		android:text="@string/button_connect"
+    	android:stackFromBottom="true"
+		style="@style/button_connect"
     />
 </LinearLayout>
