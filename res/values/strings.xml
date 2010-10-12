@@ -37,14 +37,15 @@
     <!-- Options Menu -->
     <string name="menu_connect">Connect a device</string>
     
-	<string name="menu_home">Home</string>
-	<string name="menu_graph">Graph</string>
-	<string name="menu_map">Map</string>
-	<string name="menu_disconnect">Disconnect device</string>
-	<string name="msg_coming_soon">Coming Soon!</string>
-	<string name="menu_quit">Quit</string>
-	<string name="menu_debug_on">Debug ON</string>
-	<string name="menu_debug_off">Debug OFF</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_graph">Graph</string>
+    <string name="menu_map">Map</string>
+    <string name="menu_disconnect">Disconnect device</string>
+    <string name="msg_coming_soon">Coming Soon!</string>
+    <string name="menu_quit">Quit</string>
+    <string name="menu_debug_on">Debug ON</string>
+    <string name="menu_debug_off">Debug OFF</string>
+    <string name="menu_settings">Settings</string>
 
     <!--  Preferences -->
     <string name="title_username_preference">Username</string>

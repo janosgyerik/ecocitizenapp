@@ -20,6 +20,9 @@
     <item android:id="@+id/menu_disconnect"
           android:icon="@drawable/disconnect"
           android:title="@string/menu_disconnect" />
+    <item android:id="@+id/menu_settings"
+          android:icon="@drawable/settings"
+          android:title="@string/menu_settings" />     
     <item android:id="@+id/menu_debug_on"
           android:icon="@drawable/debug"
           android:title="@string/menu_debug_on" />

@@ -408,6 +408,9 @@ public class CitySenspod extends Activity implements LocationListener {
             // Disconnect any connected devices
         	if (mBluetoothSensorService != null) mBluetoothSensorService.stop();
         	break;
+        case R.id.menu_settings:
+        	startActivity(new Intent(this, SettingsActivity.class));
+        	break;    
         case R.id.menu_home:
         	// go to home page (showing current pollution level, illustrated)
         	break;
