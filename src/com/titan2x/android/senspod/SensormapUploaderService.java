@@ -1,7 +1,6 @@
 package com.titan2x.android.senspod;
 
 import java.io.InputStream;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Formatter;
@@ -180,7 +179,7 @@ public class SensormapUploaderService {
 	}
 	
 	public boolean store(String data) {
-		int ret = getIntResponse(SENSORMAP_STORE_URL + sessionId + "/" + URLEncoder.encode(data));
+		int ret = getIntResponse(SENSORMAP_STORE_URL + sessionId + "/" + data.replace(" ", "")); //URLEncoder.encode(data));
 		if (ret == 0) return true;
 		Log.d(TAG, "store returned " + ret);
 		return false;
