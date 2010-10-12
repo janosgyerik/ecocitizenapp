@@ -28,7 +28,6 @@ implement new architecture
 	add SentenceProvider interface, hook up to the activity
 
 next
-	grep -i todo in src/
 	fix session management
 		consumer should receive device connect/disconnect messages
 		on connect: startsession

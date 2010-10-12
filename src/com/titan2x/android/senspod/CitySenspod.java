@@ -1,5 +1,7 @@
 package com.titan2x.android.senspod;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.LinkedList;
@@ -162,7 +164,7 @@ public class CitySenspod extends Activity implements LocationListener {
     }
 
     private void setupSimulatorService() {
-        Toast.makeText(this, "Starting simulator service...", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Starting Simulator service...", Toast.LENGTH_LONG).show();
         
         Log.d(TAG, "setupSimulatorService()");
 
@@ -170,7 +172,16 @@ public class CitySenspod extends Activity implements LocationListener {
         setupCommonService();
         
         // Initialize the BluetoothSensorService to replay a logfile
-        mBluetoothSensorService = new SampleSenspodService(this, mHandler);
+        String sensorId = getString(R.string.logplayer_sensor_id);
+        String filename = getString(R.string.logplayer_filename);
+        int messageInterval = getResources().getInteger(R.integer.logplayer_msg_interval);
+        try {
+        	InputStream instream = getAssets().open(filename);
+            mBluetoothSensorService = new SampleSenspodService(mHandler, sensorId, instream, messageInterval);
+        }
+        catch (IOException e) {
+            Toast.makeText(this, "Logfile does not exist, cannot start Simulator", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

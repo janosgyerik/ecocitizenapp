@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 import backport.android.bluetooth.BluetoothDevice;
@@ -41,24 +40,19 @@ public class SampleSenspodService extends BluetoothSensorService {
     private InputStream mmInStream = null;
     private ConnectedThread mConnectedThread;
     
-    // todo: these should come from properties file
-    private final int messageInterval = 1000;
-    private final String sampleFileName = "CitySenspodSample1.txt";
+    private final String mSensorId;
+    private final int mMessageInterval;
 
     /**
      * Constructor. Prepares a new session.
      * @param context  The UI Activity Context
      * @param handler  A Handler to send messages back to the UI Activity
      */
-    public SampleSenspodService(Context context, Handler handler) {
-    	try {
-			mmInStream = context.getAssets().open(sampleFileName);
-		} catch (IOException e) {
-			e.printStackTrace();
-			mHandler = null;
-			return;
-		}
+    public SampleSenspodService(Handler handler, String sensorId, InputStream instream, int messageInterval) {
     	mHandler = handler;
+    	mSensorId = sensorId;
+    	mMessageInterval = messageInterval;
+    	mmInStream = instream;
         
         setState(STATE_CONNECTING);
         
@@ -105,7 +99,7 @@ public class SampleSenspodService extends BluetoothSensorService {
 	            		byte[] buffer = line.getBytes();
 	            		mHandler.obtainMessage(MessageProtocol.MESSAGE_READ, buffer.length, -1, buffer).sendToTarget();
 	            		try {
-	            			Thread.sleep(messageInterval);
+	            			Thread.sleep(mMessageInterval);
 	            		}
 	            		catch (InterruptedException e) {
 	            		}

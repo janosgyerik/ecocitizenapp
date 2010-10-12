@@ -6,7 +6,12 @@ on the deployment type, for example development / production.
 -->
 
 <resources>
+	<!-- Application default properties -->
     <string name="username">janos_dev1</string>
     <string name="map_server_url">http://10.0.2.2:8000/api/</string>
-
+    
+    <!-- For developers only -->
+    <string name="logplayer_sensor_id">apiv3</string>
+    <string name="logplayer_filename">CitySenspodSample1.txt</string>
+    <integer name="logplayer_msg_interval">1000</integer>
 </resources>
