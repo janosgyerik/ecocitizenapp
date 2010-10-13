@@ -168,6 +168,8 @@ public class CitySenspod extends Activity implements LocationListener {
     }
     
     private void setupSenspodService() {
+    	if (mBluetoothSensorService != null) return;
+    	
         Log.d(TAG, "setupSenspodService()");
 
         setupCommonService();
@@ -177,6 +179,8 @@ public class CitySenspod extends Activity implements LocationListener {
     }
 
     private void setupSimulatorService() {
+    	if (mBluetoothSensorService != null) return;
+    	
         Toast.makeText(this, "Starting Simulator service...", Toast.LENGTH_LONG).show();
         
         Log.d(TAG, "setupSimulatorService()");
