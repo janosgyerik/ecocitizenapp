@@ -65,6 +65,17 @@ public class LogplayerService extends BluetoothSensorService {
     }
     
     /**
+     * Stop all threads
+     */
+    public synchronized void stop() {
+        if (D) Log.d(TAG, "stop");
+        if (mConnectedThread != null) mConnectedThread.shutdown();
+        if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
+        
+        setState(STATE_NONE);
+    }
+
+    /**
      * This thread runs during a connection with a remote device.
      * It handles all incoming transmissions.
      */

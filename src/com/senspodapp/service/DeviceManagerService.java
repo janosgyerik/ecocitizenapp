@@ -22,9 +22,22 @@ public class DeviceManagerService extends Service {
 
 	@Override
 	public IBinder onBind(Intent intent) {
+		if (D) Log.d(TAG, "+++ ON BIND +++");
 		return mBinder;
 	}
 	
+	@Override
+	public void onRebind(Intent intent) {
+		if (D) Log.d(TAG, "+++ ON REBIND +++");
+		super.onRebind(intent);
+	}
+
+	@Override
+	public boolean onUnbind(Intent intent) {
+		if (D) Log.d(TAG, "+++ ON UNBIND +++");
+		return super.onUnbind(intent);
+	}
+
 	final RemoteCallbackList<IDeviceManagerServiceCallback> mCallbacks =
 		new RemoteCallbackList<IDeviceManagerServiceCallback>();
 	
@@ -46,10 +59,12 @@ public class DeviceManagerService extends Service {
 		}
 
 		public void registerCallback(IDeviceManagerServiceCallback cb) {
+			if (D) Log.d(TAG, "Register callback.");
 			if (cb != null) mCallbacks.register(cb);
 		}
 
 		public void unregisterCallback(IDeviceManagerServiceCallback cb) {
+			if (D) Log.d(TAG, "Unregister callback.");
 			if (cb != null) mCallbacks.unregister(cb);
 		}
 
@@ -69,6 +84,7 @@ public class DeviceManagerService extends Service {
 		}
 
 		public void disconnectLogplayer() {
+			shutdownLogplayer();
 		}
 
 		public int getPid() {
@@ -112,6 +128,8 @@ public class DeviceManagerService extends Service {
 	
 	@Override
 	public void onDestroy() {
+		if (D) Log.d(TAG, "+++ ON DESTROY +++");
+		
 		shutdownBluetoothSensorService();
 		
 		Toast.makeText(this, "Device Manager stopped", Toast.LENGTH_SHORT);
@@ -122,6 +140,11 @@ public class DeviceManagerService extends Service {
 	void shutdownBluetoothSensorService() {
 		if (mBluetoothSensorService == null) return;
 		mBluetoothSensorService.stop();
+	}
+	
+	void shutdownLogplayer() {
+		if (mLogplayerService == null) return;
+		mLogplayerService.stop();
 	}
 
 }

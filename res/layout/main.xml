@@ -23,12 +23,15 @@
     >
     <TextView android:id="@+id/co2value"
     	style="@style/co2value"
+    	android:visibility="gone"
 	/>
     <TextView android:id="@+id/lat"
     	style="@style/latlon"
+    	android:visibility="gone"
     />
     <TextView android:id="@+id/lon"
     	style="@style/latlon"
+    	android:visibility="gone"
     />
     <ListView android:id="@+id/rawsentences"
     	android:layout_width="fill_parent"

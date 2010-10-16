@@ -68,12 +68,18 @@ public class SenspodApp extends Activity {
 		mBtnConnect.setOnClickListener(new View.OnClickListener(){   
 			public void onClick(View v) {   
 				connectSensor();
+				/*
+				mBtnConnect.setVisibility(View.GONE);
+				mBtnDisconnect.setVisibility(View.VISIBLE);
+				*/
 			}  
 		});
 		mBtnDisconnect = (Button)findViewById(R.id.btn_disconnect);
 		mBtnDisconnect.setOnClickListener(new View.OnClickListener(){   
 			public void onClick(View v) {   
 				disconnectSensor();
+				mBtnConnect.setVisibility(View.VISIBLE);
+				mBtnDisconnect.setVisibility(View.GONE);
 			}  
 		});
 		mBtnDisconnect.setVisibility(View.GONE);
@@ -136,6 +142,9 @@ public class SenspodApp extends Activity {
 	}
 	
 	void connectDeviceManager() {
+		// Start the service if not already running
+		startService(new Intent(IDeviceManagerService.class.getName()));
+		
 		// Establish connection with the service.
 		bindService(new Intent(IDeviceManagerService.class.getName()),
 				mConnection, Context.BIND_AUTO_CREATE);
@@ -149,6 +158,7 @@ public class SenspodApp extends Activity {
 			catch (RemoteException e) {
 				// There is nothing special we need to do if the service
 				// has crashed.
+				Log.e(TAG, "Exception during unregister callback.");
 			}
 			
 			mService = null;
@@ -198,6 +208,7 @@ public class SenspodApp extends Activity {
 			}
 			catch (RemoteException e) {
 				// Bummer eh. Not much we can do here.
+				Log.e(TAG, "Exception during connect to sensor.");
 			}
 		}
 	}
@@ -210,6 +221,7 @@ public class SenspodApp extends Activity {
 			catch (RemoteException e) {
 				// Bummer eh. Not much we can do here.
 				// The user can kill the service.
+				Log.e(TAG, "Exception during disconnect sensor.");
 			}
 		}
 	}
@@ -286,6 +298,8 @@ public class SenspodApp extends Activity {
 
 	@Override
 	public void onDestroy() {
+		disconnectDeviceManager();
+		
 		super.onDestroy();
 		if (D) Log.d(TAG, "--- ON DESTROY ---");
 	}
@@ -507,6 +521,7 @@ public class SenspodApp extends Activity {
 				// do anything with it; we can count on soon being
 				// disconnected (and then reconnected if it can be restarted)
 				// so there is no need to do anything here.
+				Log.e(TAG, "Exception during register callback.");
 			}
 
 			Toast.makeText(SenspodApp.this, "Remote service connected",
@@ -535,7 +550,7 @@ public class SenspodApp extends Activity {
 		 * to update the UI, we need to use a Handler to hop over there.
 		 */
 		public void receivedSentenceData(String sensorId, String sentence) {
-			mHandler.sendMessage(mHandler.obtainMessage(MessageType.SENTENCE, sentence));
+			mHandler.obtainMessage(MessageType.SENTENCE, sentence).sendToTarget();
 		}
 	};
 }
