@@ -1,6 +1,7 @@
 package com.senspodapp.service;
 
 import java.io.IOException;
+
 import java.io.InputStream;
 
 import android.app.Service;
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.os.Process;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.widget.Toast;
@@ -64,6 +66,10 @@ public class DeviceManagerService extends Service {
 		}
 
 		public void disconnectLogplayer() {
+		}
+
+		public int getPid() {
+			return Process.myPid();
 		}
 	};
 

@@ -144,10 +144,12 @@ public class SenspodApp extends Activity {
 				// There is nothing special we need to do if the service
 				// has crashed.
 			}
-		}
+			
+			mService = null;
 
-		// Detach our existing connection.
-		unbindService(mConnection);
+			// Detach our existing connection.
+			unbindService(mConnection);
+		}
 	}
 
 	void killDeviceManager() {
@@ -156,7 +158,7 @@ public class SenspodApp extends Activity {
 		// to us that information.
 		if (mService != null) {
 			try {
-				int pid = 0;//mService.getPid();
+				int pid = mService.getPid();
 				// Note that, though this API allows us to request to
 				// kill any process based on its PID, the kernel will
 				// still impose standard restrictions on which PIDs you
@@ -166,7 +168,6 @@ public class SenspodApp extends Activity {
 				// sharing a common UID will also be able to kill each
 				// other's processes.
 				Process.killProcess(pid);
-				if (false) throw new RemoteException();
 			} 
 			catch (RemoteException ex) {
 				// Recover gracefully from the process hosting the
@@ -176,6 +177,8 @@ public class SenspodApp extends Activity {
 						"Remote call failed",
 						Toast.LENGTH_SHORT).show();
 			}
+			
+			mService = null;
 		}
 	}
 

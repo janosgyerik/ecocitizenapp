@@ -5,7 +5,12 @@ import backport.android.bluetooth.BluetoothDevice;
 import com.senspodapp.service.IDeviceManagerServiceCallback;
 
 interface IDeviceManagerService {
-	void connectBluetoothDevice(in BluetoothDevice device);
+    /**
+     * Request the PID of this service, to do evil things with it.
+     */
+    int getPid();
+    
+    void connectBluetoothDevice(in BluetoothDevice device);
 	void disconnectBluetoothDevice(in String deviceName);
 	
 	void connectLogplayer(in String assetName, in int messageInterval);
