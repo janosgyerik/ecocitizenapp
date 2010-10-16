@@ -26,6 +26,12 @@
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>
+		
+		<service android:name="com.senspodapp.service.DeviceManagerService" android:process=":remote">
+			<intent-filter>
+				<action android:name="com.senspodapp.service.IDeviceManagerService"/>
+			</intent-filter>
+		</service>
 
 
 		<receiver android:name="backport.android.bluetooth.BluetoothIntentRedirector">

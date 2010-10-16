@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.os.Process;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -17,7 +18,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -67,9 +67,28 @@ public class SenspodApp extends Activity {
 		mBtnConnect = (Button)findViewById(R.id.button_connect);
 		mBtnConnect.setOnClickListener(new View.OnClickListener(){   
 			public void onClick(View v) {   
-				//launchDeviceListActivity();
+				launchDeviceListActivity();
 			}  
-		});  
+		});
+		mBtnConnect.setVisibility(View.GONE);
+		
+		((Button)findViewById(R.id.btn_dm_connect)).setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				connectDeviceManager();
+			}
+		});
+
+		((Button)findViewById(R.id.btn_dm_disconnect)).setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				disconnectDeviceManager();
+			}
+		});
+
+		((Button)findViewById(R.id.btn_dm_kill)).setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				killDeviceManager();
+			}
+		});
 
 		// Set up the custom title
 		mTitle = (TextView) findViewById(R.id.title_left_text);
@@ -107,6 +126,56 @@ public class SenspodApp extends Activity {
 		}
 		else {
 			setupSimulatorService();
+		}
+	}
+	
+	void connectDeviceManager() {
+		// Establish connection with the service.
+		bindService(new Intent(IDeviceManagerService.class.getName()),
+				mConnection, Context.BIND_AUTO_CREATE);
+	}
+
+	void disconnectDeviceManager() {
+		if (mService != null) {
+			try {
+				mService.unregisterCallback(mCallback);
+			} 
+			catch (RemoteException e) {
+				// There is nothing special we need to do if the service
+				// has crashed.
+			}
+		}
+
+		// Detach our existing connection.
+		unbindService(mConnection);
+	}
+
+	void killDeviceManager() {
+		// To kill the process hosting our service, we need to know its
+		// PID.  Conveniently our service has a call that will return
+		// to us that information.
+		if (mService != null) {
+			try {
+				int pid = 0;//mService.getPid();
+				// Note that, though this API allows us to request to
+				// kill any process based on its PID, the kernel will
+				// still impose standard restrictions on which PIDs you
+				// are actually able to kill.  Typically this means only
+				// the process running your application and any additional
+				// processes created by that app as shown here; packages
+				// sharing a common UID will also be able to kill each
+				// other's processes.
+				Process.killProcess(pid);
+				if (false) throw new RemoteException();
+			} 
+			catch (RemoteException ex) {
+				// Recover gracefully from the process hosting the
+				// server dying.
+				// Just for purposes of the sample, put up a notification.
+				Toast.makeText(SenspodApp.this,
+						"Remote call failed",
+						Toast.LENGTH_SHORT).show();
+			}
 		}
 	}
 
@@ -397,7 +466,6 @@ public class SenspodApp extends Activity {
 				// so there is no need to do anything here.
 			}
 
-			// As part of the sample, tell the user what happened.
 			Toast.makeText(SenspodApp.this, "Remote service connected",
 					Toast.LENGTH_SHORT).show();
 		}
@@ -407,75 +475,8 @@ public class SenspodApp extends Activity {
 			// unexpectedly disconnected -- that is, its process crashed.
 			mService = null;
 
-			// As part of the sample, tell the user what happened.
-			Toast.makeText(SenspodApp.this, "Remote service disconnected",
+			Toast.makeText(SenspodApp.this, "Remote service crashed",
 					Toast.LENGTH_SHORT).show();
-		}
-	};
-
-	boolean mIsBound = false;
-
-	private OnClickListener mBindListener = new OnClickListener() {
-		public void onClick(View v) {
-			// Establish connection with the service.
-			bindService(new Intent(IDeviceManagerService.class.getName()),
-					mConnection, Context.BIND_AUTO_CREATE);
-			mIsBound = true;
-			//mCallbackText.setText("Binding.");
-		}
-	};
-
-	private OnClickListener mUnbindListener = new OnClickListener() {
-		public void onClick(View v) {
-			if (mIsBound) {
-				// If we have received the service, and hence registered with
-				// it, then now is the time to unregister.
-				if (mService != null) {
-					try {
-						mService.unregisterCallback(mCallback);
-					} 
-					catch (RemoteException e) {
-						// There is nothing special we need to do if the service
-						// has crashed.
-					}
-				}
-
-				// Detach our existing connection.
-				unbindService(mConnection);
-				//mKillButton.setEnabled(false);
-				mIsBound = false;
-			}
-		}
-	};
-
-	private OnClickListener mKillListener = new OnClickListener() {
-		public void onClick(View v) {
-			// To kill the process hosting our service, we need to know its
-			// PID.  Conveniently our service has a call that will return
-			// to us that information.
-			if (mService != null) {
-				try {
-					int pid = 0;//mService.getPid();
-					// Note that, though this API allows us to request to
-					// kill any process based on its PID, the kernel will
-					// still impose standard restrictions on which PIDs you
-					// are actually able to kill.  Typically this means only
-					// the process running your application and any additional
-					// processes created by that app as shown here; packages
-					// sharing a common UID will also be able to kill each
-					// other's processes.
-					android.os.Process.killProcess(pid);
-					if (false) throw new RemoteException();
-				} 
-				catch (RemoteException ex) {
-					// Recover gracefully from the process hosting the
-					// server dying.
-					// Just for purposes of the sample, put up a notification.
-					Toast.makeText(SenspodApp.this,
-							"Remote call failed",
-							Toast.LENGTH_SHORT).show();
-				}
-			}
 		}
 	};
 

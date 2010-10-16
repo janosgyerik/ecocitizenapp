@@ -15,7 +15,7 @@
 -->
 
 <resources>
-    <string name="app_name">CitySenspod</string>
+    <string name="app_name">SenspodApp</string>
 
     <!--  BluetoothChat -->
     
