@@ -1,4 +1,4 @@
-package com.titan2x.android.senspod;
+package com.senspodapp.app;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;

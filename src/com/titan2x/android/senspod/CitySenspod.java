@@ -32,6 +32,9 @@ import android.widget.Toast;
 import backport.android.bluetooth.BluetoothAdapter;
 import backport.android.bluetooth.BluetoothDevice;
 
+import com.senspodapp.app.DeviceListActivity;
+import com.senspodapp.app.R;
+import com.senspodapp.app.SettingsActivity;
 import com.titan2x.envdata.sentences.CO2Sentence;
 
 public class CitySenspod extends Activity implements LocationListener {

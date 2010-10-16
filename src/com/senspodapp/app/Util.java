@@ -1,4 +1,4 @@
-package com.titan2x.android.senspod;
+package com.senspodapp.app;
 
 import java.util.Date;
 

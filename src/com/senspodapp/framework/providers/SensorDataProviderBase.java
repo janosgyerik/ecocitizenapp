@@ -5,12 +5,12 @@ import java.util.LinkedList;
 
 import android.util.Log;
 
+import com.senspodapp.app.Util;
 import com.senspodapp.data.GpsInfo;
 import com.senspodapp.data.SensorInfo;
 import com.senspodapp.framework.GpsProvider;
 import com.senspodapp.framework.SensorDataBundle;
 import com.senspodapp.framework.consumers.SensorDataConsumer;
-import com.titan2x.android.senspod.Util;
 
 public abstract class SensorDataProviderBase implements SensorDataProvider {
 	LinkedList<SensorDataConsumer> consumers = new LinkedList<SensorDataConsumer>();

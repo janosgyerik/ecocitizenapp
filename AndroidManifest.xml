@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.titan2x.android.senspod"
+    package="com.senspodapp.app"
     android:versionCode="1"
     android:versionName="1.0">
     <application android:icon="@drawable/icon" android:label="@string/app_name">
-	<activity android:name=".CitySenspod"
+	<activity android:name=".SenspodApp"
 	    android:screenOrientation="nosensor"
 	    android:label="@string/app_name">
 	    <intent-filter>
@@ -28,7 +28,7 @@
 	    android:theme="@android:style/Theme.Translucent.NoTitleBar"
 	    android:configChanges="orientation|keyboardHidden">
 	    <intent-filter>
-		<action android:name="com.titan2x.android.senspod.action.REQUEST_ENABLE" />
+		<action android:name="com.senspodapp.app.action.REQUEST_ENABLE" />
 		<category android:name="android.intent.category.DEFAULT" />
 	    </intent-filter>
 	</activity>
