@@ -26,6 +26,7 @@ import android.widget.Toast;
 import backport.android.bluetooth.BluetoothAdapter;
 import backport.android.bluetooth.BluetoothDevice;
 
+import com.senspodapp.service.BundleKeys;
 import com.senspodapp.service.IDeviceManagerService;
 import com.senspodapp.service.IDeviceManagerServiceCallback;
 import com.senspodapp.service.MessageType;
@@ -565,7 +566,8 @@ public class SenspodApp extends Activity {
 		 * NOT be running in our main thread like most other things -- so,
 		 * to update the UI, we need to use a Handler to hop over there.
 		 */
-		public void receivedSentenceData(String sensorId, String sentence) {
+		public void receivedSentenceBundle(Bundle bundle) {
+			final String sentence = bundle.getString(BundleKeys.SENTENCE);
 			mHandler.obtainMessage(MessageType.SENTENCE, sentence).sendToTarget();
 		}
 

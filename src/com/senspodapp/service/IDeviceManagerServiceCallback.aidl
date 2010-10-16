@@ -1,8 +1,9 @@
 package com.senspodapp.service;
 
+import android.os.Bundle;
+
 oneway interface IDeviceManagerServiceCallback {
-	void receivedSentenceData(String sensorId, String sentence);
-	// todo: should be a bundle of GpsInfo, DateTime, SensorId, Sentence
+	void receivedSentenceBundle(in Bundle bundle);
 	
 	void receivedSensorConnectionNone();
 	void receivedSensorConnectionSuccess(String deviceName);

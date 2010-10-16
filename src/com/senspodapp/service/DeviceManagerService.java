@@ -5,6 +5,7 @@ import java.io.InputStream;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -144,11 +145,12 @@ public class DeviceManagerService extends Service {
 				// GpsInfo, DateTime, SensorId, Sentence 
 				// Broadcast to all clients
 				final int N = mCallbacks.beginBroadcast();
-				final String sentence = (String)msg.obj;
+				final Bundle bundle = (Bundle)msg.obj;
+				final String sentence = (String)bundle.getString(BundleKeys.SENTENCE);
 				if (D) Log.d(TAG, "SENTENCE = " + sentence);
 				for (int i = 0; i < N; ++i) {
 					try {
-						mCallbacks.getBroadcastItem(i).receivedSentenceData("sensorid", sentence);
+						mCallbacks.getBroadcastItem(i).receivedSentenceBundle(bundle);
 					}
 					catch (RemoteException e) {
 						// The RemoteCallbackList will take care of removing

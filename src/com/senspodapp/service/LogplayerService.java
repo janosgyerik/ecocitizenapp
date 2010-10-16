@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import backport.android.bluetooth.BluetoothDevice;
@@ -100,7 +101,12 @@ public class LogplayerService extends BluetoothSensorService {
 	            	String line = reader.readLine();
 	            	if (line != null) {
 	            		hasReadAnything = true;
-	            		mHandler.obtainMessage(MessageType.SENTENCE, line).sendToTarget();
+	            		Bundle bundle = new Bundle();
+	            		//bundle.putParcelable("GpsInfo", "");
+	            		bundle.putString(BundleKeys.DATETIMETZ, "123");
+	            		bundle.putString(BundleKeys.SENSORID, "Logplayer");
+	            		bundle.putString(BundleKeys.SENTENCE, line);
+	            		mHandler.obtainMessage(MessageType.SENTENCE, bundle).sendToTarget();
 	            		try {
 	            			Thread.sleep(mMessageInterval);
 	            		}

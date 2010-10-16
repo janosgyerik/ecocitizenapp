@@ -7,4 +7,5 @@ public abstract class MessageType {
 	public final static int SENSORCONNECTION_LOST = 14;
 	
 	public final static int SENTENCE = 21;
+	
 }
