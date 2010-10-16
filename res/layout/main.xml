@@ -37,24 +37,29 @@
         android:transcriptMode="alwaysScroll"
         android:layout_weight="1"
     />
-    <Button android:id="@+id/button_connect"
-		android:text="@string/button_connect"
+    <Button android:id="@+id/btn_connect"
+		android:text="@string/btn_connect"
     	android:stackFromBottom="true"
-		style="@style/button_connect"
+		style="@style/btn_connect"
+    />
+    <Button android:id="@+id/btn_disconnect"
+		android:text="@string/btn_disconnect"
+    	android:stackFromBottom="true"
+		style="@style/btn_connect"
     />
     <Button android:id="@+id/btn_dm_connect"
 		android:text="Connect DM"
     	android:stackFromBottom="true"
-		style="@style/button_connect"
+		style="@style/btn_connect"
     />
     <Button android:id="@+id/btn_dm_disconnect"
 		android:text="Disconnect DM"
     	android:stackFromBottom="true"
-		style="@style/button_connect"
+		style="@style/btn_connect"
     />
     <Button android:id="@+id/btn_dm_kill"
 		android:text="Kill DM"
     	android:stackFromBottom="true"
-		style="@style/button_connect"
+		style="@style/btn_connect"
     />
 </LinearLayout>

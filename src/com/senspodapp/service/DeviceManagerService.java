@@ -1,7 +1,6 @@
 package com.senspodapp.service;
 
 import java.io.IOException;
-
 import java.io.InputStream;
 
 import android.app.Service;
@@ -12,10 +11,14 @@ import android.os.Message;
 import android.os.Process;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
+import android.util.Log;
 import android.widget.Toast;
 import backport.android.bluetooth.BluetoothDevice;
 
 public class DeviceManagerService extends Service {
+	// Debugging
+	private static final String TAG = "DeviceManagerService";
+	private static final boolean D = true;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -73,7 +76,6 @@ public class DeviceManagerService extends Service {
 		}
 	};
 
-	private static final int SENTENCE_MSG = 1;
 	/**
 	 * Our Handler to execute operations on the main thread.
 	 * This is used to dispatch sentences to the callbacks.
@@ -82,10 +84,11 @@ public class DeviceManagerService extends Service {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-				case SENTENCE_MSG: {
+				case MessageType.SENTENCE: {
 					// Broadcast to all clients
 					final int N = mCallbacks.beginBroadcast();
-					final String sentence = new String((byte[])msg.obj);
+					final String sentence = (String)msg.obj;
+					if (D) Log.d(TAG, "SENTENCE = " + sentence);
 					for (int i = 0; i < N; ++i) {
 						try {
 							mCallbacks.getBroadcastItem(i).receivedSentenceData("sensorid", sentence);

@@ -49,7 +49,7 @@ public class SenspodApp extends Activity {
 	// Local Bluetooth adapter
 	private BluetoothAdapter mBluetoothAdapter = null;
 
-	private Button mBtnConnect;
+	private Button mBtnConnect, mBtnDisconnect;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -64,14 +64,20 @@ public class SenspodApp extends Activity {
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
 
 		//Set up the button to connect to the sensor
-		mBtnConnect = (Button)findViewById(R.id.button_connect);
+		mBtnConnect = (Button)findViewById(R.id.btn_connect);
 		mBtnConnect.setOnClickListener(new View.OnClickListener(){   
 			public void onClick(View v) {   
-				launchDeviceListActivity();
+				connectSensor();
 			}  
 		});
-		mBtnConnect.setVisibility(View.GONE);
-		
+		mBtnDisconnect = (Button)findViewById(R.id.btn_disconnect);
+		mBtnDisconnect.setOnClickListener(new View.OnClickListener(){   
+			public void onClick(View v) {   
+				disconnectSensor();
+			}  
+		});
+		mBtnDisconnect.setVisibility(View.GONE);
+
 		((Button)findViewById(R.id.btn_dm_connect)).setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				connectDeviceManager();
@@ -181,6 +187,32 @@ public class SenspodApp extends Activity {
 			mService = null;
 		}
 	}
+	
+	void connectSensor() {
+		//launchDeviceListActivity();
+		if (mService != null) {
+			try {
+				String assetName = getString(R.string.logplayer_filename);
+				int messageInterval = getResources().getInteger(R.integer.logplayer_msg_interval);
+				mService.connectLogplayer(assetName, messageInterval);
+			}
+			catch (RemoteException e) {
+				// Bummer eh. Not much we can do here.
+			}
+		}
+	}
+	
+	void disconnectSensor() {
+		if (mService != null) {
+			try {
+				mService.disconnectLogplayer();
+			}
+			catch (RemoteException e) {
+				// Bummer eh. Not much we can do here.
+				// The user can kill the service.
+			}
+		}
+	}
 
 	@Override
 	public synchronized void onResume() {
@@ -263,6 +295,14 @@ public class SenspodApp extends Activity {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
+	            case MessageType.SENTENCE:
+	                String line = (String)msg.obj;
+	                int indexOf_dollar = line.indexOf('$'); 
+	                if (indexOf_dollar > -1) {
+	                	line = line.substring(indexOf_dollar);
+	                }
+	                mSentencesArrayAdapter.add(line);
+	                break;
 			/* TODO
             case MessageProtocol.MESSAGE_STATE_CHANGE:
                 if (D) Log.i(TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
@@ -494,9 +534,7 @@ public class SenspodApp extends Activity {
 		 * NOT be running in our main thread like most other things -- so,
 		 * to update the UI, we need to use a Handler to hop over there.
 		 */
-		public void receivedSentenceData(String sensorId, String sentence)
-		throws RemoteException {
-			// TODO Auto-generated method stub
+		public void receivedSentenceData(String sensorId, String sentence) {
 			mHandler.sendMessage(mHandler.obtainMessage(MessageType.SENTENCE, sentence));
 		}
 	};

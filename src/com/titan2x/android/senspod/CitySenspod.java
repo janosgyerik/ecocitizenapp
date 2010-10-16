@@ -88,7 +88,7 @@ public class CitySenspod extends Activity implements LocationListener {
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
         
         //Set up the button to connect to the sensor
-        mBtnConnect = (Button)findViewById(R.id.button_connect);
+        mBtnConnect = (Button)findViewById(R.id.btn_connect);
         mBtnConnect.setOnClickListener(new View.OnClickListener(){   
             public void onClick(View v) {   
             	launchDeviceListActivity();

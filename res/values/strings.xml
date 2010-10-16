@@ -61,6 +61,7 @@
     <string name="dialog_title_sensormapurl_preference">Enter SensorMap API URL</string>
 
     <!-- Tree view -->
-    <string name="button_connect">Connect to sensor</string>
+    <string name="btn_connect">Connect to sensor</string>
+    <string name="btn_disconnect">Disconnect sensor</string>
 
 </resources>
