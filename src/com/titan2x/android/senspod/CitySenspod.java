@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.Date;
-import java.util.LinkedList;
 
 import android.app.Activity;
 import android.content.Context;
@@ -100,7 +99,7 @@ public class CitySenspod extends Activity implements LocationListener {
         mTitle.setText(R.string.app_name);
         mTitle = (TextView) findViewById(R.id.title_right_text);
 
-        mSentencesArrayAdapter = new DequeArrayAdapter<String>(new LinkedList<String>(), this, R.layout.message);
+        mSentencesArrayAdapter = new ArrayAdapter<String>(this, R.layout.message);
         mSentencesView = (ListView) findViewById(R.id.rawsentences);
         mSentencesView.setAdapter(mSentencesArrayAdapter);
 
