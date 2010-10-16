@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -27,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import backport.android.bluetooth.BluetoothAdapter;
@@ -39,19 +41,27 @@ public class CitySenspod extends Activity implements LocationListener {
     private static final String TAG = "CitySenspod";
     private static final boolean D = true;
     private boolean debugMode = false;
-
+    //Data types
+    private static final String DATA_TYPE_HUM = "Hum";
+    private static final String DATA_TYPE_TEMP = "T";
+    private static final String DATA_TYPE_NOISE = "Noise";
+    private static final String DATA_TYPE_NOX = "NOx";
+    private static final String DATA_TYPE_COX = "COx";
+    private static final String DATA_TYPE_BATT = "Batt";
+    
     // Intent request codes
     private static final int REQUEST_CONNECT_DEVICE = 1;
     private static final int REQUEST_ENABLE_BT = 2;
-
+    
     // Layout Views
     private TextView mTitle;
     private TextView mCo2View;
     private TextView mLatView;
     private TextView mLonView;
     private ListView mSentencesView;
+    private TableLayout mSentencesTbl;
     private ArrayAdapter<String> mSentencesArrayAdapter;
-    
+   private  ArrayAdapter<View> mSentencesRowList;
     // Count of received data messages
     private int mMessageCount = 1;
     
@@ -100,7 +110,8 @@ public class CitySenspod extends Activity implements LocationListener {
         mSentencesArrayAdapter = new DequeArrayAdapter<String>(new LinkedList<String>(), this, R.layout.message);
         mSentencesView = (ListView) findViewById(R.id.rawsentences);
         mSentencesView.setAdapter(mSentencesArrayAdapter);
-
+        mSentencesTbl =(TableLayout)findViewById(R.id.tblsentences);
+        
 		locationmanager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
 		for (String provider : locationmanager.getAllProviders()) {
 			Log.d(TAG, "provider=" + provider);
@@ -120,7 +131,17 @@ public class CitySenspod extends Activity implements LocationListener {
     public void onStart() {
         super.onStart();
         if(D) Log.e(TAG, "++ ON START ++");
-
+        //If userName is blank,then update in preferences username and map_server_url from props.xml
+        SharedPreferences settings =   PreferenceManager.getDefaultSharedPreferences(this);
+        if(settings.getString("default_username","")==null){
+        	String userName = this.getString(R.string.username);
+        	String sensormapurl = this.getString(R.string.map_server_url);
+        	SharedPreferences.Editor editor = settings.edit();
+            editor.putString("default_username", userName);
+            editor.putString("default_sensormapurl", sensormapurl);
+            // Commit the edits!
+            editor.commit();
+        }
         // If BT is not on, request that it be enabled.
         // setupSenspodService() will then be called during onActivityResult
         if (mBluetoothAdapter != null) {
@@ -160,9 +181,9 @@ public class CitySenspod extends Activity implements LocationListener {
         
         mLatView = (TextView) findViewById(R.id.lat);
         mLonView = (TextView) findViewById(R.id.lon);
-        
-        String username = getString(R.string.username);
-        String map_server_url = getString(R.string.map_server_url);
+        SharedPreferences settings =   PreferenceManager.getDefaultSharedPreferences(this);
+        String username = settings.getString("default_username", "");
+        String map_server_url = settings.getString("default_sensormapurl", "");
         String sensorId = "apiv3";
         mSensormapUploaderService = new SensormapUploaderService(username, map_server_url, sensorId);
     }
@@ -184,8 +205,8 @@ public class CitySenspod extends Activity implements LocationListener {
         Toast.makeText(this, "Starting Simulator service...", Toast.LENGTH_LONG).show();
         
         Log.d(TAG, "setupSimulatorService()");
-
-        debugMode = true;
+        //start with debug mode OFF.
+        debugMode = false;
         setupCommonService();
         
         // Initialize the BluetoothSensorService to replay a logfile
@@ -268,13 +289,70 @@ public class CitySenspod extends Activity implements LocationListener {
                 	mCo2View.setText(co2val);
                 	mCo2View.setGravity(Gravity.CENTER);
                 }
-
+                
                 mSensormapUploaderService.receivedSentence(line, lastLocation, lastLocationDate);
-
+                
                 if (debugMode) {
             		mSentencesArrayAdapter.add(line + ";l=" + line.length());
             	}
-
+               if(line.startsWith("$PSEN")){
+                String values[] = new String[6];
+                values = line.split(",");
+                
+                if(values[1].equals(DATA_TYPE_HUM)){
+                
+	                TextView hum_name =(TextView)mSentencesTbl.findViewById(R.id.Hum_name);
+	                TextView hum_metric =(TextView)mSentencesTbl.findViewById(R.id.Hum_metric);
+	                TextView hum_value =(TextView)mSentencesTbl.findViewById(R.id.Hum_value);
+	                hum_name.setText(values[1]);
+	                hum_metric.setText(values[2]);
+	                hum_value.setText(values[3]);
+	                if(values[4].equals(DATA_TYPE_TEMP)){
+	                TextView temp_name =(TextView)mSentencesTbl.findViewById(R.id.Temp_name);
+	                TextView temp_value =(TextView)mSentencesTbl.findViewById(R.id.Temp_value);
+	                temp_name.setText(values[4]);
+	                temp_value.setText(values[5]);
+	                }
+                   }
+                if(values[1].equals(DATA_TYPE_NOISE)){
+                    TextView noise_name =(TextView)mSentencesTbl.findViewById(R.id.Noise_name);
+                    TextView noise_metric =(TextView)mSentencesTbl.findViewById(R.id.Noise_metric);
+                    TextView noise_value =(TextView)mSentencesTbl.findViewById(R.id.Noise_value);
+                    noise_name.setText(values[1]);
+                    noise_metric.setText(values[2]);
+                    noise_value.setText(values[3]);
+                    
+                    
+                   }
+                if(values[1].equals(DATA_TYPE_NOX)){
+                    TextView nox_name =(TextView)mSentencesTbl.findViewById(R.id.Nox_name);
+                    TextView nox_metric =(TextView)mSentencesTbl.findViewById(R.id.Nox_metric);
+                    TextView nox_value =(TextView)mSentencesTbl.findViewById(R.id.Nox_value);
+                    nox_name.setText(values[1]);
+                    nox_metric.setText(values[2]);
+                    nox_value.setText(values[3]);
+                   }
+                
+               if(values[1].equals(DATA_TYPE_COX)){
+                   TextView cox_name =(TextView)mSentencesTbl.findViewById(R.id.Cox_name);
+                   TextView cox_metric =(TextView)mSentencesTbl.findViewById(R.id.Cox_metric);
+                   TextView cox_value =(TextView)mSentencesTbl.findViewById(R.id.Cox_value);
+                   cox_name.setText(values[1]);
+                   cox_metric.setText(values[2]);
+                   cox_value.setText(values[3]);
+                   }
+                
+               if(values[1].equals(DATA_TYPE_BATT)){
+                   TextView batt_name =(TextView)mSentencesTbl.findViewById(R.id.Batt_name);
+                   TextView batt_metric =(TextView)mSentencesTbl.findViewById(R.id.Batt_metric);
+                   TextView batt_value =(TextView)mSentencesTbl.findViewById(R.id.Batt_value);
+                   batt_name.setText(values[1]);
+                   batt_metric.setText(values[2]);
+                   batt_value.setText(values[3]);
+                   }
+           
+                }
+                
             	++mMessageCount;
                 TextView messageIndicator = (TextView) findViewById(R.id.title_message_indicator);
                 messageIndicator.setText("Msg#" + mMessageCount + " ");
@@ -293,7 +371,7 @@ public class CitySenspod extends Activity implements LocationListener {
             }
         }
     };
-
+    
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(D) Log.d(TAG, "onActivityResult " + resultCode);
         switch (requestCode) {
@@ -392,11 +470,13 @@ public class CitySenspod extends Activity implements LocationListener {
     	if (mBluetoothAdapter == null) {
     		if (mBluetoothSensorService != null) {
     			((SampleSenspodService)mBluetoothSensorService).start(); 
+    			findViewById(R.id.tblsentences).setVisibility(View.VISIBLE);
+    	        		
     		}
     	}
     	else {
             // Launch the DeviceListActivity to see devices and do scan
-        	Toast.makeText(this, R.string.msg_coming_soon, Toast.LENGTH_SHORT).show();
+    		Toast.makeText(this, R.string.msg_coming_soon, Toast.LENGTH_SHORT).show();
             Intent serverIntent = new Intent(this, DeviceListActivity.class);
             startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
     	}
