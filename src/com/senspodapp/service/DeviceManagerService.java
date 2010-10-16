@@ -25,7 +25,7 @@ public class DeviceManagerService extends Service {
 		if (D) Log.d(TAG, "+++ ON BIND +++");
 		return mBinder;
 	}
-	
+
 	@Override
 	public void onRebind(Intent intent) {
 		if (D) Log.d(TAG, "+++ ON REBIND +++");
@@ -40,20 +40,19 @@ public class DeviceManagerService extends Service {
 
 	final RemoteCallbackList<IDeviceManagerServiceCallback> mCallbacks =
 		new RemoteCallbackList<IDeviceManagerServiceCallback>();
-	
+
 	BluetoothSensorService mBluetoothSensorService = null;
 	LogplayerService mLogplayerService = null;
 	String mConnectedDeviceName = null;
-	
+
 	private final IDeviceManagerService.Stub mBinder = new IDeviceManagerService.Stub() {
 		public void connectBluetoothDevice(BluetoothDevice device) {
 			// TODO: add support for multiple devices
 			if (mConnectedDeviceName != null) return;
 			if (mBluetoothSensorService != null) return;
-			
+
 			mBluetoothSensorService = new BluetoothSensorService(mHandler);
 			mBluetoothSensorService.connect(device);
-			mConnectedDeviceName = device.getName();
 		}
 
 		public void disconnectBluetoothDevice(String deviceName) {
@@ -65,12 +64,11 @@ public class DeviceManagerService extends Service {
 			// TODO: add support for multiple devices
 			if (mConnectedDeviceName != null) return;
 			if (mLogplayerService != null) return;
-			
+
 			try {
 				InputStream instream = getAssets().open(assetFilename);
 				mLogplayerService = new LogplayerService(mHandler, instream, messageInterval);
 				mLogplayerService.connect(null);
-				mConnectedDeviceName = "Logplayer";
 			}
 			catch (IOException e) {
 				e.printStackTrace();
@@ -108,51 +106,87 @@ public class DeviceManagerService extends Service {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-				case MessageType.SENTENCE: {
-					// Broadcast to all clients
-					final int N = mCallbacks.beginBroadcast();
-					final String sentence = (String)msg.obj;
-					if (D) Log.d(TAG, "SENTENCE = " + sentence);
-					for (int i = 0; i < N; ++i) {
-						try {
-							mCallbacks.getBroadcastItem(i).receivedSentenceData("sensorid", sentence);
-						}
-						catch (RemoteException e) {
-							// The RemoteCallbackList will take care of removing
-							// the dead object for us.
+			case MessageType.SENSORCONNECTION_NONE:
+			case MessageType.SENSORCONNECTION_SUCCESS:
+			case MessageType.SENSORCONNECTION_FAILED:
+			case MessageType.SENSORCONNECTION_LOST: {
+				final int N = mCallbacks.beginBroadcast();
+				final String deviceName = (String)msg.obj;
+				mConnectedDeviceName = deviceName;
+				if (D) Log.d(TAG, "what = " + msg.what + ", deviceName = " + deviceName);
+				for (int i = 0; i < N; ++i) {
+					try {
+						switch (msg.what) {
+						case MessageType.SENSORCONNECTION_NONE:
+							mCallbacks.getBroadcastItem(i).receivedSensorConnectionNone();
+							break;
+						case MessageType.SENSORCONNECTION_SUCCESS:
+							mCallbacks.getBroadcastItem(i).receivedSensorConnectionSuccess(deviceName);
+							break;
+						case MessageType.SENSORCONNECTION_FAILED:
+							mCallbacks.getBroadcastItem(i).receivedSensorConnectionFailed(deviceName);
+							break;
+						case MessageType.SENSORCONNECTION_LOST:
+							mCallbacks.getBroadcastItem(i).receivedSensorConnectionLost(deviceName);
+							break;
 						}
 					}
-					mCallbacks.finishBroadcast();
-				} break;
-				default:
-					super.handleMessage(msg);
+					catch (RemoteException e) {
+						// The RemoteCallbackList will take care of removing
+						// the dead object for us.
+					}
+				}
+				mCallbacks.finishBroadcast();
+			} break;
+			case MessageType.SENTENCE: {
+				// TODO
+				// SENTENCE message should include:
+				// GpsInfo, DateTime, SensorId, Sentence 
+				// Broadcast to all clients
+				final int N = mCallbacks.beginBroadcast();
+				final String sentence = (String)msg.obj;
+				if (D) Log.d(TAG, "SENTENCE = " + sentence);
+				for (int i = 0; i < N; ++i) {
+					try {
+						mCallbacks.getBroadcastItem(i).receivedSentenceData("sensorid", sentence);
+					}
+					catch (RemoteException e) {
+						// The RemoteCallbackList will take care of removing
+						// the dead object for us.
+					}
+				}
+				mCallbacks.finishBroadcast();
+			} break;
+			default:
+				super.handleMessage(msg);
 			}
 		}
 	};
-	
+
 	@Override
 	public void onCreate() {
 	}
-	
+
 	@Override
 	public void onDestroy() {
 		if (D) Log.d(TAG, "+++ ON DESTROY +++");
-		
+
 		shutdownBluetoothSensorService();
-		
+
 		Toast.makeText(this, "Device Manager stopped", Toast.LENGTH_SHORT);
-		
+
 		mCallbacks.kill();
 	}
-	
+
 	void shutdownBluetoothSensorService() {
 		if (mBluetoothSensorService == null) return;
 		mBluetoothSensorService.stop();
 	}
-	
+
 	void shutdownLogplayer() {
 		if (mLogplayerService == null) return;
 		mLogplayerService.stop();
+		mLogplayerService = null;
 	}
 
 }

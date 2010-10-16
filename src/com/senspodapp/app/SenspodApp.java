@@ -66,18 +66,12 @@ public class SenspodApp extends Activity {
 		mBtnConnect.setOnClickListener(new View.OnClickListener(){   
 			public void onClick(View v) {   
 				connectSensor();
-				/*
-				mBtnConnect.setVisibility(View.GONE);
-				mBtnDisconnect.setVisibility(View.VISIBLE);
-				*/
 			}  
 		});
 		mBtnDisconnect = (Button)findViewById(R.id.btn_disconnect);
 		mBtnDisconnect.setOnClickListener(new View.OnClickListener(){   
 			public void onClick(View v) {   
 				disconnectSensor();
-				mBtnConnect.setVisibility(View.VISIBLE);
-				mBtnDisconnect.setVisibility(View.GONE);
 			}  
 		});
 		mBtnDisconnect.setVisibility(View.GONE);
@@ -138,11 +132,11 @@ public class SenspodApp extends Activity {
 			setupSimulatorService();
 		}
 	}
-	
+
 	void connectDeviceManager() {
 		// Start the service if not already running
 		startService(new Intent(IDeviceManagerService.class.getName()));
-		
+
 		// Establish connection with the service.
 		bindService(new Intent(IDeviceManagerService.class.getName()),
 				mConnection, Context.BIND_AUTO_CREATE);
@@ -158,7 +152,7 @@ public class SenspodApp extends Activity {
 				// has crashed.
 				Log.e(TAG, "Exception during unregister callback.");
 			}
-			
+
 			mService = null;
 
 			// Detach our existing connection.
@@ -191,11 +185,11 @@ public class SenspodApp extends Activity {
 						"Remote call failed",
 						Toast.LENGTH_SHORT).show();
 			}
-			
+
 			mService = null;
 		}
 	}
-	
+
 	void connectSensor() {
 		//launchDeviceListActivity();
 		if (mService != null) {
@@ -210,7 +204,7 @@ public class SenspodApp extends Activity {
 			}
 		}
 	}
-	
+
 	void disconnectSensor() {
 		if (mService != null) {
 			try {
@@ -297,7 +291,7 @@ public class SenspodApp extends Activity {
 	@Override
 	public void onDestroy() {
 		disconnectDeviceManager();
-		
+
 		super.onDestroy();
 		if (D) Log.d(TAG, "--- ON DESTROY ---");
 	}
@@ -307,15 +301,23 @@ public class SenspodApp extends Activity {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-	            case MessageType.SENTENCE:
-	                String line = (String)msg.obj;
-	                int indexOf_dollar = line.indexOf('$'); 
-	                if (indexOf_dollar > -1) {
-	                	line = line.substring(indexOf_dollar);
-	                }
-	                mSentencesArrayAdapter.add(line);
-	                break;
-			/* TODO
+			case MessageType.SENTENCE:
+				String line = (String)msg.obj;
+				int indexOf_dollar = line.indexOf('$'); 
+				if (indexOf_dollar > -1) {
+					line = line.substring(indexOf_dollar);
+				}
+				mSentencesArrayAdapter.add(line);
+				break;
+			case MessageType.SENSORCONNECTION_SUCCESS:
+				setConnectedDeviceName((String)msg.obj);
+				break;
+			case MessageType.SENSORCONNECTION_NONE:
+			case MessageType.SENSORCONNECTION_FAILED:
+			case MessageType.SENSORCONNECTION_LOST:
+				setConnectedDeviceName(null);
+				break;
+				/* TODO
             case MessageProtocol.MESSAGE_STATE_CHANGE:
                 if (D) Log.i(TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
                 switch (msg.arg1) {
@@ -356,7 +358,7 @@ public class SenspodApp extends Activity {
                                Toast.LENGTH_SHORT).show();
                 break;
             }
-			 */
+				 */
 			default:
 				super.handleMessage(msg);
 			}
@@ -426,7 +428,7 @@ public class SenspodApp extends Activity {
 				break;
 			}
 		}    	
-	*/
+		 */
 	}
 
 	@Override
@@ -454,7 +456,7 @@ public class SenspodApp extends Activity {
 			Intent serverIntent = new Intent(this, DeviceListActivity.class);
 			startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
 		}
-		*/
+		 */
 	}
 
 	@Override
@@ -493,14 +495,18 @@ public class SenspodApp extends Activity {
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 		Log.d(TAG, "status changed");
 	}
-	
+
 	private void setConnectedDeviceName(String connectedDeviceName) {
 		if (connectedDeviceName == null) {
-            mTitle.setText(R.string.title_not_connected);
+			mTitle.setText(R.string.title_not_connected);
+			mBtnConnect.setVisibility(View.VISIBLE);
+			mBtnDisconnect.setVisibility(View.GONE);
 		}
 		else {
-            mTitle.setText(R.string.title_connected_to);
-            mTitle.append(connectedDeviceName);
+			mTitle.setText(R.string.title_connected_to);
+			mTitle.append(connectedDeviceName);
+			mBtnConnect.setVisibility(View.GONE);
+			mBtnDisconnect.setVisibility(View.VISIBLE);
 		}
 	}
 
@@ -541,6 +547,8 @@ public class SenspodApp extends Activity {
 			// unexpectedly disconnected -- that is, its process crashed.
 			mService = null;
 
+			setConnectedDeviceName(null);
+
 			Toast.makeText(SenspodApp.this, "Remote service crashed",
 					Toast.LENGTH_SHORT).show();
 		}
@@ -559,6 +567,22 @@ public class SenspodApp extends Activity {
 		 */
 		public void receivedSentenceData(String sensorId, String sentence) {
 			mHandler.obtainMessage(MessageType.SENTENCE, sentence).sendToTarget();
+		}
+
+		public void receivedSensorConnectionNone() {
+			mHandler.obtainMessage(MessageType.SENSORCONNECTION_NONE).sendToTarget();
+		}
+
+		public void receivedSensorConnectionFailed(String deviceName) {
+			mHandler.obtainMessage(MessageType.SENSORCONNECTION_FAILED, deviceName).sendToTarget();
+		}
+
+		public void receivedSensorConnectionLost(String deviceName) {
+			mHandler.obtainMessage(MessageType.SENSORCONNECTION_LOST, deviceName).sendToTarget();
+		}
+
+		public void receivedSensorConnectionSuccess(String deviceName) {
+			mHandler.obtainMessage(MessageType.SENSORCONNECTION_SUCCESS, deviceName).sendToTarget();
 		}
 	};
 }

@@ -144,6 +144,9 @@ public class BluetoothSensorService {
         if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
         if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
         
+        // Send the name of the connected device back to the Device Manager
+        mHandler.obtainMessage(MessageType.SENSORCONNECTION_NONE).sendToTarget();
+
         setState(STATE_NONE);
     }
 

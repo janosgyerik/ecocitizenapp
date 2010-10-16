@@ -72,6 +72,9 @@ public class LogplayerService extends BluetoothSensorService {
         if (mConnectedThread != null) mConnectedThread.shutdown();
         if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
         
+        // Send the name of the connected device back to the Device Manager
+        mHandler.obtainMessage(MessageType.SENSORCONNECTION_NONE).sendToTarget();
+
         setState(STATE_NONE);
     }
 
@@ -132,6 +135,6 @@ public class LogplayerService extends BluetoothSensorService {
         		Log.e(TAG, "close() of input stream failed", e);
         	}
         }
+        
     }
 }
-
