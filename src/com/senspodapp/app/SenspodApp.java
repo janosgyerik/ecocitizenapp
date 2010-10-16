@@ -44,8 +44,6 @@ public class SenspodApp extends Activity {
 	private ListView mSentencesView;
 	private ArrayAdapter<String> mSentencesArrayAdapter;
 
-	// Name of the connected device
-	private String mConnectedDeviceName = null;
 	// Local Bluetooth adapter
 	private BluetoothAdapter mBluetoothAdapter = null;
 
@@ -495,6 +493,16 @@ public class SenspodApp extends Activity {
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 		Log.d(TAG, "status changed");
 	}
+	
+	private void setConnectedDeviceName(String connectedDeviceName) {
+		if (connectedDeviceName == null) {
+            mTitle.setText(R.string.title_not_connected);
+		}
+		else {
+            mTitle.setText(R.string.title_connected_to);
+            mTitle.append(connectedDeviceName);
+		}
+	}
 
 	private IDeviceManagerService mService = null;
 
@@ -502,8 +510,7 @@ public class SenspodApp extends Activity {
 	 * Class for interacting with the main interface of the service.
 	 */
 	private ServiceConnection mConnection = new ServiceConnection() {
-		public void onServiceConnected(ComponentName className,
-				IBinder service) {
+		public void onServiceConnected(ComponentName className, IBinder service) {
 			// This is called when the connection with the service has been
 			// established, giving us the service object we can use to
 			// interact with the service.  We are communicating with our
@@ -514,6 +521,7 @@ public class SenspodApp extends Activity {
 			// We want to monitor the service for as long as we are
 			// connected to it.
 			try {
+				setConnectedDeviceName(mService.getConnectedDeviceName());
 				mService.registerCallback(mCallback);
 			} 
 			catch (RemoteException e) {

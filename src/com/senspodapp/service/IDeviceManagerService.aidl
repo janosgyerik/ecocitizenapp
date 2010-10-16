@@ -9,6 +9,7 @@ interface IDeviceManagerService {
      * Request the PID of this service, to do evil things with it.
      */
     int getPid();
+	String getConnectedDeviceName();
     
     void connectBluetoothDevice(in BluetoothDevice device);
 	void disconnectBluetoothDevice(in String deviceName);

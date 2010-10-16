@@ -43,14 +43,17 @@ public class DeviceManagerService extends Service {
 	
 	BluetoothSensorService mBluetoothSensorService = null;
 	LogplayerService mLogplayerService = null;
+	String mConnectedDeviceName = null;
 	
 	private final IDeviceManagerService.Stub mBinder = new IDeviceManagerService.Stub() {
 		public void connectBluetoothDevice(BluetoothDevice device) {
 			// TODO: add support for multiple devices
-			if (mBluetoothSensorService == null) {
-				mBluetoothSensorService = new BluetoothSensorService(mHandler);
-				mBluetoothSensorService.connect(device);
-			}
+			if (mConnectedDeviceName != null) return;
+			if (mBluetoothSensorService != null) return;
+			
+			mBluetoothSensorService = new BluetoothSensorService(mHandler);
+			mBluetoothSensorService.connect(device);
+			mConnectedDeviceName = device.getName();
 		}
 
 		public void disconnectBluetoothDevice(String deviceName) {
@@ -58,37 +61,42 @@ public class DeviceManagerService extends Service {
 			shutdownBluetoothSensorService();
 		}
 
-		public void registerCallback(IDeviceManagerServiceCallback cb) {
-			if (D) Log.d(TAG, "Register callback.");
-			if (cb != null) mCallbacks.register(cb);
-		}
-
-		public void unregisterCallback(IDeviceManagerServiceCallback cb) {
-			if (D) Log.d(TAG, "Unregister callback.");
-			if (cb != null) mCallbacks.unregister(cb);
-		}
-
 		public void connectLogplayer(String assetFilename, int messageInterval) {
 			// TODO: add support for multiple devices
-			if (mLogplayerService == null) {
-				try {
-					InputStream instream = getAssets().open(assetFilename);
-					mLogplayerService = new LogplayerService(mHandler, instream, messageInterval);
-					mLogplayerService.connect(null);
-				}
-				catch (IOException e) {
-					e.printStackTrace();
-					return;
-				}
+			if (mConnectedDeviceName != null) return;
+			if (mLogplayerService != null) return;
+			
+			try {
+				InputStream instream = getAssets().open(assetFilename);
+				mLogplayerService = new LogplayerService(mHandler, instream, messageInterval);
+				mLogplayerService.connect(null);
+				mConnectedDeviceName = "Logplayer";
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+				return;
 			}
 		}
 
 		public void disconnectLogplayer() {
+			// TODO: add support for multiple devices
 			shutdownLogplayer();
+		}
+
+		public void registerCallback(IDeviceManagerServiceCallback cb) {
+			if (cb != null) mCallbacks.register(cb);
+		}
+
+		public void unregisterCallback(IDeviceManagerServiceCallback cb) {
+			if (cb != null) mCallbacks.unregister(cb);
 		}
 
 		public int getPid() {
 			return Process.myPid();
+		}
+
+		public String getConnectedDeviceName() throws RemoteException {
+			return mConnectedDeviceName;
 		}
 	};
 
