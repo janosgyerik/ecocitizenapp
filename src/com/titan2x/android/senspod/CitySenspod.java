@@ -100,7 +100,7 @@ public class CitySenspod extends Activity implements LocationListener {
         mTitle = (TextView) findViewById(R.id.title_right_text);
 
         mSentencesArrayAdapter = new ArrayAdapter<String>(this, R.layout.message);
-        mSentencesView = (ListView) findViewById(R.id.rawsentences);
+        mSentencesView = (ListView) findViewById(R.id.sentences);
         mSentencesView.setAdapter(mSentencesArrayAdapter);
 
 		locationmanager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);

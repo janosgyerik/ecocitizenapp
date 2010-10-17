@@ -33,7 +33,7 @@
     	style="@style/latlon"
     	android:visibility="gone"
     />
-    <ListView android:id="@+id/rawsentences"
+    <ListView android:id="@+id/sentences"
     	android:layout_width="fill_parent"
     	android:layout_height="fill_parent"
     	android:stackFromBottom="true"

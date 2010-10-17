@@ -1,6 +1,5 @@
 migration to new architecture step by step
 	build gps provider into DM
-	create base class for SenspodApp and SentencesActivity
 	StatusActivity
 		total sentences received
 		total sentences uploaded
