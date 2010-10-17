@@ -474,6 +474,9 @@ public class SenspodApp extends Activity {
 		case R.id.menu_settings:
 			startActivity(new Intent(this, SettingsActivity.class));
 			break;    
+		case R.id.menu_sentences:
+			startActivity(new Intent(this, SentencesActivity.class));
+			break;    
 		case R.id.menu_home:
 			// go to home page (showing current pollution level, illustrated)
 			break;

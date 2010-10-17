@@ -3,12 +3,22 @@
 	package="com.senspodapp.app" android:versionCode="1"
 	android:versionName="1.0">
 	<application android:icon="@drawable/icon" android:label="@string/app_name">
+		<service android:name="com.senspodapp.service.DeviceManagerService"
+			android:process=":remote">
+			<intent-filter>
+				<action android:name="com.senspodapp.service.IDeviceManagerService" />
+			</intent-filter>
+		</service>
+
 		<activity android:name=".SenspodApp"
 			android:screenOrientation="nosensor" android:label="@string/app_name">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
+		</activity>
+
+		<activity android:name=".SentencesActivity" android:label="Sentences">
 		</activity>
 
 		<activity android:name=".SettingsActivity" android:label="@string/menu_settings">
@@ -26,13 +36,6 @@
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>
-		
-		<service android:name="com.senspodapp.service.DeviceManagerService" android:process=":remote">
-			<intent-filter>
-				<action android:name="com.senspodapp.service.IDeviceManagerService"/>
-			</intent-filter>
-		</service>
-
 
 		<receiver android:name="backport.android.bluetooth.BluetoothIntentRedirector">
 			<intent-filter>

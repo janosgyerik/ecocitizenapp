@@ -1,5 +1,37 @@
+migration to new architecture step by step
+	build gps provider into DM
+	create base class for SenspodApp and SentencesActivity
+	StatusActivity
+		total sentences received
+		total sentences uploaded
+		list of connected devices
+		extra controlling features
+			kill service
+	TreeActivity = SenspodApp
+		automatically connect to the service
+		show connect button if service has no devices
+	FileSaverService
+		CRITICAL
+	UploaderService
+		CRITICAL
+
+maybe for part-timers
+	logplayer is robust
+		automatically disconnects after file is finished
+		start stop works consistently without errors
+
+optimization
+	remove all hardcoded strings from src/ and res/
+		SentencesActivity
+	automatically start service when app is started
+	comments in new source code
+	improve button style by using different style parent?
+	implement Logplayer as an independent class, not as subclass of BT
+		in the future we might create a unified interface for device manager to make it possible to connect any type of device. For now it's an unnecessary complication
+	fix licence message
+
 confirm with real android device
-	-
+	can start and stop bt connections
 
 tasks when connected to internet
 	migrate tasks from launchpad to redmine
