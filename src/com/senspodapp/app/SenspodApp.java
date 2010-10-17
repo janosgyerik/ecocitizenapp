@@ -16,8 +16,7 @@ public class SenspodApp extends DeviceManagerClient {
 	private static final boolean D = true;
 
 	// Layout Views
-	private ListView mSentencesView;
-	private ArrayAdapter<String> mSentencesArrayAdapter;
+	//
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -44,32 +43,10 @@ public class SenspodApp extends DeviceManagerClient {
 		});
 		mBtnDisconnect.setVisibility(View.GONE);
 
-		((Button)findViewById(R.id.btn_dm_connect)).setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				connectDeviceManager();
-			}
-		});
-
-		((Button)findViewById(R.id.btn_dm_disconnect)).setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				disconnectDeviceManager();
-			}
-		});
-
-		((Button)findViewById(R.id.btn_dm_kill)).setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				killDeviceManager();
-			}
-		});
-
 		// Set up the custom title
 		mTitle = (TextView) findViewById(R.id.title_left_text);
 		mTitle.setText(R.string.app_name);
 		mTitle = (TextView) findViewById(R.id.title_right_text);
-
-		mSentencesArrayAdapter = new ArrayAdapter<String>(this, R.layout.message);
-		mSentencesView = (ListView) findViewById(R.id.sentences);
-		mSentencesView.setAdapter(mSentencesArrayAdapter);
 
 		// If the adapter is null, then Bluetooth is not supported
 		if (mBluetoothAdapter == null) {
@@ -78,7 +55,12 @@ public class SenspodApp extends DeviceManagerClient {
 	}
 
 	@Override
+	void receivedSentenceBundle(Bundle bundle) {
+		// TODO: get GPS from bundle and display lat/lon
+	}
+	
+	@Override
 	void receivedSentenceLine(String line) {
-		mSentencesArrayAdapter.add(line);
+		// TODO: parse the sentence line and display data values
 	}
 }

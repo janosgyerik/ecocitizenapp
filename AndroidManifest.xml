@@ -21,6 +21,9 @@
 		<activity android:name=".SentencesActivity" android:label="Sentences">
 		</activity>
 
+		<activity android:name=".DeviceManagerConsole" android:label="Console">
+		</activity>
+
 		<activity android:name=".SettingsActivity" android:label="@string/menu_settings">
 		</activity>
 

@@ -383,9 +383,11 @@ public class CitySenspod extends Activity implements LocationListener {
         disconnectMenuItem = menu.findItem(R.id.menu_disconnect);
         onBluetoothStateChanged();
         
+        /*
         debugOnMenuItem = menu.findItem(R.id.menu_debug_on);
         debugOffMenuItem = menu.findItem(R.id.menu_debug_off);
         onDebugModeChanged();
+        */
         
         return true;
     }
@@ -431,6 +433,7 @@ public class CitySenspod extends Activity implements LocationListener {
         case R.id.menu_quit:
         	finish();
         	break;
+        	/*
         case R.id.menu_debug_on:
         	debugMode = true;
         	onDebugModeChanged();
@@ -439,6 +442,7 @@ public class CitySenspod extends Activity implements LocationListener {
         	debugMode = false;
         	onDebugModeChanged();
         	break;
+        	*/
         }
         return false;
     }
