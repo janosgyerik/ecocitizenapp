@@ -87,7 +87,7 @@ public class CitySenspod extends Activity implements LocationListener {
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
         
         //Set up the button to connect to the sensor
-        mBtnConnect = (Button)findViewById(R.id.btn_connect);
+        mBtnConnect = (Button)findViewById(R.id.btn_connect_device);
         mBtnConnect.setOnClickListener(new View.OnClickListener(){   
             public void onClick(View v) {   
             	launchDeviceListActivity();
@@ -400,7 +400,7 @@ public class CitySenspod extends Activity implements LocationListener {
     	}
     	else {
             // Launch the DeviceListActivity to see devices and do scan
-        	Toast.makeText(this, R.string.msg_coming_soon, Toast.LENGTH_SHORT).show();
+        	//Toast.makeText(this, R.string.msg_coming_soon, Toast.LENGTH_SHORT).show();
             Intent serverIntent = new Intent(this, DeviceListActivity.class);
             startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
     	}
@@ -424,11 +424,11 @@ public class CitySenspod extends Activity implements LocationListener {
         	break;
         case R.id.menu_graph:
         	// go to graph page (pollution graph showing past N minutes)
-            Toast.makeText(this, R.string.msg_coming_soon, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, R.string.msg_coming_soon, Toast.LENGTH_SHORT).show();
         	break;
         case R.id.menu_map:
         	// go to map page (pollution map showing past N minutes)
-            Toast.makeText(this, R.string.msg_coming_soon, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, R.string.msg_coming_soon, Toast.LENGTH_SHORT).show();
         	break;
         case R.id.menu_quit:
         	finish();

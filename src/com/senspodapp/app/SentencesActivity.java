@@ -28,7 +28,7 @@ public class SentencesActivity extends DeviceManagerClient {
 		
 		// Set up the custom title
 		mTitle = (TextView) findViewById(R.id.title_left_text);
-		mTitle.setText("Sentences");
+		mTitle.setText(R.string.sentences_activity);
 		mTitle = (TextView) findViewById(R.id.title_right_text);
 
 		mSentencesArrayAdapter = new ArrayAdapter<String>(this, R.layout.message);

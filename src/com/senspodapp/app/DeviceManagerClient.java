@@ -333,17 +333,6 @@ public abstract class DeviceManagerClient extends Activity {
 		case R.id.menu_console:
 			startActivity(new Intent(this, DeviceManagerConsole.class));
 			break;    
-		case R.id.menu_home:
-			// go to home page (showing current pollution level, illustrated)
-			break;
-		case R.id.menu_graph:
-			// go to graph page (pollution graph showing past N minutes)
-			Toast.makeText(this, R.string.msg_coming_soon, Toast.LENGTH_SHORT).show();
-			break;
-		case R.id.menu_map:
-			// go to map page (pollution map showing past N minutes)
-			Toast.makeText(this, R.string.msg_coming_soon, Toast.LENGTH_SHORT).show();
-			break;
 		case R.id.menu_quit:
 			finish();
 			break;

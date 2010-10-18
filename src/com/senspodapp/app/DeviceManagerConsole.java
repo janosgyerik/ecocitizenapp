@@ -35,34 +35,34 @@ public class DeviceManagerConsole extends DeviceManagerClient {
 		setContentView(R.layout.console);
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
 
-		Button mBtnConnectSensor = (Button)findViewById(R.id.btn_connect);
+		Button mBtnConnectSensor = (Button)findViewById(R.id.btn_connect_device);
 		mBtnConnectSensor.setOnClickListener(new View.OnClickListener(){   
 			public void onClick(View v) {   
 				connectSensor();
 			}  
 		});
-		Button mBtnDisconnectSensor = (Button)findViewById(R.id.btn_disconnect);
+		Button mBtnDisconnectSensor = (Button)findViewById(R.id.btn_disconnect_device);
 		mBtnDisconnectSensor.setOnClickListener(new View.OnClickListener(){   
 			public void onClick(View v) {   
 				disconnectSensor();
 			}  
 		});
 
-		Button mBtnConnectDM = (Button)findViewById(R.id.btn_dm_connect);
+		Button mBtnConnectDM = (Button)findViewById(R.id.btn_connect_dm);
 		mBtnConnectDM.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				connectDeviceManager();
 			}
 		});
 
-		Button mBtnDisconnectDM = (Button)findViewById(R.id.btn_dm_disconnect);
+		Button mBtnDisconnectDM = (Button)findViewById(R.id.btn_disconnect_dm);
 		mBtnDisconnectDM.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				disconnectDeviceManager();
 			}
 		});
 
-		Button mBtnKillDM = (Button)findViewById(R.id.btn_dm_kill);
+		Button mBtnKillDM = (Button)findViewById(R.id.btn_kill_dm);
 		mBtnKillDM.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				killDeviceManager();
@@ -71,7 +71,7 @@ public class DeviceManagerConsole extends DeviceManagerClient {
 
 		// Set up the custom title
 		mTitle = (TextView) findViewById(R.id.title_left_text);
-		mTitle.setText("Device Manager Console");
+		mTitle.setText(R.string.console_activity);
 		mTitle = (TextView) findViewById(R.id.title_right_text);
 
 		mSentencesArrayAdapter = new ArrayAdapter<String>(this, R.layout.message);

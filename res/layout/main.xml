@@ -22,7 +22,7 @@
     android:id="@+id/treepage"
     >
     <TextView android:id="@+id/co2"
-    	style="@style/co2value"
+    	style="@style/co2"
     	android:gravity="center"
 	/>
     <TextView android:id="@+id/lat"
@@ -36,14 +36,14 @@
     	android:layout_height="fill_parent"
     	android:layout_weight="1"
     />
-    <Button android:id="@+id/btn_connect"
-		android:text="@string/btn_connect"
+    <Button android:id="@+id/btn_connect_device"
+		android:text="@string/btn_connect_device"
     	android:stackFromBottom="true"
-		style="@style/btn_connect"
+		style="@style/btn"
     />
-    <Button android:id="@+id/btn_disconnect"
-		android:text="@string/btn_disconnect"
+    <Button android:id="@+id/btn_disconnect_device"
+		android:text="@string/btn_disconnect_device"
     	android:stackFromBottom="true"
-		style="@style/btn_connect"
+		style="@style/btn"
     />
 </LinearLayout>

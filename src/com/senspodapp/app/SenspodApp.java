@@ -44,13 +44,13 @@ public class SenspodApp extends DeviceManagerClient {
 		mLonView = (TextView)findViewById(R.id.lon);
 		
 		// Set up the button to connect/disconnect sensors
-		mBtnConnect = (Button)findViewById(R.id.btn_connect);
+		mBtnConnect = (Button)findViewById(R.id.btn_connect_device);
 		mBtnConnect.setOnClickListener(new View.OnClickListener(){   
 			public void onClick(View v) {   
 				connectSensor();
 			}  
 		});
-		mBtnDisconnect = (Button)findViewById(R.id.btn_disconnect);
+		mBtnDisconnect = (Button)findViewById(R.id.btn_disconnect_device);
 		mBtnDisconnect.setOnClickListener(new View.OnClickListener(){   
 			public void onClick(View v) {   
 				disconnectSensor();

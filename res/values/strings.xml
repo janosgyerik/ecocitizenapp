@@ -16,11 +16,12 @@
 
 <resources>
     <string name="app_name">SenspodApp</string>
+    <string name="settings_activity">Settings</string>
+    <string name="sentences_activity">Sentences</string>
+    <string name="console_activity">Console</string>
 
-    <!--  BluetoothChat -->
-    
     <string name="not_connected">You are not connected to a device</string>
-    <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Leaving Bluetooth Chat.</string>
+    <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Exit.</string>
     <string name="title_connecting">connecting...</string>
     <string name="title_connected_to">connected: </string>
     <string name="title_not_connected">not connected</string>
@@ -35,21 +36,19 @@
     <string name="button_scan">Scan for devices</string>
 
     <!-- Options Menu -->
-    <string name="menu_connect">Connect a device</string>
-    
     <string name="menu_home">Home</string>
+    <string name="menu_connect">Connect a device</string>
     <string name="menu_graph">Graph</string>
     <string name="menu_map">Map</string>
     <string name="menu_disconnect">Disconnect device</string>
-    <string name="msg_coming_soon">Coming Soon!</string>
     <string name="menu_quit">Quit</string>
-    <string name="menu_debug_on">Debug ON</string>
-    <string name="menu_debug_off">Debug OFF</string>
     <string name="menu_settings">Settings</string>
+    <string name="menu_sentences">Sentences</string>
+    <string name="menu_console">Console</string>
 
     <!--  Preferences -->
     <string name="title_username_preference">Username</string>
-    <string name="summary_username_preference">User name on SensorMap website</string>
+    <string name="summary_username_preference">Username on SensorMap website</string>
     <string name="dialog_title_username_preference">Enter your SensorMap username</string>
     
     <string name="title_password_preference">Password</string>
@@ -61,7 +60,10 @@
     <string name="dialog_title_sensormapurl_preference">Enter SensorMap API URL</string>
 
     <!-- Tree view -->
-    <string name="btn_connect">Connect to sensor</string>
-    <string name="btn_disconnect">Disconnect sensor</string>
+    <string name="btn_connect_device">Connect to sensor</string>
+    <string name="btn_disconnect_device">Disconnect sensor</string>
+    <string name="btn_connect_dm">Connect DM</string>
+    <string name="btn_disconnect_dm">Disconnect DM</string>
+    <string name="btn_kill_dm">Kill DM</string>
 
 </resources>
