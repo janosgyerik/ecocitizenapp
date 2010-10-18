@@ -1,9 +1,14 @@
 migration to new architecture step by step
 	build gps provider into DM
 	fix tree page
-		connect/disconnect button
-		show co2 value
 		show lat/lon
+	automatic bt detection and proper handling in DeviceManagerClient
+		if no bt, use logplayer instead
+		otherwise use bt
+		possibly option to use logplayer too
+	menus
+		generic pages should not have the usual menu, just a back option
+			'back' should work the same way as the back button
 	code cleansing
 		variable names
 		hardcoded strings

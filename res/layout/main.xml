@@ -21,14 +21,20 @@
     android:background="@drawable/background1"
     android:id="@+id/treepage"
     >
-    <TextView android:id="@+id/co2value"
+    <TextView android:id="@+id/co2"
     	style="@style/co2value"
+    	android:gravity="center"
 	/>
     <TextView android:id="@+id/lat"
     	style="@style/latlon"
     />
     <TextView android:id="@+id/lon"
     	style="@style/latlon"
+    />
+    <ListView android:id="@+id/vspace"
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:layout_weight="1"
     />
     <Button android:id="@+id/btn_connect"
 		android:text="@string/btn_connect"

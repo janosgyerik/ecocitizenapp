@@ -1,14 +1,17 @@
 package com.senspodapp.app;
 
+import java.text.DecimalFormat;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.senspodapp.parser.Co2SentenceParser;
+import com.senspodapp.service.BundleKeys;
 
 public class SenspodApp extends DeviceManagerClient {
 	// Debugging
@@ -16,7 +19,14 @@ public class SenspodApp extends DeviceManagerClient {
 	private static final boolean D = true;
 
 	// Layout Views
-	//
+	private TextView mCo2View;
+	private static DecimalFormat co2Format = new DecimalFormat("0");
+    private TextView mLatView;
+    private TextView mLonView;
+    private static DecimalFormat latLonFormat = new DecimalFormat("* ###.00000");
+    
+	private Button mBtnConnect;
+	private Button mBtnDisconnect;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -28,14 +38,19 @@ public class SenspodApp extends DeviceManagerClient {
 		setContentView(R.layout.main);
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
 
-		//Set up the button to connect to the sensor
-		Button mBtnConnect = (Button)findViewById(R.id.btn_connect);
+		// Set up layout components
+		mCo2View = (TextView)findViewById(R.id.co2);
+		mLatView = (TextView)findViewById(R.id.lat);
+		mLonView = (TextView)findViewById(R.id.lon);
+		
+		// Set up the button to connect/disconnect sensors
+		mBtnConnect = (Button)findViewById(R.id.btn_connect);
 		mBtnConnect.setOnClickListener(new View.OnClickListener(){   
 			public void onClick(View v) {   
 				connectSensor();
 			}  
 		});
-		Button mBtnDisconnect = (Button)findViewById(R.id.btn_disconnect);
+		mBtnDisconnect = (Button)findViewById(R.id.btn_disconnect);
 		mBtnDisconnect.setOnClickListener(new View.OnClickListener(){   
 			public void onClick(View v) {   
 				disconnectSensor();
@@ -56,11 +71,31 @@ public class SenspodApp extends DeviceManagerClient {
 
 	@Override
 	void receivedSentenceBundle(Bundle bundle) {
-		// TODO: get GPS from bundle and display lat/lon
+		String line = bundle.getString(BundleKeys.SENTENCE);
+		if (parser.match(line)) {
+			mCo2View.setText(co2Format.format(parser.getFloatValue()));
+			
+			// TODO: get GPS from bundle and display lat/lon
+		}
 	}
+	
+	Co2SentenceParser parser = new Co2SentenceParser();
 	
 	@Override
 	void receivedSentenceLine(String line) {
-		// TODO: parse the sentence line and display data values
+		// Never called, because we work with the Bundle in receivedSentenceBundle
+	}
+	
+	@Override
+	void setConnectedDeviceName(String connectedDeviceName) {
+		super.setConnectedDeviceName(connectedDeviceName);
+		if (connectedDeviceName == null) {
+			mBtnConnect.setVisibility(View.VISIBLE);
+			mBtnDisconnect.setVisibility(View.GONE);
+		}
+		else {
+			mBtnConnect.setVisibility(View.GONE);
+			//mBtnDisconnect.setVisibility(View.VISIBLE);
+		}
 	}
 }

@@ -132,8 +132,8 @@ public abstract class DeviceManagerClient extends Activity {
 		}
 	}
 
+	// TODO: if we have BT, use it, otherwise start logplayer
 	void connectSensor() {
-		//launchDeviceListActivity();
 		if (mService != null) {
 			try {
 				String assetName = getString(R.string.logplayer_filename);
@@ -319,12 +319,10 @@ public abstract class DeviceManagerClient extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_connect:
-			launchDeviceListActivity();
+			connectSensor();
 			return true;
 		case R.id.menu_disconnect:
-			// Disconnect any connected devices
-			// TODO
-			//if (mBluetoothSensorService != null) mBluetoothSensorService.stop();
+			disconnectSensor();
 			break;
 		case R.id.menu_settings:
 			startActivity(new Intent(this, SettingsActivity.class));
@@ -353,7 +351,7 @@ public abstract class DeviceManagerClient extends Activity {
 		return false;
 	}
 
-	private void setConnectedDeviceName(String connectedDeviceName) {
+	void setConnectedDeviceName(String connectedDeviceName) {
 		if (connectedDeviceName == null) {
 			mTitle.setText(R.string.title_not_connected);
 		}

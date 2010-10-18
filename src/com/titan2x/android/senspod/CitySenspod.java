@@ -157,7 +157,7 @@ public class CitySenspod extends Activity implements LocationListener {
     }
 
     private void setupCommonService() {
-        mCo2View = (TextView) findViewById(R.id.co2value);
+        mCo2View = (TextView) findViewById(R.id.co2);
         mCo2View.setGravity(Gravity.CENTER);
         
         mLatView = (TextView) findViewById(R.id.lat);
