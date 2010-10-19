@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:background="@drawable/background1"
+	>
+
+	<TableLayout android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:id="@+id/tblsentences"
+		android:layout_gravity="center" android:baselineAligned="true"
+		android:gravity="center_horizontal" android:drawingCacheQuality="auto">
+
+		<TableRow android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/Hum">
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:padding="3dip"
+				android:hint="Hum" android:id="@+id/Hum_name" android:text="Hum"></TextView>
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:padding="3dip"
+				android:id="@+id/Hum_metric"></TextView>
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/Hum_value"
+				android:padding="3dip"></TextView>
+		</TableRow>
+
+		<TableRow android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/Batt">
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/Batt_name"
+				android:text="Batt" android:padding="3dip"></TextView>
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/Batt_metric"
+				android:padding="3dip"></TextView>
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/Batt_value"
+				android:padding="3dip"></TextView>
+		</TableRow>
+
+		<TableRow android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/Noise">
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:text="Noise"
+				android:id="@+id/Noise_name" android:padding="3dip"></TextView>
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/Noise_metric"
+				android:padding="3dip"></TextView>
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/Noise_value"
+				android:padding="3dip"></TextView>
+		</TableRow>
+
+		<TableRow android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/Cox">
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/Cox_name"
+				android:text="Cox" android:padding="3dip"></TextView>
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/Cox_metric"
+				android:padding="3dip"></TextView>
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/Cox_value"
+				android:padding="3dip"></TextView>
+		</TableRow>
+
+		<TableRow android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/Nox">
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/Nox_name"
+				android:text="Nox" android:padding="3dip"></TextView>
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/Nox_metric"
+				android:padding="3dip"></TextView>
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/Nox_value"
+				android:padding="3dip"></TextView>
+		</TableRow>
+
+		<TableRow android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/Temp">
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:text="Temp" android:id="@+id/Temp_name"
+				android:padding="3dip"></TextView>
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/Temp_metric"
+				android:padding="3dip"></TextView>
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/Temp_value"
+				android:padding="3dip"></TextView>
+		</TableRow>
+
+	</TableLayout>
+	
+    <Button android:id="@+id/btn_connect_device"
+		android:text="@string/btn_connect_device"
+    	android:stackFromBottom="true"
+		style="@style/btn"
+    />
+    <Button android:id="@+id/btn_disconnect_device"
+		android:text="@string/btn_disconnect_device"
+    	android:stackFromBottom="true"
+		style="@style/btn"
+    />
+
+</LinearLayout>

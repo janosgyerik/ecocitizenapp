@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.titan2x.android.senspod;
+package com.senspodapp.app;
 
 import java.util.HashSet;
 import java.util.Set;

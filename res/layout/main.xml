@@ -1,18 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2009 The Android Open Source Project
-
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
-
-          http://www.apache.org/licenses/LICENSE-2.0
-
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License.
--->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
@@ -21,8 +7,9 @@
     android:background="@drawable/background1"
     android:id="@+id/treepage"
     >
-    <TextView android:id="@+id/co2value"
-    	style="@style/co2value"
+    <TextView android:id="@+id/co2"
+    	style="@style/co2"
+    	android:gravity="center"
 	/>
     <TextView android:id="@+id/lat"
     	style="@style/latlon"
@@ -30,16 +17,19 @@
     <TextView android:id="@+id/lon"
     	style="@style/latlon"
     />
-    <ListView android:id="@+id/rawsentences"
+    <ListView android:id="@+id/vspace"
     	android:layout_width="fill_parent"
     	android:layout_height="fill_parent"
-    	android:stackFromBottom="true"
-        android:transcriptMode="alwaysScroll"
-        android:layout_weight="1"
+    	android:layout_weight="1"
     />
-    <Button android:id="@+id/button_connect"
-		android:text="@string/button_connect"
+    <Button android:id="@+id/btn_connect_device"
+		android:text="@string/btn_connect_device"
     	android:stackFromBottom="true"
-		style="@style/button_connect"
+		style="@style/btn"
+    />
+    <Button android:id="@+id/btn_disconnect_device"
+		android:text="@string/btn_disconnect_device"
+    	android:stackFromBottom="true"
+		style="@style/btn"
     />
 </LinearLayout>
