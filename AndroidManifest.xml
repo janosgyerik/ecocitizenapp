@@ -27,6 +27,9 @@
 		<activity android:name=".SettingsActivity" android:label="@string/menu_settings">
 		</activity>
 
+		<activity android:name=".TabularViewActivity" android:label="Tabular View">
+		</activity>
+
 		<activity android:name=".DeviceListActivity" android:label="@string/select_device"
 			android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden" />
 

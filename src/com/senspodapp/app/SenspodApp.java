@@ -2,7 +2,9 @@ package com.senspodapp.app;
 
 import java.text.DecimalFormat;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -33,6 +35,8 @@ public class SenspodApp extends DeviceManagerClient {
 		super.onCreate(savedInstanceState);
 		if (D) Log.e(TAG, "+++ ON CREATE +++");
 
+		PreferenceManager.setDefaultValues(this, R.xml.default_preferences, false);
+
 		// Set up the window layout
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.main);
@@ -62,10 +66,24 @@ public class SenspodApp extends DeviceManagerClient {
 		mTitle = (TextView) findViewById(R.id.title_left_text);
 		mTitle.setText(R.string.app_name);
 		mTitle = (TextView) findViewById(R.id.title_right_text);
-
+		
 		// If the adapter is null, then Bluetooth is not supported
 		if (mBluetoothAdapter == null) {
 			Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
+		}
+
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+		if (settings.getString("default_username", "") == "") {
+			String username = this.getString(R.string.username);
+			String map_server_url = this.getString(R.string.map_server_url);
+			SharedPreferences.Editor editor = settings.edit();
+			editor.putString("default_username", username);
+			editor.putString("default_sensormapurl", map_server_url);
+			editor.commit();
+			mTitle.setText("reset username");
+		}
+		else {
+			mTitle.setText("username: " + settings.getString("default_username", "jack"));
 		}
 	}
 
