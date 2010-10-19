@@ -71,22 +71,30 @@ public class SenspodApp extends DeviceManagerClient {
 		if (mBluetoothAdapter == null) {
 			Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
 		}
+	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		if (D) Log.d(TAG, "++ ON START ++");
 
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-		if (settings.getString("default_username", "") == "") {
+		if (settings.getString("username", "").equals("")) {
 			String username = this.getString(R.string.username);
+			SharedPreferences.Editor editor = settings.edit();
+			editor.putString("username", username);
+			editor.commit();
+		}
+		if (settings.getString("map_server_url", "").equals("")) {
 			String map_server_url = this.getString(R.string.map_server_url);
 			SharedPreferences.Editor editor = settings.edit();
-			editor.putString("default_username", username);
-			editor.putString("default_sensormapurl", map_server_url);
+			editor.putString("map_server_url", map_server_url);
 			editor.commit();
-			mTitle.setText("reset username");
-		}
-		else {
-			mTitle.setText("username: " + settings.getString("default_username", "jack"));
 		}
 	}
 
+	Co2SentenceParser parser = new Co2SentenceParser();
+	
 	@Override
 	void receivedSentenceBundle(Bundle bundle) {
 		String line = bundle.getString(BundleKeys.SENTENCE);
@@ -96,8 +104,6 @@ public class SenspodApp extends DeviceManagerClient {
 			// TODO: get GPS from bundle and display lat/lon
 		}
 	}
-	
-	Co2SentenceParser parser = new Co2SentenceParser();
 	
 	@Override
 	void receivedSentenceLine(String line) {

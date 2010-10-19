@@ -3,24 +3,24 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
     <EditTextPreference
-            android:key="default_username"
+            android:key="username"
             android:defaultValue=""
             android:title="@string/title_username_preference"
             android:summary="@string/summary_username_preference"
             android:dialogTitle="@string/dialog_title_username_preference" />
             
     <EditTextPreference
-            android:key="default_password"
+            android:key="password"
             android:defaultValue=""
             android:title="@string/title_password_preference"
             android:summary="@string/summary_password_preference"
             android:dialogTitle="@string/dialog_title_password_preference" />
             
     <EditTextPreference
-            android:key="default_sensormapurl"
+            android:key="map_server_url"
             android:defaultValue="http://dev.sensormap.titan2x.com/api"
-            android:title="@string/title_sensormapurl_preference"
-            android:summary="@string/summary_sensormapurl_preference"
-            android:dialogTitle="@string/dialog_title_sensormapurl_preference" />
+            android:title="@string/title_map_server_url_preference"
+            android:summary="@string/summary_map_server_url_preference"
+            android:dialogTitle="@string/dialog_title_map_server_url_preference" />
             
 </PreferenceScreen>

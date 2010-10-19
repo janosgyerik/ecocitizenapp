@@ -9,8 +9,6 @@ migration to new architecture step by step
 	menus
 		generic pages should not have the usual menu, just a back option
 			'back' should work the same way as the back button
-	TreeActivity = SenspodApp
-		show connect button if service has no devices
 	FileSaverService
 		CRITICAL
 	UploaderService
