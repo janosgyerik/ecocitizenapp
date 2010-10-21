@@ -18,7 +18,6 @@ public class GpsLocationListener implements LocationListener {
 	Location mLastLocation = null;
 	Location mLastKnownLocation = null;
 	Bundle mLastKnownLocationBundle = new Bundle();
-	Bundle mLastLocationBundle = new Bundle();
 	
 	static final SimpleDateFormat dtzFormat = new SimpleDateFormat("yyyyMMddHHmmss.S,Z");
 	
@@ -62,12 +61,11 @@ public class GpsLocationListener implements LocationListener {
 	}
 	
 	public Bundle getLastLocationBundle() {
-		return mLastLocation == null ? mLastLocationBundle : mLastKnownLocationBundle;
+		return mLastLocation == null ? null : mLastKnownLocationBundle;
 	}
 	
 	public void onLocationChanged(Location location) {
 		mLastLocation = location;
-		mLastLocationBundle.putString(BundleKeys.LOCATION_DTZ, dtzFormat.format(new Date()));
 		
 		if (location == null) return;
 		
