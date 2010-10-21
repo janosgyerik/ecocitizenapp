@@ -3,6 +3,7 @@ package com.senspodapp.app;
 import java.text.DecimalFormat;
 
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -25,7 +26,7 @@ public class SenspodApp extends DeviceManagerClient {
 	private static DecimalFormat co2Format = new DecimalFormat("0");
     private TextView mLatView;
     private TextView mLonView;
-    private static DecimalFormat latLonFormat = new DecimalFormat("* ###.00000");
+    private static DecimalFormat latlonFormat = new DecimalFormat("* ###.00000");
     
 	private Button mBtnConnect;
 	private Button mBtnDisconnect;
@@ -101,7 +102,16 @@ public class SenspodApp extends DeviceManagerClient {
 		if (parser.match(line)) {
 			mCo2View.setText(co2Format.format(parser.getFloatValue()));
 			
-			// TODO: get GPS from bundle and display lat/lon
+			Bundle locationBundle = bundle.getBundle(BundleKeys.LOCATION_BUNDLE);
+			if (locationBundle == null) {
+				mLatView.setText("N.A.");
+				mLonView.setText("N.A.");
+			}
+			else {
+				Location location = (Location)locationBundle.getParcelable(BundleKeys.LOCATION_LOC);
+				mLatView.setText(latlonFormat.format(location.getLatitude()));
+				mLonView.setText(latlonFormat.format(location.getLongitude()));
+			}
 		}
 	}
 	

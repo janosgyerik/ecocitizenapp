@@ -1,29 +1,30 @@
 migration to new architecture step by step
-	fix tree page
-		show lat/lon
+	UploaderService
+		CRITICAL
+		a real service, and, subscriber of DeviceManagerService
+	fix BluetoothSensorService, make it a child of SensorManager
+	rename non-services
+		BluetoothSensorService -> BluetoothSensorManager
+		LogplayerService -> LogplayerSensorManager
 	automatic bt detection and proper handling in DeviceManagerClient
 		if no bt, use logplayer instead
 		otherwise use bt
 		possibly option to use logplayer too
-	menus
-		generic pages should not have the usual menu, just a back option
-			'back' should work the same way as the back button
+	clean up DeviceManagerClient (lots of commented out unused code)
 	FileSaverService
-		CRITICAL
-	UploaderService
-		CRITICAL
+		IMPORTANT
 
-maybe for part-timers
-	logplayer is robust
-		automatically disconnects after file is finished
-		start stop works consistently without errors
+redmine
+	use NotificationManager in DeviceManagerService
+		add some icon dm_on when the service is running
+		remove icon when the service is not running
+		change icon to dm_connected when any devices are connected
+	show latlon on tabular view activities as the top 2 rows
 
 optimization
-	remove all hardcoded strings from src/ and res/
-		SentencesActivity
-	automatically start service when app is started
-	comments in new source code
-	improve button style by using different style parent?
+	make logplayer device name the sample filename (asset name)
+	comments in new source code, especially service code
+	improve button style by using different style parent? theme?
 	fix licence message
 
 confirm with real android device
