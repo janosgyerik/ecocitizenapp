@@ -8,10 +8,8 @@ import java.io.InputStreamReader;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import backport.android.bluetooth.BluetoothDevice;
-import backport.android.bluetooth.BluetoothSocket;
 
-public class LogplayerService extends BluetoothSensorService {
+public class LogplayerService extends SensorManager {
     // Debugging
     static final String TAG = "LogplayerService";
     static final boolean D = true;
@@ -26,43 +24,25 @@ public class LogplayerService extends BluetoothSensorService {
      * Constructor. Prepares a new session.
      * @param handler  A Handler to send messages back to the UI Activity
      */
-    public LogplayerService(Handler handler, InputStream instream, int messageInterval) {
-    	mState = STATE_NONE;
+    public LogplayerService(Handler handler, GpsLocationListener gpsLocationListener,
+    		InputStream instream, int messageInterval) {
     	mHandler = handler;
+    	mGpsLocationListener = gpsLocationListener;
+    	
     	mMessageInterval = messageInterval;
     	mmInStream = instream;
+    	
+    	mSensorId = "LogPlayer";
+    	mDeviceName = "LogPlayer";
     }
  
-    /**
-     * @param device  Should be null.
-     */
     @Override
-    public synchronized void connect(BluetoothDevice device) {
-        mDeviceName = "Logplayer";
-        
-        if (D) Log.d(TAG, "connect to: " + mDeviceName);
-
-        setState(STATE_CONNECTING);
-        
-        connected(null, null);
-    }
-
-    /**
-     * Start the ConnectedThread to begin managing a Bluetooth connection
-     * @param socket  The BluetoothSocket on which the connection was made
-     * @param device  The BluetoothDevice that has been connected
-     */
-    public synchronized void connected(BluetoothSocket socket, BluetoothDevice device) {
-        if (D) Log.d(TAG, "connected");
-
+    public synchronized void start() {
         // Start the thread to manage the connection and perform transmissions
         mConnectedThread = new ConnectedThread();
         mConnectedThread.start();
-
-        // Send the name of the connected device back to the Device Manager
-        mHandler.obtainMessage(MessageType.SENSORCONNECTION_SUCCESS, mDeviceName).sendToTarget();
-
-        setState(STATE_CONNECTED);
+        
+        sendToHandler(MessageType.SENSORCONNECTION_SUCCESS);
     }
     
     /**
@@ -72,11 +52,8 @@ public class LogplayerService extends BluetoothSensorService {
         if (D) Log.d(TAG, "stop");
         if (mConnectedThread != null) mConnectedThread.shutdown();
         if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
-        
-        // Send the name of the connected device back to the Device Manager
-        mHandler.obtainMessage(MessageType.SENSORCONNECTION_NONE).sendToTarget();
 
-        setState(STATE_NONE);
+        sendToHandler(MessageType.SENSORCONNECTION_NONE);
     }
 
     /**
@@ -101,11 +78,7 @@ public class LogplayerService extends BluetoothSensorService {
 	            	String line = reader.readLine();
 	            	if (line != null) {
 	            		hasReadAnything = true;
-	            		Bundle bundle = new Bundle();
-	            		//bundle.putParcelable("GpsInfo", "");
-	            		bundle.putString(BundleKeys.SENTENCE_DTZ, "123");
-	            		bundle.putString(BundleKeys.SENTENCE_SENSOR_ID, "Logplayer");
-	            		bundle.putString(BundleKeys.SENTENCE_LINE, line);
+	            		Bundle bundle = getSensorDataBundle(line);
 	            		mHandler.obtainMessage(MessageType.SENTENCE, bundle).sendToTarget();
 	            		try {
 	            			Thread.sleep(mMessageInterval);
@@ -128,7 +101,8 @@ public class LogplayerService extends BluetoothSensorService {
         	if (mmInStream != null) {
         		try {
         			mmInStream.close();
-        		} catch (IOException e) {
+        		} 
+        		catch (IOException e) {
         			Log.e(TAG, "close() of InputStream failed.");
         		}
         	}
@@ -137,7 +111,8 @@ public class LogplayerService extends BluetoothSensorService {
         public void cancel() {
         	try {
         		mmInStream.close();
-        	} catch (IOException e) {
+        	} 
+        	catch (IOException e) {
         		Log.e(TAG, "close() of input stream failed", e);
         	}
         }

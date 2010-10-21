@@ -45,7 +45,7 @@ public class DeviceManagerService extends Service {
 		new RemoteCallbackList<IDeviceManagerServiceCallback>();
 
 	BluetoothSensorService mBluetoothSensorService = null;
-	LogplayerService mLogplayerService = null;
+	SensorManager mLogplayerService = null;
 	String mConnectedDeviceName = null;
 
 	private final IDeviceManagerService.Stub mBinder = new IDeviceManagerService.Stub() {
@@ -70,8 +70,8 @@ public class DeviceManagerService extends Service {
 
 			try {
 				InputStream instream = getAssets().open(assetFilename);
-				mLogplayerService = new LogplayerService(mHandler, instream, messageInterval);
-				mLogplayerService.connect(null);
+				mLogplayerService = new LogplayerService(mHandler, mLocationListener, instream, messageInterval);
+				mLogplayerService.start();
 			}
 			catch (IOException e) {
 				e.printStackTrace();
@@ -115,15 +115,16 @@ public class DeviceManagerService extends Service {
 			case MessageType.SENSORCONNECTION_SUCCESS:
 			case MessageType.SENSORCONNECTION_FAILED:
 			case MessageType.SENSORCONNECTION_LOST: {
+				final String deviceName = (String)msg.obj;
+				mConnectedDeviceName = deviceName;
 				if (msg.what == MessageType.SENSORCONNECTION_SUCCESS) {
 					mLocationListener.requestLocationUpdates();
 				}
 				else {
 					mLocationListener.removeLocationUpdates();
+					mConnectedDeviceName = null;
 				}
 				final int N = mCallbacks.beginBroadcast();
-				final String deviceName = (String)msg.obj;
-				mConnectedDeviceName = deviceName;
 				if (D) Log.d(TAG, "what = " + msg.what + ", deviceName = " + deviceName);
 				for (int i = 0; i < N; ++i) {
 					try {

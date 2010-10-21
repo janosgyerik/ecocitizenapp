@@ -1,8 +1,6 @@
 migration to new architecture step by step
 	fix tree page
 		show lat/lon
-	create SensorManager abstract class to be the parent of BluetoothSensorService and LogplayerService
-	update DeviceManagerService to use a SensorManager object
 	automatic bt detection and proper handling in DeviceManagerClient
 		if no bt, use logplayer instead
 		otherwise use bt
