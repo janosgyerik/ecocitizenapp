@@ -103,9 +103,9 @@ public class LogplayerService extends BluetoothSensorService {
 	            		hasReadAnything = true;
 	            		Bundle bundle = new Bundle();
 	            		//bundle.putParcelable("GpsInfo", "");
-	            		bundle.putString(BundleKeys.DATETIMETZ, "123");
-	            		bundle.putString(BundleKeys.SENSORID, "Logplayer");
-	            		bundle.putString(BundleKeys.SENTENCE, line);
+	            		bundle.putString(BundleKeys.SENTENCE_DTZ, "123");
+	            		bundle.putString(BundleKeys.SENTENCE_SENSOR_ID, "Logplayer");
+	            		bundle.putString(BundleKeys.SENTENCE_LINE, line);
 	            		mHandler.obtainMessage(MessageType.SENTENCE, bundle).sendToTarget();
 	            		try {
 	            			Thread.sleep(mMessageInterval);

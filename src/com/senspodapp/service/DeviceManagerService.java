@@ -156,7 +156,7 @@ public class DeviceManagerService extends Service {
 				// Broadcast to all clients
 				final int N = mCallbacks.beginBroadcast();
 				final Bundle bundle = (Bundle)msg.obj;
-				final String sentence = (String)bundle.getString(BundleKeys.SENTENCE);
+				final String sentence = (String)bundle.getString(BundleKeys.SENTENCE_LINE);
 				if (D) Log.d(TAG, "SENTENCE = " + sentence);
 				for (int i = 0; i < N; ++i) {
 					try {

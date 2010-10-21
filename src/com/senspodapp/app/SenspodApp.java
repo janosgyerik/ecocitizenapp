@@ -97,7 +97,7 @@ public class SenspodApp extends DeviceManagerClient {
 	
 	@Override
 	void receivedSentenceBundle(Bundle bundle) {
-		String line = bundle.getString(BundleKeys.SENTENCE);
+		String line = bundle.getString(BundleKeys.SENTENCE_LINE);
 		if (parser.match(line)) {
 			mCo2View.setText(co2Format.format(parser.getFloatValue()));
 			

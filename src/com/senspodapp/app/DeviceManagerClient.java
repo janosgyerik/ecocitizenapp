@@ -227,7 +227,7 @@ public abstract class DeviceManagerClient extends Activity {
 	}
 	
 	void receivedSentenceBundle(Bundle bundle) {
-		String line = bundle.getString(BundleKeys.SENTENCE);
+		String line = bundle.getString(BundleKeys.SENTENCE_LINE);
 		int indexOf_dollar = line.indexOf('$'); 
 		if (indexOf_dollar > -1) {
 			line = line.substring(indexOf_dollar);
