@@ -336,6 +336,9 @@ public abstract class DeviceManagerClient extends Activity {
 		case R.id.menu_quit:
 			finish();
 			break;
+		case R.id.menu_tabularview:
+			startActivity(new Intent(this, TabularViewActivity.class));
+			break;
 		}
 		return false;
 	}

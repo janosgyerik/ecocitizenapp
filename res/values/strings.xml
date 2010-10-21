@@ -19,6 +19,7 @@
     <string name="settings_activity">Settings</string>
     <string name="sentences_activity">Sentences</string>
     <string name="console_activity">Console</string>
+    <string name="tabularview_activity">Tabular View</string>
 
     <string name="not_connected">You are not connected to a device</string>
     <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Exit.</string>
@@ -45,7 +46,8 @@
     <string name="menu_settings">Settings</string>
     <string name="menu_sentences">Sentences</string>
     <string name="menu_console">Console</string>
-
+    <string name="menu_tabularview">Tabular View</string>
+    
     <!--  Preferences -->
     <string name="title_username_preference">Username</string>
     <string name="summary_username_preference">Username on SensorMap website</string>
