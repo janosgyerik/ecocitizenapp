@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -20,7 +22,7 @@ public class DeviceManagerService extends Service {
 	// Debugging
 	private static final String TAG = "DeviceManagerService";
 	private static final boolean D = true;
-
+	
 	@Override
 	public IBinder onBind(Intent intent) {
 		if (D) Log.d(TAG, "+++ ON BIND +++");
@@ -98,6 +100,8 @@ public class DeviceManagerService extends Service {
 			return mConnectedDeviceName;
 		}
 	};
+	
+	GpsLocationListener mLocationListener = new GpsLocationListener();
 
 	/**
 	 * Our Handler to execute operations on the main thread.
@@ -111,6 +115,12 @@ public class DeviceManagerService extends Service {
 			case MessageType.SENSORCONNECTION_SUCCESS:
 			case MessageType.SENSORCONNECTION_FAILED:
 			case MessageType.SENSORCONNECTION_LOST: {
+				if (msg.what == MessageType.SENSORCONNECTION_SUCCESS) {
+					mLocationListener.requestLocationUpdates();
+				}
+				else {
+					mLocationListener.removeLocationUpdates();
+				}
 				final int N = mCallbacks.beginBroadcast();
 				final String deviceName = (String)msg.obj;
 				mConnectedDeviceName = deviceName;
@@ -167,6 +177,7 @@ public class DeviceManagerService extends Service {
 
 	@Override
 	public void onCreate() {
+		initLocationManager();
 	}
 
 	@Override
@@ -189,6 +200,10 @@ public class DeviceManagerService extends Service {
 		if (mLogplayerService == null) return;
 		mLogplayerService.stop();
 		mLogplayerService = null;
+	}
+
+	public void initLocationManager() {
+		mLocationListener.setLocationManager((LocationManager)getSystemService(Context.LOCATION_SERVICE));
 	}
 
 }
