@@ -41,6 +41,23 @@ public class DeviceManagerService extends Service {
 		return super.onUnbind(intent);
 	}
 
+	@Override
+	public void onCreate() {
+		initLocationManager();
+	}
+
+	@Override
+	public void onDestroy() {
+		if (D) Log.d(TAG, "+++ ON DESTROY +++");
+
+		shutdownBluetoothSensorService();
+		shutdownLogplayer();
+
+		Toast.makeText(this, "Device Manager stopped", Toast.LENGTH_SHORT);
+
+		mCallbacks.kill();
+	}
+
 	final RemoteCallbackList<IDeviceManagerServiceCallback> mCallbacks =
 		new RemoteCallbackList<IDeviceManagerServiceCallback>();
 
@@ -176,25 +193,10 @@ public class DeviceManagerService extends Service {
 		}
 	};
 
-	@Override
-	public void onCreate() {
-		initLocationManager();
-	}
-
-	@Override
-	public void onDestroy() {
-		if (D) Log.d(TAG, "+++ ON DESTROY +++");
-
-		shutdownBluetoothSensorService();
-
-		Toast.makeText(this, "Device Manager stopped", Toast.LENGTH_SHORT);
-
-		mCallbacks.kill();
-	}
-
 	void shutdownBluetoothSensorService() {
 		if (mBluetoothSensorService == null) return;
 		mBluetoothSensorService.stop();
+		mBluetoothSensorService = null;
 	}
 
 	void shutdownLogplayer() {

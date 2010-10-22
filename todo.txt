@@ -3,9 +3,6 @@ migration to new architecture step by step
 		CRITICAL
 		a real service, and, subscriber of DeviceManagerService
 	fix BluetoothSensorService, make it a child of SensorManager
-	rename non-services
-		BluetoothSensorService -> BluetoothSensorManager
-		LogplayerService -> LogplayerSensorManager
 	automatic bt detection and proper handling in DeviceManagerClient
 		if no bt, use logplayer instead
 		otherwise use bt
@@ -13,6 +10,9 @@ migration to new architecture step by step
 	clean up DeviceManagerClient (lots of commented out unused code)
 	FileSaverService
 		IMPORTANT
+	rename non-services
+		BluetoothSensorService -> BluetoothSensorManager
+		LogplayerService -> LogplayerSensorManager
 
 redmine
 	use NotificationManager in DeviceManagerService
