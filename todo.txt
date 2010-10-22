@@ -21,6 +21,10 @@ redmine
 		change icon to dm_connected when any devices are connected
 	show latlon on tabular view activities as the top 2 rows
 
+sensormap
+	/login/username/token
+	/startsession/.* for handling bad requests
+
 optimization
 	make logplayer device name the sample filename (asset name)
 	comments in new source code, especially service code
