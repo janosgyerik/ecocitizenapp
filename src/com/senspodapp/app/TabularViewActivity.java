@@ -26,14 +26,12 @@ public class TabularViewActivity extends DeviceManagerClient {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (D)
-			Log.e(TAG, "+++ ON CREATE +++");
+		if (D) Log.d(TAG, "+++ ON CREATE +++");
 
 		// Set up the window layout
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.tabularview);
-		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
-				R.layout.custom_title);
+		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
 
 		// Set up the custom title
 		mTitle = (TextView) findViewById(R.id.title_left_text);
