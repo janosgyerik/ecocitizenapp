@@ -109,4 +109,11 @@ abstract public class SensorManager {
     void connectionLost() {
         sendToHandler(MessageType.SENSORCONNECTION_LOST);
     }
+    
+    /**
+     * Connection none, notify owner's handler.
+     */
+    void connectionNone() {
+        sendToHandler(MessageType.SENSORCONNECTION_NONE);
+    }
 }
