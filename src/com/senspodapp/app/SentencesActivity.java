@@ -7,7 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class SentencesActivity extends DeviceManagerClient {
+public class SentencesActivity extends SimpleDeviceManagerClient {
 	// Debugging
 	private static final String TAG = "SentencesActivity";
 	private static final boolean D = true;
