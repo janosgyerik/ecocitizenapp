@@ -43,6 +43,7 @@ import backport.android.bluetooth.BluetoothDevice;
 import com.senspodapp.service.BundleKeys;
 import com.senspodapp.service.IDeviceManagerService;
 import com.senspodapp.service.IDeviceManagerServiceCallback;
+import com.senspodapp.service.ISensorMapUploaderService;
 import com.senspodapp.service.MessageType;
 
 public abstract class DeviceManagerClient extends Activity {
@@ -77,6 +78,7 @@ public abstract class DeviceManagerClient extends Activity {
 		if (D) Log.d(TAG, "++ ON START ++");
 
 		connectDeviceManager();
+		//connectSensorMapUploader();
 
 		// If BT is not on, request that it be enabled.
 		// setupSenspodService() will then be called during onActivityResult
@@ -142,12 +144,56 @@ public abstract class DeviceManagerClient extends Activity {
 				// Recover gracefully from the process hosting the
 				// server dying.
 				// Just for purposes of the sample, put up a notification.
-				Toast.makeText(DeviceManagerClient.this,
-						"Remote call failed",
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "Remote call failed", Toast.LENGTH_SHORT).show();
 			}
 
 			mService = null;
+		}
+	}
+
+	void connectSensorMapUploader() {
+		// Start the service if not already running
+		startService(new Intent(ISensorMapUploaderService.class.getName()));
+
+		// Establish connection with the service.
+		bindService(new Intent(ISensorMapUploaderService.class.getName()),
+				mSensorMapUploaderConnection, Context.BIND_AUTO_CREATE);
+	}
+
+	void disconnectSensorMapUploader() {
+		if (mSensorMapUploaderService != null) {
+			mSensorMapUploaderService = null;
+
+			// Detach our existing connection.
+			unbindService(mSensorMapUploaderConnection);
+		}
+	}
+
+	void killSensorMapUploader() {
+		// To kill the process hosting our service, we need to know its
+		// PID.  Conveniently our service has a call that will return
+		// to us that information.
+		if (mSensorMapUploaderService != null) {
+			try {
+				int pid = mSensorMapUploaderService.getPid();
+				// Note that, though this API allows us to request to
+				// kill any process based on its PID, the kernel will
+				// still impose standard restrictions on which PIDs you
+				// are actually able to kill.  Typically this means only
+				// the process running your application and any additional
+				// processes created by that app as shown here; packages
+				// sharing a common UID will also be able to kill each
+				// other's processes.
+				Process.killProcess(pid);
+			} 
+			catch (RemoteException ex) {
+				// Recover gracefully from the process hosting the
+				// server dying.
+				// Just for purposes of the sample, put up a notification.
+				Toast.makeText(this, "Remote call failed", Toast.LENGTH_SHORT).show();
+			}
+
+			mSensorMapUploaderService = null;
 		}
 	}
 
@@ -240,6 +286,7 @@ public abstract class DeviceManagerClient extends Activity {
 	@Override
 	public void onDestroy() {
 		disconnectDeviceManager();
+		disconnectSensorMapUploader();
 
 		super.onDestroy();
 		if (D) Log.d(TAG, "--- ON DESTROY ---");
@@ -445,6 +492,37 @@ public abstract class DeviceManagerClient extends Activity {
 
 		public void receivedSensorConnectionSuccess(String deviceName) {
 			mHandler.obtainMessage(MessageType.SENSORCONNECTION_SUCCESS, deviceName).sendToTarget();
+		}
+	};
+	
+	private ISensorMapUploaderService mSensorMapUploaderService = null;
+
+	/**
+	 * Class for interacting with the SensorMap uploader service.
+	 */
+	private ServiceConnection mSensorMapUploaderConnection = new ServiceConnection() {
+		public void onServiceConnected(ComponentName className, IBinder service) {
+			// This is called when the connection with the service has been
+			// established, giving us the service object we can use to
+			// interact with the service.  We are communicating with our
+			// service through an IDL interface, so get a client-side
+			// representation of that from the raw service object.
+			mSensorMapUploaderService = ISensorMapUploaderService.Stub.asInterface(service);
+			try {
+				mSensorMapUploaderService.activate();
+			} catch (RemoteException e) {
+				// In this case the service has crashed before we could even
+				// do anything with it; we can count on soon being
+				// disconnected (and then reconnected if it can be restarted)
+				// so there is no need to do anything here.
+				Log.e(TAG, "Exception during activate.");
+			}
+		}
+
+		public void onServiceDisconnected(ComponentName className) {
+			// This is called when the connection with the service has been
+			// unexpectedly disconnected -- that is, its process crashed.
+			mSensorMapUploaderService = null;
 		}
 	};
 }

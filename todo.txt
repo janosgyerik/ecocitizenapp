@@ -1,7 +1,8 @@
 migration to new architecture step by step
 	UploaderService
-		CRITICAL
-		a real service, and, subscriber of DeviceManagerService
+		fix timezone
+		test well
+		activate in DeviceManagerClient
 	fix BluetoothSensorService, make it a child of SensorManager
 	automatic bt detection and proper handling in DeviceManagerClient
 		if no bt, use logplayer instead
