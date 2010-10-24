@@ -1,4 +1,7 @@
 migration to new architecture step by step
+	improve logplayer self-disconnect
+		either Logplayer should call disconnect logplayer as a service call
+		or implement a new message, SENSORCONNECTION_SELFDESTRUCT
 	UploaderService
 		fix timezone
 		test well

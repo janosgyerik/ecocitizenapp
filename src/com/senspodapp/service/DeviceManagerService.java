@@ -167,6 +167,7 @@ public class DeviceManagerService extends Service {
 						switch (msg.what) {
 						case MessageType.SENSORCONNECTION_NONE:
 							mCallbacks.getBroadcastItem(i).receivedSensorConnectionNone();
+							shutdownLogplayer();
 							break;
 						case MessageType.SENSORCONNECTION_SUCCESS:
 							mCallbacks.getBroadcastItem(i).receivedSensorConnectionSuccess(deviceName);

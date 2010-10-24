@@ -105,6 +105,9 @@ public class LogplayerService extends SensorManager {
 	            		catch (InterruptedException e) {
 	            		}
 	            	}
+	            	else if(line==null){
+	            		connectionNone();
+	            	}
 				} 
 				catch (IOException e) {
 	                Log.e(TAG, "disconnected", e);
