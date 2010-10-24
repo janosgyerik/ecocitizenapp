@@ -11,9 +11,25 @@
 		License.
 	-->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/menu_connect" android:icon="@drawable/connect"
+		android:title="@string/menu_connect" />
+	<item android:id="@+id/menu_disconnect" android:icon="@drawable/disconnect"
+		android:title="@string/menu_disconnect" />
 	<item android:id="@+id/menu_sentences" android:icon="@drawable/settings"
 		android:title="Sentences" />
+	<item android:id="@+id/menu_settings" android:icon="@drawable/settings"
+		android:title="@string/menu_settings" />
 	<item android:id="@+id/menu_console" android:icon="@drawable/settings"
 		android:title="Console" />
-	<item android:id="@+id/menu_tabularview" android:title="@string/menu_tabularview" android:icon="@drawable/home"/>
+	<item android:id="@+id/menu_home" android:icon="@drawable/home"
+		android:title="@string/menu_home" />
+	<item android:id="@+id/menu_graph" android:icon="@drawable/chart"
+		android:visible="false"
+		android:title="@string/menu_graph" />
+	<item android:id="@+id/menu_map" android:icon="@android:drawable/ic_menu_mapmode"
+		android:visible="false"
+		android:title="@string/menu_map" />
+	<item android:id="@+id/menu_quit" android:icon="@android:drawable/ic_lock_power_off"
+		android:visible="false" android:title="@string/menu_quit" />
+    <item android:id="@+id/menu_tabularview" android:title="@string/menu_tabularview" android:icon="@drawable/home"/>
 </menu>
