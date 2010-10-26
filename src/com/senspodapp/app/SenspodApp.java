@@ -21,11 +21,15 @@ package com.senspodapp.app;
 
 import java.text.DecimalFormat;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -113,6 +117,42 @@ public class SenspodApp extends DeviceManagerClient {
 		}
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.senspodapp, menu);
+
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_connect:
+			connectSensor();
+			return true;
+		case R.id.menu_disconnect:
+			disconnectSensor();
+			break;
+		case R.id.menu_settings:
+			startActivity(new Intent(this, SettingsActivity.class));
+			break;    
+		case R.id.menu_sentences:
+			startActivity(new Intent(this, SentencesActivity.class));
+			break;    
+		case R.id.menu_console:
+			startActivity(new Intent(this, DeviceManagerConsole.class));
+			break;    
+		case R.id.menu_tabularview:
+			startActivity(new Intent(this, TabularViewActivity.class));
+			break;
+		case R.id.menu_quit:
+			finish();
+			break;
+		}
+		return false;
+	}
+	
 	Co2SentenceParser parser = new Co2SentenceParser();
 	
 	@Override

@@ -28,7 +28,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class DeviceManagerConsole extends DeviceManagerClient {
+public class DeviceManagerConsole extends SimpleDeviceManagerClient {
 	// Debugging
 	private static final String TAG = "DeviceManagerConsole";
 	private static final boolean D = true;

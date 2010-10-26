@@ -34,7 +34,7 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-public class TabularViewActivity extends DeviceManagerClient {
+public class TabularViewActivity extends SimpleDeviceManagerClient {
 	// Debugging
 	private static final String TAG = "TabularViewActivity";
 	private static final boolean D = true;

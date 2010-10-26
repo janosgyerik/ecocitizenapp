@@ -32,9 +32,6 @@ import android.os.Process;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 import backport.android.bluetooth.BluetoothAdapter;
@@ -357,14 +354,6 @@ public abstract class DeviceManagerClient extends Activity {
 		}
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.option_menu, menu);
-
-		return true;
-	}
-
 	public void launchDeviceListActivity() {
 		/* TODO
 		if (mBluetoothAdapter == null) {
@@ -379,34 +368,6 @@ public abstract class DeviceManagerClient extends Activity {
 			startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
 		}
 		 */
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.menu_connect:
-			connectSensor();
-			return true;
-		case R.id.menu_disconnect:
-			disconnectSensor();
-			break;
-		case R.id.menu_settings:
-			startActivity(new Intent(this, SettingsActivity.class));
-			break;    
-		case R.id.menu_sentences:
-			startActivity(new Intent(this, SentencesActivity.class));
-			break;    
-		case R.id.menu_console:
-			startActivity(new Intent(this, DeviceManagerConsole.class));
-			break;    
-		case R.id.menu_quit:
-			finish();
-			break;
-		case R.id.menu_tabularview:
-			startActivity(new Intent(this, TabularViewActivity.class));
-			break;
-		}
-		return false;
 	}
 
 	void setConnectedDeviceName(String connectedDeviceName) {
