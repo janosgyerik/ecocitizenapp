@@ -21,9 +21,10 @@
     >
     <ListView android:id="@+id/sentences"
     	android:layout_width="fill_parent"
-    	android:layout_height="fill_parent"
     	android:stackFromBottom="true"
         android:transcriptMode="alwaysScroll"
         android:layout_weight="1"
-    />
+    android:layout_height="wrap_content"/>
+    <Button android:id="@+id/btn_connect_device" android:text="@string/btn_connect_device" android:stackFromBottom="true" style="@style/btn"/>
+    <Button android:id="@+id/btn_disconnect_device" android:text="@string/btn_disconnect_device" android:stackFromBottom="true" style="@style/btn"/>
 </LinearLayout>

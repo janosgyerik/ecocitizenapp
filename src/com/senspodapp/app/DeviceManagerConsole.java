@@ -34,20 +34,7 @@ public class DeviceManagerConsole extends SimpleDeviceManagerClient {
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.console);
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
-
-		Button mBtnConnectSensor = (Button)findViewById(R.id.btn_connect_device);
-		mBtnConnectSensor.setOnClickListener(new View.OnClickListener(){   
-			public void onClick(View v) {   
-				connectSensor();
-			}  
-		});
-		Button mBtnDisconnectSensor = (Button)findViewById(R.id.btn_disconnect_device);
-		mBtnDisconnectSensor.setOnClickListener(new View.OnClickListener(){   
-			public void onClick(View v) {   
-				disconnectSensor();
-			}  
-		});
-
+		setupCommonButtons();
 		Button mBtnConnectDM = (Button)findViewById(R.id.btn_connect_dm);
 		mBtnConnectDM.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
