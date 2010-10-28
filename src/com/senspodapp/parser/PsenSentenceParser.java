@@ -4,7 +4,7 @@ public class PsenSentenceParser {
 	String metric;
 	float floatValue;
 	String strValue;
-	
+	String name;
 	int[] levelBoundaries = new int[]{};
     int level;
     
@@ -25,6 +25,7 @@ public class PsenSentenceParser {
 		floatValue = Float.NaN;
 		strValue = null;
 		level = 0;
+		name = null;
 	}
 	
 	public PsenSentenceParser() {
@@ -36,13 +37,19 @@ public class PsenSentenceParser {
 		int dataStartIndex = line.indexOf(pattern);
 		if (dataStartIndex > -1) {
 			String[] cols = line.substring(dataStartIndex).split(",");
+			if (cols.length < 4)
+				return false;
+			name = cols[1];
 			metric = cols[2];
-			floatValue = Float.parseFloat(cols[3]);
-			strValue = String.valueOf(floatValue);
+			try {
+				floatValue = Float.parseFloat(cols[3]);
+				strValue = String.valueOf(floatValue);
+			} catch (NumberFormatException  e) {
+				strValue = String.valueOf(cols[3]);
+			}
 			setLevel();
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
@@ -61,5 +68,9 @@ public class PsenSentenceParser {
 	
 	public int getLevel() {
 		return level;
+	}
+	
+	public String getName() {
+		return name;
 	}
 }

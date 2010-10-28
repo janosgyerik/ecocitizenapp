@@ -20,7 +20,8 @@
     <string name="sentences_activity">Sentences</string>
     <string name="console_activity">Console</string>
     <string name="tabularview_activity">Tabular View</string>
-
+    <string name="tabularviewplus_activity">Tabular View+</string>
+    
     <string name="not_connected">You are not connected to a device</string>
     <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Exit.</string>
     <string name="title_connecting">connecting...</string>
@@ -47,6 +48,7 @@
     <string name="menu_sentences">Sentences</string>
     <string name="menu_console">Console</string>
     <string name="menu_tabularview">Tabular View</string>
+    <string name="menu_tabularplusview">Tabular View+</string>
     
     <!--  Preferences -->
     <string name="title_username_preference">Username</string>

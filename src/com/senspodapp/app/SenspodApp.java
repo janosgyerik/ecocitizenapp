@@ -130,6 +130,9 @@ public class SenspodApp extends DeviceManagerClient {
 		case R.id.menu_tabularview:
 			startActivity(new Intent(this, TabularViewActivity.class));
 			break;
+		case R.id.menu_tabularplusview:
+			startActivity(new Intent(this, TabularViewPlusActivity.class));
+			break;
 		}
 		return false;
 	}
