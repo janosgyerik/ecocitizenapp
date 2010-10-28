@@ -36,6 +36,9 @@
 
 		<activity android:name=".TabularViewActivity" android:label="Tabular View">
 		</activity>
+		
+		<activity android:name=".TabularViewPlusActivity" android:label="Tabular View+">
+		</activity>
 
 		<activity android:name=".DeviceListActivity" android:label="@string/select_device"
 			android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden" />
