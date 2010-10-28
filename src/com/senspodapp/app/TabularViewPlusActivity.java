@@ -47,7 +47,7 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 	void receivedSentenceLine(String line) {
 		if (parser.match(line)) {
 			if(!hmDataType.containsKey(parser.getName())){
-			    TableRow tr = new TableRow(this);
+				TableRow tr = new TableRow(this);
 				TextView name = new TextView(this);
 				TextView metric = new TextView(this);
 				TextView value = new TextView(this);
@@ -56,12 +56,12 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 				metric.setText(parser.getMetric());
 				value.setText(parser.getStrValue());
 				value.setGravity(Gravity.RIGHT);
-                value.setId(ROWID);
-				
+				value.setId(ROWID);
+
 				tr.addView(name);
 				tr.addView(metric);
 				tr.addView(value);
-				
+
 				hmDataType.put(parser.getName(),ROWID);
 				mSentencesTbl.addView(tr, new TableLayout.LayoutParams(FP, WC));
 				ROWID++;

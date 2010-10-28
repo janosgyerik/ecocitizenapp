@@ -6,20 +6,20 @@ public class PsenSentenceParser {
 	String strValue;
 	String name;
 	int[] levelBoundaries = new int[]{};
-    int level;
-    
-    String pattern = "$PSEN,";
-    
-    public PsenSentenceParser(String pattern) {
-    	this.pattern = pattern;
-    }
-    
-    void setLevel() {
-        for (level = 0; level < levelBoundaries.length; ++level) {
-            if (floatValue < levelBoundaries[level]) break;
-        }
-    }
-	
+	int level;
+
+	String pattern = "$PSEN,";
+
+	public PsenSentenceParser(String pattern) {
+		this.pattern = pattern;
+	}
+
+	void setLevel() {
+		for (level = 0; level < levelBoundaries.length; ++level) {
+			if (floatValue < levelBoundaries[level]) break;
+		}
+	}
+
 	void reset() {
 		metric = null;
 		floatValue = Float.NaN;
@@ -27,11 +27,11 @@ public class PsenSentenceParser {
 		level = 0;
 		name = null;
 	}
-	
+
 	public PsenSentenceParser() {
 		reset();
 	}
-	
+
 	public boolean match(String line) {
 		reset();
 		int dataStartIndex = line.indexOf(pattern);
@@ -53,23 +53,23 @@ public class PsenSentenceParser {
 			return false;
 		}
 	}
-	
+
 	public String getMetric() {
 		return metric;
 	}
-	
+
 	public float getFloatValue() {
 		return floatValue;
 	}
-	
+
 	public String getStrValue() {
 		return strValue;
 	}
-	
+
 	public int getLevel() {
 		return level;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
