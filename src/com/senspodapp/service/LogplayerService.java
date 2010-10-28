@@ -105,7 +105,7 @@ public class LogplayerService extends SensorManager {
 						catch (InterruptedException e) {
 						}
 					}
-					else if(line==null){
+					else {
 						connectionNone();
 					}
 				} 
@@ -113,6 +113,22 @@ public class LogplayerService extends SensorManager {
 					Log.e(TAG, "disconnected", e);
 					connectionLost();
 					break;			
+				}
+				catch (Exception e) {
+					// Sometimes, NullPointerException can happen during shutdown...
+					Log.e(TAG, "disconnected", e);
+					connectionLost();
+					break;			
+					/*
+					 * E/AndroidRuntime(  957): java.lang.NullPointerException
+					 * E/AndroidRuntime(  957):        at android.content.res.AssetManager.getAssetRemainingLength(Native Method)
+					 * E/AndroidRuntime(  957):        at android.content.res.AssetManager.access$300(AssetManager.java:36)
+					 * E/AndroidRuntime(  957):        at android.content.res.AssetManager$AssetInputStream.available(AssetManager.java:523)
+					 * E/AndroidRuntime(  957):        at java.io.InputStreamReader.read(InputStreamReader.java:431)
+					 * E/AndroidRuntime(  957):        at java.io.BufferedReader.fillbuf(BufferedReader.java:130)
+					 * E/AndroidRuntime(  957):        at java.io.BufferedReader.readLine(BufferedReader.java:353)
+					 * E/AndroidRuntime(  957):        at com.senspodapp.service.LogplayerService$ConnectedThread.run(LogplayerService.java:97)
+					 */
 				}
 			}
 		}
