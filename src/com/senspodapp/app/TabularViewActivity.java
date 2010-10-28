@@ -28,9 +28,7 @@ import com.senspodapp.parser.NoxSentenceParser;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -52,26 +50,14 @@ public class TabularViewActivity extends SimpleDeviceManagerClient {
 		setContentView(R.layout.tabularview);
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
 
+		setupCommonButtons();
+		
 		// Set up the custom title
 		mTitle = (TextView) findViewById(R.id.title_left_text);
 		mTitle.setText(R.string.tabularview_activity);
 		mTitle = (TextView) findViewById(R.id.title_right_text);
 
 		mSentencesTbl = (TableLayout)findViewById(R.id.tblsentences);
-
-		// Set up the button to connect/disconnect sensors
-		Button mBtnConnect = (Button)findViewById(R.id.btn_connect_device);
-		mBtnConnect.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				connectSensor();
-			}
-		});
-		Button mBtnDisconnect = (Button)findViewById(R.id.btn_disconnect_device);
-		mBtnDisconnect.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				disconnectSensor();
-			}
-		});
 	}
 
 	

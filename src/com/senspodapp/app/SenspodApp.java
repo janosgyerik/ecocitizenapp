@@ -133,22 +133,22 @@ public class SenspodApp extends DeviceManagerClient {
 			return true;
 		case R.id.menu_disconnect:
 			disconnectSensor();
-			break;
+			return true;
 		case R.id.menu_settings:
 			startActivity(new Intent(this, SettingsActivity.class));
-			break;    
+			return true;    
 		case R.id.menu_sentences:
 			startActivity(new Intent(this, SentencesActivity.class));
-			break;    
+			return true;    
 		case R.id.menu_console:
 			startActivity(new Intent(this, DeviceManagerConsole.class));
-			break;    
+			return true;    
 		case R.id.menu_tabularview:
 			startActivity(new Intent(this, TabularViewActivity.class));
-			break;
+			return true;
 		case R.id.menu_quit:
 			finish();
-			break;
+			return true;
 		}
 		return false;
 	}
