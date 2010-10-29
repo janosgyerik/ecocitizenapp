@@ -1,5 +1,4 @@
 migration to new architecture step by step
-	use logfile name as device name
 	UploaderService
 		fix timezone
 		test well

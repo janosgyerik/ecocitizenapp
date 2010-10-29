@@ -44,15 +44,15 @@ public class LogplayerService extends SensorManager {
 	 * @param handler  A Handler to send messages back to the UI Activity
 	 */
 	public LogplayerService(Handler handler, GpsLocationListener gpsLocationListener,
-			InputStream instream, int messageInterval) {
+			InputStream instream, int messageInterval, String filename) {
 		mHandler = handler;
 		mGpsLocationListener = gpsLocationListener;
 
 		mMessageInterval = messageInterval;
 		mmInStream = instream;
 
-		mSensorId = "LogPlayer";
-		mDeviceName = "LogPlayer";
+		mSensorId = filename;
+		mDeviceName = filename;
 	}
 
 	@Override
