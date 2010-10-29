@@ -1,84 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent" android:background="@drawable/background1"
 	>
-	<TableLayout android:id="@+id/tblsentences"
-		android:layout_gravity="center" android:baselineAligned="true"
-		android:drawingCacheQuality="auto" android:layout_width="fill_parent" android:stretchColumns="*" android:gravity="center_vertical|center_horizontal" android:layout_height="380dip">
-
-		<TableRow android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:padding="3dip"
-				android:text="Humidity"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:padding="3dip" android:id="@+id/hum_metric"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:padding="3dip" android:id="@+id/hum_value" android:gravity="right"></TextView>
+	<TableLayout android:id="@+id/tblsentences" style="@style/tabular">
+		<TableRow android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="Humidity" style="@style/tabularColumn"></TextView>
+			<TextView android:id="@+id/hum_metric" style="@style/tabularColumn"></TextView>
+			<TextView android:id="@+id/hum_value" style="@style/tabularValueColumn"></TextView>
+		</TableRow>
+	
+		<TableRow android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="Battery" style="@style/tabularColumn"></TextView>
+			<TextView android:id="@+id/batt_metric" style="@style/tabularColumn"></TextView>
+			<TextView android:id="@+id/batt_value" style="@style/tabularValueColumn"></TextView>
 		</TableRow>
 
-		<TableRow android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:text="Battery" android:padding="3dip"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:padding="3dip" android:id="@+id/batt_metric"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:padding="3dip" android:id="@+id/batt_value" android:gravity="right"></TextView>
+		<TableRow android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="Noise" style="@style/tabularColumn"></TextView>
+			<TextView android:id="@+id/noise_metric" style="@style/tabularColumn"></TextView>
+			<TextView android:id="@+id/noise_value" style="@style/tabularValueColumn"></TextView>
 		</TableRow>
 
-		<TableRow android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:text="Noise"
-				android:padding="3dip"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:padding="3dip" android:id="@+id/noise_metric"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:padding="3dip" android:id="@+id/noise_value" android:gravity="right"></TextView>
+		<TableRow android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="COx" style="@style/tabularColumn"></TextView>
+			<TextView android:id="@+id/cox_metric" style="@style/tabularColumn"></TextView>
+			<TextView android:id="@+id/cox_value" style="@style/tabularValueColumn"></TextView>
 		</TableRow>
 
-		<TableRow android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:text="COx" android:padding="3dip"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:padding="3dip" android:id="@+id/cox_metric"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:padding="3dip" android:id="@+id/cox_value" android:gravity="right"></TextView>
+		<TableRow android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="NOx" style="@style/tabularColumn"></TextView>
+			<TextView android:id="@+id/nox_metric" style="@style/tabularColumn"></TextView>
+			<TextView android:id="@+id/nox_value" style="@style/tabularValueColumn"></TextView>
 		</TableRow>
 
-		<TableRow android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:text="NOx" android:padding="3dip"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:padding="3dip" android:id="@+id/nox_metric"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:padding="3dip" android:id="@+id/nox_value" android:gravity="right"></TextView>
+		<TableRow android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="Temperature" style="@style/tabularColumn"></TextView>
+			<TextView android:id="@+id/temp_metric" style="@style/tabularColumn"></TextView>
+			<TextView android:id="@+id/temp_value" style="@style/tabularValueColumn"></TextView>
 		</TableRow>
-
-		<TableRow android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:text="Temperature" android:padding="3dip"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:padding="3dip" android:id="@+id/temp_metric"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:padding="3dip" android:id="@+id/temp_value" android:gravity="right"></TextView>
-		</TableRow>
-	    <TableRow android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:text="CO2" android:padding="3dip"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:padding="3dip" android:id="@+id/co2_metric"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:padding="3dip" android:id="@+id/co2_value" android:gravity="right"></TextView>
+		
+	    <TableRow android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="CO2" style="@style/tabularColumn"></TextView>
+			<TextView android:id="@+id/co2_metric" style="@style/tabularColumn"></TextView>
+			<TextView android:id="@+id/co2_value" style="@style/tabularValueColumn"></TextView>
 		</TableRow>
 	</TableLayout>
+	<RelativeLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
        <Button android:id="@+id/btn_connect_device" android:text="@string/btn_connect_device" android:stackFromBottom="true" style="@style/btn"/>
        <Button android:id="@+id/btn_disconnect_device" android:text="@string/btn_disconnect_device" android:stackFromBottom="true" style="@style/btn"/>
-</LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>
