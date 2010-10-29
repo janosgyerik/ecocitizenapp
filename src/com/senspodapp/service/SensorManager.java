@@ -19,9 +19,6 @@
 
 package com.senspodapp.service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -34,8 +31,6 @@ abstract public class SensorManager {
     private static final String TAG = "SensorManager";
     private static final boolean D = true;
 
-	static final SimpleDateFormat dtzFormat = new SimpleDateFormat("yyyyMMddHHmmss.S,Z");
-	
 	String mSensorId;
     String mDeviceName;
 
@@ -55,7 +50,7 @@ abstract public class SensorManager {
     Bundle getSensorDataBundle(String sentence) {
     	Bundle bundle = new Bundle();
     	bundle.putBundle(BundleKeys.LOCATION_BUNDLE, mGpsLocationListener.getLastLocationBundle());
-    	bundle.putString(BundleKeys.SENTENCE_DTZ, dtzFormat.format(new Date()));
+    	bundle.putString(BundleKeys.SENTENCE_DTZ, Util.getCurrentDTZ());
     	bundle.putString(BundleKeys.SENTENCE_SENSOR_ID, mSensorId);
     	bundle.putString(BundleKeys.SENTENCE_LINE, sentence);
     	return bundle;

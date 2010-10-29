@@ -19,9 +19,6 @@
 
 package com.senspodapp.service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -37,8 +34,6 @@ public class GpsLocationListener implements LocationListener {
 	Location mLastLocation = null;
 	Location mLastKnownLocation = null;
 	Bundle mLastKnownLocationBundle = new Bundle();
-	
-	static final SimpleDateFormat dtzFormat = new SimpleDateFormat("yyyyMMddHHmmss.S,Z");
 	
 	// This is used to identify locations that have identical latlon.
 	// It is incremented when a location update is received with 
@@ -74,7 +69,7 @@ public class GpsLocationListener implements LocationListener {
 	void updateLastKnownLocation(Location location) {
 		++latlon_id;
 		mLastKnownLocation = location;
-		mLastKnownLocationBundle.putString(BundleKeys.LOCATION_DTZ, dtzFormat.format(new Date()));
+		mLastKnownLocationBundle.putString(BundleKeys.LOCATION_DTZ, Util.getCurrentDTZ());
 		mLastKnownLocationBundle.putInt(BundleKeys.LOCATION_LATLON_ID, latlon_id);
 		mLastKnownLocationBundle.putParcelable(BundleKeys.LOCATION_LOC, mLastKnownLocation);
 	}

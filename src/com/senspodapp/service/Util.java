@@ -17,13 +17,13 @@
  * along with SenspodApp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.senspodapp.app;
+package com.senspodapp.service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
- * 
- * @author janos
  * Collection of utility methods
  */
 public abstract class Util {
@@ -31,7 +31,10 @@ public abstract class Util {
         return (int)(nmea / 100) + (nmea % 100) / 60;
     }
     
-    public static Date getCurrentTimestamp() {
-    	return new Date();
-    }
+	static final SimpleDateFormat dtFormat = new SimpleDateFormat("yyyyMMddHHmmss.S");
+	
+	public static final String getCurrentDTZ() {
+		return String.format("%s,%d", dtFormat.format(new Date()), 
+				TimeZone.getDefault().getRawOffset() / 3600000);
+	}
 }
