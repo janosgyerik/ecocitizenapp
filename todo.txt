@@ -1,6 +1,5 @@
 migration to new architecture step by step
 	UploaderService
-		fix timezone
 		test well
 		activate in DeviceManagerClient
 	fix BluetoothSensorService, make it a child of SensorManager

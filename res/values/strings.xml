@@ -55,9 +55,9 @@
     <string name="summary_username_preference">Username on SensorMap website</string>
     <string name="dialog_title_username_preference">Enter your SensorMap username</string>
     
-    <string name="title_password_preference">Password</string>
-    <string name="summary_password_preference">Password on SensorMap website</string>
-    <string name="dialog_title_password_preference">Enter your SensorMap password</string>
+    <string name="title_api_key_preference">API key</string>
+    <string name="summary_api_key_preference">API key to the SensorMap website</string>
+    <string name="dialog_title_api_key_preference">Enter your SensorMap API key</string>
     
     <string name="title_map_server_url_preference">SensorMap URL</string>
     <string name="summary_map_server_url_preference">URL of the SensorMap API</string>
