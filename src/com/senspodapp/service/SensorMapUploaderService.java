@@ -156,7 +156,7 @@ public class SensorMapUploaderService extends Service {
 		String datarecord;
 		Bundle locationBundle = bundle.getBundle(BundleKeys.LOCATION_BUNDLE);
 		if (locationBundle == null) {
-			String format = "NOGPS,ENDGPS,%s,%s,%s,ENDSENTENCE";
+			String format = "SENTENCE,%s,%s,%s,_";
 			datarecord = formatter.format(
 					format,
 					bundle.getString(BundleKeys.SENTENCE_SENSOR_ID),
@@ -165,7 +165,7 @@ public class SensorMapUploaderService extends Service {
 			).toString();
 		}
 		else {
-			String format = "AndroidGps,%s,%d,%f,%f,%f,%f,%f,%f,ENDGPS,%s,%s,%s,ENDSENTENCE";
+			String format = "GPS,%s,%d,%f,%f,AndroidGps,%f,%f,%f,%f,_,SENTENCE,%s,%s,%s,_";
 			Location location = (Location)locationBundle.getParcelable(BundleKeys.LOCATION_LOC);
 			datarecord = formatter.format(
 					format,
@@ -290,10 +290,11 @@ public class SensorMapUploaderService extends Service {
 	String SENSORMAP_STARTSESSION_URL;
 	String SENSORMAP_STORE_URL;
 	String SENSORMAP_ENDSESSION_URL;
+	String API_VERSION = "4";
 	
 	// Member variables
 	String username;
-	String password;
+	String api_key;
 	String map_server_url;
 	
 	private int mSessionId = 0;
@@ -318,13 +319,13 @@ public class SensorMapUploaderService extends Service {
 	void reloadConfiguration() {
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 		username = settings.getString("username", "");
-		password = settings.getString("password", "");
+		api_key = settings.getString("api_key", "");
 		map_server_url = settings.getString("map_server_url", "");
 
-		SENSORMAP_LOGIN_URL = String.format("%slogin/%s/%s", map_server_url, username, password);
+		SENSORMAP_LOGIN_URL = String.format("%slogin/%s/%s", map_server_url, username, api_key);
 		SENSORMAP_STATUS_URL = String.format("%sstatus/", map_server_url);
-		SENSORMAP_STARTSESSION_URL = String.format("%sstartsession/%s/%s", map_server_url, username, password);
-		SENSORMAP_STORE_URL = String.format("%sstore/%s/", map_server_url, username);
+		SENSORMAP_STARTSESSION_URL = String.format("%sstartsession/%s/%s", map_server_url, username, api_key);
+		SENSORMAP_STORE_URL = String.format("%sstore/%s/%s/", map_server_url, API_VERSION, username);
 		SENSORMAP_ENDSESSION_URL = String.format("%sendsession/%s/", map_server_url, username);
 	}
 	
