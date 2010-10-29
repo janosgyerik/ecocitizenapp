@@ -1,7 +1,4 @@
 migration to new architecture step by step
-	improve logplayer self-disconnect
-		either Logplayer should call disconnect logplayer as a service call
-		or implement a new message, SENSORCONNECTION_DISCONNECTSELF
 	UploaderService
 		fix timezone
 		test well
@@ -19,15 +16,7 @@ migration to new architecture step by step
 		LogplayerService -> LogplayerSensorManager
 
 redmine
-	use NotificationManager in DeviceManagerService
-		add some icon dm_on when the service is running
-		remove icon when the service is not running
-		change icon to dm_connected when any devices are connected
-	show latlon on tabular view activities as the top 2 rows
-
-sensormap
-	/login/username/token
-	/startsession/.* for handling bad requests
+	-
 
 optimization
 	make logplayer device name the sample filename (asset name)

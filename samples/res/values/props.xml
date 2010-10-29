@@ -22,9 +22,10 @@ Rename this file to props.xml and adjust the values appropriately depending
 on the deployment type, for example development / production.
 -->
 <resources>
-	<!-- Application default properties -->
-    <string name="username">janos_dev1</string>
-    <string name="map_server_url">http://10.0.2.2:8000/api/</string>
+    <!-- Application default properties -->
+    <string name="username">anon</string>
+    <string name="map_server_url">http://sensormap.titan2x.com/api/</string>
+    <string name="api_key">set_this_before_deployment</string>
     
     <!-- For developers only -->
     <string name="logplayer_sensor_id">apiv3</string>
