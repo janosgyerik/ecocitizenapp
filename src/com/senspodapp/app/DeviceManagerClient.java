@@ -78,19 +78,16 @@ public abstract class DeviceManagerClient extends Activity {
 		//connectSensorMapUploader();
 
 		// If BT is not on, request that it be enabled.
-		// setupSenspodService() will then be called during onActivityResult
 		if (mBluetoothAdapter != null) {
 			if (!mBluetoothAdapter.isEnabled()) {
-				Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-				startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+				launchRequestEnableBT();
 			} 
-			else {
-				setupSenspodService();
-			}
 		}
-		else {
-			setupSimulatorService();
-		}
+	}
+	
+	void launchRequestEnableBT() {
+		Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+		startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
 	}
 
 	void connectDeviceManager() {
@@ -194,8 +191,59 @@ public abstract class DeviceManagerClient extends Activity {
 		}
 	}
 
-	// TODO: if we have BT, use it, otherwise start logplayer
 	void connectSensor() {
+		if (mService != null) {
+			if (mBluetoothAdapter != null) {
+				if (mBluetoothAdapter.isEnabled()) {
+					// Launch the DeviceListActivity to see devices and do scan
+					Intent serverIntent = new Intent(this, DeviceListActivity.class);
+					startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
+				}
+				else {
+					launchRequestEnableBT();
+				}
+			}
+			else {
+				try {
+					String assetName = getString(R.string.logplayer_filename);
+					int messageInterval = getResources().getInteger(R.integer.logplayer_msg_interval);
+					mService.connectLogplayer(assetName, messageInterval);
+				}
+				catch (RemoteException e) {
+					// Bummer eh. Not much we can do here.
+					Log.e(TAG, "Exception during connect to sensor.");
+				}
+			}
+		}
+	}
+
+	void disconnectSensor() {
+		if (mService != null) {
+			try {
+				// will disconnect all devices
+				mService.disconnectDevice(null); 
+			}
+			catch (RemoteException e) {
+				// Bummer eh. Not much we can do here.
+				// The user can kill the service.
+				Log.e(TAG, "Exception during disconnect sensor.");
+			}
+		}
+	}
+
+	void connectBluetoothDevice(BluetoothDevice device) {
+		if (mService != null) {
+			try {
+				mService.connectBluetoothDevice(device);
+			}
+			catch (RemoteException e) {
+				// Bummer eh. Not much we can do here.
+				Log.e(TAG, "Exception during connectBluetoothDevice.");
+			}
+		}
+	}
+
+	void connectLogplayer() {
 		if (mService != null) {
 			try {
 				String assetName = getString(R.string.logplayer_filename);
@@ -204,20 +252,7 @@ public abstract class DeviceManagerClient extends Activity {
 			}
 			catch (RemoteException e) {
 				// Bummer eh. Not much we can do here.
-				Log.e(TAG, "Exception during connect to sensor.");
-			}
-		}
-	}
-
-	void disconnectSensor() {
-		if (mService != null) {
-			try {
-				mService.disconnectDevice(null); // will disconnect all devices
-			}
-			catch (RemoteException e) {
-				// Bummer eh. Not much we can do here.
-				// The user can kill the service.
-				Log.e(TAG, "Exception during disconnect sensor.");
+				Log.e(TAG, "Exception during connectLogplayer.");
 			}
 		}
 	}
@@ -229,55 +264,6 @@ public abstract class DeviceManagerClient extends Activity {
 		// Performing this check in onResume() covers the case in which BT was
 		// not enabled during onStart(), so we were paused to enable it...
 		// onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
-		/* TODO
-        if (mBluetoothSensorService != null) {
-            // Only if the state is STATE_NONE, do we know that we haven't started already
-            if (mBluetoothSensorService.getState() == BluetoothSensorService.STATE_NONE) {
-            	// Start the Bluetooth services
-            	//mBluetoothSensorService.start();
-            }
-        }
-		 */
-	}
-
-	private void setupCommonService() {
-	}
-
-	private void setupSenspodService() {
-		/* TODO
-    	if (mBluetoothSensorService != null) return;
-
-    	if (D) Log.d(TAG, "setupSenspodService()");
-
-        setupCommonService();
-
-        // Initialize the BluetoothSensorService to perform bluetooth connections
-        mBluetoothSensorService = new CitySenspodService(this, mHandler);
-		 */
-	}
-
-	private void setupSimulatorService() {
-		/* TODO
-    	if (mBluetoothSensorService != null) return;
-
-        Toast.makeText(this, "Starting Simulator service...", Toast.LENGTH_LONG).show();
-
-        if (D) Log.d(TAG, "setupSimulatorService()");
-
-        setupCommonService();
-
-        // Initialize the BluetoothSensorService to replay a logfile
-        String filename = getString(R.string.logplayer_filename);
-        int messageInterval = getResources().getInteger(R.integer.logplayer_msg_interval);
-        try {
-        	InputStream instream = getAssets().open(filename);
-            mBluetoothSensorService = new SampleSenspodService(mHandler, sensorId, instream, messageInterval);
-        }
-        catch (IOException e) {
-        	mBluetoothSensorService = null;
-            Toast.makeText(this, "Logfile does not exist, cannot start Simulator", Toast.LENGTH_LONG).show();
-        }
-		 */
 	}
 
 	@Override
@@ -332,42 +318,21 @@ public abstract class DeviceManagerClient extends Activity {
 				// Get the device MAC address
 				String address = data.getExtras()
 				.getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
-				// Get the BLuetoothDevice object
+				
 				BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
-				// Attempt to connect to the device
-				// TODO
-				//mBluetoothSensorService.connect(device);
+				connectBluetoothDevice(device);
 			}
 			break;
 		case REQUEST_ENABLE_BT:
 			// When the request to enable Bluetooth returns
 			if (resultCode == Activity.RESULT_OK) {
-				// Bluetooth is now enabled, so set up a session
-				setupSenspodService();
+				// Bluetooth is now enabled
 			} 
 			else {
 				// User did not enable Bluetooth or an error occured
-				Log.d(TAG, "BT not enabled");
-				Toast.makeText(this, R.string.bt_not_enabled_leaving, Toast.LENGTH_SHORT).show();
-				finish();
 			}
+			break;
 		}
-	}
-
-	public void launchDeviceListActivity() {
-		/* TODO
-		if (mBluetoothAdapter == null) {
-			if (mBluetoothSensorService != null) {
-				((SampleSenspodService)mBluetoothSensorService).start(); 
-			}
-		}
-		else {
-			// Launch the DeviceListActivity to see devices and do scan
-			Toast.makeText(this, R.string.msg_coming_soon, Toast.LENGTH_SHORT).show();
-			Intent serverIntent = new Intent(this, DeviceListActivity.class);
-			startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
-		}
-		 */
 	}
 
 	void setConnectedDeviceName(String connectedDeviceName) {

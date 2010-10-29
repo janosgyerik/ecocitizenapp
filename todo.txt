@@ -1,14 +1,10 @@
 migration to new architecture step by step
+	use logfile name as device name
 	UploaderService
 		fix timezone
 		test well
 		activate in DeviceManagerClient
 	fix BluetoothSensorService, make it a child of SensorManager
-	automatic bt detection and proper handling in DeviceManagerClient
-		if no bt, use logplayer instead
-		otherwise use bt
-		possibly option to use logplayer too
-	clean up DeviceManagerClient (lots of commented out unused code)
 	FileSaverService
 		IMPORTANT
 	rename non-services
