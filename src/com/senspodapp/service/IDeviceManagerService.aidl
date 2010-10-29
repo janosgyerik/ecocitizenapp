@@ -31,10 +31,9 @@ interface IDeviceManagerService {
 	String getConnectedDeviceName();
     
     void connectBluetoothDevice(in BluetoothDevice device);
-	void disconnectBluetoothDevice(in String deviceName);
-	
 	void connectLogplayer(in String assetName, in int messageInterval);
-	void disconnectLogplayer();
+
+	void disconnectDevice(in String deviceName);
 	
 	void registerCallback(in IDeviceManagerServiceCallback cb);
 	void unregisterCallback(in IDeviceManagerServiceCallback cb);

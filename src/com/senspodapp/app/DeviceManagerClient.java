@@ -212,7 +212,7 @@ public abstract class DeviceManagerClient extends Activity {
 	void disconnectSensor() {
 		if (mService != null) {
 			try {
-				mService.disconnectLogplayer();
+				mService.disconnectDevice(null); // will disconnect all devices
 			}
 			catch (RemoteException e) {
 				// Bummer eh. Not much we can do here.

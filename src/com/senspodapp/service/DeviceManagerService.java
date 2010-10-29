@@ -69,8 +69,7 @@ public class DeviceManagerService extends Service {
 	public void onDestroy() {
 		if (D) Log.d(TAG, "+++ ON DESTROY +++");
 
-		shutdownBluetoothSensorService();
-		shutdownLogplayer();
+		shutdownSensorManager();
 
 		Toast.makeText(this, "Device Manager stopped", Toast.LENGTH_SHORT);
 
@@ -80,34 +79,27 @@ public class DeviceManagerService extends Service {
 	final RemoteCallbackList<IDeviceManagerServiceCallback> mCallbacks =
 		new RemoteCallbackList<IDeviceManagerServiceCallback>();
 
-	BluetoothSensorService mBluetoothSensorService = null;
-	SensorManager mLogplayerService = null;
+	SensorManager mSensorManager = null;
 	String mConnectedDeviceName = null;
 
 	private final IDeviceManagerService.Stub mBinder = new IDeviceManagerService.Stub() {
 		public void connectBluetoothDevice(BluetoothDevice device) {
 			// TODO: add support for multiple devices
-			if (mConnectedDeviceName != null) return;
-			if (mBluetoothSensorService != null) return;
+			if (mSensorManager != null) return;
 
-			mBluetoothSensorService = new BluetoothSensorService(mHandler);
-			mBluetoothSensorService.connect(device);
-		}
-
-		public void disconnectBluetoothDevice(String deviceName) {
-			// TODO: add support for multiple devices
-			shutdownBluetoothSensorService();
+			// TODO implement BluetoothSensorService
+			//mSensorManager = new BluetoothSensorService(mHandler);
+			//mSensorManager.connect(device);
 		}
 
 		public void connectLogplayer(String assetFilename, int messageInterval) {
 			// TODO: add support for multiple devices
-			if (mConnectedDeviceName != null) return;
-			if (mLogplayerService != null) return;
+			if (mSensorManager != null) return;
 
 			try {
 				InputStream instream = getAssets().open(assetFilename);
-				mLogplayerService = new LogplayerService(mHandler, mLocationListener, instream, messageInterval);
-				mLogplayerService.start();
+				mSensorManager = new LogplayerService(mHandler, mLocationListener, instream, messageInterval);
+				mSensorManager.start();
 			}
 			catch (IOException e) {
 				e.printStackTrace();
@@ -115,9 +107,8 @@ public class DeviceManagerService extends Service {
 			}
 		}
 
-		public void disconnectLogplayer() {
-			// TODO: add support for multiple devices
-			shutdownLogplayer();
+		public void disconnectDevice(String deviceName) throws RemoteException {
+			shutdownSensorManager(deviceName);
 		}
 
 		public void registerCallback(IDeviceManagerServiceCallback cb) {
@@ -167,7 +158,7 @@ public class DeviceManagerService extends Service {
 						switch (msg.what) {
 						case MessageType.SENSORCONNECTION_NONE:
 							mCallbacks.getBroadcastItem(i).receivedSensorConnectionNone();
-							shutdownLogplayer();
+							shutdownSensorManager();
 							break;
 						case MessageType.SENSORCONNECTION_SUCCESS:
 							mCallbacks.getBroadcastItem(i).receivedSensorConnectionSuccess(deviceName);
@@ -212,17 +203,16 @@ public class DeviceManagerService extends Service {
 			}
 		}
 	};
-
-	void shutdownBluetoothSensorService() {
-		if (mBluetoothSensorService == null) return;
-		mBluetoothSensorService.stop();
-		mBluetoothSensorService = null;
+	
+	void shutdownSensorManager() {
+		// TODO: add support for multiple devices
+		shutdownSensorManager(null);
 	}
 
-	void shutdownLogplayer() {
-		if (mLogplayerService == null) return;
-		mLogplayerService.stop();
-		mLogplayerService = null;
+	void shutdownSensorManager(String deviceName) {
+		if (mSensorManager == null) return;
+		mSensorManager.stop();
+		mSensorManager = null;
 	}
 
 	public void initLocationManager() {
