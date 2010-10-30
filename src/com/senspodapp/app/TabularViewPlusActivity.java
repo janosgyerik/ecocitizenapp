@@ -42,8 +42,11 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 	// Layout Views
 	private TableLayout mSentencesTbl;
 	
+	// Constants
 	private final int TR_WIDTH = ViewGroup.LayoutParams.WRAP_CONTENT; 
 	private final int TR_HEIGHT = ViewGroup.LayoutParams.FILL_PARENT;
+	private final int columnColor = Color.WHITE;
+	private final int valueColor = Color.YELLOW;
 	
 	private HashMap<String, Integer> hmDataType = new HashMap<String, Integer>();
 	private int mRowID = 0;
@@ -82,12 +85,15 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 
 				name.setText(parser.getName());
 				name.setTextAppearance(this, style.TextAppearance_Medium);
+				name.setTextColor(columnColor);
 				
 				metric.setText(parser.getMetric());
-				metric.setTextAppearance(this,style.TextAppearance_Medium);
+				metric.setTextAppearance(this, style.TextAppearance_Medium);
+				metric.setTextColor(columnColor);
 				
 				value.setText(parser.getStrValue());
-				value.setTextAppearance(this,style.TextAppearance_Medium);
+				value.setTextAppearance(this, style.TextAppearance_Medium);
+				value.setTextColor(valueColor);
 				value.setGravity(Gravity.RIGHT);
 				value.setId(mRowID);
 
@@ -95,10 +101,6 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 				tr.addView(metric);
 				tr.addView(value);
 
-				name.setTextColor(Color.RED);
-				metric.setTextColor(Color.RED);
-				value.setTextColor(Color.YELLOW);
-				
 				hmDataType.put(parser.getName(), mRowID);
 				mSentencesTbl.addView(tr, new TableLayout.LayoutParams(TR_HEIGHT, TR_WIDTH));
 
