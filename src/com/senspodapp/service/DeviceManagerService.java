@@ -141,11 +141,16 @@ public class DeviceManagerService extends Service {
 			case MessageType.SENSORCONNECTION_NONE:
 			case MessageType.SENSORCONNECTION_SUCCESS:
 			case MessageType.SENSORCONNECTION_FAILED:
-			case MessageType.SENSORCONNECTION_LOST: {
+			case MessageType.SENSORCONNECTION_LOST: 
+			case MessageType.SENSORCONNECTION_DISCONNECTSELF: {
 				final String deviceName = (String)msg.obj;
 				mConnectedDeviceName = deviceName;
 				if (msg.what == MessageType.SENSORCONNECTION_SUCCESS) {
 					mLocationListener.requestLocationUpdates();
+				}
+				else if (msg.what == MessageType.SENSORCONNECTION_DISCONNECTSELF){
+					shutdownSensorManager(mConnectedDeviceName);
+					break;
 				}
 				else {
 					mLocationListener.removeLocationUpdates();
@@ -158,7 +163,6 @@ public class DeviceManagerService extends Service {
 						switch (msg.what) {
 						case MessageType.SENSORCONNECTION_NONE:
 							mCallbacks.getBroadcastItem(i).receivedSensorConnectionNone();
-							shutdownSensorManager();
 							break;
 						case MessageType.SENSORCONNECTION_SUCCESS:
 							mCallbacks.getBroadcastItem(i).receivedSensorConnectionSuccess(deviceName);

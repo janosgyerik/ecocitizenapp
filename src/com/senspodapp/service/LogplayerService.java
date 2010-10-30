@@ -106,7 +106,7 @@ public class LogplayerService extends SensorManager {
 						}
 					}
 					else {
-						connectionNone();
+						connectionDisconnectSelf();
 					}
 				} 
 				catch (IOException e) {

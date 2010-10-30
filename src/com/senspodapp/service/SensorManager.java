@@ -76,6 +76,7 @@ abstract public class SensorManager {
     void sendToHandler(int messageType) {
     	switch (messageType) {
     	case MessageType.SENSORCONNECTION_SUCCESS:
+    	case MessageType.SENSORCONNECTION_DISCONNECTSELF:
             mHandler.obtainMessage(messageType, mDeviceName).sendToTarget();
     		break;
     	case MessageType.SENSORCONNECTION_FAILED:
@@ -113,5 +114,12 @@ abstract public class SensorManager {
      */
     void connectionNone() {
         sendToHandler(MessageType.SENSORCONNECTION_NONE);
+    }
+    
+    /**
+     * connectionDisconnectSelf, notify owner's handler.
+     */
+    void connectionDisconnectSelf() {
+        sendToHandler(MessageType.SENSORCONNECTION_DISCONNECTSELF);
     }
 }

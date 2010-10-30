@@ -45,7 +45,7 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:baselineAligned">true</item>
         <item name="android:drawingCacheQuality">auto</item>
-        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_width">wrap_content</item>
     	<item name="android:stretchColumns">*</item>
     	<item name="android:layout_height">wrap_content</item>
     	<item name="android:gravity">center_vertical|center_horizontal</item>
