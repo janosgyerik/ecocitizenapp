@@ -115,6 +115,12 @@ public class SenspodApp extends DeviceManagerClient {
 			editor.putString("map_server_url", map_server_url);
 			editor.commit();
 		}
+		if (settings.getString("api_key", "").equals("")) {
+			String api_key = this.getString(R.string.api_key);
+			SharedPreferences.Editor editor = settings.edit();
+			editor.putString("api_key", api_key);
+			editor.commit();
+		}
 	}
 
 	@Override

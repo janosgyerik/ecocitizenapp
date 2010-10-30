@@ -290,14 +290,14 @@ public class SensorMapUploaderService extends Service {
 	String SENSORMAP_STARTSESSION_URL;
 	String SENSORMAP_STORE_URL;
 	String SENSORMAP_ENDSESSION_URL;
-	String API_VERSION = "4";
+	final String SENSORMAP_API_VERSION = "4";
 	
 	// Member variables
 	String username;
 	String api_key;
 	String map_server_url;
 	
-	private int mSessionId = 0;
+	private String mSessionId = null;
 	
 	void uploadDataRecord(String data) {
 		Log.d(TAG, "STORE = " + data);
@@ -319,13 +319,13 @@ public class SensorMapUploaderService extends Service {
 	void reloadConfiguration() {
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 		username = settings.getString("username", "");
-		api_key = settings.getString("api_key", "");
 		map_server_url = settings.getString("map_server_url", "");
+		api_key = settings.getString("api_key", "");
 
 		SENSORMAP_LOGIN_URL = String.format("%slogin/%s/%s", map_server_url, username, api_key);
 		SENSORMAP_STATUS_URL = String.format("%sstatus/", map_server_url);
-		SENSORMAP_STARTSESSION_URL = String.format("%sstartsession/%s/%s", map_server_url, username, api_key);
-		SENSORMAP_STORE_URL = String.format("%sstore/%s/%s/", map_server_url, API_VERSION, username);
+		SENSORMAP_STARTSESSION_URL = String.format("%sstartsession/%s/%s/", map_server_url, username, api_key);
+		SENSORMAP_STORE_URL = String.format("%sstore/%s/", map_server_url, username);
 		SENSORMAP_ENDSESSION_URL = String.format("%sendsession/%s/", map_server_url, username);
 	}
 	
@@ -346,7 +346,7 @@ public class SensorMapUploaderService extends Service {
         }
 	}
 	
-	public int getIntResponse(String url) {
+	public String getStringResponse(String url) {
 		if (D) Log.d(TAG, url);
         HttpClient client = new DefaultHttpClient();
         HttpGet request = new HttpGet(url);
@@ -354,21 +354,26 @@ public class SensorMapUploaderService extends Service {
         try {
          	HttpResponse response = client.execute(request);
         	StatusLine status = response.getStatusLine();
-        	if (status.getStatusCode() != HTTP_STATUS_OK) return -1;
+        	if (status.getStatusCode() != HTTP_STATUS_OK) return null;
 
         	HttpEntity entity = response.getEntity();
 			InputStream istream = entity.getContent();
 			byte[] buf = new byte[100];
 			int bytes_read = istream.read(buf);
-			char[] charbuf = new char[bytes_read];
-			for (int i = 0; i < bytes_read; ++i) charbuf[i] = (char)buf[i];
-			String intstr = String.valueOf(charbuf);
-			return Integer.valueOf(intstr);
+			if (bytes_read > 0) {
+				char[] charbuf = new char[bytes_read];
+				for (int i = 0; i < bytes_read; ++i) charbuf[i] = (char)buf[i];
+				String str = String.valueOf(charbuf);
+				return str;
+			}
+			else {
+				return "";
+			}
         }
         catch (Exception e) {
-        	//e.printStackTrace();
-        	Log.e(TAG, "Exception in getIntResponse");
-        	return -1;
+        	e.printStackTrace();
+        	Log.e(TAG, "Exception in getStringResponse");
+        	return null;
         }
 	}
 	
@@ -421,18 +426,19 @@ public class SensorMapUploaderService extends Service {
 	}
 	
 	public boolean ws_startsession(String username) {
-		mSessionId = getIntResponse(SENSORMAP_STARTSESSION_URL);
-		return mSessionId > 0;
+		mSessionId = getStringResponse(SENSORMAP_STARTSESSION_URL);
+		return mSessionId != null;
 	}
 	
 	public boolean ws_store(String data) {
 		data = data.replace(" ", "");
-		int ret = getIntResponse(SENSORMAP_STORE_URL + mSessionId + "/" + data); //URLEncoder.encode(data));
-		return ret == 0;
+		return getStringResponse(SENSORMAP_STORE_URL + mSessionId + "/" 
+				+ SENSORMAP_API_VERSION + "/" + data) != null; 
+		//URLEncoder.encode(data));
 	}
 	
 	public void ws_endsession() {
-		getIntResponse(SENSORMAP_ENDSESSION_URL + mSessionId);
+		getStringResponse(SENSORMAP_ENDSESSION_URL + mSessionId + "/");
 	}
 
 }

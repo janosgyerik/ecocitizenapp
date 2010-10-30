@@ -1,8 +1,11 @@
 migration to new architecture step by step
-	UploaderService
-		test well
-		activate in DeviceManagerClient
 	fix BluetoothSensorService, make it a child of SensorManager
+	if SensorMap status is ok but login fails
+		show error message
+		button to open preferences and change settings
+		button for SensorMapUploaderService.reloadConfig
+		a proper activity for upload manager would be the best
+		in the most primitive case: reload config on login failure
 	FileSaverService
 		IMPORTANT
 	rename non-services
