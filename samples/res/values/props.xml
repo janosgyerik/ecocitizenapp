@@ -25,7 +25,7 @@ on the deployment type, for example development / production.
     <!-- Application default properties -->
     <string name="username">anon</string>
     <string name="map_server_url">http://sensormap.titan2x.com/api/</string>
-    <string name="api_key">set_this_before_deployment</string>
+    <string name="api_key">JRECsQLiWYisEsLS</string>
     
     <!-- For developers only -->
     <string name="logplayer_sensor_id">apiv3</string>

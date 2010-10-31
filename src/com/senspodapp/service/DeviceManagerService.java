@@ -87,9 +87,7 @@ public class DeviceManagerService extends Service {
 			// TODO: add support for multiple devices
 			if (mSensorManager != null) return;
 
-			// TODO implement BluetoothSensorService
-			//mSensorManager = new BluetoothSensorService(mHandler);
-			//mSensorManager.connect(device);
+			mSensorManager = new BluetoothSensorManager(mHandler, mLocationListener, device);
 		}
 
 		public void connectLogplayer(String assetFilename, int messageInterval) {

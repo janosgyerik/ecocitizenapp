@@ -26,9 +26,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.UUID;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import backport.android.bluetooth.BluetoothAdapter;
 import backport.android.bluetooth.BluetoothDevice;
 import backport.android.bluetooth.BluetoothSocket;
 
@@ -37,7 +37,7 @@ import backport.android.bluetooth.BluetoothSocket;
  * connections with other devices. It has a thread for connecting with 
  * a device, and a thread for performing data transmissions when connected.
  */
-public class BluetoothSensorManager {
+public class BluetoothSensorManager extends SensorManager {
     // Debugging
     private static final String TAG = "BluetoothSensorService";
     private static final boolean D = true;
@@ -46,57 +46,33 @@ public class BluetoothSensorManager {
     private static final UUID MY_UUID = UUID.fromString("19A78F3D-AA91-4346-98E4-9F169F25E456");
 
     // Member fields
-    private final BluetoothAdapter mAdapter;
     private ConnectThread mConnectThread;
     private ConnectedThread mConnectedThread;
-    int mState;
-    String mDeviceName;
 
-    // handler of the owner object, for sending sentences and notifications
-    Handler mHandler;
-    
     final int STATE_NONE = 1;
     final int STATE_CONNECTING = 2;
     final int STATE_CONNECTED = 3;
+    private int mState = STATE_NONE;
     
-    public BluetoothSensorManager() {
-    	mHandler = null;
-    	mAdapter = null;
-    }
-
-    /**
-     * Constructor. Prepares a new BluetoothSensorService.
-     * @param handler  A Handler to send messages back to the UI Activity
-     */
-    public BluetoothSensorManager(Handler handler) {
-        mAdapter = BluetoothAdapter.getDefaultAdapter();
-        mState = STATE_NONE;
+	/**
+	 * Constructor. Prepares a new session.
+	 * @param handler  A Handler to send messages back to the UI Activity
+	 */
+    public BluetoothSensorManager(Handler handler, GpsLocationListener gpsLocationListener, 
+    		BluetoothDevice device) {
         mHandler = handler;
-    }
+		mGpsLocationListener = gpsLocationListener;
 
-    /**
-     * Set the current state of the connection
-     * @param state  An integer defining the current connection state
-     */
-    synchronized void setState(int state) {
-        if (D) Log.d(TAG, "setState() " + mState + " -> " + state);
-        mState = state;
-    }
-
-    /**
-     * Return the current connection STATE_ 
-     */
-    public synchronized int getState() {
-        return mState;
-    }
+		mSensorId = device.getAddress();
+		mDeviceName = device.getName();
+		connect(device);
+	}
 
     /**
      * Start the ConnectThread to initiate a connection to a remote device.
      * @param device  The BluetoothDevice to connect
      */
     public synchronized void connect(BluetoothDevice device) {
-        mDeviceName = device.getName();
-        
         if (D) Log.d(TAG, "connect to: " + device);
 
         // Cancel any thread attempting to make a connection
@@ -111,7 +87,8 @@ public class BluetoothSensorManager {
         // Start the thread to connect with the given device
         mConnectThread = new ConnectThread(device);
         mConnectThread.start();
-        setState(STATE_CONNECTING);
+        
+        mState = STATE_CONNECTING;
     }
 
     /**
@@ -132,10 +109,9 @@ public class BluetoothSensorManager {
         mConnectedThread = new ConnectedThread(socket);
         mConnectedThread.start();
 
-        // Send the name of the connected device back to the Device Manager
-        mHandler.obtainMessage(MessageType.SENSORCONNECTION_SUCCESS, device.getName()).sendToTarget();
-
-        setState(STATE_CONNECTED);
+        mState = STATE_CONNECTED;
+        
+        connectionSuccess();
     }
 
     /**
@@ -147,10 +123,9 @@ public class BluetoothSensorManager {
         if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
         if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
         
-        // Send the name of the connected device back to the Device Manager
-        mHandler.obtainMessage(MessageType.SENSORCONNECTION_NONE).sendToTarget();
-
-        setState(STATE_NONE);
+        mState = STATE_NONE;
+        
+        connectionNone();
     }
 
     /**
@@ -168,26 +143,6 @@ public class BluetoothSensorManager {
         }
         // Perform the write unsynchronized
         r.write(out);
-    }
-
-    /**
-     * Indicate that the connection attempt failed and notify the UI Activity.
-     */
-    private void connectionFailed() {
-        setState(STATE_NONE);
-
-        // Send a failure message back to the Activity
-        mHandler.obtainMessage(MessageType.SENSORCONNECTION_FAILED, mDeviceName).sendToTarget();
-    }
-
-    /**
-     * Indicate that the connection was lost and notify the UI Activity.
-     */
-    void connectionLost() {
-        setState(STATE_NONE);
-
-        // Send a failure message back to the Activity
-        mHandler.obtainMessage(MessageType.SENSORCONNECTION_LOST, mDeviceName).sendToTarget();
     }
 
     /**
@@ -210,6 +165,7 @@ public class BluetoothSensorManager {
             } 
             catch (IOException e) {
                 Log.e(TAG, "create() failed", e);
+                mState = STATE_NONE;
             }
             mmSocket = tmp;
         }
@@ -218,9 +174,6 @@ public class BluetoothSensorManager {
             Log.i(TAG, "BEGIN mConnectThread");
             setName("ConnectThread");
 
-            // Always cancel discovery because it will slow down a connection
-            mAdapter.cancelDiscovery();
-
             // Make a connection to the BluetoothSocket
             try {
                 // This is a blocking call and will only return on a
@@ -228,7 +181,9 @@ public class BluetoothSensorManager {
                 mmSocket.connect();
             } 
             catch (IOException e) {
+            	mState = STATE_NONE;
                 connectionFailed();
+                
                 // Close the socket
                 try {
                     mmSocket.close();
@@ -310,12 +265,12 @@ public class BluetoothSensorManager {
 				try {
 	            	String line = reader.readLine();
 	            	if (line != null) {
-	                    //mHandler.obtainMessage(MessageType.SENTENCE, line.length(), -1, line.getBytes())
-	            		mHandler.obtainMessage(MessageType.SENTENCE, line)
-                        .sendToTarget();
+						Bundle bundle = getSensorDataBundle(line);
+						mHandler.obtainMessage(MessageType.SENTENCE, bundle).sendToTarget();
 	            	}
 				} catch (IOException e) {
 	                Log.e(TAG, "disconnected", e);
+	                mState = STATE_NONE;
 	                connectionLost();
 	                break;			
 				}

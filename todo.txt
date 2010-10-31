@@ -1,11 +1,11 @@
 migration to new architecture step by step
-	fix BluetoothSensorService, make it a child of SensorManager
 	if SensorMap status is ok but login fails
 		show error message
 		button to open preferences and change settings
 		button for SensorMapUploaderService.reloadConfig
 		a proper activity for upload manager would be the best
 		in the most primitive case: reload config on login failure
+	uploader should reload configuration after it changes
 	FileSaverService
 		IMPORTANT
 
@@ -13,40 +13,12 @@ redmine
 	-
 
 optimization
-	make logplayer device name the sample filename (asset name)
-	comments in new source code, especially service code
+	review comments in entire code, especially service code
 	improve button style by using different style parent? theme?
-	fix licence message
-
-confirm with real android device
-	can start and stop bt connections
-
-tasks when connected to internet
-	migrate tasks from launchpad to redmine
-
-implement new architecture
-	add SentenceConsumer interface, make the activity implement it
-	add SentenceProvider interface, hook up to the activity
-
-next
-	fix session management
-		consumer should receive device connect/disconnect messages
-		on connect: startsession
-		on sentence: store
-		on disconnect: endsession
-		application should also notify, and trigger endsession
 
 core functionality
 	add status indicator of data uploading
-	add status indicator of incoming sensor data (already in Redmine)
-
-optimization
-	simulator
-		when the sample file is finished, shutdown the service
-		make connect/disconnect work
-	tree page
-		add battery level, aligned to the right on the same line as lat
-		add nice colored scale for co2 level
+	add status indicator of incoming sensor data
 
 bugs
 	-
