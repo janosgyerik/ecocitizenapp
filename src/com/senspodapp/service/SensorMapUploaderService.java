@@ -161,7 +161,7 @@ public class SensorMapUploaderService extends Service {
 					format,
 					bundle.getString(BundleKeys.SENTENCE_SENSOR_ID),
 					bundle.getString(BundleKeys.SENTENCE_DTZ),
-					bundle.getString(BundleKeys.SENTENCE_LINE)
+					line
 			).toString();
 		}
 		else {
@@ -170,7 +170,7 @@ public class SensorMapUploaderService extends Service {
 			datarecord = formatter.format(
 					format,
 					locationBundle.getString(BundleKeys.LOCATION_DTZ),
-					locationBundle.getString(BundleKeys.LOCATION_LATLON_ID),
+					locationBundle.getInt(BundleKeys.LOCATION_LATLON_ID),
 					location.getLatitude(),
 					location.getLongitude(),
 					location.getAccuracy(),
@@ -179,7 +179,7 @@ public class SensorMapUploaderService extends Service {
 					location.getSpeed(),
 					bundle.getString(BundleKeys.SENTENCE_SENSOR_ID),
 					bundle.getString(BundleKeys.SENTENCE_DTZ),
-					bundle.getString(BundleKeys.SENTENCE_LINE)
+					line
 			).toString();
 		}
 		
@@ -300,19 +300,19 @@ public class SensorMapUploaderService extends Service {
 	private String mSessionId = null;
 	
 	void uploadDataRecord(String data) {
-		Log.d(TAG, "STORE = " + data);
+		//if (D) Log.d(TAG, "STORE = " + data);
 		waitForStore(data);
 	}
 	
 	void startSession() {
-		Log.d(TAG, "STARTSESSION");
+		if (D) Log.d(TAG, "STARTSESSION");
 		reloadConfiguration();
 		waitForSensorMapReachable();
 		waitForStartSession();
 	}
 	
 	void endSession() {
-		Log.d(TAG, "ENDSESSION");
+		if (D) Log.d(TAG, "ENDSESSION");
 		ws_endsession();
 	}
 
@@ -430,7 +430,7 @@ public class SensorMapUploaderService extends Service {
 	
 	public boolean ws_startsession(String username) {
 		mSessionId = getStringResponse(SENSORMAP_STARTSESSION_URL);
-		return mSessionId != null;
+		return mSessionId != null && ! mSessionId.equals("");
 	}
 	
 	public boolean ws_store(String data) {

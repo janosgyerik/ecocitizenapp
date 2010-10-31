@@ -63,7 +63,7 @@ public class BluetoothSensorManager extends SensorManager {
         mHandler = handler;
 		mGpsLocationListener = gpsLocationListener;
 
-		mSensorId = device.getAddress();
+		mSensorId = device.getAddress().replaceAll(":", "_");
 		mDeviceName = device.getName();
 		connect(device);
 	}
