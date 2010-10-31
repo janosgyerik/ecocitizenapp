@@ -98,7 +98,7 @@ public class DeviceManagerService extends Service {
 
 			try {
 				InputStream instream = getAssets().open(assetFilename);
-				mSensorManager = new LogplayerService(mHandler, mLocationListener, instream, messageInterval, assetFilename);
+				mSensorManager = new LogplayerSensorManager(mHandler, mLocationListener, instream, messageInterval, assetFilename);
 				mSensorManager.start();
 			}
 			catch (IOException e) {

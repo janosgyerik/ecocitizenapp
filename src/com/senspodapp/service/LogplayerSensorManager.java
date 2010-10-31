@@ -28,7 +28,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
-public class LogplayerService extends SensorManager {
+public class LogplayerSensorManager extends SensorManager {
 	// Debugging
 	static final String TAG = "LogplayerService";
 	static final boolean D = true;
@@ -43,7 +43,7 @@ public class LogplayerService extends SensorManager {
 	 * Constructor. Prepares a new session.
 	 * @param handler  A Handler to send messages back to the UI Activity
 	 */
-	public LogplayerService(Handler handler, GpsLocationListener gpsLocationListener,
+	public LogplayerSensorManager(Handler handler, GpsLocationListener gpsLocationListener,
 			InputStream instream, int messageInterval, String filename) {
 		mHandler = handler;
 		mGpsLocationListener = gpsLocationListener;

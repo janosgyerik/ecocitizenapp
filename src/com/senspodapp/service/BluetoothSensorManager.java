@@ -37,7 +37,7 @@ import backport.android.bluetooth.BluetoothSocket;
  * connections with other devices. It has a thread for connecting with 
  * a device, and a thread for performing data transmissions when connected.
  */
-public class BluetoothSensorService {
+public class BluetoothSensorManager {
     // Debugging
     private static final String TAG = "BluetoothSensorService";
     private static final boolean D = true;
@@ -59,7 +59,7 @@ public class BluetoothSensorService {
     final int STATE_CONNECTING = 2;
     final int STATE_CONNECTED = 3;
     
-    public BluetoothSensorService() {
+    public BluetoothSensorManager() {
     	mHandler = null;
     	mAdapter = null;
     }
@@ -68,7 +68,7 @@ public class BluetoothSensorService {
      * Constructor. Prepares a new BluetoothSensorService.
      * @param handler  A Handler to send messages back to the UI Activity
      */
-    public BluetoothSensorService(Handler handler) {
+    public BluetoothSensorManager(Handler handler) {
         mAdapter = BluetoothAdapter.getDefaultAdapter();
         mState = STATE_NONE;
         mHandler = handler;
@@ -239,7 +239,7 @@ public class BluetoothSensorService {
             }
 
             // Reset the ConnectThread because we're done
-            synchronized (BluetoothSensorService.this) {
+            synchronized (BluetoothSensorManager.this) {
                 mConnectThread = null;
             }
 

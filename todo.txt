@@ -8,9 +8,6 @@ migration to new architecture step by step
 		in the most primitive case: reload config on login failure
 	FileSaverService
 		IMPORTANT
-	rename non-services
-		BluetoothSensorService -> BluetoothSensorManager
-		LogplayerService -> LogplayerSensorManager
 
 redmine
 	-
