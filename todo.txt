@@ -5,7 +5,6 @@ migration to new architecture step by step
 		button for SensorMapUploaderService.reloadConfig
 		a proper activity for upload manager would be the best
 		in the most primitive case: reload config on login failure
-	uploader should reload configuration after it changes
 	FileSaverService
 		IMPORTANT
 

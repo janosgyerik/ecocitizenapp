@@ -386,6 +386,7 @@ public class SensorMapUploaderService extends Service {
 				Log.e(TAG, "sensormap UNREACHABLE");
 				try {
 					Thread.sleep(QUEUE_NOSENSORMAP_SLEEP);
+					reloadConfiguration();
 				} catch (InterruptedException e) {
 					// ignore sleep interrupts
 				}
@@ -402,6 +403,7 @@ public class SensorMapUploaderService extends Service {
 				Log.e(TAG, "startsession ERROR");
 				try {
 					Thread.sleep(QUEUE_LOGINERROR_SLEEP);
+					reloadConfiguration();
 				} catch (InterruptedException e) {
 					// ignore sleep interrupts
 				}
@@ -418,6 +420,7 @@ public class SensorMapUploaderService extends Service {
 				Log.e(TAG, "store ERROR");
 				try {
 					Thread.sleep(QUEUE_STOREERROR_SLEEP);
+					reloadConfiguration();
 				} catch (InterruptedException e) {
 					// ignore sleep interrupts
 				}
