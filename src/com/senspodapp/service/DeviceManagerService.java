@@ -41,6 +41,7 @@ public class DeviceManagerService extends Service {
 	// Debugging
 	private static final String TAG = "DeviceManagerService";
 	private static final boolean D = true;
+	private static final boolean LOG_SENTENCES = false;
 	
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -183,14 +184,11 @@ public class DeviceManagerService extends Service {
 				mCallbacks.finishBroadcast();
 			} break;
 			case MessageType.SENTENCE: {
-				// TODO
-				// SENTENCE message should include:
-				// GpsInfo, DateTime, SensorId, Sentence 
 				// Broadcast to all clients
 				final int N = mCallbacks.beginBroadcast();
 				final Bundle bundle = (Bundle)msg.obj;
 				final String sentence = (String)bundle.getString(BundleKeys.SENTENCE_LINE);
-				if (D) Log.d(TAG, "SENTENCE = " + sentence);
+				if (LOG_SENTENCES) Log.d(TAG, "SENTENCE = " + sentence);
 				for (int i = 0; i < N; ++i) {
 					try {
 						mCallbacks.getBroadcastItem(i).receivedSentenceBundle(bundle);
@@ -209,7 +207,8 @@ public class DeviceManagerService extends Service {
 	};
 	
 	void shutdownSensorManager() {
-		// TODO: add support for multiple devices
+		// TODO: add support for multiple devices: loop over each connected  
+		// device name and call the overloaded method with device name.
 		shutdownSensorManager(null);
 	}
 
