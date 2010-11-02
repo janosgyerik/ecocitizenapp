@@ -8,16 +8,9 @@ migration to new architecture step by step
 	FileSaverService
 		IMPORTANT
 
-redmine
-	-
-
 optimization
 	review comments in entire code, especially service code
 	improve button style by using different style parent? theme?
-
-core functionality
-	add status indicator of data uploading
-	add status indicator of incoming sensor data
 
 bugs
 	-
