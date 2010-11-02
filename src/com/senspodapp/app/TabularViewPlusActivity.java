@@ -29,7 +29,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -57,15 +56,7 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 		if (D) Log.d(TAG, "+++ ON CREATE +++");
 
 		// Set up the window layout
-		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.tabularviewplus);
-		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
-
-		// Set up the custom title
-		mTitle = (TextView) findViewById(R.id.title_left_text);
-		mTitle.setText(R.string.tabularviewplus_activity);
-		mTitle = (TextView) findViewById(R.id.title_right_text);
-
 		mSentencesTbl = (TableLayout)findViewById(R.id.tblsentencesplus);
 		
 		setupCommonButtons();

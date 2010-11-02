@@ -95,7 +95,7 @@ public abstract class DeviceManagerClient extends Activity {
 		startService(new Intent(IDeviceManagerService.class.getName()));
 
 		// Establish connection with the service.
-		bindService(new Intent(IDeviceManagerService.class.getName()),
+		getApplicationContext().bindService(new Intent(IDeviceManagerService.class.getName()),
 				mConnection, Context.BIND_AUTO_CREATE);
 	}
 
@@ -150,7 +150,7 @@ public abstract class DeviceManagerClient extends Activity {
 		startService(new Intent(ISensorMapUploaderService.class.getName()));
 
 		// Establish connection with the service.
-		bindService(new Intent(ISensorMapUploaderService.class.getName()),
+		getApplicationContext().bindService(new Intent(ISensorMapUploaderService.class.getName()),
 				mSensorMapUploaderConnection, Context.BIND_AUTO_CREATE);
 	}
 
@@ -336,12 +336,14 @@ public abstract class DeviceManagerClient extends Activity {
 	}
 
 	void setConnectedDeviceName(String connectedDeviceName) {
-		if (connectedDeviceName == null) {
-			mTitle.setText(R.string.title_not_connected);
-		}
-		else {
-			mTitle.setText(R.string.title_connected_to);
-			mTitle.append(connectedDeviceName);
+
+		if (this instanceof SenspodApp) {
+			if (connectedDeviceName == null) {
+				mTitle.setText(R.string.title_not_connected);
+			} else {
+				mTitle.setText(R.string.title_connected_to);
+				mTitle.append(connectedDeviceName);
+			}
 		}
 	}
 
