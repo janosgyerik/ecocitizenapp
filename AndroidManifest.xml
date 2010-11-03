@@ -17,7 +17,7 @@
 			</intent-filter>
 		</service>
 
-		<activity android:name=".SenspodApp"
+		<activity android:name=".TreeViewActivity"
 			android:screenOrientation="nosensor" android:label="@string/app_name">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,7 @@
 		<activity android:name=".SentencesActivity" android:label="Sentences">
 		</activity>
 
-		<activity android:name=".DeviceManagerConsole" android:label="Console">
+		<activity android:name=".ConsoleActivity" android:label="Console">
 		</activity>
 
 		<activity android:name=".SettingsActivity" android:label="@string/menu_settings">

@@ -26,9 +26,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-public class DeviceManagerConsole extends SimpleDeviceManagerClient {
+public class ConsoleActivity extends SimpleDeviceManagerClient {
 	// Debugging
-	private static final String TAG = "DeviceManagerConsole";
+	private static final String TAG = "ConsoleActivity";
 	private static final boolean D = true;
 
 	// Layout Views

@@ -39,9 +39,9 @@ import android.widget.Toast;
 import com.senspodapp.parser.Co2SentenceParser;
 import com.senspodapp.service.BundleKeys;
 
-public class SenspodApp extends DeviceManagerClient {
+public class TreeViewActivity extends DeviceManagerClient {
 	// Debugging
-	private static final String TAG = "SenspodApp";
+	private static final String TAG = "TreeViewActivity";
 	private static final boolean D = true;
 
 	// Layout Views
@@ -126,7 +126,7 @@ public class SenspodApp extends DeviceManagerClient {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.senspodapp, menu);
+		inflater.inflate(R.menu.treeviewactivity, menu);
 
 		return true;
 	}
@@ -146,7 +146,7 @@ public class SenspodApp extends DeviceManagerClient {
 		case R.id.menu_debugtools:
 			startActivity(new Intent(this, DebugToolsActivity.class));
 			return true;
-		case R.id.menu_quit:
+		case R.id.menu_close:
 			finish();
 			return true;
 		}
