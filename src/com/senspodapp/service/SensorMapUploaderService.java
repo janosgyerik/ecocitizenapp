@@ -29,6 +29,10 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.R;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
@@ -50,7 +54,9 @@ public class SensorMapUploaderService extends Service {
 	// Debugging
 	private static final String TAG = "SensorMapUploaderService";
 	private static final boolean D = true;
-
+    private static final int NOTIFY_ID = 1;
+	private NotificationManager mNotificationManager;
+	
 	@Override
 	public IBinder onBind(Intent intent) {
 		if (D) Log.d(TAG, "+++ ON BIND +++");
@@ -72,6 +78,8 @@ public class SensorMapUploaderService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		String ns = Context.NOTIFICATION_SERVICE;
+	    mNotificationManager = (NotificationManager) getSystemService(ns);
 		if (D) Log.d(TAG, "+++ ON CREATE +++");
 	}
 
@@ -341,6 +349,7 @@ public class SensorMapUploaderService extends Service {
         }
         catch (Exception e) {
         	//e.printStackTrace();
+        	sendNotifications(MessageType.SENSORMAPUPLOADER_BLOCKED);
         	Log.e(TAG, "Exception in isSensormapReachable");
         	return false;
         }
@@ -414,6 +423,7 @@ public class SensorMapUploaderService extends Service {
 	public void waitForStore(String data) {
 		while (active) {
 			if (ws_store(data)) {
+				sendNotifications(MessageType.SENSORMAPUPLOADER_UPLOADING);
 				return;
 			}
 			else {
@@ -421,6 +431,7 @@ public class SensorMapUploaderService extends Service {
 				try {
 					Thread.sleep(QUEUE_STOREERROR_SLEEP);
 					reloadConfiguration();
+					sendNotifications(MessageType.SENSORMAPUPLOADER_WAITING);
 				} catch (InterruptedException e) {
 					// ignore sleep interrupts
 				}
@@ -444,4 +455,34 @@ public class SensorMapUploaderService extends Service {
 		getStringResponse(SENSORMAP_ENDSESSION_URL + mSessionId + "/");
 	}
 
+	public void sendNotifications(int type) {
+		int icon = 0;
+		CharSequence tickerText = null;
+		Notification notification;
+		long when = System.currentTimeMillis();
+		
+		switch (type) {
+		case MessageType.SENSORMAPUPLOADER_WAITING:
+			icon = R.drawable.stat_sys_phone_call_on_hold;
+			tickerText = "Waiting";
+			break;
+		case MessageType.SENSORMAPUPLOADER_UPLOADING:
+			icon = R.drawable.stat_sys_phone_call;
+			tickerText = "Uploading";
+			break;
+		case MessageType.SENSORMAPUPLOADER_BLOCKED:
+			icon = R.drawable.stat_notify_missed_call;
+			tickerText = "Blocked";
+			break;
+		}		
+		notification = new Notification(icon, tickerText, when);
+		Context context = getApplicationContext();
+		CharSequence contentTitle = "Mapupload Notification";
+		CharSequence contentText = "Uploader Service";
+		Intent notificationIntent = new Intent(this, DeviceManagerService.class);
+		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+		mNotificationManager.notify(NOTIFY_ID, notification);
+	
+	}
 }

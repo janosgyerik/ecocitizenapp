@@ -26,6 +26,12 @@ public abstract class MessageType {
 	public final static int SENSORCONNECTION_LOST = 14;
 	public final static int SENSORCONNECTION_DISCONNECTSELF = 15;
 	
+	public final static int SENSORMAPUPLOADER_WAITING = 16;
+	public final static int SENSORMAPUPLOADER_UPLOADING = 17;
+	public final static int SENSORMAPUPLOADER_BLOCKED = 18;
+	
+	
+	
 	public final static int SENTENCE = 21;
 	
 }
