@@ -75,7 +75,7 @@ public abstract class DeviceManagerClient extends Activity {
 		if (D) Log.d(TAG, "++ ON START ++");
 
 		connectDeviceManager();
-		connectSensorMapUploader();
+		//connectSensorMapUploader();
 
 		// If BT is not on, request that it be enabled.
 		if (mBluetoothAdapter != null) {
