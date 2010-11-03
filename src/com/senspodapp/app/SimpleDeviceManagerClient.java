@@ -50,7 +50,7 @@ public abstract class SimpleDeviceManagerClient extends DeviceManagerClient {
 
 	@Override
 	void setConnectedDeviceName(String connectedDeviceName) {
-		super.setConnectedDeviceName(connectedDeviceName);
+		//super.setConnectedDeviceName(connectedDeviceName);
 		if (connectedDeviceName == null) {
 			mBtnConnect.setVisibility(View.VISIBLE);
 			mBtnDisconnect.setVisibility(View.GONE);

@@ -1,4 +1,8 @@
 migration to new architecture step by step
+	some bug after logfile finished...
+		disconnectself sent repeatedly
+		the service also crashes
+	new variable in props.xml : override prefs (useful for debug)
 	if SensorMap status is ok but login fails
 		show error message
 		button to open preferences and change settings

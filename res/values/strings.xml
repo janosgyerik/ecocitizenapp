@@ -49,6 +49,7 @@
     <string name="menu_console">Console</string>
     <string name="menu_tabularview">Tabular View</string>
     <string name="menu_tabularviewplus">Tabular View+</string>
+    <string name="menu_debugtools">Debug Tools</string>
     
     <!--  Preferences -->
     <string name="title_username_preference">Username</string>

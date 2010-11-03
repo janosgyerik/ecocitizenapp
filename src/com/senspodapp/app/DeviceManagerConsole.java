@@ -22,11 +22,9 @@ package com.senspodapp.app;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class DeviceManagerConsole extends SimpleDeviceManagerClient {
 	// Debugging
@@ -50,10 +48,8 @@ public class DeviceManagerConsole extends SimpleDeviceManagerClient {
 		if (D) Log.d(TAG, "+++ ON CREATE +++");
 
 		// Set up the window layout
-		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.console);
-		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
-		
+
 		setupCommonButtons();
 		
 		Button mBtnConnectDM = (Button)findViewById(R.id.btn_connect_dm);
@@ -76,11 +72,6 @@ public class DeviceManagerConsole extends SimpleDeviceManagerClient {
 				killDeviceManager();
 			}
 		});
-
-		// Set up the custom title
-		mTitle = (TextView) findViewById(R.id.title_left_text);
-		mTitle.setText(R.string.console_activity);
-		mTitle = (TextView) findViewById(R.id.title_right_text);
 
 		mSentencesArrayAdapter = new ArrayAdapter<String>(this, R.layout.message);
 		mSentencesView = (ListView) findViewById(R.id.sentences);
