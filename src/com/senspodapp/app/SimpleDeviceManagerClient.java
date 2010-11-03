@@ -78,7 +78,7 @@ public abstract class SimpleDeviceManagerClient extends DeviceManagerClient {
 		case R.id.menu_disconnect:
 			disconnectSensor();
 			return true;
-		case R.id.menu_quit:
+		case R.id.menu_close:
 			finish();
 			return true;
 		}
