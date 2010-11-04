@@ -159,7 +159,7 @@ public abstract class DeviceManagerClient extends Activity {
 			mSensorMapUploaderService = null;
 
 			// Detach our existing connection.
-			unbindService(mSensorMapUploaderConnection);
+			getApplicationContext().unbindService(mSensorMapUploaderConnection);
 		}
 	}
 
