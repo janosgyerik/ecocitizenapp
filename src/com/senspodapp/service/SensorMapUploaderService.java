@@ -57,6 +57,14 @@ public class SensorMapUploaderService extends Service {
     private static final int NOTIFY_ID = 1;
 	private NotificationManager mNotificationManager;
 	
+    private static final int ICON_WAITING = R.drawable.stat_sys_phone_call_on_hold;
+    private static final int ICON_UPLOADING = R.drawable.stat_sys_phone_call;
+    private static final int ICON_BLOCKING = R.drawable.stat_notify_missed_call;
+    
+    private static final int SENSORMAPUPLOADER_WAITING =1;
+    private static final int SENSORMAPUPLOADER_UPLOADING = 2;
+    private static final int SENSORMAPUPLOADER_BLOCKING = 3;
+	
 	@Override
 	public IBinder onBind(Intent intent) {
 		if (D) Log.d(TAG, "+++ ON BIND +++");
@@ -349,7 +357,7 @@ public class SensorMapUploaderService extends Service {
         }
         catch (Exception e) {
         	//e.printStackTrace();
-        	sendNotifications(MessageType.SENSORMAPUPLOADER_BLOCKED);
+        	sendNotifications(SENSORMAPUPLOADER_BLOCKING);
         	Log.e(TAG, "Exception in isSensormapReachable");
         	return false;
         }
@@ -423,7 +431,7 @@ public class SensorMapUploaderService extends Service {
 	public void waitForStore(String data) {
 		while (active) {
 			if (ws_store(data)) {
-				sendNotifications(MessageType.SENSORMAPUPLOADER_UPLOADING);
+				sendNotifications(SENSORMAPUPLOADER_UPLOADING);
 				return;
 			}
 			else {
@@ -431,7 +439,7 @@ public class SensorMapUploaderService extends Service {
 				try {
 					Thread.sleep(QUEUE_STOREERROR_SLEEP);
 					reloadConfiguration();
-					sendNotifications(MessageType.SENSORMAPUPLOADER_WAITING);
+					sendNotifications(SENSORMAPUPLOADER_WAITING);
 				} catch (InterruptedException e) {
 					// ignore sleep interrupts
 				}
@@ -462,19 +470,19 @@ public class SensorMapUploaderService extends Service {
 		long when = System.currentTimeMillis();
 		
 		switch (type) {
-		case MessageType.SENSORMAPUPLOADER_WAITING:
-			icon = R.drawable.stat_sys_phone_call_on_hold;
+		case SENSORMAPUPLOADER_WAITING:
+			icon = ICON_WAITING;
 			tickerText = "Waiting";
 			break;
-		case MessageType.SENSORMAPUPLOADER_UPLOADING:
-			icon = R.drawable.stat_sys_phone_call;
+		case SENSORMAPUPLOADER_UPLOADING:
+			icon = ICON_UPLOADING;
 			tickerText = "Uploading";
 			break;
-		case MessageType.SENSORMAPUPLOADER_BLOCKED:
-			icon = R.drawable.stat_notify_missed_call;
-			tickerText = "Blocked";
+		case SENSORMAPUPLOADER_BLOCKING:
+			icon = ICON_BLOCKING;
+			tickerText = "Block";
 			break;
-		}		
+		}			
 		notification = new Notification(icon, tickerText, when);
 		Context context = getApplicationContext();
 		CharSequence contentTitle = "Mapupload Notification";
