@@ -29,6 +29,10 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.R;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
@@ -46,11 +50,25 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.senspodapp.app.TreeViewActivity;
+
 public class SensorMapUploaderService extends Service {
 	// Debugging
 	private static final String TAG = "SensorMapUploaderService";
 	private static final boolean D = true;
+	
+	private NotificationManager mNotificationManager;
 
+	private static final int ICON_STANDBY = R.drawable.stat_sys_phone_call_on_hold;
+	private static final int ICON_UPLOADING = R.drawable.stat_sys_phone_call;
+	private static final int ICON_BLOCKED = R.drawable.stat_notify_missed_call;
+
+	private enum Status {
+		STANDBY,
+		UPLOADING,
+		BLOCKED
+	}
+	
 	@Override
 	public IBinder onBind(Intent intent) {
 		if (D) Log.d(TAG, "+++ ON BIND +++");
@@ -73,6 +91,10 @@ public class SensorMapUploaderService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		if (D) Log.d(TAG, "+++ ON CREATE +++");
+		
+		String ns = Context.NOTIFICATION_SERVICE;
+		mNotificationManager = (NotificationManager) getSystemService(ns);
+		updateStatus(Status.STANDBY);
 	}
 
 	@Override
@@ -354,7 +376,7 @@ public class SensorMapUploaderService extends Service {
         try {
          	HttpResponse response = client.execute(request);
         	StatusLine status = response.getStatusLine();
-        	if (status.getStatusCode() != HTTP_STATUS_OK) return null;
+			if (status.getStatusCode() != HTTP_STATUS_OK) return null;
 
         	HttpEntity entity = response.getEntity();
 			InputStream istream = entity.getContent();
@@ -384,6 +406,7 @@ public class SensorMapUploaderService extends Service {
 			}
 			else {
 				Log.e(TAG, "sensormap UNREACHABLE");
+				updateStatus(Status.BLOCKED);
 				try {
 					Thread.sleep(QUEUE_NOSENSORMAP_SLEEP);
 					reloadConfiguration();
@@ -401,6 +424,7 @@ public class SensorMapUploaderService extends Service {
 			}
 			else {
 				Log.e(TAG, "startsession ERROR");
+				updateStatus(Status.BLOCKED);
 				try {
 					Thread.sleep(QUEUE_LOGINERROR_SLEEP);
 					reloadConfiguration();
@@ -414,10 +438,12 @@ public class SensorMapUploaderService extends Service {
 	public void waitForStore(String data) {
 		while (active) {
 			if (ws_store(data)) {
+				updateStatus(Status.UPLOADING);
 				return;
 			}
 			else {
 				Log.e(TAG, "store ERROR");
+				updateStatus(Status.BLOCKED);
 				try {
 					Thread.sleep(QUEUE_STOREERROR_SLEEP);
 					reloadConfiguration();
@@ -442,6 +468,38 @@ public class SensorMapUploaderService extends Service {
 	
 	public void ws_endsession() {
 		getStringResponse(SENSORMAP_ENDSESSION_URL + mSessionId + "/");
+		updateStatus(Status.STANDBY);
 	}
 
+	public void updateStatus(Status status) {
+		Context context = getApplicationContext();
+		CharSequence contentTitle = context.getString(com.senspodapp.app.R.string.notification_smu_title);
+		CharSequence tickerText = context.getString(com.senspodapp.app.R.string.notification_smu_ticker);
+
+		Notification notification;
+		long when = System.currentTimeMillis();
+		int icon = 0;
+		CharSequence contentText = null;
+		
+		switch (status) {
+		case STANDBY:
+			icon = ICON_STANDBY;
+			contentText = context.getString(com.senspodapp.app.R.string.notification_smu_standby);
+			break;
+		case UPLOADING:
+			icon = ICON_UPLOADING;
+			contentText = context.getString(com.senspodapp.app.R.string.notification_smu_uploading);
+			break;
+		case BLOCKED:
+		default:
+			icon = ICON_BLOCKED;
+			contentText = context.getString(com.senspodapp.app.R.string.notification_smu_blocked);
+			break;
+		}
+		notification = new Notification(icon, tickerText, when);
+		Intent notificationIntent = new Intent(this, TreeViewActivity.class);
+		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+		mNotificationManager.notify(1, notification);
+	}
 }

@@ -70,5 +70,12 @@
     <string name="btn_connect_dm">Connect DM</string>
     <string name="btn_disconnect_dm">Disconnect DM</string>
     <string name="btn_kill_dm">Kill DM</string>
+    
+    <!-- SensorMapUploaderService -->
+    <string name="notification_smu_title">SensorMap Uploader Service</string>
+    <string name="notification_smu_ticker">SensorMap Uploader Service</string>
+    <string name="notification_smu_standby">Waiting for data ...</string>
+    <string name="notification_smu_uploading">Uploading data ...</string>
+    <string name="notification_smu_blocked">SensorMap unreachable!</string>
 
 </resources>
