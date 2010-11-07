@@ -116,7 +116,29 @@ public abstract class DeviceManagerClient extends Activity {
 			getApplicationContext().unbindService(mConnection);
 		}
 	}
-
+   
+	void shutdown(){
+		
+		if (mService != null) {
+			try {
+				mService.shutdown();
+			} 
+			catch (RemoteException e) {
+				Log.e(TAG, "Exception during shutdown device manage service");
+			}
+		}
+		if (mSensorMapUploaderService != null) {
+			try {
+				mSensorMapUploaderService.shutdown();
+			} 
+			catch (RemoteException e) {
+				Log.e(TAG, "Exception during shutdown sensor map uploader service.");
+			}
+		}
+			
+	}
+	
+	
 	void killDeviceManager() {
 		// To kill the process hosting our service, we need to know its
 		// PID.  Conveniently our service has a call that will return

@@ -105,7 +105,11 @@ public class DeviceManagerService extends Service {
 				return;
 			}
 		}
-
+        
+		public void shutdown() throws RemoteException {
+			stopSelf();
+		}
+		
 		public void disconnectDevice(String deviceName) throws RemoteException {
 			shutdownSensorManager(deviceName);
 		}

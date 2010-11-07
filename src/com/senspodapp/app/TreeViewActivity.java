@@ -147,6 +147,7 @@ public class TreeViewActivity extends DeviceManagerClient {
 			startActivity(new Intent(this, DebugToolsActivity.class));
 			return true;
 		case R.id.menu_close:
+			shutdown();
 			finish();
 			return true;
 		}

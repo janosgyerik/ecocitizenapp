@@ -24,7 +24,7 @@ interface ISensorMapUploaderService {
      * Request the PID of this service, to do evil things with it.
      */
     int getPid();
-
+    void shutdown();
 	void activate();
 	void deactivate();
 }

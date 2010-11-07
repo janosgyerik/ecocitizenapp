@@ -31,6 +31,6 @@
 		android:visible="false"
 		android:title="@string/menu_map" />
 	<item android:id="@+id/menu_close" android:icon="@android:drawable/ic_lock_power_off"
-		android:visible="false" android:title="@string/menu_close" />
+	    android:title="@string/menu_close" />
     <item android:id="@+id/menu_debugtools" android:title="@string/menu_debugtools" android:icon="@drawable/home"/>
 </menu>
