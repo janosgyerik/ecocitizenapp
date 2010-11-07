@@ -58,15 +58,16 @@ public class SensorMapUploaderService extends Service {
 	private static final boolean D = true;
 	
 	private NotificationManager mNotificationManager;
-
+    private String previousStatus;
 	private static final int ICON_STANDBY = R.drawable.stat_sys_phone_call_on_hold;
 	private static final int ICON_UPLOADING = R.drawable.stat_sys_phone_call;
 	private static final int ICON_BLOCKED = R.drawable.stat_notify_missed_call;
-
+    
 	private enum Status {
 		STANDBY,
 		UPLOADING,
-		BLOCKED
+		BLOCKED,
+		PREVIOUS
 	}
 	
 	@Override
@@ -410,6 +411,7 @@ public class SensorMapUploaderService extends Service {
 			}
 			else {
 				Log.e(TAG, "sensormap UNREACHABLE");
+				if(!previousStatus.equals(Status.BLOCKED.toString()))
 				updateStatus(Status.BLOCKED);
 				try {
 					Thread.sleep(QUEUE_NOSENSORMAP_SLEEP);
@@ -428,6 +430,7 @@ public class SensorMapUploaderService extends Service {
 			}
 			else {
 				Log.e(TAG, "startsession ERROR");
+				if(!previousStatus.equals(Status.BLOCKED.toString()))
 				updateStatus(Status.BLOCKED);
 				try {
 					Thread.sleep(QUEUE_LOGINERROR_SLEEP);
@@ -442,11 +445,13 @@ public class SensorMapUploaderService extends Service {
 	public void waitForStore(String data) {
 		while (active) {
 			if (ws_store(data)) {
+				if(!previousStatus.equals(Status.UPLOADING.toString()))
 				updateStatus(Status.UPLOADING);
 				return;
 			}
 			else {
 				Log.e(TAG, "store ERROR");
+				if(!previousStatus.equals(Status.BLOCKED.toString()))
 				updateStatus(Status.BLOCKED);
 				try {
 					Thread.sleep(QUEUE_STOREERROR_SLEEP);
@@ -479,7 +484,7 @@ public class SensorMapUploaderService extends Service {
 		Context context = getApplicationContext();
 		CharSequence contentTitle = context.getString(com.senspodapp.app.R.string.notification_smu_title);
 		CharSequence tickerText = context.getString(com.senspodapp.app.R.string.notification_smu_ticker);
-
+		
 		Notification notification;
 		long when = System.currentTimeMillis();
 		int icon = 0;
@@ -488,15 +493,18 @@ public class SensorMapUploaderService extends Service {
 		switch (status) {
 		case STANDBY:
 			icon = ICON_STANDBY;
+			previousStatus =Status.STANDBY.name();
 			contentText = context.getString(com.senspodapp.app.R.string.notification_smu_standby);
 			break;
 		case UPLOADING:
 			icon = ICON_UPLOADING;
+			previousStatus =Status.UPLOADING.name();
 			contentText = context.getString(com.senspodapp.app.R.string.notification_smu_uploading);
 			break;
 		case BLOCKED:
 		default:
 			icon = ICON_BLOCKED;
+		    previousStatus =Status.BLOCKED.name();
 			contentText = context.getString(com.senspodapp.app.R.string.notification_smu_blocked);
 			break;
 		}
