@@ -1,4 +1,10 @@
-migration to new architecture step by step
+nice to have
+	know the number of data records pending for upload
+	user profiles: anon, dev, janos, ...
+
+next
+	how to build and deploy from the command line
+	uploader should reload config if ...
 	some bug after logfile finished...
 		disconnectself sent repeatedly
 		the service also crashes

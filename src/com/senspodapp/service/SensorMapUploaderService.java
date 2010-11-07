@@ -64,10 +64,12 @@ public class SensorMapUploaderService extends Service {
 	private static final int ICON_BLOCKED = R.drawable.stat_notify_missed_call;
 
 	private enum Status {
+		NONE,
 		STANDBY,
 		UPLOADING,
 		BLOCKED
 	}
+	private Status status = Status.NONE;
 	
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -472,6 +474,9 @@ public class SensorMapUploaderService extends Service {
 	}
 
 	public void updateStatus(Status status) {
+		if (this.status == status) return;
+		this.status = status;
+		
 		Context context = getApplicationContext();
 		CharSequence contentTitle = context.getString(com.senspodapp.app.R.string.notification_smu_title);
 		CharSequence tickerText = context.getString(com.senspodapp.app.R.string.notification_smu_ticker);
