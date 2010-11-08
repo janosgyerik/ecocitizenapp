@@ -28,13 +28,15 @@ interface IDeviceManagerService {
      * Request the PID of this service, to do evil things with it.
      */
     int getPid();
-	String getConnectedDeviceName();
+
+    String getConnectedDeviceName();
     
     void connectBluetoothDevice(in BluetoothDevice device);
-	void connectLogplayer(in String assetName, in int messageInterval);
-
-	void disconnectDevice(in String deviceName);
+    void connectLogplayer(in String assetName, in int messageInterval);
+    void disconnectDevice(in String deviceName);
 	
-	void registerCallback(in IDeviceManagerServiceCallback cb);
-	void unregisterCallback(in IDeviceManagerServiceCallback cb);
+    void registerCallback(in IDeviceManagerServiceCallback cb);
+    void unregisterCallback(in IDeviceManagerServiceCallback cb);
+
+    void shutdown();
 }

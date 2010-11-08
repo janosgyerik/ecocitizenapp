@@ -25,12 +25,11 @@
 	<item android:id="@+id/menu_settings" android:icon="@drawable/settings"
 		android:title="@string/menu_settings" />
 	<item android:id="@+id/menu_graph" android:icon="@drawable/chart"
-		android:visible="false"
-		android:title="@string/menu_graph" />
+		android:visible="false" android:title="@string/menu_graph" />
 	<item android:id="@+id/menu_map" android:icon="@android:drawable/ic_menu_mapmode"
-		android:visible="false"
-		android:title="@string/menu_map" />
-	<item android:id="@+id/menu_close" android:icon="@android:drawable/ic_lock_power_off"
-		android:visible="false" android:title="@string/menu_close" />
-    <item android:id="@+id/menu_debugtools" android:title="@string/menu_debugtools" android:icon="@drawable/home"/>
+		android:visible="false" android:title="@string/menu_map" />
+	<item android:id="@+id/menu_debugtools" android:title="@string/menu_debugtools"
+		android:icon="@drawable/home" />
+	<item android:id="@+id/menu_quit" android:icon="@android:drawable/ic_lock_power_off"
+		android:title="@string/menu_quit" />
 </menu>

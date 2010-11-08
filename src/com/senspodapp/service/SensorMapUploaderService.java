@@ -124,6 +124,11 @@ public class SensorMapUploaderService extends Service {
 		public int getPid() throws RemoteException {
 			return Process.myPid();
 		}
+
+		public void shutdown() throws RemoteException {
+			mNotificationManager.cancelAll();
+			stopSelf();
+		}
 	};
 	
 	void activate() {

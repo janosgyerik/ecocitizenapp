@@ -25,6 +25,8 @@ interface ISensorMapUploaderService {
      */
     int getPid();
 
-	void activate();
-	void deactivate();
+    void activate();
+    void deactivate();
+
+    void shutdown();
 }
