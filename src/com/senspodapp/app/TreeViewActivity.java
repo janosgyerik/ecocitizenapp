@@ -103,21 +103,20 @@ public class TreeViewActivity extends DeviceManagerClient {
 		if (D) Log.d(TAG, "++ ON START ++");
 
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-		if (settings.getString("username", "").equals("")) {
+		if(this.getString(R.string.forcePreferencesFromProps).equals("true")){
+
 			String username = this.getString(R.string.username);
 			SharedPreferences.Editor editor = settings.edit();
 			editor.putString("username", username);
 			editor.commit();
-		}
-		if (settings.getString("map_server_url", "").equals("")) {
+
 			String map_server_url = this.getString(R.string.map_server_url);
-			SharedPreferences.Editor editor = settings.edit();
+			editor = settings.edit();
 			editor.putString("map_server_url", map_server_url);
 			editor.commit();
-		}
-		if (settings.getString("api_key", "").equals("")) {
+
 			String api_key = this.getString(R.string.api_key);
-			SharedPreferences.Editor editor = settings.edit();
+			editor = settings.edit();
 			editor.putString("api_key", api_key);
 			editor.commit();
 		}
