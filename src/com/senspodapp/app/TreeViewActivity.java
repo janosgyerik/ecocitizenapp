@@ -43,7 +43,7 @@ public class TreeViewActivity extends DeviceManagerClient {
 	// Debugging
 	private static final String TAG = "TreeViewActivity";
 	private static final boolean D = true;
-
+    private static final int LOAD_FROM_PROPS = R.string.forcePreferencesFromProps;
 	// Layout Views
 	private TextView mCo2View;
 	private static DecimalFormat co2Format = new DecimalFormat("0");
@@ -103,7 +103,7 @@ public class TreeViewActivity extends DeviceManagerClient {
 		if (D) Log.d(TAG, "++ ON START ++");
 
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-		if(this.getString(R.string.forcePreferencesFromProps).equals("true")){
+		if(this.getString(LOAD_FROM_PROPS).equals("true")){
 
 			String username = this.getString(R.string.username);
 			SharedPreferences.Editor editor = settings.edit();
