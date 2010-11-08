@@ -26,6 +26,7 @@ on the deployment type, for example development / production.
     <string name="username">anon</string>
     <string name="map_server_url">http://sensormap.titan2x.com/api/</string>
     <string name="api_key">JRECsQLiWYisEsLS</string>
+    <bool name="forcePreferencesFromProps">true</bool>
     
     <!-- For developers only -->
     <string name="logplayer_sensor_id">apiv3</string>
