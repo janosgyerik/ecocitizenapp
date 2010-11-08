@@ -43,7 +43,7 @@ public class TreeViewActivity extends DeviceManagerClient {
 	// Debugging
 	private static final String TAG = "TreeViewActivity";
 	private static final boolean D = true;
-
+    
 	// Layout Views
 	private TextView mCo2View;
 	private static DecimalFormat co2Format = new DecimalFormat("0");
@@ -54,10 +54,14 @@ public class TreeViewActivity extends DeviceManagerClient {
 	private Button mBtnConnect;
 	private Button mBtnDisconnect;
 
+	private boolean mForcePreferencesFromProps = false;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (D) Log.d(TAG, "+++ ON CREATE +++");
+
+		mForcePreferencesFromProps = this.getResources().getBoolean(R.bool.forcePreferencesFromProps);
 
 		PreferenceManager.setDefaultValues(this, R.xml.default_preferences, false);
 
@@ -103,23 +107,42 @@ public class TreeViewActivity extends DeviceManagerClient {
 		if (D) Log.d(TAG, "++ ON START ++");
 
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-		if (settings.getString("username", "").equals("")) {
+		
+		if (mForcePreferencesFromProps) {
 			String username = this.getString(R.string.username);
 			SharedPreferences.Editor editor = settings.edit();
 			editor.putString("username", username);
 			editor.commit();
-		}
-		if (settings.getString("map_server_url", "").equals("")) {
+
 			String map_server_url = this.getString(R.string.map_server_url);
-			SharedPreferences.Editor editor = settings.edit();
+			editor = settings.edit();
 			editor.putString("map_server_url", map_server_url);
 			editor.commit();
-		}
-		if (settings.getString("api_key", "").equals("")) {
+
 			String api_key = this.getString(R.string.api_key);
-			SharedPreferences.Editor editor = settings.edit();
+			editor = settings.edit();
 			editor.putString("api_key", api_key);
 			editor.commit();
+		}
+		else {
+			if (settings.getString("username", "").equals("")) {
+				String username = this.getString(R.string.username);
+				SharedPreferences.Editor editor = settings.edit();
+				editor.putString("username", username);
+				editor.commit();
+			}
+			if (settings.getString("map_server_url", "").equals("")) {
+				String map_server_url = this.getString(R.string.map_server_url);
+				SharedPreferences.Editor editor = settings.edit();
+				editor.putString("map_server_url", map_server_url);
+				editor.commit();
+			}
+			if (settings.getString("api_key", "").equals("")) {
+				String api_key = this.getString(R.string.api_key);
+				SharedPreferences.Editor editor = settings.edit();
+				editor.putString("api_key", api_key);
+				editor.commit();
+			}
 		}
 	}
 

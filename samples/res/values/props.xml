@@ -28,7 +28,10 @@ on the deployment type, for example development / production.
     <string name="api_key">JRECsQLiWYisEsLS</string>
     
     <!-- For developers only -->
+    <bool name="forcePreferencesFromProps">true</bool>
+
     <string name="logplayer_sensor_id">apiv3</string>
     <string name="logplayer_filename">CitySenspodSample1.txt</string>
     <integer name="logplayer_msg_interval">1000</integer>
+
 </resources>
