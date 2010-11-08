@@ -77,5 +77,6 @@
     <string name="notification_smu_standby">Waiting for data ...</string>
     <string name="notification_smu_uploading">Uploading data ...</string>
     <string name="notification_smu_blocked">SensorMap unreachable!</string>
+    <string name="notification_smu_loginerror">Login error! Check your settings.</string>
 
 </resources>

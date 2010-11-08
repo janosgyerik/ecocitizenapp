@@ -2,21 +2,15 @@ nice to have
 	know the number of data records pending for upload
 	user profiles: anon, dev, janos, ...
 
-next
-	how to build and deploy from the command line
-	uploader should reload config if ...
-	some bug after logfile finished...
-		disconnectself sent repeatedly
-		the service also crashes
-	new variable in props.xml : override prefs (useful for debug)
-	if SensorMap status is ok but login fails
-		show error message
-		button to open preferences and change settings
-		button for SensorMapUploaderService.reloadConfig
-		a proper activity for upload manager would be the best
-		in the most primitive case: reload config on login failure
+critical
 	FileSaverService
-		IMPORTANT
+
+next
+	bug: session id becomes 'null' somehow?
+	bug: when sensor goes away, app cannot connect anymore until kill DM
+	bug: android uploader gets killed
+	bug: java.net.UnknownHostException
+	bug: repeated endession calls after logfile finished, until service crash
 
 optimization
 	review comments in entire code, especially service code

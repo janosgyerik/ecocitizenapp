@@ -59,6 +59,7 @@ public class SensorMapUploaderService extends Service {
 	
 	private NotificationManager mNotificationManager;
 
+	private static final int ICON_LOGINERROR = R.drawable.stat_sys_warning;
 	private static final int ICON_STANDBY = R.drawable.stat_sys_phone_call_on_hold;
 	private static final int ICON_UPLOADING = R.drawable.stat_sys_phone_call;
 	private static final int ICON_BLOCKED = R.drawable.stat_notify_missed_call;
@@ -67,7 +68,8 @@ public class SensorMapUploaderService extends Service {
 		NONE,
 		STANDBY,
 		UPLOADING,
-		BLOCKED
+		BLOCKED,
+		LOGINERROR
 	}
 	private Status status = Status.NONE;
 	
@@ -305,9 +307,9 @@ public class SensorMapUploaderService extends Service {
 	//////////////////////////////////////////////////////////////////////////
 
     public static final int HTTP_STATUS_OK = 200;
-	public static final int QUEUE_NOSENSORMAP_SLEEP = 30000;
-	public static final int QUEUE_LOGINERROR_SLEEP = 10000;
-	public static final int QUEUE_STOREERROR_SLEEP = 10000;
+    
+	public static final int WAITFOR_SENSORMAP_MILLIS   = 30000;
+	public static final int WAITFOR_PREFSCHANGE_MILLIS = 10000;
 	
 	String SENSORMAP_LOGIN_URL;
 	String SENSORMAP_STATUS_URL;
@@ -323,23 +325,6 @@ public class SensorMapUploaderService extends Service {
 	
 	private String mSessionId = null;
 	
-	void uploadDataRecord(String data) {
-		//if (D) Log.d(TAG, "STORE = " + data);
-		waitForStore(data);
-	}
-	
-	void startSession() {
-		if (D) Log.d(TAG, "STARTSESSION");
-		reloadConfiguration();
-		waitForSensorMapReachable();
-		waitForStartSession();
-	}
-	
-	void endSession() {
-		if (D) Log.d(TAG, "ENDSESSION");
-		ws_endsession();
-	}
-
 	void reloadConfiguration() {
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 		username = settings.getString("username", "");
@@ -353,24 +338,31 @@ public class SensorMapUploaderService extends Service {
 		SENSORMAP_ENDSESSION_URL = String.format("%sendsession/%s/", map_server_url, username);
 	}
 	
-	public boolean isSensormapReachable() {
-		if (D) Log.d(TAG, SENSORMAP_STATUS_URL);
-        HttpClient client = new DefaultHttpClient();
-        HttpGet request = new HttpGet(SENSORMAP_STATUS_URL);
-        
-        try {
-        	HttpResponse response = client.execute(request);
-        	StatusLine status = response.getStatusLine();
-        	return status.getStatusCode() == HTTP_STATUS_OK;
-        }
-        catch (Exception e) {
-        	//e.printStackTrace();
-        	Log.e(TAG, "Exception in isSensormapReachable");
-        	return false;
-        }
+	void startSession() {
+		if (D) Log.d(TAG, "STARTSESSION");
+		mSessionId = null;
+		waitForSensorMapReachable();
+		waitForStartSession();
 	}
 	
-	public String getStringResponse(String url) {
+	void uploadDataRecord(String data) {
+		//if (D) Log.d(TAG, "STORE = " + data);
+		waitForStore(data);
+	}
+	
+	void endSession() {
+		if (D) Log.d(TAG, "ENDSESSION");
+		if (mSessionId != null) waitForEndSession();
+	}
+
+	/**
+	 * Returns HTTP response as string, or NULL on network errors
+	 * and if response status code is not HTTP_STATUS_OK.
+	 * 
+	 * @param url
+	 * @return
+	 */
+	String getStringResponse(String url) {
 		if (D) Log.d(TAG, url);
         HttpClient client = new DefaultHttpClient();
         HttpGet request = new HttpGet(url);
@@ -401,17 +393,19 @@ public class SensorMapUploaderService extends Service {
         }
 	}
 	
-	public void waitForSensorMapReachable() {
+	void waitForSensorMapReachable() {
 		while (active) {
-			if (isSensormapReachable()) {
+			if (mSessionId == null) reloadConfiguration();
+			
+			String ret = getStringResponse(SENSORMAP_STATUS_URL);
+			if (ret != null) { 
 				return;
 			}
 			else {
 				Log.e(TAG, "sensormap UNREACHABLE");
 				updateStatus(Status.BLOCKED);
 				try {
-					Thread.sleep(QUEUE_NOSENSORMAP_SLEEP);
-					reloadConfiguration();
+					Thread.sleep(WAITFOR_SENSORMAP_MILLIS);
 				} catch (InterruptedException e) {
 					// ignore sleep interrupts
 				}
@@ -419,64 +413,92 @@ public class SensorMapUploaderService extends Service {
 		}
 	}
 	
-	public void waitForStartSession() {
+	void waitForAccountInfoChange() {
+		updateStatus(Status.LOGINERROR);
+		
+		String old_username = username;
+		String old_map_server_url = map_server_url;
+		String old_api_key = api_key;
+		
 		while (active) {
-			if (ws_startsession(username)) {
+			if (D) Log.d(TAG, "Waiting for change in preferences ...");
+			reloadConfiguration();
+			
+			if (!old_username.equals(username) 
+					|| !old_map_server_url.equals(map_server_url)
+					|| !old_api_key.equals(api_key)) {
+				if (D) Log.d(TAG, "OK, change in preferences detected.");
 				return;
 			}
-			else {
-				Log.e(TAG, "startsession ERROR");
-				updateStatus(Status.BLOCKED);
-				try {
-					Thread.sleep(QUEUE_LOGINERROR_SLEEP);
-					reloadConfiguration();
-				} catch (InterruptedException e) {
-					// ignore sleep interrupts
-				}
+				
+			try {
+				Thread.sleep(WAITFOR_PREFSCHANGE_MILLIS);
+			} catch (InterruptedException e) {
+				// ignore sleep interrupts
 			}
 		}
 	}
 	
-	public void waitForStore(String data) {
+	void waitForStartSession() {
 		while (active) {
-			if (ws_store(data)) {
+			mSessionId = getStringResponse(SENSORMAP_STARTSESSION_URL);
+			if (mSessionId == null) {
+				// network error
+				Log.e(TAG, "network error during /startsession, sensor map UNREACHABLE");
+				waitForSensorMapReachable();
+			}
+			else if (mSessionId.equals("")) {
+				// login error
+				Log.e(TAG, "login error during /startsession, fix account info in preferences");
+				waitForAccountInfoChange();
+			}
+			else {
+				// success!
+				return;
+			}
+		}
+	}
+	
+	void waitForStore(String data) {
+		data = data.replace(" ", "");
+		while (active) {
+			String ret = getStringResponse(SENSORMAP_STORE_URL + mSessionId + "/" 
+					+ SENSORMAP_API_VERSION + "/" + data); 
+			//URLEncoder.encode(data));
+			if (ret == null) {
+				// network error
+				Log.e(TAG, "network error during /store, sensor map UNREACHABLE");
+				waitForSensorMapReachable();
+			}
+			else {
+				// success!
 				updateStatus(Status.UPLOADING);
 				return;
 			}
+		}
+	}
+		
+	void waitForEndSession() {
+		while (active) {
+			String ret = getStringResponse(SENSORMAP_ENDSESSION_URL + mSessionId + "/"); 
+			if (ret == null) {
+				// network error
+				Log.e(TAG, "network error during /endsession, sensor map UNREACHABLE");
+				waitForSensorMapReachable();
+			}
 			else {
-				Log.e(TAG, "store ERROR");
-				updateStatus(Status.BLOCKED);
-				try {
-					Thread.sleep(QUEUE_STOREERROR_SLEEP);
-					reloadConfiguration();
-				} catch (InterruptedException e) {
-					// ignore sleep interrupts
-				}
+				// success!
+				mSessionId = null;
+				updateStatus(Status.STANDBY);
+				return;
 			}
 		}
 	}
-	
-	public boolean ws_startsession(String username) {
-		mSessionId = getStringResponse(SENSORMAP_STARTSESSION_URL);
-		return mSessionId != null && ! mSessionId.equals("");
-	}
-	
-	public boolean ws_store(String data) {
-		data = data.replace(" ", "");
-		return getStringResponse(SENSORMAP_STORE_URL + mSessionId + "/" 
-				+ SENSORMAP_API_VERSION + "/" + data) != null; 
-		//URLEncoder.encode(data));
-	}
-	
-	public void ws_endsession() {
-		getStringResponse(SENSORMAP_ENDSESSION_URL + mSessionId + "/");
-		updateStatus(Status.STANDBY);
-	}
 
-	public void updateStatus(Status status) {
+	void updateStatus(Status status) {
 		if (this.status == status) return;
 		this.status = status;
-		
+
 		Context context = getApplicationContext();
 		CharSequence contentTitle = context.getString(com.senspodapp.app.R.string.notification_smu_title);
 		CharSequence tickerText = context.getString(com.senspodapp.app.R.string.notification_smu_ticker);
@@ -485,8 +507,12 @@ public class SensorMapUploaderService extends Service {
 		long when = System.currentTimeMillis();
 		int icon = 0;
 		CharSequence contentText = null;
-		
+
 		switch (status) {
+		case LOGINERROR:
+			icon = ICON_LOGINERROR;
+			contentText = context.getString(com.senspodapp.app.R.string.notification_smu_loginerror);
+			break;
 		case STANDBY:
 			icon = ICON_STANDBY;
 			contentText = context.getString(com.senspodapp.app.R.string.notification_smu_standby);
