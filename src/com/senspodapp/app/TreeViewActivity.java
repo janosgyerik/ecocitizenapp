@@ -21,6 +21,8 @@ package com.senspodapp.app;
 
 import java.text.DecimalFormat;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
@@ -53,7 +55,7 @@ public class TreeViewActivity extends DeviceManagerClient {
     
 	private Button mBtnConnect;
 	private Button mBtnDisconnect;
-
+    private static final String QUIT_ALERT="Are you sure to quit?";
 	private boolean mForcePreferencesFromProps = false;
 	
 	@Override
@@ -170,8 +172,20 @@ public class TreeViewActivity extends DeviceManagerClient {
 			startActivity(new Intent(this, DebugToolsActivity.class));
 			return true;
 		case R.id.menu_quit:
-			shutdown();
-			finish();
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage(QUIT_ALERT)
+			       .setCancelable(false)
+			       .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			   			shutdown();
+						finish();
+			           }
+			       })
+			       .setNegativeButton("No", new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			                dialog.cancel();
+			           }
+			       }).show();
 			return true;
 		}
 		return false;
