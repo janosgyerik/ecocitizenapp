@@ -51,6 +51,8 @@
     <string name="menu_tabularview">Tabular View</string>
     <string name="menu_tabularviewplus">Tabular View+</string>
     <string name="menu_debugtools">Debug Tools</string>
+    <string name="menu_preparegps">Activate GPS</string>
+    
     
     <!--  Preferences -->
     <string name="title_username_preference">Username</string>
@@ -71,6 +73,9 @@
     <string name="btn_connect_dm">Connect DM</string>
     <string name="btn_disconnect_dm">Disconnect DM</string>
     <string name="btn_kill_dm">Kill DM</string>
+    <string name="btn_cancel">Cancel</string>
+    
+    
     
     <!-- SensorMapUploaderService -->
     <string name="notification_smu_title">SensorMap Uploader Service</string>

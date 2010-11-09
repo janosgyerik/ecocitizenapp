@@ -32,4 +32,6 @@
 		android:icon="@drawable/home" />
 	<item android:id="@+id/menu_quit" android:icon="@android:drawable/ic_lock_power_off"
 		android:title="@string/menu_quit" />
+	<item android:id="@+id/menu_preparegps" android:icon="@drawable/connect"
+		android:title="@string/menu_preparegps" />
 </menu>
