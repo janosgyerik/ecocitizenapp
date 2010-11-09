@@ -21,6 +21,8 @@ package com.senspodapp.app;
 
 import java.text.DecimalFormat;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
@@ -170,8 +172,20 @@ public class TreeViewActivity extends DeviceManagerClient {
 			startActivity(new Intent(this, DebugToolsActivity.class));
 			return true;
 		case R.id.menu_quit:
-			shutdown();
-			finish();
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage(R.string.msg_quit)
+			       .setCancelable(true)
+			       .setPositiveButton(R.string.btn_yes, new DialogInterface.OnClickListener() {
+			    	   public void onClick(DialogInterface dialog, int id) {
+			    		   shutdown();
+			    		   finish();
+			    	   }
+			       })
+			       .setNegativeButton(R.string.btn_no, new DialogInterface.OnClickListener() {
+			    	   public void onClick(DialogInterface dialog, int id) {
+			    		   dialog.cancel();
+			    	   }
+			       }).show();
 			return true;
 		}
 		return false;

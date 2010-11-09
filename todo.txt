@@ -6,10 +6,9 @@ critical
 	FileSaverService
 
 next
-	? bug: session id becomes 'null' somehow?
 	bug: when sensor goes away, app cannot connect anymore until kill DM
-	bug: android uploader gets killed
-	bug: java.net.UnknownHostException
+	? bug: android uploader gets killed
+	? bug: java.net.UnknownHostException
 
 optimization
 	review comments in entire code, especially service code

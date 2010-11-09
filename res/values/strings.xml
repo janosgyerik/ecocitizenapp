@@ -71,6 +71,10 @@
     <string name="btn_connect_dm">Connect DM</string>
     <string name="btn_disconnect_dm">Disconnect DM</string>
     <string name="btn_kill_dm">Kill DM</string>
+    <string name="msg_quit">Are you sure you want to quit?</string>
+    <string name="btn_yes">Yes</string>
+    <string name="btn_no">No</string>
+    <string name="btn_cancel">Cancel</string>
     
     <!-- SensorMapUploaderService -->
     <string name="notification_smu_title">SensorMap Uploader Service</string>
