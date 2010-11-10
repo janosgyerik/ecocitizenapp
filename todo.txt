@@ -5,8 +5,6 @@ nice to have
 	FileSaverService with proper synchronization
 
 next
-	eliminate hardcoded values in manifest and menus
-	bug: do not call startsession before data is received
 	? bug: android uploader gets killed
 	? bug: java.net.UnknownHostException
 
