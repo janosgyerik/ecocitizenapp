@@ -273,7 +273,14 @@ public class FileSaverService extends Service {
 	void startSession(){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		String date = sdf.format(new Date());
-		File file =new File(Environment.getExternalStorageDirectory()+"/session_"+date);
+		File file = null;
+		if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+			 file =new File(Environment.getExternalStorageDirectory()+"/session_"+date);
+		}
+		else if(Environment.getExternalStorageState().equals(Environment.MEDIA_REMOVED)){
+			 file =new File(this.getFilesDir().getPath()+"/session_"+date);
+		}
+		
 		try {
 			file.createNewFile();
 		} catch (IOException e2) {
