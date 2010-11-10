@@ -151,14 +151,8 @@ public class DeviceManagerService extends Service {
 				if (msg.what == MessageType.SENSORCONNECTION_SUCCESS) {
 					mLocationListener.requestLocationUpdates();
 				}
-				else if (msg.what == MessageType.SENSORCONNECTION_DISCONNECTSELF) {
-					mLocationListener.removeLocationUpdates();
-					mConnectedDeviceName = null;
-					shutdownSensorManager(deviceName);
-				}
 				else {
-					mLocationListener.removeLocationUpdates();
-					mConnectedDeviceName = null;
+					shutdownSensorManager(deviceName);
 				}
 				final int N = mCallbacks.beginBroadcast();
 				if (D) Log.d(TAG, "what = " + msg.what + ", deviceName = " + deviceName);
@@ -217,6 +211,10 @@ public class DeviceManagerService extends Service {
 
 	void shutdownSensorManager(String deviceName) {
 		if (mSensorManager == null) return;
+		
+		mLocationListener.removeLocationUpdates();
+		mConnectedDeviceName = null;
+		
 		mSensorManager.stop();
 		mSensorManager = null;
 	}
