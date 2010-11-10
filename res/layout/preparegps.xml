@@ -21,13 +21,10 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/background1"
     >
     <Button android:id="@+id/btn_cancel"
 		android:text="@string/btn_cancel"
     	android:stackFromBottom="true"
 		style="@style/btn"
     />
-	<TextView android:text="@string/msg_activated_gps" android:layout_width="wrap_content"
-		android:layout_height="wrap_content"></TextView>
 </LinearLayout>

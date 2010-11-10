@@ -85,7 +85,4 @@
     <string name="notification_smu_blocked">SensorMap unreachable!</string>
     <string name="notification_smu_loginerror">Login error! Check your settings.</string>
     
-    <!-- PrepareGpsActivity -->
-    <string name="msg_activated_gps">Activated GPS, waiting for current location...</string>
-
 </resources>

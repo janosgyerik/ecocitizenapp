@@ -7,6 +7,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 
 public class PrepareGpsActivity extends Activity implements LocationListener {
@@ -22,8 +23,10 @@ public class PrepareGpsActivity extends Activity implements LocationListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (D) Log.d(TAG, "+++ ON CREATE +++");
-		
+
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.preparegps);
+		setProgressBarIndeterminateVisibility(true);
 
 		((LocationManager) getSystemService(LOCATION_SERVICE))
 		.requestLocationUpdates(PROVIDER, MIN_TIME, MIN_DISTANCE, this);
