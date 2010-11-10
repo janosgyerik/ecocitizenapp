@@ -187,6 +187,9 @@ public class TreeViewActivity extends DeviceManagerClient {
 			    	   }
 			       }).show();
 			return true;
+		case R.id.menu_preparegps:
+			startActivity(new Intent(this, PrepareGpsActivity.class));
+			return true;
 		}
 		return false;
 	}

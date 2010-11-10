@@ -30,6 +30,8 @@
 		android:visible="false" android:title="@string/menu_map" />
 	<item android:id="@+id/menu_debugtools" android:title="@string/menu_debugtools"
 		android:icon="@drawable/home" />
+	<item android:id="@+id/menu_preparegps" android:icon="@drawable/connect"
+		android:title="@string/menu_preparegps" />
 	<item android:id="@+id/menu_quit" android:icon="@android:drawable/ic_lock_power_off"
 		android:title="@string/menu_quit" />
 </menu>

@@ -40,6 +40,9 @@
 		<activity android:name=".TabularViewPlusActivity" android:label="Tabular View+">
 		</activity>
 		
+		<activity android:name=".PrepareGpsActivity" android:label="Prepare Gps">
+		</activity>
+		
 		<activity android:name=".DebugToolsActivity" android:label="Debug Tools"
 		    android:theme="@android:style/Theme.NoTitleBar">
 		</activity>

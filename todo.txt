@@ -6,6 +6,8 @@ critical
 	FileSaverService
 
 next
+	clean up strings.xml
+	eliminate hardcoded values in manifest and menus
 	bug: when sensor goes away, app cannot connect anymore until kill DM
 	? bug: android uploader gets killed
 	? bug: java.net.UnknownHostException
