@@ -1,18 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2009 The Android Open Source Project
-
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
-
-          http://www.apache.org/licenses/LICENSE-2.0
-
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License.
--->
 
 <resources>
     <string name="app_name">SenspodApp</string>
@@ -21,9 +7,12 @@
     <string name="console_activity">Console</string>
     <string name="tabularview_activity">Tabular View</string>
     <string name="tabularviewplus_activity">Tabular View+</string>
+    <string name="treeview_activity">Tree View</string>
+    <string name="preparegps_activity">Waiting for GPS ...</string>
+    <string name="debugtools_activity">Debug Tools</string>
+    <string name="devicelist_activity">Device List</string>
     
     <string name="not_connected">You are not connected to a device</string>
-    <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Exit.</string>
     <string name="title_connecting">connecting...</string>
     <string name="title_connected_to">source: </string>
     <string name="title_not_connected">not connected</string>

@@ -1,13 +1,12 @@
 nice to have
 	know the number of data records pending for upload
 	user profiles: anon, dev, janos, ...
-
-critical
-	FileSaverService
+	support for multiple devices
+	FileSaverService with proper synchronization
 
 next
-	clean up strings.xml
 	eliminate hardcoded values in manifest and menus
+	bug: do not call startsession before data is received
 	? bug: android uploader gets killed
 	? bug: java.net.UnknownHostException
 

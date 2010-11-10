@@ -25,30 +25,30 @@
 			</intent-filter>
 		</activity>
 
-		<activity android:name=".SentencesActivity" android:label="Sentences">
+		<activity android:name=".SentencesActivity" android:label="@string/sentences_activity">
 		</activity>
 
-		<activity android:name=".ConsoleActivity" android:label="Console">
+		<activity android:name=".ConsoleActivity" android:label="@string/console_activity">
 		</activity>
 
-		<activity android:name=".SettingsActivity" android:label="@string/menu_settings">
+		<activity android:name=".SettingsActivity" android:label="@string/settings_activity">
 		</activity>
 
-		<activity android:name=".TabularViewActivity" android:label="Tabular View">
+		<activity android:name=".TabularViewActivity" android:label="@string/tabularview_activity">
 		</activity>
 		
-		<activity android:name=".TabularViewPlusActivity" android:label="Tabular View+">
+		<activity android:name=".TabularViewPlusActivity" android:label="@string/tabularviewplus_activity">
 		</activity>
 		
-		<activity android:name=".PrepareGpsActivity" android:label="Waiting for GPS ..."
+		<activity android:name=".PrepareGpsActivity" android:label="@string/preparegps_activity"
 		    android:theme="@android:style/Theme.Dialog">
 		</activity>
 		
-		<activity android:name=".DebugToolsActivity" android:label="Debug Tools"
+		<activity android:name=".DebugToolsActivity" android:label="@string/debugtools_activity"
 		    android:theme="@android:style/Theme.NoTitleBar">
 		</activity>
         
-		<activity android:name=".DeviceListActivity" android:label="@string/select_device"
+		<activity android:name=".DeviceListActivity" android:label="@string/devicelist_activity"
 			android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden" />
 
 		<activity android:name="backport.android.bluetooth.RequestEnableActivity"
