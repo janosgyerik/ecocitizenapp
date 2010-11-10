@@ -19,6 +19,8 @@ public class PrepareGpsActivity extends Activity implements LocationListener {
 	private static final int    MIN_TIME = 1000;
 	private static final float  MIN_DISTANCE = .1f;
 	
+	private LocationManager mLocationManager;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,19 +30,30 @@ public class PrepareGpsActivity extends Activity implements LocationListener {
 		setContentView(R.layout.preparegps);
 		setProgressBarIndeterminateVisibility(true);
 
-		((LocationManager) getSystemService(LOCATION_SERVICE))
-		.requestLocationUpdates(PROVIDER, MIN_TIME, MIN_DISTANCE, this);
+		mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+		mLocationManager.requestLocationUpdates(PROVIDER, MIN_TIME, MIN_DISTANCE, this);
 		
 		((Button) findViewById(R.id.btn_cancel))
 		.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				finish();
+				cancel();
 			}
 		});
 	}
 
-	public void onLocationChanged(Location location) {
+	@Override
+	protected void onPause() {
+		super.onPause();
+		mLocationManager.removeUpdates(this);
+	}
+	
+	private void cancel() {
+		mLocationManager.removeUpdates(this);
 		finish();
+	}
+
+	public void onLocationChanged(Location location) {
+		cancel();
 	}
 
 	public void onProviderDisabled(String provider) {
