@@ -34,4 +34,6 @@
 		android:title="@string/menu_quit" />
 	<item android:id="@+id/menu_preparegps" android:icon="@drawable/connect"
 		android:title="@string/menu_preparegps" />
+	<item android:id="@+id/menu_fileuploader" android:icon="@drawable/connect"
+		android:title="@string/menu_fileuploader" />
 </menu>

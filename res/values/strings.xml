@@ -21,6 +21,7 @@
     <string name="console_activity">Console</string>
     <string name="tabularview_activity">Tabular View</string>
     <string name="tabularviewplus_activity">Tabular View+</string>
+    <string name="msg_file_uploader">tap on a file to start uploading</string>
     
     <string name="not_connected">You are not connected to a device</string>
     <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Exit.</string>
@@ -52,7 +53,7 @@
     <string name="menu_tabularviewplus">Tabular View+</string>
     <string name="menu_debugtools">Debug Tools</string>
     <string name="menu_preparegps">Activate GPS</string>
-    
+    <string name="menu_fileuploader">Upload Data</string>
     
     <!--  Preferences -->
     <string name="title_username_preference">Username</string>
@@ -74,7 +75,7 @@
     <string name="btn_disconnect_dm">Disconnect DM</string>
     <string name="btn_kill_dm">Kill DM</string>
     <string name="btn_cancel">Cancel</string>
-    
+    <string name="btn_uploader">Upload data</string>
     
     
     <!-- SensorMapUploaderService -->

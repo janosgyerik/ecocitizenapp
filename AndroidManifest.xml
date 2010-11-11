@@ -37,7 +37,10 @@
 
 		<activity android:name=".ConsoleActivity" android:label="Console">
 		</activity>
-
+		
+		<activity android:name=".FileUploaderActivity" android:label="FileUploader">
+		</activity>
+		
 		<activity android:name=".SettingsActivity" android:label="@string/menu_settings">
 		</activity>
 
