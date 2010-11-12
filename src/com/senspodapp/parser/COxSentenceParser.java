@@ -19,8 +19,8 @@
 
 package com.senspodapp.parser;
 
-public class CoxSentenceParser extends PsenSentenceParser {
-	public CoxSentenceParser() {
+public class COxSentenceParser extends PsenSentenceParser {
+	public COxSentenceParser() {
 		super("$PSEN,COx,");
 	}
 }

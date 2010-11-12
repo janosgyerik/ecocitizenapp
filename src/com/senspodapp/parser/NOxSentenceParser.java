@@ -19,8 +19,8 @@
 
 package com.senspodapp.parser;
 
-public class NoxSentenceParser extends PsenSentenceParser {
-	public NoxSentenceParser() {
+public class NOxSentenceParser extends PsenSentenceParser {
+	public NOxSentenceParser() {
 		super("$PSEN,NOx,");
 	}
 }
