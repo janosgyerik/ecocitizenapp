@@ -38,7 +38,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.senspodapp.parser.Co2SentenceParser;
+import com.senspodapp.parser.CO2SentenceParser;
 import com.senspodapp.service.BundleKeys;
 
 public class TreeViewActivity extends DeviceManagerClient {
@@ -47,7 +47,7 @@ public class TreeViewActivity extends DeviceManagerClient {
 	private static final boolean D = true;
     
 	// Layout Views
-	private TextView mCo2View;
+	private TextView mCO2View;
 	private static DecimalFormat co2Format = new DecimalFormat("0");
     private TextView mLatView;
     private TextView mLonView;
@@ -73,7 +73,7 @@ public class TreeViewActivity extends DeviceManagerClient {
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
 
 		// Set up layout components
-		mCo2View = (TextView)findViewById(R.id.co2);
+		mCO2View = (TextView)findViewById(R.id.co2);
 		mLatView = (TextView)findViewById(R.id.lat);
 		mLonView = (TextView)findViewById(R.id.lon);
 		
@@ -194,13 +194,13 @@ public class TreeViewActivity extends DeviceManagerClient {
 		return false;
 	}
 	
-	Co2SentenceParser parser = new Co2SentenceParser();
+	CO2SentenceParser parser = new CO2SentenceParser();
 	
 	@Override
 	void receivedSentenceBundle(Bundle bundle) {
 		String line = bundle.getString(BundleKeys.SENTENCE_LINE);
 		if (parser.match(line)) {
-			mCo2View.setText(co2Format.format(parser.getFloatValue()));
+			mCO2View.setText(co2Format.format(parser.getFloatValue()));
 			
 			Bundle locationBundle = bundle.getBundle(BundleKeys.LOCATION_BUNDLE);
 			if (locationBundle == null) {

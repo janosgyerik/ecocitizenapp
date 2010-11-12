@@ -29,7 +29,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import android.R;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -50,6 +49,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.senspodapp.app.R;
 import com.senspodapp.app.TreeViewActivity;
 
 public class SensorMapUploaderService extends Service {
@@ -59,10 +59,10 @@ public class SensorMapUploaderService extends Service {
 	
 	private NotificationManager mNotificationManager;
 
-	private static final int ICON_LOGINERROR = R.drawable.stat_sys_warning;
-	private static final int ICON_STANDBY = R.drawable.stat_sys_phone_call_on_hold;
-	private static final int ICON_UPLOADING = R.drawable.stat_sys_phone_call;
-	private static final int ICON_BLOCKED = R.drawable.stat_notify_missed_call;
+	private static final int ICON_LOGINERROR = android.R.drawable.stat_sys_warning;
+	private static final int ICON_STANDBY = R.drawable.smu_standby;
+	private static final int ICON_UPLOADING = R.drawable.smu_uploading;
+	private static final int ICON_BLOCKED = R.drawable.smu_blocked;
 
 	private enum Status {
 		NONE,

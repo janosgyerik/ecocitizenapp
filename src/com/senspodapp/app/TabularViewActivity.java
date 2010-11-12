@@ -20,11 +20,11 @@
 package com.senspodapp.app;
 
 import com.senspodapp.parser.BatterySentenceParser;
-import com.senspodapp.parser.Co2SentenceParser;
-import com.senspodapp.parser.CoxSentenceParser;
+import com.senspodapp.parser.CO2SentenceParser;
+import com.senspodapp.parser.COxSentenceParser;
 import com.senspodapp.parser.HumiditySentenceParser;
 import com.senspodapp.parser.NoiseSentenceParser;
-import com.senspodapp.parser.NoxSentenceParser;
+import com.senspodapp.parser.NOxSentenceParser;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -61,12 +61,12 @@ public class TabularViewActivity extends SimpleDeviceManagerClient {
 	}
 
 	
-	CoxSentenceParser coxParser = new CoxSentenceParser();
+	COxSentenceParser coxParser = new COxSentenceParser();
 	BatterySentenceParser battParser = new BatterySentenceParser();
 	HumiditySentenceParser humParser = new HumiditySentenceParser();
 	NoiseSentenceParser noiseParser = new NoiseSentenceParser();
-	NoxSentenceParser noxParser = new NoxSentenceParser();
-	Co2SentenceParser co2Parser = new Co2SentenceParser();
+	NOxSentenceParser noxParser = new NOxSentenceParser();
+	CO2SentenceParser co2Parser = new CO2SentenceParser();
 
 	@Override
 	void receivedSentenceLine(String line) {

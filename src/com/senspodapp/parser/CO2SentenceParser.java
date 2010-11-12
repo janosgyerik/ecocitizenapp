@@ -19,8 +19,8 @@
 
 package com.senspodapp.parser;
 
-public class Co2SentenceParser extends PsenSentenceParser {
-	public Co2SentenceParser() {
+public class CO2SentenceParser extends PsenSentenceParser {
+	public CO2SentenceParser() {
 		super("$PSEN,CO2,");
 	}
 }
