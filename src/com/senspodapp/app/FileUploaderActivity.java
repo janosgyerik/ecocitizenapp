@@ -21,8 +21,8 @@ package com.senspodapp.app;
 
 import java.io.File;
 import java.io.FileFilter;
-import android.app.TabActivity;
-import android.content.res.Resources;
+
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -31,57 +31,41 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TabHost;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.TabHost.OnTabChangeListener;
 
-public class FileUploaderActivity extends TabActivity implements OnItemClickListener,OnTabChangeListener{
+public class FileUploaderActivity extends Activity implements OnItemClickListener{
 
-	private ListView mListView;
-	private File mSDdir;
+	private ListView internalListView;
+	private ListView externallListView;
+	private File internalDir;
+	private File externalDir;
 	private Button mButton;
-	private static final String msg = "coming soon";
-	private static final String NO_FILE = "NONE";
+	private static final String msg = "Coming soon ...";
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fileuploader);
-		Resources res = getResources();
-		TabHost tabHost = getTabHost();
-		tabHost.setup();
-		TabHost.TabSpec spec;
-		spec = tabHost.newTabSpec("internal").setIndicator("Internal storage",
-				res.getDrawable(R.drawable.tab_tabularviewplus))
-				.setContent(R.id.btn_uploader);
-		tabHost.addTab(spec);
 
-		spec = tabHost.newTabSpec("external").setIndicator("external storage",
-				res.getDrawable(R.drawable.tab_sentences))
-				.setContent(R.id.btn_uploader);
-		tabHost.addTab(spec);
-		tabHost.setCurrentTabByTag("internal");
-		tabHost.setOnTabChangedListener(this);
-		mSDdir = getFilesDir();
+		internalDir = getFilesDir();
+		externalDir = Environment.getExternalStorageDirectory();
+		
 		mButton = (Button) findViewById(R.id.btn_uploader);
-		mButton.setVisibility(View.VISIBLE);
 		mButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Toast.makeText(FileUploaderActivity.this, msg, Toast.LENGTH_LONG).show();
 			}
 		});
-		mListView = (ListView) findViewById(R.id.filelist);
-		mListView.setOnItemClickListener(this);
-		updateList(mSDdir);
+		
+		internalListView = (ListView) findViewById(R.id.internalFilelist);
+		internalListView.setOnItemClickListener(this);
+		updateList(internalDir,internalListView);
+	
+		externallListView = (ListView) findViewById(R.id.externalFilelist);
+		externallListView.setOnItemClickListener(this);
+		updateList(externalDir,externallListView);
+
 	}
 
-	public void onTabChanged(String tabId) {  
-		if (tabId == "external")  
-			mSDdir = Environment.getExternalStorageDirectory();
-		else  
-			mSDdir = getFilesDir();
-
-		updateList(mSDdir);
-	}  
 
 	final private FileFilter filter = new FileFilter() {
 		public boolean accept(File pathname) {
@@ -92,7 +76,7 @@ public class FileUploaderActivity extends TabActivity implements OnItemClickList
 		}
 	};
 
-	private void updateList(File dir){
+	private void updateList(File dir,ListView listView){
 		ArrayAdapter<String> mfilesAdapter = new ArrayAdapter<String>(this, R.layout.message);
 		if(dir.listFiles(filter)!=null&&dir.listFiles(filter).length != 0){
 			File[] files = dir.listFiles(filter);
@@ -101,9 +85,10 @@ public class FileUploaderActivity extends TabActivity implements OnItemClickList
 			}
 		}
 		else{
-			mfilesAdapter.add(NO_FILE);
+			String noFiles = getResources().getText(R.string.File_Saver_None).toString();
+			mfilesAdapter.add(noFiles);
 		}
-		mListView.setAdapter(mfilesAdapter);
+		listView.setAdapter(mfilesAdapter);
 	}
 	
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {

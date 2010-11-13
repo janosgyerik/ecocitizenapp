@@ -22,6 +22,9 @@
     <string name="tabularview_activity">Tabular View</string>
     <string name="tabularviewplus_activity">Tabular View+</string>
     <string name="msg_file_uploader">tap on a file to start uploading</string>
+    <string name="File_Saver_External">External storage</string>
+    <string name="File_Saver_Internal">Internal storage</string>
+    <string name="File_Saver_None">None</string>
     
     <string name="not_connected">You are not connected to a device</string>
     <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Exit.</string>

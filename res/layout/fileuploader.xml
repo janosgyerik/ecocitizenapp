@@ -17,29 +17,24 @@
     You should have received a copy of the GNU General Public License
     along with SenspodApp.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@android:id/tabhost"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:stackFromBottom="true"
-        android:padding="5dp">
-        <TabWidget
-            android:id="@android:id/tabs"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
-        <FrameLayout
-            android:id="@android:id/tabcontent"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:padding="5dp" >
-            <LinearLayout  android:orientation="vertical"
+    android:layout_height="fill_parent"
+    >
+        <LinearLayout  android:orientation="vertical"
                  android:layout_width="fill_parent"
                   android:layout_height="fill_parent"> 
-                  <ListView android:id="@+id/filelist"
+                  <TextView android:text="@string/File_Saver_Internal"  android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                  <ListView android:id="@+id/internalFilelist"
+    	            android:layout_width="fill_parent"
+    	            android:layout_height="fill_parent"
+    	            android:stackFromBottom="true"
+                    android:transcriptMode="alwaysScroll"
+                    android:layout_weight="1"
+                  /> 
+                  <TextView android:text="@string/File_Saver_External"  android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <ListView android:id="@+id/externalFilelist"
     	            android:layout_width="fill_parent"
     	            android:layout_height="fill_parent"
     	            android:stackFromBottom="true"
@@ -47,8 +42,6 @@
                     android:layout_weight="1"
                   /> 
                   <TextView android:text="@string/msg_file_uploader"  android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-                  <Button android:id="@+id/btn_uploader" android:text="@string/btn_uploader"  android:stackFromBottom="true" visalbe="ture" style="@style/btn"/>
+                  <Button android:id="@+id/btn_uploader" android:text="@string/btn_uploader"  android:stackFromBottom="true" style="@style/btn"/>
             </LinearLayout>
-        </FrameLayout>
     </LinearLayout>    
-</TabHost>
