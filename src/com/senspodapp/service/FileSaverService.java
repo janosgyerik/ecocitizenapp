@@ -19,7 +19,9 @@
 
 package com.senspodapp.service;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
@@ -47,10 +49,10 @@ public class FileSaverService extends Service {
 	private static final String TAG = "FileSaverService";
 	private static final boolean D = true;
 	
-	private final static String EXTERNAL_TARGETDIR = "Download";
-	private final static String FILENAME_PREFIX = "session_";
-	private final static String FILENAME_EXTENSION = "csv";
-	private final static SimpleDateFormat DATEFORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
+	public final static String EXTERNAL_TARGETDIR = "Download";
+	public final static String FILENAME_PREFIX = "session_";
+	public final static String FILENAME_EXTENSION = "csv";
+	private final static SimpleDateFormat DATEFORMAT = new SimpleDateFormat("yyyyMMddHHmm");
 	
 	private OutputStream output = null;
 	
@@ -274,9 +276,8 @@ public class FileSaverService extends Service {
 	
 	void startSession() {
 		String datestr = DATEFORMAT.format(new Date());
-		String filename;
 		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-			filename = String.format(
+			String filename = String.format(
 					"%s/%s/%s%s.%s",
 					Environment.getExternalStorageDirectory(),
 					EXTERNAL_TARGETDIR,
@@ -284,21 +285,24 @@ public class FileSaverService extends Service {
 					datestr,
 					FILENAME_EXTENSION
 					);
+			try {
+				output = new FileOutputStream(new File(filename));
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
 		} 
 		else {
-			filename = String.format(
-					"%s/%s%s.%s",
-					this.getFilesDir().getPath(),
+			String filename = String.format(
+					"%s%s.%s",
 					FILENAME_PREFIX,
 					datestr,
 					FILENAME_EXTENSION
 					);
-		}
-
-		try {
-			output = openFileOutput(filename, Context.MODE_PRIVATE);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			try {
+				output = openFileOutput(filename, Context.MODE_PRIVATE);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -314,6 +318,7 @@ public class FileSaverService extends Service {
 	
 	void endSession() {
 		if (D) Log.d(TAG, "ENDSESSION");
+		if (output == null) return;
 		try {
 			output.close();
 		} catch (IOException e) {

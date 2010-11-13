@@ -11,6 +11,7 @@
     <string name="preparegps_activity">Waiting for GPS ...</string>
     <string name="debugtools_activity">Debug Tools</string>
     <string name="devicelist_activity">Device List</string>
+    <string name="fileuploader_activity">File Uploader</string>
     
     <string name="not_connected">You are not connected to a device</string>
     <string name="title_connecting">connecting...</string>
@@ -41,6 +42,7 @@
     <string name="menu_tabularviewplus">Tabular View+</string>
     <string name="menu_debugtools">Debug Tools</string>
     <string name="menu_preparegps">Prepare GPS</string>
+    <string name="menu_fileuploader">Upload data</string>
     
     <!--  Preferences -->
     <string name="title_username_preference">Username</string>
@@ -65,6 +67,7 @@
     <string name="btn_yes">Yes</string>
     <string name="btn_no">No</string>
     <string name="btn_cancel">Cancel</string>
+    <string name="btn_upload_all">Upload All</string>
     
     <!-- SensorMapUploaderService -->
     <string name="notification_smu_title">SensorMap Uploader Service</string>
@@ -73,5 +76,11 @@
     <string name="notification_smu_uploading">Uploading data ...</string>
     <string name="notification_smu_blocked">SensorMap unreachable!</string>
     <string name="notification_smu_loginerror">Login error! Check your settings.</string>
+    
+    <!-- FileUploadService -->
+    <string name="title_internal_storage">Internal storage</string>
+    <string name="title_external_storage">External storage</string>
+    <string name="label_none">None</string>
+    <string name="msg_fileuploader_hint">Tap on a file to start uploading!</string>
     
 </resources>

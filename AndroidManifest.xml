@@ -47,14 +47,18 @@
 		<activity android:name=".TabularViewPlusActivity" android:label="@string/tabularviewplus_activity">
 		</activity>
 		
-		<activity android:name=".PrepareGpsActivity" android:label="@string/preparegps_activity"
-		    android:theme="@android:style/Theme.Dialog">
-		</activity>
-		
 		<activity android:name=".DebugToolsActivity" android:label="@string/debugtools_activity"
 		    android:theme="@android:style/Theme.NoTitleBar">
 		</activity>
         
+		<activity android:name=".PrepareGpsActivity" android:label="@string/preparegps_activity"
+		    android:theme="@android:style/Theme.Dialog">
+		</activity>
+		
+		<activity android:name=".FileUploaderActivity" android:label="@string/fileuploader_activity"
+			android:theme="@android:style/Theme.Dialog" >
+		</activity>
+
 		<activity android:name=".DeviceListActivity" android:label="@string/devicelist_activity"
 			android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden" />
 
