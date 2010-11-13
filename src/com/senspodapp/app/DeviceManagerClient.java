@@ -40,6 +40,7 @@ import backport.android.bluetooth.BluetoothDevice;
 import com.senspodapp.service.BundleKeys;
 import com.senspodapp.service.IDeviceManagerService;
 import com.senspodapp.service.IDeviceManagerServiceCallback;
+import com.senspodapp.service.IFileSaverService;
 import com.senspodapp.service.ISensorMapUploaderService;
 import com.senspodapp.service.MessageType;
 
@@ -76,7 +77,8 @@ public abstract class DeviceManagerClient extends Activity {
 
 		connectDeviceManager();
 		connectSensorMapUploader();
-
+		//connectFileSaver();
+        
 		// If BT is not on, request that it be enabled.
 		if (mBluetoothAdapter != null) {
 			if (!mBluetoothAdapter.isEnabled()) {
@@ -134,6 +136,14 @@ public abstract class DeviceManagerClient extends Activity {
 				Log.e(TAG, "Exception during shutdown sensor map uploader service.");
 			}
 		}
+		if (mFileSaverService != null) {
+			try {
+				mFileSaverService.shutdown();
+			} 
+			catch (RemoteException e) {
+				Log.e(TAG, "Exception during shutdown file saver service.");
+			}
+		}
 			
 	}
 	
@@ -181,6 +191,52 @@ public abstract class DeviceManagerClient extends Activity {
 
 			// Detach our existing connection.
 			getApplicationContext().unbindService(mSensorMapUploaderConnection);
+		}
+	}
+	
+	void connectFileSaver() {
+		// Start the service if not already running
+		startService(new Intent(IFileSaverService.class.getName()));
+
+		// Establish connection with the service.
+		getApplicationContext().bindService(new Intent(IFileSaverService.class.getName()),
+				mFileSaverConnection, Context.BIND_AUTO_CREATE);
+	}
+	
+	void disconnectFileSaver() {
+		if (mFileSaverService != null) {
+			mFileSaverService = null;
+
+			// Detach our existing connection.
+			getApplicationContext().unbindService(mFileSaverConnection);
+		}
+	}
+	
+	void killFileSaver() {
+		// To kill the process hosting our service, we need to know its
+		// PID.  Conveniently our service has a call that will return
+		// to us that information.
+		if (mFileSaverService != null) {
+			try {
+				int pid = mFileSaverService.getPid();
+				// Note that, though this API allows us to request to
+				// kill any process based on its PID, the kernel will
+				// still impose standard restrictions on which PIDs you
+				// are actually able to kill.  Typically this means only
+				// the process running your application and any additional
+				// processes created by that app as shown here; packages
+				// sharing a common UID will also be able to kill each
+				// other's processes.
+				Process.killProcess(pid);
+			} 
+			catch (RemoteException ex) {
+				// Recover gracefully from the process hosting the
+				// server dying.
+				// Just for purposes of the sample, put up a notification.
+				Toast.makeText(this, "Remote call failed", Toast.LENGTH_SHORT).show();
+			}
+
+			mFileSaverService = null;
 		}
 	}
 
@@ -291,7 +347,8 @@ public abstract class DeviceManagerClient extends Activity {
 	public void onDestroy() {
 		disconnectDeviceManager();
 		disconnectSensorMapUploader();
-
+		disconnectFileSaver();
+		
 		super.onDestroy();
 		if (D) Log.d(TAG, "--- ON DESTROY ---");
 	}
@@ -470,6 +527,37 @@ public abstract class DeviceManagerClient extends Activity {
 			// This is called when the connection with the service has been
 			// unexpectedly disconnected -- that is, its process crashed.
 			mSensorMapUploaderService = null;
+		}
+	};	
+	
+	private IFileSaverService mFileSaverService = null;
+
+	/**
+	 * Class for interacting with the file saver service.
+	 */
+	private ServiceConnection mFileSaverConnection = new ServiceConnection() {
+		public void onServiceConnected(ComponentName className, IBinder service) {
+			// This is called when the connection with the service has been
+			// established, giving us the service object we can use to
+			// interact with the service.  We are communicating with our
+			// service through an IDL interface, so get a client-side
+			// representation of that from the raw service object.
+			mFileSaverService = IFileSaverService.Stub.asInterface(service);
+			try {
+				mFileSaverService.activate();
+			} catch (RemoteException e) {
+				// In this case the service has crashed before we could even
+				// do anything with it; we can count on soon being
+				// disconnected (and then reconnected if it can be restarted)
+				// so there is no need to do anything here.
+				Log.e(TAG, "Exception during activate.");
+			}
+		}
+
+		public void onServiceDisconnected(ComponentName className) {
+			// This is called when the connection with the service has been
+			// unexpectedly disconnected -- that is, its process crashed.
+			mFileSaverService = null;
 		}
 	};
 }
