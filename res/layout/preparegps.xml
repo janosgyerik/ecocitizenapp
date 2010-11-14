@@ -17,14 +17,40 @@
     You should have received a copy of the GNU General Public License
     along with SenspodApp.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-    <Button android:id="@+id/btn_cancel"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:background="@drawable/background1"
+	>
+	<TableLayout android:id="@+id/tblgps" style="@style/tabular">   
+	<TableRow android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="Latitude:" style="@style/tabularColumn"></TextView>
+			<TextView android:id="@+id/latitude_value" style="@style/tabularValueColumn"></TextView>
+		</TableRow>
+	<TableRow android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="Longitude:" style="@style/tabularColumn"></TextView>
+			<TextView android:id="@+id/longitude_value" style="@style/tabularValueColumn"></TextView>
+	</TableRow>
+	<TableRow android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="Accuracy:" style="@style/tabularColumn"></TextView>
+			<TextView android:id="@+id/accuracy_value" style="@style/tabularValueColumn"></TextView>
+	</TableRow>
+	<TableRow android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="Altitude:" style="@style/tabularColumn"></TextView>
+			<TextView android:id="@+id/altitude_value" style="@style/tabularValueColumn"></TextView>
+	</TableRow>
+	<TableRow android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="Bearing:" style="@style/tabularColumn"></TextView>
+			<TextView android:id="@+id/bearing_value" style="@style/tabularValueColumn"></TextView>
+	</TableRow>
+    </TableLayout>
+   	<RelativeLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+        <Button android:id="@+id/btn_cancel"
 		android:text="@string/btn_cancel"
     	android:stackFromBottom="true"
 		style="@style/btn"
     />
-</LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

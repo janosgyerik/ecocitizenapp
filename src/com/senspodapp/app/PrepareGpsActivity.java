@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TableLayout;
+import android.widget.TextView;
 
 public class PrepareGpsActivity extends Activity implements LocationListener {
 	// Debugging
@@ -18,7 +20,9 @@ public class PrepareGpsActivity extends Activity implements LocationListener {
 	private static final String PROVIDER = LocationManager.GPS_PROVIDER;
 	private static final int    MIN_TIME = 1000;
 	private static final float  MIN_DISTANCE = .1f;
-	
+	private static final String CHANGE_BUTTON="Close";
+	// Layout Views
+	private TableLayout gpsTbl;
 	private LocationManager mLocationManager;
 	
 	@Override
@@ -29,7 +33,7 @@ public class PrepareGpsActivity extends Activity implements LocationListener {
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.preparegps);
 		setProgressBarIndeterminateVisibility(true);
-
+		gpsTbl = (TableLayout)findViewById(R.id.tblgps);
 		mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 		mLocationManager.requestLocationUpdates(PROVIDER, MIN_TIME, MIN_DISTANCE, this);
 		
@@ -53,7 +57,24 @@ public class PrepareGpsActivity extends Activity implements LocationListener {
 	}
 
 	public void onLocationChanged(Location location) {
-		cancel();
+		TextView latitude_value = (TextView) gpsTbl.findViewById(R.id.latitude_value);
+		latitude_value.setText(String.valueOf(location.getLatitude()));
+		
+		TextView longitude_value = (TextView) gpsTbl.findViewById(R.id.longitude_value);
+		longitude_value.setText(String.valueOf(location.getLongitude()));
+		
+		TextView accuracy_value = (TextView) gpsTbl.findViewById(R.id.accuracy_value);
+		accuracy_value.setText(String.valueOf(location.getAccuracy()));
+		
+		TextView altitude_value = (TextView) gpsTbl.findViewById(R.id.altitude_value);
+		altitude_value.setText(String.valueOf(location.getAltitude()));
+		
+		TextView bearing_value = (TextView) gpsTbl.findViewById(R.id.bearing_value);
+		bearing_value.setText(String.valueOf(location.getBearing()));
+		
+		Button btn_cancel =((Button) findViewById(R.id.btn_cancel));
+		btn_cancel.setText(CHANGE_BUTTON);
+		
 	}
 
 	public void onProviderDisabled(String provider) {
