@@ -18,6 +18,10 @@
     along with SenspodApp.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/menu_connect" android:icon="@drawable/connect"
+		android:title="@string/menu_connect" android:visible="false"/>
+	<item android:id="@+id/menu_disconnect" android:icon="@drawable/disconnect"
+		android:title="@string/menu_disconnect" />
 	<item android:id="@+id/menu_settings" android:icon="@drawable/settings"
 		android:title="@string/menu_settings" />
 	<item android:id="@+id/menu_graph" android:icon="@drawable/chart"
@@ -27,13 +31,9 @@
 	<item android:id="@+id/menu_debugtools" android:title="@string/menu_debugtools"
 		android:icon="@drawable/home" />
 	<item android:id="@+id/menu_preparegps" android:icon="@drawable/connect"
-		android:title="@string/menu_preparegps" />
+		android:title="@string/menu_preparegps" android:visible="true"/>
 	<item android:id="@+id/menu_fileuploader" android:icon="@drawable/connect"
 		android:title="@string/menu_fileuploader" />
 	<item android:id="@+id/menu_quit" android:icon="@android:drawable/ic_lock_power_off"
 		android:title="@string/menu_quit" />
-	<item android:id="@+id/menu_connect" android:icon="@drawable/connect"
-		android:title="@string/menu_connect" />
-	<item android:id="@+id/menu_disconnect" android:icon="@drawable/disconnect"
-		android:title="@string/menu_disconnect" />
 </menu>

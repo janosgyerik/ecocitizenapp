@@ -42,9 +42,9 @@ public class PrepareGpsActivity extends Activity implements LocationListener {
 	}
 
 	@Override
-	protected void onPause() {
-		super.onPause();
+	protected void onDestroy() {
 		mLocationManager.removeUpdates(this);
+		super.onDestroy();
 	}
 	
 	private void cancel() {
