@@ -20,7 +20,17 @@
 package com.senspodapp.parser;
 
 public class CO2SentenceParser extends PsenSentenceParser {
+	
+	private static int[] levelboundaries = new int[]{ 300, 350, 400, 450, 500, 600, 750, 1000, 1500 };
+	public int level = 0;
 	public CO2SentenceParser() {
 		super("$PSEN,CO2,");
 	}
+	public int getLevel(float ppm) {
+		for (level = 0; level < levelboundaries.length; ++level) {
+			if (ppm < levelboundaries[level]) break;
+		}
+	    return level;
+	}
 }
+

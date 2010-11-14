@@ -35,6 +35,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +53,9 @@ public class TreeViewActivity extends DeviceManagerClient {
 	private TextView mLatView;
 	private TextView mLonView;
 	private static DecimalFormat latlonFormat = new DecimalFormat("* ###.00000");
+	private static final String IMG_PREFIX = "treebg_level_";
+	private static final String DEF_PACKAGE = "com.senspodapp.app";
+	private static final String DEF_TYPE = "drawable";
     
 	private Button mBtnConnect;
 	private Button mBtnDisconnect;
@@ -204,7 +208,10 @@ public class TreeViewActivity extends DeviceManagerClient {
 		String line = bundle.getString(BundleKeys.SENTENCE_LINE);
 		if (parser.match(line)) {
 			mCO2View.setText(co2Format.format(parser.getFloatValue()));
-			
+			String imgname = IMG_PREFIX + parser.getLevel(parser.getFloatValue());
+			int resID = getResources().getIdentifier(imgname, DEF_TYPE, DEF_PACKAGE);
+			LinearLayout treepage = (LinearLayout) findViewById(R.id.treepage);
+			treepage.setBackgroundResource(resID);
 			Bundle locationBundle = bundle.getBundle(BundleKeys.LOCATION_BUNDLE);
 			if (locationBundle == null) {
 				mLatView.setText("N.A.");
