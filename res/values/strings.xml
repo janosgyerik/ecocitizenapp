@@ -56,6 +56,10 @@
     <string name="title_map_server_url_preference">SensorMap URL</string>
     <string name="summary_map_server_url_preference">URL of the SensorMap API</string>
     <string name="dialog_title_map_server_url_preference">Enter SensorMap API URL</string>
+    
+    <string name="title_externalstorage_preference">Use external storage</string>
+    <string name="summary_externalstorage_preference">Try to save data files on external storage</string>
+    <string name="dialog_title_externalstorage_preference">Use external storage</string>
 
     <!-- Tree view -->
     <string name="btn_connect_device">Connect to sensor</string>

@@ -33,6 +33,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Environment;
@@ -41,6 +42,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Process;
 import android.os.RemoteException;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -53,7 +55,8 @@ public class FileSaverService extends Service {
 	public final static String FILENAME_PREFIX = "session_";
 	public final static String FILENAME_EXTENSION = "csv";
 	private final static SimpleDateFormat DATEFORMAT = new SimpleDateFormat("yyyyMMddHHmm");
-	
+	private final static String EXTERNAL_STORAGE_KEY="use_external_storage ";
+	private final static String USE_EXTERNAL_STORAGE ="true";
 	private OutputStream output = null;
 	
 	@Override
@@ -276,7 +279,9 @@ public class FileSaverService extends Service {
 	
 	void startSession() {
 		String datestr = DATEFORMAT.format(new Date());
-		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+		String useExternalStorage = settings.getString(EXTERNAL_STORAGE_KEY, "");
+		if (useExternalStorage.equals(USE_EXTERNAL_STORAGE)&&Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
 			String filename = String.format(
 					"%s/%s/%s%s.%s",
 					Environment.getExternalStorageDirectory(),
