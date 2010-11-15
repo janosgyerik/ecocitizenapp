@@ -5,6 +5,11 @@ nice to have
 	FileSaverService with proper synchronization
 
 next
+	fix hardcoded values in debugtools
+	fix indent in BluetoothSensorManager, and everywhere
+	bug: sending mock GPS sometimes does not work
+	bug: sending mock GPS sometimes works even if AVD has no GPS support
+	bug: shows connected to sensor even though it's not....
 	? bug: android uploader gets killed
 	? bug: java.net.UnknownHostException
 

@@ -8,7 +8,7 @@
     <string name="tabularview_activity">Tabular View</string>
     <string name="tabularviewplus_activity">Tabular View+</string>
     <string name="treeview_activity">Tree View</string>
-    <string name="preparegps_activity">Waiting for GPS ...</string>
+    <string name="preparegps_activity">Prepare GPS</string>
     <string name="debugtools_activity">Debug Tools</string>
     <string name="devicelist_activity">Device List</string>
     <string name="fileuploader_activity">File Uploader</string>
@@ -67,6 +67,8 @@
     <string name="btn_yes">Yes</string>
     <string name="btn_no">No</string>
     <string name="btn_cancel">Cancel</string>
+    <string name="btn_close">Close</string>
+    <string name="btn_scan_again">Scan again</string>
     <string name="btn_upload_all">Upload All</string>
     
     <!-- SensorMapUploaderService -->
@@ -82,5 +84,8 @@
     <string name="title_external_storage">External storage</string>
     <string name="label_none">None</string>
     <string name="msg_fileuploader_hint">Tap on a file to start uploading!</string>
+    
+    <!-- Prepare GPS -->
+    <string name="msg_waiting_for_gps">Waiting for GPS location ...</string>
     
 </resources>

@@ -18,13 +18,35 @@
     along with SenspodApp.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-    <Button android:id="@+id/btn_cancel"
-		android:text="@string/btn_cancel"
-    	android:stackFromBottom="true"
-		style="@style/btn"
-    />
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" 
+	>
+	<TableLayout android:id="@+id/tblgps" style="@style/tabular">   
+	<TableRow android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="Latitude:" style="@style/tabularColumn"></TextView>
+			<TextView android:id="@+id/latitude_value" style="@style/tabularValueColumn"></TextView>
+		</TableRow>
+	<TableRow android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="Longitude:" style="@style/tabularColumn"></TextView>
+			<TextView android:id="@+id/longitude_value" style="@style/tabularValueColumn"></TextView>
+	</TableRow>
+	<TableRow android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="Accuracy:" style="@style/tabularColumn"></TextView>
+			<TextView android:id="@+id/accuracy_value" style="@style/tabularValueColumn"></TextView>
+	</TableRow>
+	<TableRow android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="Altitude:" style="@style/tabularColumn"></TextView>
+			<TextView android:id="@+id/altitude_value" style="@style/tabularValueColumn"></TextView>
+	</TableRow>
+	<TableRow android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="Bearing:" style="@style/tabularColumn"></TextView>
+			<TextView android:id="@+id/bearing_value" style="@style/tabularValueColumn"></TextView>
+	</TableRow>
+    </TableLayout>
+	<Button android:id="@+id/btn_cancel" android:text="@string/btn_cancel"
+		style="@style/btn" />
+	<Button android:id="@+id/btn_scan_again" android:text="@string/btn_scan_again"
+		android:visibility="gone" style="@style/btn" />
+	<Button android:id="@+id/btn_close" android:text="@string/btn_close"
+		android:visibility="gone" style="@style/btn" />
 </LinearLayout>
