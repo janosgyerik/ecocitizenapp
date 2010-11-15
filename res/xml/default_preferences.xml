@@ -41,4 +41,10 @@
             android:summary="@string/summary_api_key_preference"
             android:dialogTitle="@string/dialog_title_api_key_preference" />
             
+    <CheckBoxPreference
+            android:key="use_external_storage"
+            android:defaultValue="true"
+            android:title="@string/title_externalstorage_preference"
+            android:summary="@string/summary_externalstorage_preference" />
+                       
 </PreferenceScreen>
