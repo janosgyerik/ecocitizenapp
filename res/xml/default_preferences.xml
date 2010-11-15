@@ -47,5 +47,12 @@
             android:title="@string/title_externalstorage_preference"
             android:summary="@string/summary_externalstorage_preference"
             android:dialogTitle="@string/dialog_title_externalstorage_preference" />
+            
+     <EditTextPreference
+            android:key="rtupload"
+            android:defaultValue="False"
+            android:title="@string/title_rtupload_preference"
+            android:summary="@string/summary_rtupload_preference"
+            android:dialogTitle="@string/dialog_title_rtupload_preference" /> 
                        
 </PreferenceScreen>
