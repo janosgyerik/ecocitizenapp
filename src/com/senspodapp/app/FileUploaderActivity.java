@@ -46,7 +46,7 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 	// Debugging
 	private static final String TAG = "FileUploaderActivity";
 	private static final boolean D = true;
-    
+
 	private static final String MSG_COMING_SOON = "Coming soon ..."; // TODO
 
 	@Override
@@ -55,10 +55,10 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 		if (D) Log.d(TAG, "+++ ON CREATE +++");
 
 		setContentView(R.layout.fileuploader);
-		
+
 		//createDummyInternalFile();
 		//createDummyExternalFile();
-		
+
 		showInternalFiles();
 		showExternalFiles();
 
@@ -68,14 +68,14 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 				Toast.makeText(FileUploaderActivity.this, MSG_COMING_SOON, Toast.LENGTH_LONG).show();
 			}
 		});
-		
+
 		// TODO if the lists are empty, show message and cancel button
 	}
-	
+
 	void showInternalFiles() {
 		ListView listView = (ListView) findViewById(R.id.internal_storage);
 		listView.setOnItemClickListener(this);
-		
+
 		ArrayAdapter<String> filesArrayAdapter = new ArrayAdapter<String>(this, R.layout.filename);
 		listView.setAdapter(filesArrayAdapter);
 
@@ -89,22 +89,22 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 			filesArrayAdapter.add(getString(R.string.label_none));
 		}
 	}
-	
+
 	void showExternalFiles() {
 		ListView listView = (ListView) findViewById(R.id.external_storage);
 		listView.setOnItemClickListener(this);
-		
+
 		ArrayAdapter<String> filesArrayAdapter = new ArrayAdapter<String>(this, R.layout.filename);
 		listView.setAdapter(filesArrayAdapter);
-		
+
 		String basedirPath = String.format(
 				"%s/%s",
 				Environment.getExternalStorageDirectory(),
 				FileSaverService.EXTERNAL_TARGETDIR
-				);
+		);
 
 		List<String> filenames = new LinkedList<String>();
-		
+
 		File basedir = new File(basedirPath);
 		if (basedir.isDirectory()) {
 			for (File file : basedir.listFiles()) {
@@ -115,7 +115,7 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 				}
 			}
 		}
-		
+
 		if (!filenames.isEmpty()) {
 			for (String filename : filenames) {
 				filesArrayAdapter.add(filename);
@@ -125,7 +125,7 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 			filesArrayAdapter.add(getString(R.string.label_none));
 		}
 	}
-	
+
 	private void createDummyInternalFile() {
 		String datestr = "DTZ";
 		String filename;
@@ -145,7 +145,7 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 			e.printStackTrace();
 		}
 	}
-	
+
 	void createDummyExternalFile() {
 		String datestr = "DTZ";
 		String filename;
@@ -157,7 +157,7 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 					FileSaverService.FILENAME_PREFIX,
 					datestr,
 					FileSaverService.FILENAME_EXTENSION
-					);
+			);
 		} 
 		else {
 			Toast.makeText(FileUploaderActivity.this, "No external storage", Toast.LENGTH_LONG).show();
@@ -179,7 +179,7 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 			e.printStackTrace();
 		}
 	}
-		
+
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		Toast.makeText(FileUploaderActivity.this, MSG_COMING_SOON, Toast.LENGTH_LONG).show();
 	}

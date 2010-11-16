@@ -42,7 +42,7 @@ public class DeviceManagerService extends Service {
 	private static final String TAG = "DeviceManagerService";
 	private static final boolean D = true;
 	private static final boolean LOG_SENTENCES = false;
-	
+
 	@Override
 	public IBinder onBind(Intent intent) {
 		if (D) Log.d(TAG, "+++ ON BIND +++");
@@ -105,11 +105,11 @@ public class DeviceManagerService extends Service {
 				return;
 			}
 		}
-        
+
 		public void shutdown() throws RemoteException {
 			stopSelf();
 		}
-		
+
 		public void disconnectDevice(String deviceName) throws RemoteException {
 			shutdownSensorManager(deviceName);
 		}
@@ -130,7 +130,7 @@ public class DeviceManagerService extends Service {
 			return mConnectedDeviceName;
 		}
 	};
-	
+
 	GpsLocationListener mLocationListener = new GpsLocationListener();
 
 	/**
@@ -202,7 +202,7 @@ public class DeviceManagerService extends Service {
 			}
 		}
 	};
-	
+
 	void shutdownSensorManager() {
 		// TODO: add support for multiple devices: loop over each connected  
 		// device name and call the overloaded method with device name.
@@ -211,10 +211,10 @@ public class DeviceManagerService extends Service {
 
 	void shutdownSensorManager(String deviceName) {
 		if (mSensorManager == null) return;
-		
+
 		mLocationListener.removeLocationUpdates();
 		mConnectedDeviceName = null;
-		
+
 		mSensorManager.stop();
 		mSensorManager = null;
 	}

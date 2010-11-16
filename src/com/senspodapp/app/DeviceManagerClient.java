@@ -53,15 +53,15 @@ public abstract class DeviceManagerClient extends Activity {
 	// Intent request codes
 	private static final int REQUEST_CONNECT_DEVICE = 1;
 	private static final int REQUEST_ENABLE_BT = 2;
-	
+
 	private final static String PREFS_RTUPLOAD = "rtupload";
-	
+
 	// Layout Views
 	TextView mTitle;
 
 	// Local Bluetooth adapter
 	BluetoothAdapter mBluetoothAdapter = null;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -77,12 +77,12 @@ public abstract class DeviceManagerClient extends Activity {
 	public void onStart() {
 		super.onStart();
 		if (D) Log.d(TAG, "++ ON START ++");
-		
+
 		connectDeviceManager();
 		connectFileSaver();
-		
+
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-		
+
 		if (settings.getBoolean(PREFS_RTUPLOAD, false)) {
 			connectSensorMapUploader();
 		} 
@@ -94,7 +94,7 @@ public abstract class DeviceManagerClient extends Activity {
 			}
 			disconnectSensorMapUploader();
 		}
-		
+
 		// If BT is not on, request that it be enabled.
 		if (mBluetoothAdapter != null) {
 			if (!mBluetoothAdapter.isEnabled()) {
@@ -102,7 +102,7 @@ public abstract class DeviceManagerClient extends Activity {
 			} 
 		}
 	}
-	
+
 	void launchRequestEnableBT() {
 		Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 		startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
@@ -134,7 +134,7 @@ public abstract class DeviceManagerClient extends Activity {
 			getApplicationContext().unbindService(mConnection);
 		}
 	}
-   
+
 	void shutdown() {
 		if (mService != null) {
 			try {
@@ -161,7 +161,7 @@ public abstract class DeviceManagerClient extends Activity {
 			}
 		}
 	}
-	
+
 	void killDeviceManager() {
 		// To kill the process hosting our service, we need to know its
 		// PID.  Conveniently our service has a call that will return
@@ -207,7 +207,7 @@ public abstract class DeviceManagerClient extends Activity {
 			getApplicationContext().unbindService(mSensorMapUploaderConnection);
 		}
 	}
-	
+
 	void connectFileSaver() {
 		// Start the service if not already running
 		startService(new Intent(IFileSaverService.class.getName()));
@@ -216,7 +216,7 @@ public abstract class DeviceManagerClient extends Activity {
 		getApplicationContext().bindService(new Intent(IFileSaverService.class.getName()),
 				mFileSaverConnection, Context.BIND_AUTO_CREATE);
 	}
-	
+
 	void disconnectFileSaver() {
 		if (mFileSaverService != null) {
 			mFileSaverService = null;
@@ -225,7 +225,7 @@ public abstract class DeviceManagerClient extends Activity {
 			getApplicationContext().unbindService(mFileSaverConnection);
 		}
 	}
-	
+
 	void killFileSaver() {
 		// To kill the process hosting our service, we need to know its
 		// PID.  Conveniently our service has a call that will return
@@ -362,11 +362,11 @@ public abstract class DeviceManagerClient extends Activity {
 		disconnectDeviceManager();
 		disconnectSensorMapUploader();
 		disconnectFileSaver();
-		
+
 		super.onDestroy();
 		if (D) Log.d(TAG, "--- ON DESTROY ---");
 	}
-	
+
 	void receivedSentenceBundle(Bundle bundle) {
 		String line = bundle.getString(BundleKeys.SENTENCE_LINE);
 		int indexOf_dollar = line.indexOf('$'); 
@@ -375,7 +375,7 @@ public abstract class DeviceManagerClient extends Activity {
 		}
 		receivedSentenceLine(line);
 	}
-	
+
 	abstract void receivedSentenceLine(String line);
 
 	// The Handler that gets information back from the BluetoothSensorService
@@ -410,7 +410,7 @@ public abstract class DeviceManagerClient extends Activity {
 				// Get the device MAC address
 				String address = data.getExtras()
 				.getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
-				
+
 				BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
 				connectBluetoothDevice(device);
 			}
@@ -512,7 +512,7 @@ public abstract class DeviceManagerClient extends Activity {
 			mHandler.obtainMessage(MessageType.SENSORCONNECTION_SUCCESS, deviceName).sendToTarget();
 		}
 	};
-	
+
 	private ISensorMapUploaderService mSensorMapUploaderService = null;
 
 	/**
@@ -543,7 +543,7 @@ public abstract class DeviceManagerClient extends Activity {
 			mSensorMapUploaderService = null;
 		}
 	};	
-	
+
 	private IFileSaverService mFileSaverService = null;
 
 	/**

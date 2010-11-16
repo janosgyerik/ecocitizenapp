@@ -25,7 +25,7 @@ public abstract class MessageType {
 	public final static int SENSORCONNECTION_FAILED = 13;
 	public final static int SENSORCONNECTION_LOST = 14;
 	public final static int SENSORCONNECTION_DISCONNECTSELF = 15;
-	
+
 	public final static int SENTENCE = 21;
-	
+
 }

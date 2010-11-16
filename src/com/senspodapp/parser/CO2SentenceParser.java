@@ -23,7 +23,7 @@ public class CO2SentenceParser extends PsenSentenceParser {
 	static {
 		levelBoundaries = new int[]{ 300, 350, 400, 450, 500, 600, 750, 1000, 1500 };
 	}
-	
+
 	public CO2SentenceParser() {
 		super("$PSEN,CO2,");
 	}

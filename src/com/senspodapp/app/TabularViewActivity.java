@@ -39,7 +39,7 @@ public class TabularViewActivity extends SimpleDeviceManagerClient {
 
 	// Layout Views
 	private TableLayout mSentencesTbl;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,7 +51,7 @@ public class TabularViewActivity extends SimpleDeviceManagerClient {
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
 
 		setupCommonButtons();
-		
+
 		// Set up the custom title
 		mTitle = (TextView) findViewById(R.id.title_left_text);
 		mTitle.setText(R.string.tabularview_activity);
@@ -60,7 +60,7 @@ public class TabularViewActivity extends SimpleDeviceManagerClient {
 		mSentencesTbl = (TableLayout)findViewById(R.id.tblsentences);
 	}
 
-	
+
 	COxSentenceParser coxParser = new COxSentenceParser();
 	BatterySentenceParser battParser = new BatterySentenceParser();
 	HumiditySentenceParser humParser = new HumiditySentenceParser();
@@ -76,7 +76,7 @@ public class TabularViewActivity extends SimpleDeviceManagerClient {
 			batt_metric.setText(battParser.getMetric());
 			batt_value.setText(battParser.getStrValue());
 		}
-		
+
 		else if (coxParser.match(line)) {
 			TextView cox_metric = (TextView) mSentencesTbl.findViewById(R.id.cox_metric);
 			TextView cox_value = (TextView) mSentencesTbl.findViewById(R.id.cox_value);
@@ -111,7 +111,7 @@ public class TabularViewActivity extends SimpleDeviceManagerClient {
 			nox_metric.setText(noxParser.getMetric());
 			nox_value.setText(noxParser.getStrValue());
 		}
-		
+
 		else if (co2Parser.match(line)) {
 			TextView co2_metric = (TextView) mSentencesTbl.findViewById(R.id.co2_metric);
 			TextView co2_value = (TextView) mSentencesTbl.findViewById(R.id.co2_value);

@@ -27,35 +27,35 @@ import android.widget.TabHost;
 
 public class DebugToolsActivity extends TabActivity {
 	public void onCreate(Bundle savedInstanceState) {
-	    super.onCreate(savedInstanceState);
-	    setContentView(R.layout.debugtools);
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.debugtools);
 
-	    Resources res = getResources();
-	    TabHost tabHost = getTabHost();
-	    tabHost.setup();
-	    TabHost.TabSpec spec;
-	    Intent intent; 
-	    
-	    intent = new Intent().setClass(this, TabularViewPlusActivity.class);
-	   
-	    spec = tabHost.newTabSpec("tabularView+").setIndicator("TabularView",
-	                      res.getDrawable(R.drawable.tab_tabularviewplus))
-	                  .setContent(intent);
-	    tabHost.addTab(spec);
-	   
-	    intent = new Intent().setClass(this, SentencesActivity.class);
-	    spec = tabHost.newTabSpec("sentences").setIndicator("Sentences",
-	                      res.getDrawable(R.drawable.tab_sentences))
-	                  .setContent(intent);
-	    tabHost.addTab(spec);
+		Resources res = getResources();
+		TabHost tabHost = getTabHost();
+		tabHost.setup();
+		TabHost.TabSpec spec;
+		Intent intent; 
 
-	    intent = new Intent().setClass(this, ConsoleActivity.class);
-	    spec = tabHost.newTabSpec("console").setIndicator("Console",
-	                      res.getDrawable(R.drawable.tab_console))
-	                  .setContent(intent);
-	    tabHost.addTab(spec);
+		intent = new Intent().setClass(this, TabularViewPlusActivity.class);
 
-	    tabHost.setCurrentTabByTag("tabularView+");
+		spec = tabHost.newTabSpec("tabularView+").setIndicator("TabularView",
+				res.getDrawable(R.drawable.tab_tabularviewplus))
+				.setContent(intent);
+		tabHost.addTab(spec);
+
+		intent = new Intent().setClass(this, SentencesActivity.class);
+		spec = tabHost.newTabSpec("sentences").setIndicator("Sentences",
+				res.getDrawable(R.drawable.tab_sentences))
+				.setContent(intent);
+		tabHost.addTab(spec);
+
+		intent = new Intent().setClass(this, ConsoleActivity.class);
+		spec = tabHost.newTabSpec("console").setIndicator("Console",
+				res.getDrawable(R.drawable.tab_console))
+				.setContent(intent);
+		tabHost.addTab(spec);
+
+		tabHost.setCurrentTabByTag("tabularView+");
 	}
 
 }

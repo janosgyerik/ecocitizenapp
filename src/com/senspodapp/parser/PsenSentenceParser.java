@@ -25,7 +25,7 @@ public class PsenSentenceParser {
 	String strValue;
 	String name;
 	int level;
-	
+
 	static int[] levelBoundaries = new int[]{};
 
 	String pattern = "$PSEN,";
@@ -58,7 +58,7 @@ public class PsenSentenceParser {
 		if (dataStartIndex > -1) {
 			String[] cols = line.substring(dataStartIndex).split(",");
 			if (cols.length < 4) return false;
-			
+
 			name = cols[1];
 			metric = cols[2];
 			try {
@@ -68,7 +68,7 @@ public class PsenSentenceParser {
 				strValue = cols[3];
 			}
 			setLevel();
-			
+
 			return true;
 		} 
 		else {

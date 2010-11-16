@@ -37,19 +37,19 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 	// Debugging
 	private static final String TAG = "TabularViewPlusActivity";
 	private static final boolean D = true;
-	
+
 	// Layout Views
 	private TableLayout mSentencesTbl;
-	
+
 	// Constants
 	private final int TR_WIDTH = ViewGroup.LayoutParams.WRAP_CONTENT; 
 	private final int TR_HEIGHT = ViewGroup.LayoutParams.FILL_PARENT;
 	private final int columnColor = Color.WHITE;
 	private final int valueColor = Color.YELLOW;
-	
+
 	private HashMap<String, Integer> hmDataType = new HashMap<String, Integer>();
 	private int mRowID = 0;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -58,7 +58,7 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 		// Set up the window layout
 		setContentView(R.layout.tabularviewplus);
 		mSentencesTbl = (TableLayout)findViewById(R.id.tblsentencesplus);
-		
+
 		setupCommonButtons();
 	}
 
@@ -69,7 +69,7 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 		if (parser.match(line)) {
 			if (!hmDataType.containsKey(parser.getName())) {
 				TableRow tr = new TableRow(this);
-		
+
 				TextView name = new TextView(this);
 				TextView metric = new TextView(this);
 				TextView value = new TextView(this);
@@ -77,11 +77,11 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 				name.setText(parser.getName());
 				name.setTextAppearance(this, style.TextAppearance_Medium);
 				name.setTextColor(columnColor);
-				
+
 				metric.setText(parser.getMetric());
 				metric.setTextAppearance(this, style.TextAppearance_Medium);
 				metric.setTextColor(columnColor);
-				
+
 				value.setText(parser.getStrValue());
 				value.setTextAppearance(this, style.TextAppearance_Medium);
 				value.setTextColor(valueColor);

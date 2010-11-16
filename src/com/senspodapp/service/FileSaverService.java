@@ -50,16 +50,16 @@ public class FileSaverService extends Service {
 	// Debugging
 	private static final String TAG = "FileSaverService";
 	private static final boolean D = true;
-	
+
 	public final static String EXTERNAL_TARGETDIR = "Download";
 	public final static String FILENAME_PREFIX = "session_";
 	public final static String FILENAME_EXTENSION = "csv";
 	private final static SimpleDateFormat DATEFORMAT = new SimpleDateFormat("yyyyMMddHHmm");
-	
+
 	private final static String PREFS_EXTERNAL_STORAGE = "use_external_storage";
-	
+
 	private OutputStream output = null;
-	
+
 	@Override
 	public IBinder onBind(Intent intent) {
 		if (D) Log.d(TAG, "+++ ON BIND +++");
@@ -91,16 +91,16 @@ public class FileSaverService extends Service {
 		Toast.makeText(this, "File saver stopped", Toast.LENGTH_SHORT);
 		super.onDestroy();
 	}
-	
+
 	private final IFileSaverService.Stub mBinder = new IFileSaverService.Stub() {
 		public void deactivate() throws RemoteException {
 			FileSaverService.this.deactivate();
 		}
-		
+
 		public void activate() throws RemoteException {
 			FileSaverService.this.activate();
 		}
-		
+
 		public int getPid() throws RemoteException {
 			return Process.myPid();
 		}
@@ -109,12 +109,12 @@ public class FileSaverService extends Service {
 			stopSelf();
 		}
 	};
-	
+
 	void activate() {
 		active = true;
 		connectDeviceManager();
 	}
-	
+
 	void deactivate() {
 		active = false;
 		disconnectDeviceManager();
@@ -144,7 +144,7 @@ public class FileSaverService extends Service {
 			unbindService(mConnection);
 		}
 	}
-	
+
 	boolean active = false;
 
 	void receivedSentenceBundle(Bundle bundle) {
@@ -154,7 +154,7 @@ public class FileSaverService extends Service {
 		if (indexOf_dollar > -1) {
 			line = line.substring(indexOf_dollar);
 		}
-		
+
 		Formatter formatter = new Formatter();
 		String datarecord;
 		Bundle locationBundle = bundle.getBundle(BundleKeys.LOCATION_BUNDLE);
@@ -187,7 +187,7 @@ public class FileSaverService extends Service {
 		}
 		saveDataRecord(datarecord);
 	}
-	
+
 	// The Handler that gets information back from the BluetoothSensorService
 	final Handler mHandler = new Handler() {
 		@Override
@@ -277,11 +277,11 @@ public class FileSaverService extends Service {
 			mHandler.obtainMessage(MessageType.SENSORCONNECTION_SUCCESS, deviceName).sendToTarget();
 		}
 	};
-	
+
 	void startSession() {
 		String datestr = DATEFORMAT.format(new Date());
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-		
+
 		if (settings.getBoolean(PREFS_EXTERNAL_STORAGE, false)
 				&& Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
 			String filename = String.format(
@@ -291,7 +291,7 @@ public class FileSaverService extends Service {
 					FILENAME_PREFIX,
 					datestr,
 					FILENAME_EXTENSION
-					);
+			);
 			try {
 				output = new FileOutputStream(new File(filename));
 			} catch (FileNotFoundException e) {
@@ -304,7 +304,7 @@ public class FileSaverService extends Service {
 					FILENAME_PREFIX,
 					datestr,
 					FILENAME_EXTENSION
-					);
+			);
 			try {
 				output = openFileOutput(filename, Context.MODE_PRIVATE);
 			} catch (FileNotFoundException e) {
@@ -312,7 +312,7 @@ public class FileSaverService extends Service {
 			}
 		}
 	}
-	
+
 	void saveDataRecord(String data) {
 		byte[] buffer = null;
 		try {
@@ -322,7 +322,7 @@ public class FileSaverService extends Service {
 			e.printStackTrace();
 		}
 	}
-	
+
 	void endSession() {
 		if (D) Log.d(TAG, "ENDSESSION");
 		if (output == null) return;

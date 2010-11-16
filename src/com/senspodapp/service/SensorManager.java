@@ -27,99 +27,99 @@ import android.util.Log;
  * Base class for handling communications with sensor devices.
  */
 abstract public class SensorManager {
-    // Debugging
-    private static final String TAG = "SensorManager";
-    private static final boolean D = true;
+	// Debugging
+	private static final String TAG = "SensorManager";
+	private static final boolean D = true;
 
 	String mSensorId;
-    String mDeviceName;
+	String mDeviceName;
 
-    // handler of the owner object, for sending sentences and notifications
-    Handler mHandler;
-        
-    void setHandler(Handler handler) {
-        mHandler = handler;
-    }
-    
-    GpsLocationListener mGpsLocationListener;
-    
-    void setGpsLocationListener(GpsLocationListener gpsLocationListener) {
-    	mGpsLocationListener = gpsLocationListener;
-    }
-    
-    Bundle getSensorDataBundle(String sentence) {
-    	Bundle bundle = new Bundle();
-    	bundle.putBundle(BundleKeys.LOCATION_BUNDLE, mGpsLocationListener.getLastLocationBundle());
-    	bundle.putString(BundleKeys.SENTENCE_DTZ, Util.getCurrentDTZ());
-    	bundle.putString(BundleKeys.SENTENCE_SENSOR_ID, mSensorId);
-    	bundle.putString(BundleKeys.SENTENCE_LINE, sentence);
-    	return bundle;
-    }
-    
-    /**
-     * Start connection threads.
-     */
-    public synchronized void start() {
-    	if (D) Log.d(TAG, "start");
-    }
+	// handler of the owner object, for sending sentences and notifications
+	Handler mHandler;
 
-    /**
-     * Stop all threads
-     */
-    public synchronized void stop() {
-        if (D) Log.d(TAG, "stop");
-    }
+	void setHandler(Handler handler) {
+		mHandler = handler;
+	}
 
-    /**
-     * Send message to owner's handler.
-     */
-    void sendToHandler(int messageType) {
-    	switch (messageType) {
-    	case MessageType.SENSORCONNECTION_SUCCESS:
-            mHandler.obtainMessage(messageType, mDeviceName).sendToTarget();
-    		break;
-    	case MessageType.SENSORCONNECTION_DISCONNECTSELF:
-    	case MessageType.SENSORCONNECTION_FAILED:
-    	case MessageType.SENSORCONNECTION_LOST:
-    	case MessageType.SENSORCONNECTION_NONE:
-            mHandler.obtainMessage(messageType, mDeviceName).sendToTarget();
-            mDeviceName = null;
-    		break;
-    	}
-    }
-    
-    /**
-     * Connection established, notify owner's handler.
-     */
-    void connectionSuccess() {
-        sendToHandler(MessageType.SENSORCONNECTION_SUCCESS);
-    }
+	GpsLocationListener mGpsLocationListener;
 
-    /**
-     * Connection failed, notify owner's handler.
-     */
-    void connectionFailed() {
-        sendToHandler(MessageType.SENSORCONNECTION_FAILED);
-    }
+	void setGpsLocationListener(GpsLocationListener gpsLocationListener) {
+		mGpsLocationListener = gpsLocationListener;
+	}
 
-    /**
-     * Connection lost, notify owner's handler.
-     */
-    void connectionLost() {
-        sendToHandler(MessageType.SENSORCONNECTION_LOST);
-    }
-    
-    /**
-     * Connection none, notify owner's handler.
-     */
-    void connectionNone() {
-        sendToHandler(MessageType.SENSORCONNECTION_NONE);
-    }
-    
-    /**
-     * connectionDisconnectSelf, notify owner's handler.
-     */
-    void connectionDisconnectSelf() {
-        sendToHandler(MessageType.SENSORCONNECTION_DISCONNECTSELF);
-    }
+	Bundle getSensorDataBundle(String sentence) {
+		Bundle bundle = new Bundle();
+		bundle.putBundle(BundleKeys.LOCATION_BUNDLE, mGpsLocationListener.getLastLocationBundle());
+		bundle.putString(BundleKeys.SENTENCE_DTZ, Util.getCurrentDTZ());
+		bundle.putString(BundleKeys.SENTENCE_SENSOR_ID, mSensorId);
+		bundle.putString(BundleKeys.SENTENCE_LINE, sentence);
+		return bundle;
+	}
+
+	/**
+	 * Start connection threads.
+	 */
+	 public synchronized void start() {
+		 if (D) Log.d(TAG, "start");
+	 }
+
+	 /**
+	  * Stop all threads
+	  */
+	 public synchronized void stop() {
+		 if (D) Log.d(TAG, "stop");
+	 }
+
+	 /**
+	  * Send message to owner's handler.
+	  */
+	 void sendToHandler(int messageType) {
+		 switch (messageType) {
+		 case MessageType.SENSORCONNECTION_SUCCESS:
+			 mHandler.obtainMessage(messageType, mDeviceName).sendToTarget();
+			 break;
+		 case MessageType.SENSORCONNECTION_DISCONNECTSELF:
+		 case MessageType.SENSORCONNECTION_FAILED:
+		 case MessageType.SENSORCONNECTION_LOST:
+		 case MessageType.SENSORCONNECTION_NONE:
+			 mHandler.obtainMessage(messageType, mDeviceName).sendToTarget();
+			 mDeviceName = null;
+			 break;
+		 }
+	 }
+
+	 /**
+	  * Connection established, notify owner's handler.
+	  */
+	 void connectionSuccess() {
+		 sendToHandler(MessageType.SENSORCONNECTION_SUCCESS);
+	 }
+
+	 /**
+	  * Connection failed, notify owner's handler.
+	  */
+	 void connectionFailed() {
+		 sendToHandler(MessageType.SENSORCONNECTION_FAILED);
+	 }
+
+	 /**
+	  * Connection lost, notify owner's handler.
+	  */
+	 void connectionLost() {
+		 sendToHandler(MessageType.SENSORCONNECTION_LOST);
+	 }
+
+	 /**
+	  * Connection none, notify owner's handler.
+	  */
+	 void connectionNone() {
+		 sendToHandler(MessageType.SENSORCONNECTION_NONE);
+	 }
+
+	 /**
+	  * connectionDisconnectSelf, notify owner's handler.
+	  */
+	 void connectionDisconnectSelf() {
+		 sendToHandler(MessageType.SENSORCONNECTION_DISCONNECTSELF);
+	 }
 }

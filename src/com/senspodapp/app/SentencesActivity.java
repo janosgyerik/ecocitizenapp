@@ -40,14 +40,14 @@ public class SentencesActivity extends SimpleDeviceManagerClient {
 
 		// Set up the window layout
 		setContentView(R.layout.sentences);
-		
+
 		setupCommonButtons();
-		
+
 		mSentencesArrayAdapter = new ArrayAdapter<String>(this, R.layout.message);
 		mSentencesView = (ListView) findViewById(R.id.sentences);
 		mSentencesView.setAdapter(mSentencesArrayAdapter);
 	}
-	
+
 	@Override
 	void receivedSentenceLine(String line) {
 		mSentencesArrayAdapter.add(line);
