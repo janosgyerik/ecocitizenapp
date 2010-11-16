@@ -24,6 +24,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -52,7 +53,9 @@ public abstract class DeviceManagerClient extends Activity {
 	// Intent request codes
 	private static final int REQUEST_CONNECT_DEVICE = 1;
 	private static final int REQUEST_ENABLE_BT = 2;
-
+	
+	private final static String PREFS_RTUPLOAD = "rtupload";
+	
 	// Layout Views
 	TextView mTitle;
 
@@ -74,11 +77,24 @@ public abstract class DeviceManagerClient extends Activity {
 	public void onStart() {
 		super.onStart();
 		if (D) Log.d(TAG, "++ ON START ++");
-
+		
 		connectDeviceManager();
-		//connectSensorMapUploader();
 		connectFileSaver();
-        
+		
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+		
+		if (settings.getBoolean(PREFS_RTUPLOAD, false)) {
+			connectSensorMapUploader();
+		} 
+		else if (mSensorMapUploaderService != null) {
+			try {
+				mSensorMapUploaderService.shutdown();
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+			disconnectSensorMapUploader();
+		}
+		
 		// If BT is not on, request that it be enabled.
 		if (mBluetoothAdapter != null) {
 			if (!mBluetoothAdapter.isEnabled()) {
@@ -144,9 +160,7 @@ public abstract class DeviceManagerClient extends Activity {
 				Log.e(TAG, "Exception during shutdown file saver service.");
 			}
 		}
-			
 	}
-	
 	
 	void killDeviceManager() {
 		// To kill the process hosting our service, we need to know its

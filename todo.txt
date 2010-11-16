@@ -7,6 +7,8 @@ nice to have
 next
 	fix hardcoded values in debugtools
 	fix indent in BluetoothSensorManager, and everywhere
+	add prefs to save file
+	bug: messages like 'Remote service connected' are not helpful but confusing to users
 	bug: sending mock GPS sometimes does not work
 	bug: sending mock GPS sometimes works even if AVD has no GPS support
 	bug: shows connected to sensor even though it's not....

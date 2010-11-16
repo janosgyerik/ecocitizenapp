@@ -61,6 +61,11 @@
     <string name="summary_externalstorage_preference">Try to save data files on external storage</string>
     <string name="dialog_title_externalstorage_preference">Use external storage</string>
 
+    <string name="title_rtupload_preference">Real-time uploading</string>
+    <string name="summary_rtupload_preference">If enabled, sensor data will be uploaded in real-time</string>
+    <string name="dialog_title_rtupload_preference">Real-time uploading</string>
+
+
     <!-- Tree view -->
     <string name="btn_connect_device">Connect to sensor</string>
     <string name="btn_disconnect_device">Disconnect sensor</string>
