@@ -284,18 +284,30 @@ public class FileSaverService extends Service {
 
 		if (settings.getBoolean(PREFS_EXTERNAL_STORAGE, false)
 				&& Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+			String basedirectoryPath = String.format(
+					"%s/%s",
+					Environment.getExternalStorageDirectory().getPath(),
+					EXTERNAL_TARGETDIR
+			);
+			File directory = new File(basedirectoryPath); 
+			if (!directory.exists()) { 
+				directory.mkdir(); 
+			} 
 			String filename = String.format(
-					"%s/%s/%s%s.%s",
-					Environment.getExternalStorageDirectory(),
-					EXTERNAL_TARGETDIR,
+					"%s/%s%s.%s",
+					directory.getPath(),
 					FILENAME_PREFIX,
 					datestr,
 					FILENAME_EXTENSION
 			);
-			try {
-				output = new FileOutputStream(new File(filename));
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
+			File file = new File(filename); 
+			if (!file.exists()&& directory.exists()){ 
+				try {
+					file.createNewFile(); 
+					output = new FileOutputStream(file);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		} 
 		else {
