@@ -81,6 +81,8 @@
     <string name="btn_scan_again">Scan again</string>
     <string name="btn_upload_all">Upload All</string>
     <string name="btn_delete_all">Delete All</string>
+    <string name="btn_upload_single">Upload</string>
+    <string name="btn_delete_single">Delete</string>
     
     <!-- SensorMapUploaderService -->
     <string name="notification_smu_title">SensorMap Uploader Service</string>
