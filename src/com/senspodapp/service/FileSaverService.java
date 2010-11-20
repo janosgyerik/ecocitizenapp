@@ -291,21 +291,18 @@ public class FileSaverService extends Service {
 			);
 			File directory = new File(basedirectoryPath); 
 			if (!directory.exists()) { 
-				directory.mkdir(); 
+				if(!directory.mkdirs()) 
+					return; 
 			} 
 			String filename = String.format(
 					"%s/%s%s.%s",
-					directory.getPath(),
+					basedirectoryPath,
 					FILENAME_PREFIX,
 					datestr,
 					FILENAME_EXTENSION
 			);
-			File file = new File(filename); 
-			
 				try {
-					if (!file.exists()&& directory.exists())
-						file.createNewFile(); 
-					output = new FileOutputStream(file);
+					output = new FileOutputStream(new File(filename));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
