@@ -35,7 +35,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -53,24 +52,24 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 	// Debugging
 	private static final String TAG = "FileUploaderActivity";
 	private static final boolean D = true;
+	
 	public ArrayAdapter<String> externalFilesArrayAdapter;
     public ArrayAdapter<String> internalFilesArrayAdapter;
-    private ListView externallistView;
-    private ListView internallistView;
-	private static final String MSG_COMING_SOON = "Coming soon ..."; // TODO
-	private static final long WAIT_TIME = 400;
     
+	private static final String MSG_COMING_SOON = "Coming soon ..."; // TODO
+	
 	private static final int INTERNAL_TYPE = 1 ;
     private static final int EXTERNAL_TYPE = 2;
     private static final int BACK_DEFAULT = 3;
-    
 	private AlertDialog.Builder deleteSingleTemp;
 	private static String deleteFileName;
 	private static int deleteFrom;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (D) Log.d(TAG, "+++ ON CREATE +++");
+		
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.fileuploader);
 
@@ -79,8 +78,7 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 
 		externalFilesArrayAdapter = new ArrayAdapter<String>(this, R.layout.filename);
 		internalFilesArrayAdapter = new ArrayAdapter<String>(this, R.layout.filename);
-		externallistView = (ListView) findViewById(R.id.external_storage);
-		internallistView = (ListView) findViewById(R.id.internal_storage);
+		
 		
 		showInternalFiles();
 		showExternalFiles();
@@ -105,7 +103,7 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 				dialog.cancel();
 			}
 		});
-		
+
 		Button btnDeleteAll = (Button) findViewById(R.id.btn_delete_all);
 		btnDeleteAll.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -126,7 +124,7 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 				dialog.cancel();
 			}
 		});
-		
+
 		deleteSingleTemp = new AlertDialog.Builder(this);
 		deleteSingleTemp
 		.setPositiveButton(R.string.btn_upload_single, new DialogInterface.OnClickListener() {
@@ -146,12 +144,14 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 
 	void showInternalFiles() {
 		
+		
+		ListView internallistView = (ListView) findViewById(R.id.internal_storage);
+		
 		internallistView.setOnItemClickListener(this);
 
 		internallistView.setAdapter(internalFilesArrayAdapter);
-
-		String[] fileList = fileList();
-		if (fileList.length > 0) {
+		
+		if (fileList().length > 0) {
 			for (String filename : fileList()) {
 				internalFilesArrayAdapter.add(filename);
 			}
@@ -162,6 +162,8 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 	}
 
 	void showExternalFiles() {
+		
+		ListView externallistView = (ListView) findViewById(R.id.external_storage);
 		
 		externallistView.setOnItemClickListener(this);
 
@@ -199,30 +201,28 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 	void deleteSingle(){
 		if(deleteFrom==INTERNAL_TYPE){
 			deleteFile(deleteFileName);
-			handler.obtainMessage(INTERNAL_TYPE,deleteFileName).sendToTarget();
+			handler.obtainMessage(INTERNAL_TYPE, deleteFileName).sendToTarget();
 		}else{
 			String basedirPath = String.format(
 					"%s/%s",
 					Environment.getExternalStorageDirectory(),
 					FileSaverService.EXTERNAL_TARGETDIR
 			);
-			File fileDelete = new File(basedirPath,deleteFileName); 
-			if (fileDelete.exists()) fileDelete.delete();
-			handler.obtainMessage(EXTERNAL_TYPE,deleteFileName).sendToTarget();
+			File fileDelete = new File(basedirPath, deleteFileName); 
+			fileDelete.delete();
+			handler.obtainMessage(EXTERNAL_TYPE, deleteFileName).sendToTarget();
 		} 	
 	}
 	
 	
-	class deleteTask extends AsyncTask<Handler ,String ,Void>{
-		private Handler mhandler;
-		protected Void doInBackground(Handler... params) {
-			mhandler = params[0];
+	class deleteTask extends AsyncTask<Void, String, Void>{
+
+		protected Void doInBackground(Void... params) {
 			String[] fileList = fileList();
 			if (fileList.length > 0) {
 				for (String filename : fileList()) {
 					deleteFile(filename);
-					publishProgress(String.valueOf(INTERNAL_TYPE),filename);
-					SystemClock.sleep(WAIT_TIME);
+					publishProgress(String.valueOf(INTERNAL_TYPE), filename);
 				}
 			}
 
@@ -238,19 +238,18 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 					String filename = file.getName();
 					if (filename.startsWith(FileSaverService.FILENAME_PREFIX) 
 							&& filename.endsWith(FileSaverService.FILENAME_EXTENSION)) { 
-						File fileDelete = new File(basedirPath,filename); 
+						File fileDelete = new File(basedirPath, filename); 
 						if (fileDelete.exists()) fileDelete.delete();
-						publishProgress(String.valueOf(EXTERNAL_TYPE),filename);
-						SystemClock.sleep(WAIT_TIME);
+						publishProgress(String.valueOf(EXTERNAL_TYPE), filename);
 					}
 				}
 			}
-			publishProgress(String.valueOf(BACK_DEFAULT),null);
+			publishProgress(String.valueOf(BACK_DEFAULT), null);
 			return null;
 		}
 
 		protected void onProgressUpdate(String...progress){
-			mhandler.obtainMessage(Integer.parseInt(progress[0]), progress[1]).sendToTarget();
+			handler.obtainMessage(Integer.parseInt(progress[0]), progress[1]).sendToTarget();
 		}
 		
 	}
@@ -259,7 +258,7 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 		setProgressBarIndeterminateVisibility(true);
 		Button btnDeleteAll = (Button) findViewById(R.id.btn_delete_all);
 		btnDeleteAll.setVisibility(View.GONE);
-		new deleteTask().execute(handler);		
+		new deleteTask().execute();		
 	}
 	
 	final Handler handler = new Handler() {
@@ -268,11 +267,9 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 			switch (msg.what) {
 			case INTERNAL_TYPE:
 				internalFilesArrayAdapter.remove((String)msg.obj);
-				internallistView.setAdapter(internalFilesArrayAdapter);
 				break;
 			case EXTERNAL_TYPE:
 				externalFilesArrayAdapter.remove((String)msg.obj);
-				externallistView.setAdapter(externalFilesArrayAdapter);
 				break;
 			case BACK_DEFAULT:
 				setProgressBarIndeterminateVisibility(false);
@@ -347,7 +344,7 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
          String item = (String) listView.getItemAtPosition(position);
          if(!item.endsWith(getString(R.string.label_none))){
         	 deleteFileName = item;
-        	 if(listView.equals(internallistView)){
+        	 if(listView.equals((ListView) findViewById(R.id.internal_storage))){
         		 deleteFrom = INTERNAL_TYPE; 
         	 }
         	 else{

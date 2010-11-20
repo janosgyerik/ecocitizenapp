@@ -301,14 +301,15 @@ public class FileSaverService extends Service {
 					FILENAME_EXTENSION
 			);
 			File file = new File(filename); 
-			if (!file.exists()&& directory.exists()){ 
+			
 				try {
-					file.createNewFile(); 
+					if (!file.exists()&& directory.exists())
+						file.createNewFile(); 
 					output = new FileOutputStream(file);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-			}
+			
 		} 
 		else {
 			String filename = String.format(
