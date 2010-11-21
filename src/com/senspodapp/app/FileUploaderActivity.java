@@ -211,7 +211,11 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 			File fileDelete = new File(basedirPath, deleteFileName); 
 			fileDelete.delete();
 			handler.obtainMessage(EXTERNAL_TYPE, deleteFileName).sendToTarget();
-		} 	
+		}
+		if(internalFilesArrayAdapter.isEmpty())
+			internalFilesArrayAdapter.add(getString(R.string.label_none));
+		if(externalFilesArrayAdapter.isEmpty())
+			externalFilesArrayAdapter.add(getString(R.string.label_none));
 	}
 	
 	
@@ -244,12 +248,17 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 					}
 				}
 			}
-			publishProgress(String.valueOf(BACK_DEFAULT), null);
+			handler.obtainMessage(BACK_DEFAULT).sendToTarget();
 			return null;
 		}
 
 		protected void onProgressUpdate(String...progress){
-			handler.obtainMessage(Integer.parseInt(progress[0]), progress[1]).sendToTarget();
+			if(progress[0].equals(String.valueOf(INTERNAL_TYPE))){
+				internalFilesArrayAdapter.remove(progress[1]);
+			}
+			else{
+				externalFilesArrayAdapter.remove(progress[1]);
+			}
 		}
 		
 	}
@@ -260,7 +269,7 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 		btnDeleteAll.setVisibility(View.GONE);
 		new deleteTask().execute();		
 	}
-	
+
 	final Handler handler = new Handler() {
 		
 		public void handleMessage(Message msg) {
