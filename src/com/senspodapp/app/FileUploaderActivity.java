@@ -198,7 +198,7 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 		}
 	}
 
-	void deleteSingle(){
+	void deleteSingle() {
 		if(deleteFrom==INTERNAL_TYPE){
 			deleteFile(deleteFileName);
 			handler.obtainMessage(INTERNAL_TYPE, deleteFileName).sendToTarget();
