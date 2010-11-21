@@ -54,13 +54,13 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 	private static final boolean D = true;
 	
 	public ArrayAdapter<String> externalFilesArrayAdapter;
-    public ArrayAdapter<String> internalFilesArrayAdapter;
-    
+	public ArrayAdapter<String> internalFilesArrayAdapter;
+
 	private static final String MSG_COMING_SOON = "Coming soon ..."; // TODO
-	
+
 	private static final int INTERNAL_TYPE = 1 ;
-    private static final int EXTERNAL_TYPE = 2;
-    private static final int BACK_DEFAULT = 3;
+	private static final int EXTERNAL_TYPE = 2;
+	private static final int BACK_DEFAULT = 3;
 	private AlertDialog.Builder deleteSingleTemp;
 	private static String deleteFileName;
 	private static int deleteFrom;
@@ -146,7 +146,7 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 		
 		
 		ListView internallistView = (ListView) findViewById(R.id.internal_storage);
-		
+
 		internallistView.setOnItemClickListener(this);
 
 		internallistView.setAdapter(internalFilesArrayAdapter);
@@ -253,7 +253,7 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 		}
 
 		protected void onProgressUpdate(String...progress){
-			if(progress[0].equals(String.valueOf(INTERNAL_TYPE))){
+			if (progress[0].equals(String.valueOf(INTERNAL_TYPE))) {
 				internalFilesArrayAdapter.remove(progress[1]);
 			}
 			else{
@@ -263,7 +263,7 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 		
 	}
 	
-	void deleteAll(){
+	void deleteAll() {
 		setProgressBarIndeterminateVisibility(true);
 		Button btnDeleteAll = (Button) findViewById(R.id.btn_delete_all);
 		btnDeleteAll.setVisibility(View.GONE);
@@ -349,8 +349,8 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 	}
 
 	public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3) {
-		 ListView listView = (ListView) parent;
-         String item = (String) listView.getItemAtPosition(position);
+		ListView listView = (ListView) parent;
+		String item = (String) listView.getItemAtPosition(position);
          if(!item.endsWith(getString(R.string.label_none))){
         	 deleteFileName = item;
         	 if(listView.equals((ListView) findViewById(R.id.internal_storage))){
