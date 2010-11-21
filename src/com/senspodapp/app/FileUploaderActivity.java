@@ -219,7 +219,7 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 	}
 	
 	
-	class deleteTask extends AsyncTask<Void, String, Void>{
+	class deleteTask extends AsyncTask<Void, String, Void> {
 
 		protected Void doInBackground(Void... params) {
 			String[] fileList = fileList();
@@ -252,7 +252,7 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 			return null;
 		}
 
-		protected void onProgressUpdate(String...progress){
+		protected void onProgressUpdate(String...progress) {
 			if (progress[0].equals(String.valueOf(INTERNAL_TYPE))) {
 				internalFilesArrayAdapter.remove(progress[1]);
 			}
