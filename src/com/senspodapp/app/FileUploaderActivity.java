@@ -199,10 +199,10 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 	}
 
 	void deleteSingle() {
-		if(deleteFrom==INTERNAL_TYPE){
+		if (deleteFrom == INTERNAL_TYPE) {
 			deleteFile(deleteFileName);
 			handler.obtainMessage(INTERNAL_TYPE, deleteFileName).sendToTarget();
-		}else{
+		} else {
 			String basedirPath = String.format(
 					"%s/%s",
 					Environment.getExternalStorageDirectory(),
@@ -212,10 +212,12 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 			fileDelete.delete();
 			handler.obtainMessage(EXTERNAL_TYPE, deleteFileName).sendToTarget();
 		}
-		if(internalFilesArrayAdapter.isEmpty())
+		if(internalFilesArrayAdapter.isEmpty()) {
 			internalFilesArrayAdapter.add(getString(R.string.label_none));
-		if(externalFilesArrayAdapter.isEmpty())
+		}
+		if(externalFilesArrayAdapter.isEmpty()) {
 			externalFilesArrayAdapter.add(getString(R.string.label_none));
+		}
 	}
 	
 	
@@ -256,7 +258,7 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 			if (progress[0].equals(String.valueOf(INTERNAL_TYPE))) {
 				internalFilesArrayAdapter.remove(progress[1]);
 			}
-			else{
+			else {
 				externalFilesArrayAdapter.remove(progress[1]);
 			}
 		}
@@ -351,15 +353,15 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 	public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3) {
 		ListView listView = (ListView) parent;
 		String item = (String) listView.getItemAtPosition(position);
-         if(!item.endsWith(getString(R.string.label_none))){
-        	 deleteFileName = item;
-        	 if(listView.equals((ListView) findViewById(R.id.internal_storage))){
-        		 deleteFrom = INTERNAL_TYPE; 
-        	 }
-        	 else{
-        		 deleteFrom = EXTERNAL_TYPE; 
-        	 }
-        	 deleteSingleTemp.show();
-         }
+		if (!item.endsWith(getString(R.string.label_none))) {
+			deleteFileName = item;
+			if (listView.equals((ListView) findViewById(R.id.internal_storage))) {
+				deleteFrom = INTERNAL_TYPE; 
+			}
+			else {
+				deleteFrom = EXTERNAL_TYPE; 
+			}
+			deleteSingleTemp.show();
+		}
 	}
 }
