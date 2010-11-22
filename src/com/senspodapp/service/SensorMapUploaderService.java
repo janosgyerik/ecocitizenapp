@@ -56,7 +56,8 @@ public class SensorMapUploaderService extends Service {
 	// Debugging
 	private static final String TAG = "SensorMapUploaderService";
 	private static final boolean D = true;
-
+	private static boolean READY_FOR_STARTSESSION = false;
+	
 	private NotificationManager mNotificationManager;
 
 	private static final int ICON_LOGINERROR = android.R.drawable.stat_sys_warning;
@@ -228,6 +229,10 @@ public class SensorMapUploaderService extends Service {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case MessageType.SENTENCE:
+				if (READY_FOR_STARTSESSION) {
+					startSession();
+					READY_FOR_STARTSESSION = false;
+				}
 				receivedSentenceBundle((Bundle)msg.obj);
 				break;
 			case MessageType.SENSORCONNECTION_FAILED:
@@ -236,7 +241,7 @@ public class SensorMapUploaderService extends Service {
 				endSession();
 				break;
 			case MessageType.SENSORCONNECTION_SUCCESS:
-				startSession();
+				READY_FOR_STARTSESSION = true;
 				break;
 			default:
 				// drop all other message types
