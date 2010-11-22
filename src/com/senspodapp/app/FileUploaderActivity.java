@@ -212,10 +212,10 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 			fileDelete.delete();
 			handler.obtainMessage(EXTERNAL_TYPE, deleteFileName).sendToTarget();
 		}
-		if(internalFilesArrayAdapter.isEmpty()) {
+		if (internalFilesArrayAdapter.isEmpty()) {
 			internalFilesArrayAdapter.add(getString(R.string.label_none));
 		}
-		if(externalFilesArrayAdapter.isEmpty()) {
+		if (externalFilesArrayAdapter.isEmpty()) {
 			externalFilesArrayAdapter.add(getString(R.string.label_none));
 		}
 	}
@@ -290,10 +290,12 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 			default:
 				break;
 			}
-			if(internalFilesArrayAdapter.isEmpty())
+			if (internalFilesArrayAdapter.isEmpty()) {
 				internalFilesArrayAdapter.add(getString(R.string.label_none));
-			if(externalFilesArrayAdapter.isEmpty())
+			}
+			if (externalFilesArrayAdapter.isEmpty()) {
 				externalFilesArrayAdapter.add(getString(R.string.label_none));
+			}
 		}
 	};
 	private void createDummyInternalFile() {
