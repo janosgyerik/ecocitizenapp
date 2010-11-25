@@ -52,6 +52,17 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 	private static final String TAG = "FileUploaderActivity";
 	private static final boolean D = true;
 	
+	private List<String> internalFilenames;
+	private List<String> externalFilenames;
+	private static String externalDirname;
+	static {
+		externalDirname = String.format(
+				"%s/%s",
+				Environment.getExternalStorageDirectory(),
+				FileSaverService.EXTERNAL_TARGETDIR
+		);
+	}
+	
 	public ArrayAdapter<String> externalFilesArrayAdapter;
 	public ArrayAdapter<String> internalFilesArrayAdapter;
 
@@ -72,8 +83,8 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.fileuploader);
 
-		//createDummyInternalFile();
-		//createDummyExternalFile();
+		buildFilenameLists();
+		createDummyFiles();
 
 		externalFilesArrayAdapter = new ArrayAdapter<String>(this, R.layout.filename);
 		internalFilesArrayAdapter = new ArrayAdapter<String>(this, R.layout.filename);
@@ -138,14 +149,36 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 		
 		// TODO if the lists are empty, show message and cancel button
 	}
+	
+	private void buildFilenameLists() {
+		internalFilenames = new LinkedList<String>();
+		for (String filename : fileList()) {
+			if (filename.startsWith(FileSaverService.FILENAME_PREFIX) 
+					&& filename.endsWith(FileSaverService.FILENAME_EXTENSION)) { 
+				internalFilenames.add(filename);
+			}
+		}
+		
+		externalFilenames = new LinkedList<String>();
+		File externalDir = new File(externalDirname);
+		if (externalDir.isDirectory()) {
+			for (File file : externalDir.listFiles()) {
+				String filename = file.getName();
+				if (filename.startsWith(FileSaverService.FILENAME_PREFIX) 
+						&& filename.endsWith(FileSaverService.FILENAME_EXTENSION)) { 
+					externalFilenames.add(file.getName());
+				}
+			}
+		}
+	}
 
 	void showInternalFiles() {
 		ListView internalListView = (ListView) findViewById(R.id.internal_storage);
 		internalListView.setOnItemClickListener(this);
 		internalListView.setAdapter(internalFilesArrayAdapter);
-		
-		if (fileList().length > 0) {
-			for (String filename : fileList()) {
+
+		if (!internalFilenames.isEmpty()) {
+			for (String filename : internalFilenames) {
 				internalFilesArrayAdapter.add(filename);
 			}
 		}
@@ -159,27 +192,8 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 		externalListView.setOnItemClickListener(this);
 		externalListView.setAdapter(externalFilesArrayAdapter);
 
-		String basedirPath = String.format(
-				"%s/%s",
-				Environment.getExternalStorageDirectory(),
-				FileSaverService.EXTERNAL_TARGETDIR
-		);
-
-		List<String> filenames = new LinkedList<String>();
-
-		File basedir = new File(basedirPath);
-		if (basedir.isDirectory()) {
-			for (File file : basedir.listFiles()) {
-				String filename = file.getName();
-				if (filename.startsWith(FileSaverService.FILENAME_PREFIX) 
-						&& filename.endsWith(FileSaverService.FILENAME_EXTENSION)) { 
-					filenames.add(file.getName());
-				}
-			}
-		}
-
-		if (!filenames.isEmpty()) {
-			for (String filename : filenames) {
+		if (!externalFilenames.isEmpty()) {
+			for (String filename : externalFilenames) {
 				externalFilesArrayAdapter.add(filename);
 			}
 		}
@@ -285,6 +299,9 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 			}
 			mItemClickDialog.show();
 		}
+	}
+	
+	private void createDummyFiles() {
 	}
 
 	private void createDummyInternalFile() {
