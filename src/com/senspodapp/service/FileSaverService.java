@@ -56,7 +56,7 @@ public class FileSaverService extends Service {
 	public final static String EXTERNAL_TARGETDIR = "Download";
 	public final static String FILENAME_PREFIX = "session_";
 	public final static String FILENAME_EXTENSION = "csv";
-	private final static SimpleDateFormat DATEFORMAT = new SimpleDateFormat("yyyyMMddHHmm");
+	public final static SimpleDateFormat DATEFORMAT = new SimpleDateFormat("yyyyMMddHHmm");
 
 	private final static String PREFS_EXTERNAL_STORAGE = "use_external_storage";
 

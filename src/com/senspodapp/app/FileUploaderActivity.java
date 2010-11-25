@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -306,10 +307,10 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 	}
 
 	private void createDummyInternalFile() {
-		String datestr = "DTZ";
+		String datestr = FileSaverService.DATEFORMAT.format(new Date());
 		String filename;
 		filename = String.format(
-				"%s%s.%s",
+				"%s%s-x.%s",
 				FileSaverService.FILENAME_PREFIX,
 				datestr,
 				FileSaverService.FILENAME_EXTENSION
@@ -326,11 +327,23 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 	}
 
 	void createDummyExternalFile() {
-		String datestr = "DTZ";
+		String datestr = FileSaverService.DATEFORMAT.format(new Date());
 		String filename;
 		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+			String dirname = String.format(
+					"%s/%s",
+					Environment.getExternalStorageDirectory(),
+					FileSaverService.EXTERNAL_TARGETDIR
+			);
+			File dir = new File(dirname);
+			if (!dir.exists()) {
+				if (!dir.mkdirs()) {
+					Toast.makeText(FileUploaderActivity.this, "Could not create dir", Toast.LENGTH_LONG).show();
+					return;
+				}
+			}
 			filename = String.format(
-					"%s/%s/%s%s.%s",
+					"%s/%s/%s%s-x.%s",
 					Environment.getExternalStorageDirectory(),
 					FileSaverService.EXTERNAL_TARGETDIR,
 					FileSaverService.FILENAME_PREFIX,
