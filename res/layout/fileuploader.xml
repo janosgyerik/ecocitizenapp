@@ -50,9 +50,21 @@
         android:stackFromBottom="true"
         android:layout_weight="2"
     />
-    <Button android:id="@+id/btn_upload_all"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_upload_all"
-    />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:orientation="horizontal"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_alignParentBottom="true"
+    	>
+	    <Button android:id="@+id/btn_upload_all"
+	        android:text="@string/btn_upload_all"
+	        android:layout_weight="1"
+	        style="@style/btn"
+	    />
+	    <Button android:id="@+id/btn_delete_all"
+	        android:text="@string/btn_delete_all"
+	        android:layout_weight="1"
+	        style="@style/btn"
+	    />
+    </LinearLayout>
 </LinearLayout>
