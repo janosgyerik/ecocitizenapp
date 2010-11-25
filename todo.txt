@@ -5,7 +5,6 @@ nice to have
 	FileSaverService with proper synchronization
 
 FileUploader
-	try to remove handler
 	small changes
 		'Cancel' button in main
 		'Cancel' button in mItemClicked

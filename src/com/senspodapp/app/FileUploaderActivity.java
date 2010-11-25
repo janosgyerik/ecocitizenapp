@@ -34,8 +34,6 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -61,7 +59,6 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 
 	private static final int INTERNAL_TYPE = 1 ;
 	private static final int EXTERNAL_TYPE = 2;
-	private static final int BACK_DEFAULT = 3;
 	
 	private AlertDialog.Builder mItemClickDialog;
 	private static String deleteFileName;
@@ -194,7 +191,6 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 	void deleteSingle() {
 		if (deleteFrom == INTERNAL_TYPE) {
 			deleteFile(deleteFileName);
-			handler.obtainMessage(INTERNAL_TYPE, deleteFileName).sendToTarget();
 		} 
 		else {
 			String basedirPath = String.format(
@@ -204,7 +200,6 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 			);
 			File fileDelete = new File(basedirPath, deleteFileName); 
 			fileDelete.delete();
-			handler.obtainMessage(EXTERNAL_TYPE, deleteFileName).sendToTarget();
 		}
 		if (internalFilesArrayAdapter.isEmpty()) {
 			internalFilesArrayAdapter.add(getString(R.string.label_none));
@@ -243,7 +238,6 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 					}
 				}
 			}
-			handler.obtainMessage(BACK_DEFAULT).sendToTarget();
 			
 			return null;
 		}
@@ -256,6 +250,19 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 				externalFilesArrayAdapter.remove(progress[1]);
 			}
 		}
+
+		protected void onPostExecute(Void result) {
+			setProgressBarIndeterminateVisibility(false);
+			Button btnDeleteAll = (Button) findViewById(R.id.btn_delete_all);
+			btnDeleteAll.setVisibility(View.VISIBLE);
+			
+			if (internalFilesArrayAdapter.isEmpty()) {
+				internalFilesArrayAdapter.add(getString(R.string.label_none));
+			}
+			if (externalFilesArrayAdapter.isEmpty()) {
+				externalFilesArrayAdapter.add(getString(R.string.label_none));
+			}
+		}
 	}
 	
 	void deleteAll() {
@@ -264,32 +271,6 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 		btnDeleteAll.setVisibility(View.GONE);
 		new deleteTask().execute();		
 	}
-
-	final Handler handler = new Handler() {
-		public void handleMessage(Message msg) {
-			switch (msg.what) {
-			case INTERNAL_TYPE:
-				internalFilesArrayAdapter.remove((String)msg.obj);
-				break;
-			case EXTERNAL_TYPE:
-				externalFilesArrayAdapter.remove((String)msg.obj);
-				break;
-			case BACK_DEFAULT:
-				setProgressBarIndeterminateVisibility(false);
-				Button btnDeleteAll = (Button) findViewById(R.id.btn_delete_all);
-				btnDeleteAll.setVisibility(View.VISIBLE);
-				break;
-			default:
-				break;
-			}
-			if (internalFilesArrayAdapter.isEmpty()) {
-				internalFilesArrayAdapter.add(getString(R.string.label_none));
-			}
-			if (externalFilesArrayAdapter.isEmpty()) {
-				externalFilesArrayAdapter.add(getString(R.string.label_none));
-			}
-		}
-	};
 
 	public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3) {
 		ListView listView = (ListView) parent;
