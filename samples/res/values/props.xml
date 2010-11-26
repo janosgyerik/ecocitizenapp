@@ -34,4 +34,5 @@ on the deployment type, for example development / production.
     <string name="logplayer_filename">CitySenspodSample1.txt</string>
     <integer name="logplayer_msg_interval">1000</integer>
 
+    <integer name="min_dummy_files">0</integer>
 </resources>

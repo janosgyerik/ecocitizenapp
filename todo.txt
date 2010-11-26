@@ -14,6 +14,7 @@ FileUploader
 	hiding delete all is not such a good idea after all...
 		a better solution is to have a flag isDeleting
 		make sure there is only one deleteTask running at a time
+	eliminate deleteFrom, et al
 
 
 next

@@ -205,6 +205,7 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 	void deleteSingle() {
 		if (deleteFrom == INTERNAL_TYPE) {
 			deleteFile(deleteFileName);
+			internalFilesArrayAdapter.remove(deleteFileName);
 		} 
 		else {
 			String basedirPath = String.format(
@@ -214,6 +215,7 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 			);
 			File fileDelete = new File(basedirPath, deleteFileName); 
 			fileDelete.delete();
+			externalFilesArrayAdapter.remove(deleteFileName);
 		}
 		if (internalFilesArrayAdapter.isEmpty()) {
 			internalFilesArrayAdapter.add(getString(R.string.label_none));
@@ -302,71 +304,86 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 	}
 	
 	private void createDummyFiles() {
+		int minDummyFiles = getResources().getInteger(R.integer.min_dummy_files);
+		
+		int i = 0;
+		while (internalFilenames.size() < minDummyFiles) {
+			if (!createDummyInternalFile(++i)) break;
+		}
+		
+		if (isExternalStorageWritable()) {
+			i = 0;
+			while (externalFilenames.size() < minDummyFiles) {
+				if (!createDummyExternalFile(++i)) break;
+			}
+		}
 	}
-
-	private void createDummyInternalFile() {
+	
+	private boolean createDummyInternalFile(int index) {
 		String datestr = FileSaverService.DATEFORMAT.format(new Date());
 		String filename;
 		filename = String.format(
-				"%s%s-x.%s",
+				"%s%s-%d.%s",
 				FileSaverService.FILENAME_PREFIX,
 				datestr,
+				index,
 				FileSaverService.FILENAME_EXTENSION
 		);
 
 		try {
 			FileOutputStream output = openFileOutput(filename, Context.MODE_PRIVATE);
 			output.close();
+			internalFilenames.add(filename);
+			return true;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		return false;
+	}
+	
+	private static boolean isExternalStorageWritable() {
+		return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
 	}
 
-	void createDummyExternalFile() {
-		String datestr = FileSaverService.DATEFORMAT.format(new Date());
-		String filename;
-		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-			String dirname = String.format(
-					"%s/%s",
-					Environment.getExternalStorageDirectory(),
-					FileSaverService.EXTERNAL_TARGETDIR
-			);
-			File dir = new File(dirname);
-			if (!dir.exists()) {
-				if (!dir.mkdirs()) {
-					Toast.makeText(FileUploaderActivity.this, "Could not create dir", Toast.LENGTH_LONG).show();
-					return;
-				}
-			}
-			filename = String.format(
-					"%s/%s/%s%s-x.%s",
-					Environment.getExternalStorageDirectory(),
-					FileSaverService.EXTERNAL_TARGETDIR,
-					FileSaverService.FILENAME_PREFIX,
-					datestr,
-					FileSaverService.FILENAME_EXTENSION
-			);
-		} 
-		else {
-			Toast.makeText(FileUploaderActivity.this, "No external storage", Toast.LENGTH_LONG).show();
-			return;
+	private boolean createDummyExternalFile(int index) {
+		if (!isExternalStorageWritable()) {
+			Toast.makeText(FileUploaderActivity.this, "No external storage or not writable", Toast.LENGTH_LONG).show();
+			return false;
 		}
 
+		String datestr = FileSaverService.DATEFORMAT.format(new Date());
+		String filename = String.format(
+				"%s%s-%d.%s",
+				FileSaverService.FILENAME_PREFIX,
+				datestr,
+				index,
+				FileSaverService.FILENAME_EXTENSION
+		);
+		String filepath = externalDirname + "/" + filename;
+
 		try {
-			File file = new File(filename);
+			File file = new File(filepath);
 			if (!file.exists()) {
 				if (file.createNewFile()) {
+					externalFilenames.add(filename);
+					return true;
 				}
 				else {
 					Toast.makeText(FileUploaderActivity.this, "Could not create file...", Toast.LENGTH_LONG).show();
 				}
 			}
+			else {
+				return true;
+			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		return false;
 	}
 }
