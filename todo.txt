@@ -5,15 +5,8 @@ nice to have
 	FileSaverService with proper synchronization
 
 FileUploader
-	small changes
-		'Cancel' button in main
-		'Cancel' button in mItemClicked
-		'Upload' btn should not break to two lines
-		filename in mItemClicked
-		new button style 'dialogbtn' with smaller font than 'btn'
-	hiding delete all is not such a good idea after all...
-		a better solution is to have a flag isDeleting
-		make sure there is only one deleteTask running at a time
+	filename in mItemClicked
+	new button style 'dialogbtn' with smaller font than 'btn'
 	eliminate deleteFrom, et al
 
 

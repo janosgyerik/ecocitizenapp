@@ -55,12 +55,14 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 	private List<String> internalFilenames;
 	private List<String> externalFilenames;
 	private static String externalDirname;
+	private static File externalDir;
 	static {
 		externalDirname = String.format(
 				"%s/%s",
 				Environment.getExternalStorageDirectory(),
 				FileSaverService.EXTERNAL_TARGETDIR
 		);
+		externalDir = new File(externalDirname);
 	}
 	
 	public ArrayAdapter<String> externalFilesArrayAdapter;
@@ -160,7 +162,6 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 		}
 		
 		externalFilenames = new LinkedList<String>();
-		File externalDir = new File(externalDirname);
 		if (externalDir.isDirectory()) {
 			for (File file : externalDir.listFiles()) {
 				String filename = file.getName();
@@ -206,22 +207,17 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 		if (deleteFrom == INTERNAL_TYPE) {
 			deleteFile(deleteFileName);
 			internalFilesArrayAdapter.remove(deleteFileName);
+			if (internalFilesArrayAdapter.isEmpty()) {
+				internalFilesArrayAdapter.add(getString(R.string.label_none));
+			}
 		} 
 		else {
-			String basedirPath = String.format(
-					"%s/%s",
-					Environment.getExternalStorageDirectory(),
-					FileSaverService.EXTERNAL_TARGETDIR
-			);
-			File fileDelete = new File(basedirPath, deleteFileName); 
+			File fileDelete = new File(externalDirname, deleteFileName); 
 			fileDelete.delete();
 			externalFilesArrayAdapter.remove(deleteFileName);
-		}
-		if (internalFilesArrayAdapter.isEmpty()) {
-			internalFilesArrayAdapter.add(getString(R.string.label_none));
-		}
-		if (externalFilesArrayAdapter.isEmpty()) {
-			externalFilesArrayAdapter.add(getString(R.string.label_none));
+			if (externalFilesArrayAdapter.isEmpty()) {
+				externalFilesArrayAdapter.add(getString(R.string.label_none));
+			}
 		}
 	}
 	
@@ -235,22 +231,16 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 					publishProgress(String.valueOf(INTERNAL_TYPE), filename);
 				}
 			}
-
-			String basedirPath = String.format(
-					"%s/%s",
-					Environment.getExternalStorageDirectory(),
-					FileSaverService.EXTERNAL_TARGETDIR
-			);
-
-			File basedir = new File(basedirPath);
-			if (basedir.isDirectory()) {
-				for (File file : basedir.listFiles()) {
-					String filename = file.getName();
-					if (filename.startsWith(FileSaverService.FILENAME_PREFIX) 
-							&& filename.endsWith(FileSaverService.FILENAME_EXTENSION)) { 
-						File fileDelete = new File(basedirPath, filename); 
-						if (fileDelete.exists()) fileDelete.delete();
-						publishProgress(String.valueOf(EXTERNAL_TYPE), filename);
+			
+			if (isExternalStorageWritable()) {
+				if (externalDir.isDirectory()) {
+					for (File file : externalDir.listFiles()) {
+						String filename = file.getName();
+						if (filename.startsWith(FileSaverService.FILENAME_PREFIX) 
+								&& filename.endsWith(FileSaverService.FILENAME_EXTENSION)) {
+							file.delete();
+							publishProgress(String.valueOf(EXTERNAL_TYPE), filename);
+						}
 					}
 				}
 			}
@@ -261,30 +251,29 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 		protected void onProgressUpdate(String...progress) {
 			if (progress[0].equals(String.valueOf(INTERNAL_TYPE))) {
 				internalFilesArrayAdapter.remove(progress[1]);
+				if (internalFilesArrayAdapter.isEmpty()) {
+					internalFilesArrayAdapter.add(getString(R.string.label_none));
+				}
 			}
 			else {
 				externalFilesArrayAdapter.remove(progress[1]);
+				if (externalFilesArrayAdapter.isEmpty()) {
+					externalFilesArrayAdapter.add(getString(R.string.label_none));
+				}
 			}
 		}
 
 		protected void onPostExecute(Void result) {
 			setProgressBarIndeterminateVisibility(false);
 			Button btnDeleteAll = (Button) findViewById(R.id.btn_delete_all);
-			btnDeleteAll.setVisibility(View.VISIBLE);
-			
-			if (internalFilesArrayAdapter.isEmpty()) {
-				internalFilesArrayAdapter.add(getString(R.string.label_none));
-			}
-			if (externalFilesArrayAdapter.isEmpty()) {
-				externalFilesArrayAdapter.add(getString(R.string.label_none));
-			}
+			btnDeleteAll.setEnabled(true);
 		}
 	}
 	
 	void deleteAll() {
 		setProgressBarIndeterminateVisibility(true);
 		Button btnDeleteAll = (Button) findViewById(R.id.btn_delete_all);
-		btnDeleteAll.setVisibility(View.GONE);
+		btnDeleteAll.setEnabled(false);
 		new deleteTask().execute();		
 	}
 
