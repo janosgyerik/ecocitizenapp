@@ -278,6 +278,7 @@ public class FileUploaderActivity extends Activity implements OnItemClickListene
 	}
 
 	public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3) {
+		if (true) return;
 		ListView listView = (ListView) parent;
 		String item = (String) listView.getItemAtPosition(position);
 		if (!item.endsWith(getString(R.string.label_none))) {
