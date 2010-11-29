@@ -76,7 +76,7 @@ public class DeviceListActivity extends Activity {
         scanButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 doDiscovery();
-                v.setVisibility(View.GONE);
+                v.setEnabled(false);
             }
         });
 
@@ -113,6 +113,7 @@ public class DeviceListActivity extends Activity {
         // If there are paired devices, add each one to the ArrayAdapter
         if (pairedDevices.size() > 0) {
             findViewById(R.id.title_paired_devices).setVisibility(View.VISIBLE);
+            findViewById(R.id.paired_devices).setVisibility(View.VISIBLE);
             for (BluetoothDevice device : pairedDevices) {
                 mPairedDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
             }
@@ -148,9 +149,6 @@ public class DeviceListActivity extends Activity {
         // Indicate scanning in the title
         setProgressBarIndeterminateVisibility(true);
         setTitle(R.string.scanning);
-
-        // Turn on sub-title for new devices
-        findViewById(R.id.title_new_devices).setVisibility(View.VISIBLE);
 
         // If we're already discovering, stop it
         if (mBtAdapter.isDiscovering()) {
@@ -194,6 +192,10 @@ public class DeviceListActivity extends Activity {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 // If it's already paired, skip it, because it's been listed already
                 if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
+                    // Turn on sub-title for new devices
+                    findViewById(R.id.title_new_devices).setVisibility(View.VISIBLE);
+                    findViewById(R.id.new_devices).setVisibility(View.VISIBLE);
+
                 	String address = device.getAddress();
                 	if (! mNewDevicesSet.contains(address)) {
                 		mNewDevicesSet.add(address);
@@ -205,10 +207,12 @@ public class DeviceListActivity extends Activity {
                 setProgressBarIndeterminateVisibility(false);
                 setTitle(R.string.select_device);
                 if (mNewDevicesSet.isEmpty()) {
+                    // Turn on sub-title for new devices
+                    findViewById(R.id.title_new_devices).setVisibility(View.VISIBLE);
                     String noDevices = getResources().getText(R.string.none_found).toString();
                     mNewDevicesArrayAdapter.add(noDevices);
                 }
-                scanButton.setVisibility(View.VISIBLE);
+                scanButton.setEnabled(true);
             }
         }
     };
