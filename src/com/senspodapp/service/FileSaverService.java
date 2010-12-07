@@ -310,6 +310,19 @@ public class FileSaverService extends Service {
 				output = new FileOutputStream(new File(filename));
 			} catch (IOException e) {
 				e.printStackTrace();
+				filename = String.format(
+						"%s%s.%s",
+						FILENAME_PREFIX,
+						datestr,
+						FILENAME_EXTENSION
+				);
+				try {
+					output = openFileOutput(filename, Context.MODE_PRIVATE);
+				} catch (FileNotFoundException fe) {
+					fe.printStackTrace();
+					shutdownSelf();
+				}	
+				
 			}
 		} 
 		else {
@@ -323,10 +336,17 @@ public class FileSaverService extends Service {
 				output = openFileOutput(filename, Context.MODE_PRIVATE);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
+				shutdownSelf();
 			}
 		}
 	}
 
+	void shutdownSelf() {
+	    // toast message: "TODO: FileSaverService *should* shut down" 
+
+	    // TODO
+	}
+	
 	void saveDataRecord(String data) {
 		byte[] buffer = null;
 		try {
