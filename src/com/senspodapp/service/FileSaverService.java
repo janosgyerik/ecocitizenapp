@@ -62,6 +62,8 @@ public class FileSaverService extends Service {
 
 	private OutputStream output = null;
 
+	private String datestr;
+	private String filename;
 	@Override
 	public IBinder onBind(Intent intent) {
 		if (D) Log.d(TAG, "+++ ON BIND +++");
@@ -285,7 +287,7 @@ public class FileSaverService extends Service {
 	};
 
 	void startSession() {
-		String datestr = DATEFORMAT.format(new Date());
+		
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 
 		if (settings.getBoolean(PREFS_EXTERNAL_STORAGE, false)
@@ -297,9 +299,12 @@ public class FileSaverService extends Service {
 			);
 			File directory = new File(basedirectoryPath); 
 			if (!directory.exists()) { 
-				if (!directory.mkdirs()) return; 
-			} 
-			String filename = String.format(
+				if (!directory.mkdirs()) 
+					startSession_internalStorage();
+					return; 
+			}       
+			        datestr  = DATEFORMAT.format(new Date());
+			        filename = String.format(
 					"%s/%s%s.%s",
 					basedirectoryPath,
 					FILENAME_PREFIX,
@@ -310,40 +315,34 @@ public class FileSaverService extends Service {
 				output = new FileOutputStream(new File(filename));
 			} catch (IOException e) {
 				e.printStackTrace();
-				filename = String.format(
-						"%s%s.%s",
-						FILENAME_PREFIX,
-						datestr,
-						FILENAME_EXTENSION
-				);
-				try {
-					output = openFileOutput(filename, Context.MODE_PRIVATE);
-				} catch (FileNotFoundException fe) {
-					fe.printStackTrace();
-					shutdownSelf();
-				}	
+				startSession_internalStorage();
 				
 			}
 		} 
 		else {
-			String filename = String.format(
-					"%s%s.%s",
-					FILENAME_PREFIX,
-					datestr,
-					FILENAME_EXTENSION
-			);
-			try {
-				output = openFileOutput(filename, Context.MODE_PRIVATE);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-				shutdownSelf();
-			}
+			startSession_internalStorage();
 		}
 	}
 
+	void  startSession_internalStorage() {
+		datestr  = DATEFORMAT.format(new Date());
+		filename = String.format(
+				"%s%s.%s",
+				FILENAME_PREFIX,
+				datestr,
+				FILENAME_EXTENSION
+		);
+		try {
+			output = openFileOutput(filename, Context.MODE_PRIVATE);
+		} catch (FileNotFoundException fe) {
+			fe.printStackTrace();
+			shutdownSelf();
+		}	
+		
+	}
+	
 	void shutdownSelf() {
-	    // toast message: "TODO: FileSaverService *should* shut down" 
-
+		Toast.makeText(this, "TODO", Toast.LENGTH_SHORT).show();
 	    // TODO
 	}
 	
