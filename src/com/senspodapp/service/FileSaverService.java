@@ -62,7 +62,6 @@ public class FileSaverService extends Service {
 
 	private OutputStream output = null;
 
-
 	@Override
 	public IBinder onBind(Intent intent) {
 		if (D) Log.d(TAG, "+++ ON BIND +++");
@@ -152,6 +151,7 @@ public class FileSaverService extends Service {
 
 	void receivedSentenceBundle(Bundle bundle) {
 		if (! active) return;
+		
 		String line = bundle.getString(BundleKeys.SENTENCE_LINE);
 		int indexOf_dollar = line.indexOf('$'); 
 		if (indexOf_dollar > -1) {
@@ -286,7 +286,6 @@ public class FileSaverService extends Service {
 	};
 
 	void startSession() {
-		
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 
 		if (settings.getBoolean(PREFS_EXTERNAL_STORAGE, false)
@@ -303,8 +302,8 @@ public class FileSaverService extends Service {
 					return; 
 				}
 			}       
-			        String datestr  = DATEFORMAT.format(new Date());
-			        String filename = String.format(
+			String datestr  = DATEFORMAT.format(new Date());
+			String filename = String.format(
 					"%s/%s%s.%s",
 					basedirectoryPath,
 					FILENAME_PREFIX,
@@ -316,7 +315,6 @@ public class FileSaverService extends Service {
 			} catch (IOException e) {
 				e.printStackTrace();
 				startSession_internalStorage();
-				
 			}
 		} 
 		else {
@@ -325,7 +323,6 @@ public class FileSaverService extends Service {
 	}
 
 	void  startSession_internalStorage() {
-		
 		String datestr  = DATEFORMAT.format(new Date());
 		String filename = String.format(
 				"%s%s.%s",
@@ -339,12 +336,11 @@ public class FileSaverService extends Service {
 			fe.printStackTrace();
 			shutdownSelf();
 		}	
-		
 	}
 	
 	void shutdownSelf() {
 		Toast.makeText(this, "TODO: FileSaverService *should* shut down", Toast.LENGTH_SHORT).show();
-	    // TODO
+		// TODO
 	}
 	
 	void saveDataRecord(String data) {
