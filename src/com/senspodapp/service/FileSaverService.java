@@ -62,6 +62,7 @@ public class FileSaverService extends Service {
 
 	private OutputStream output = null;
 
+
 	@Override
 	public IBinder onBind(Intent intent) {
 		if (D) Log.d(TAG, "+++ ON BIND +++");
@@ -285,7 +286,7 @@ public class FileSaverService extends Service {
 	};
 
 	void startSession() {
-		String datestr = DATEFORMAT.format(new Date());
+		
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 
 		if (settings.getBoolean(PREFS_EXTERNAL_STORAGE, false)
@@ -297,9 +298,13 @@ public class FileSaverService extends Service {
 			);
 			File directory = new File(basedirectoryPath); 
 			if (!directory.exists()) { 
-				if (!directory.mkdirs()) return; 
-			} 
-			String filename = String.format(
+				if (!directory.mkdirs()) {
+					startSession_internalStorage();
+					return; 
+				}
+			}       
+			        String datestr  = DATEFORMAT.format(new Date());
+			        String filename = String.format(
 					"%s/%s%s.%s",
 					basedirectoryPath,
 					FILENAME_PREFIX,
@@ -310,23 +315,38 @@ public class FileSaverService extends Service {
 				output = new FileOutputStream(new File(filename));
 			} catch (IOException e) {
 				e.printStackTrace();
+				startSession_internalStorage();
+				
 			}
 		} 
 		else {
-			String filename = String.format(
-					"%s%s.%s",
-					FILENAME_PREFIX,
-					datestr,
-					FILENAME_EXTENSION
-			);
-			try {
-				output = openFileOutput(filename, Context.MODE_PRIVATE);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
+			startSession_internalStorage();
 		}
 	}
 
+	void  startSession_internalStorage() {
+		
+		String datestr  = DATEFORMAT.format(new Date());
+		String filename = String.format(
+				"%s%s.%s",
+				FILENAME_PREFIX,
+				datestr,
+				FILENAME_EXTENSION
+		);
+		try {
+			output = openFileOutput(filename, Context.MODE_PRIVATE);
+		} catch (FileNotFoundException fe) {
+			fe.printStackTrace();
+			shutdownSelf();
+		}	
+		
+	}
+	
+	void shutdownSelf() {
+		Toast.makeText(this, "TODO: FileSaverService *should* shut down", Toast.LENGTH_SHORT).show();
+	    // TODO
+	}
+	
 	void saveDataRecord(String data) {
 		byte[] buffer = null;
 		try {

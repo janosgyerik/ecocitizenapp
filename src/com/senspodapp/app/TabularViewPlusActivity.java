@@ -19,12 +19,15 @@
 
 package com.senspodapp.app;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 
 import com.senspodapp.parser.PsenSentenceParser;
+import com.senspodapp.service.BundleKeys;
 
 import android.R.style;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -46,6 +49,10 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 	private final int TR_HEIGHT = ViewGroup.LayoutParams.FILL_PARENT;
 	private final int columnColor = Color.WHITE;
 	private final int valueColor = Color.YELLOW;
+	
+	private static DecimalFormat latlonFormat = new DecimalFormat("* ###.00000");
+	private TextView mLatView;
+	private TextView mLonView;
 
 	private HashMap<String, Integer> hmDataType = new HashMap<String, Integer>();
 	private int mRowID = 0;
@@ -58,6 +65,8 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 		// Set up the window layout
 		setContentView(R.layout.tabularviewplus);
 		mSentencesTbl = (TableLayout)findViewById(R.id.tblsentencesplus);
+		mLatView = (TextView)findViewById(R.id.latitude);
+		mLonView = (TextView)findViewById(R.id.longitude);
 
 		setupCommonButtons();
 	}
@@ -65,7 +74,20 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 	PsenSentenceParser parser = new PsenSentenceParser();
 
 	@Override
-	void receivedSentenceLine(String line) {
+	void receivedSentenceBundle(Bundle bundle) {
+		Bundle locationBundle = bundle.getBundle(BundleKeys.LOCATION_BUNDLE);
+		
+		if (locationBundle == null) {
+			mLatView.setText("N.A.");
+			mLonView.setText("N.A.");
+		}
+		else {
+			Location location = (Location)locationBundle.getParcelable(BundleKeys.LOCATION_LOC);
+			mLatView.setText(latlonFormat.format(location.getLatitude()));
+			mLonView.setText(latlonFormat.format(location.getLongitude()));
+		}
+		
+		String line = bundle.getString(BundleKeys.SENTENCE_LINE);
 		if (parser.match(line)) {
 			if (!hmDataType.containsKey(parser.getName())) {
 				TableRow tr = new TableRow(this);
@@ -102,5 +124,10 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 				updateValue.setText(parser.getStrValue());
 			}
 		}
+	}
+
+	@Override
+	void receivedSentenceLine(String line) {
+		// Never called, because we work with the Bundle in receivedSentenceBundle
 	}
 }
