@@ -24,11 +24,13 @@
 		<TableRow android:layout_width="wrap_content"
 			android:layout_height="wrap_content">
 			<TextView android:text="Latitude" style="@style/tabularColumn" />
+			<TextView style="@style/tabularColumn"/>
 			<TextView android:id="@+id/latitude" style="@style/tabularValueColumn" />
 		</TableRow>
 		<TableRow android:layout_width="wrap_content"
 			android:layout_height="wrap_content">
 			<TextView android:text="Longitude" style="@style/tabularColumn" />
+			<TextView style="@style/tabularColumn"/>
 			<TextView android:id="@+id/longitude" style="@style/tabularValueColumn" />
 		</TableRow>
 	</TableLayout>
