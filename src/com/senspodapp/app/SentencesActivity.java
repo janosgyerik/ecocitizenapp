@@ -21,7 +21,9 @@ package com.senspodapp.app;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 public class SentencesActivity extends SimpleDeviceManagerClient {
@@ -32,7 +34,13 @@ public class SentencesActivity extends SimpleDeviceManagerClient {
 	// Layout Views
 	private ListView mSentencesView;
 	private ArrayAdapter<String> mSentencesArrayAdapter;
-
+	private Button mBtnTextMode;
+	private Button mBtnHexaMode;
+	private String Mode = TEXT;
+	private static final String  HEXA = "hexadecimal";
+	private static final String  TEXT = "text";
+	private static final String  SPACE = " ";
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,14 +50,54 @@ public class SentencesActivity extends SimpleDeviceManagerClient {
 		setContentView(R.layout.sentences);
 
 		setupCommonButtons();
+		setupPrivateButtons();
 
 		mSentencesArrayAdapter = new ArrayAdapter<String>(this, R.layout.message);
 		mSentencesView = (ListView) findViewById(R.id.sentences);
 		mSentencesView.setAdapter(mSentencesArrayAdapter);
 	}
 
+	
+	void setupPrivateButtons() {
+
+		mBtnTextMode = (Button) findViewById(R.id.btn_text_mode);
+		mBtnTextMode.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Mode = TEXT;
+				mBtnTextMode.setVisibility(View.GONE);
+				mBtnHexaMode.setVisibility(View.VISIBLE);
+			}
+		});
+
+		mBtnTextMode.setVisibility(View.GONE);
+
+		mBtnHexaMode = (Button) findViewById(R.id.btn_hexa_mode);
+		mBtnHexaMode.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Mode = HEXA;
+				mBtnHexaMode.setVisibility(View.GONE);
+				mBtnTextMode.setVisibility(View.VISIBLE);
+			}
+		});
+	}
+	
 	@Override
 	void receivedSentenceLine(String line) {
+		if(line != null){
+			if(Mode.equals(HEXA)){
+				byte[] bytes = line.getBytes();
+				String newLine = "";
+				for(int i=0;i<bytes.length;i++){
+					newLine = String.format(
+							"%s%s%s",
+							newLine,
+							SPACE,
+							Integer.toHexString(bytes[i])
+					);
+				}
+				line = newLine;
+			}
+		}
 		mSentencesArrayAdapter.add(line);
 	}
 }
