@@ -62,8 +62,7 @@ public class FileSaverService extends Service {
 
 	private OutputStream output = null;
 
-	private String datestr;
-	private String filename;
+
 	@Override
 	public IBinder onBind(Intent intent) {
 		if (D) Log.d(TAG, "+++ ON BIND +++");
@@ -299,12 +298,13 @@ public class FileSaverService extends Service {
 			);
 			File directory = new File(basedirectoryPath); 
 			if (!directory.exists()) { 
-				if (!directory.mkdirs()) 
+				if (!directory.mkdirs()) {
 					startSession_internalStorage();
 					return; 
+				}
 			}       
-			        datestr  = DATEFORMAT.format(new Date());
-			        filename = String.format(
+			        String datestr  = DATEFORMAT.format(new Date());
+			        String filename = String.format(
 					"%s/%s%s.%s",
 					basedirectoryPath,
 					FILENAME_PREFIX,
@@ -325,8 +325,9 @@ public class FileSaverService extends Service {
 	}
 
 	void  startSession_internalStorage() {
-		datestr  = DATEFORMAT.format(new Date());
-		filename = String.format(
+		
+		String datestr  = DATEFORMAT.format(new Date());
+		String filename = String.format(
 				"%s%s.%s",
 				FILENAME_PREFIX,
 				datestr,
@@ -342,7 +343,7 @@ public class FileSaverService extends Service {
 	}
 	
 	void shutdownSelf() {
-		Toast.makeText(this, "TODO", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "TODO: FileSaverService *should* shut down", Toast.LENGTH_SHORT).show();
 	    // TODO
 	}
 	
