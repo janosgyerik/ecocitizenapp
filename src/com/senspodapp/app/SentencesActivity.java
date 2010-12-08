@@ -83,11 +83,11 @@ public class SentencesActivity extends SimpleDeviceManagerClient {
 	
 	@Override
 	void receivedSentenceLine(String line) {
-		if(line != null){
-			if(Mode.equals(HEXA)){
+		if (line != null) {
+			if (Mode.equals(HEXA)) {
 				byte[] bytes = line.getBytes();
 				String newLine = "";
-				for(int i=0;i<bytes.length;i++){
+				for (int i=0; i<bytes.length; ++i) {
 					newLine = String.format(
 							"%s%s%s",
 							newLine,
