@@ -39,7 +39,6 @@ public class SentencesActivity extends SimpleDeviceManagerClient {
 	private String Mode = TEXT;
 	private static final String  HEXA = "hexadecimal";
 	private static final String  TEXT = "text";
-	private static final String  SPACE = " ";
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -87,11 +86,10 @@ public class SentencesActivity extends SimpleDeviceManagerClient {
 			if (Mode.equals(HEXA)) {
 				byte[] bytes = line.getBytes();
 				String newLine = "";
-				for (int i=0; i<bytes.length; ++i) {
+				for (int i = 0; i < bytes.length; ++i) {
 					newLine = String.format(
-							"%s%s%s",
+							"%s%s",
 							newLine,
-							SPACE,
 							Integer.toHexString(bytes[i])
 					);
 				}
