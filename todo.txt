@@ -6,7 +6,6 @@ nice to have
 
 FileUploader
 	filename in mItemClicked
-	new button style 'dialogbtn' with smaller font than 'btn'
 	eliminate deleteFrom, et al
 
 

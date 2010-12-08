@@ -47,6 +47,9 @@
 		<activity android:name=".TabularViewPlusActivity" android:label="@string/tabularviewplus_activity">
 		</activity>
 		
+		<activity android:name=".FileRemoverActivity" android:label="@string/fileremover_activity">
+		</activity>
+		
 		<activity android:name=".DebugToolsActivity" android:label="@string/debugtools_activity"
 		    android:theme="@android:style/Theme.NoTitleBar">
 		</activity>

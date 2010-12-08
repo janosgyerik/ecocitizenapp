@@ -12,7 +12,9 @@
     <string name="debugtools_activity">Debug Tools</string>
     <string name="devicelist_activity">Device List</string>
     <string name="fileuploader_activity">File Uploader</string>
+    <string name="fileremover_activity">File Remover</string>
     <string name="msg_are_you_sure">Are you sure?</string> 
+    <string name="msg_no_files">There are no files.</string> 
     
     <string name="not_connected">You are not connected to a device</string>
     <string name="title_connecting">connecting...</string>
