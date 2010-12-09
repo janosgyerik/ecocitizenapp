@@ -53,6 +53,10 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 	private static DecimalFormat latlonFormat = new DecimalFormat("* ###.00000");
 	private TextView mLatView;
 	private TextView mLonView;
+	private TextView mAccView;
+	private TextView mAltView;
+	private TextView mSpeView;
+	private TextView mBeaView;
 
 	private HashMap<String, Integer> hmDataType = new HashMap<String, Integer>();
 	private int mRowID = 0;
@@ -67,7 +71,11 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 		mSentencesTbl = (TableLayout)findViewById(R.id.tblsentencesplus);
 		mLatView = (TextView)findViewById(R.id.latitude);
 		mLonView = (TextView)findViewById(R.id.longitude);
-
+		mAccView = (TextView)findViewById(R.id.accuracy);
+		mAltView = (TextView)findViewById(R.id.altitude);
+		mSpeView = (TextView)findViewById(R.id.speed);
+		mBeaView = (TextView)findViewById(R.id.bearing);
+        
 		setupCommonButtons();
 	}
 
@@ -80,11 +88,21 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 		if (locationBundle == null) {
 			mLatView.setText("N.A.");
 			mLonView.setText("N.A.");
+			mAccView.setText("N.A.");
+			mAltView.setText("N.A.");
+			mSpeView.setText("N.A.");
+			mBeaView.setText("N.A.");
+			
 		}
 		else {
 			Location location = (Location)locationBundle.getParcelable(BundleKeys.LOCATION_LOC);
 			mLatView.setText(latlonFormat.format(location.getLatitude()));
 			mLonView.setText(latlonFormat.format(location.getLongitude()));
+			mAccView.setText(latlonFormat.format(location.getAccuracy()));
+			mAltView.setText(latlonFormat.format(location.getAltitude()));
+			mSpeView.setText(latlonFormat.format(location.getSpeed()));
+			mBeaView.setText(latlonFormat.format(location.getBearing()));
+			
 		}
 		
 		String line = bundle.getString(BundleKeys.SENTENCE_LINE);
