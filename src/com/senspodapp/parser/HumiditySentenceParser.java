@@ -38,10 +38,8 @@ public class HumiditySentenceParser extends PsenSentenceParser {
 		if (dataStartIndex > -1) {
 			String[] cols = line.substring(dataStartIndex).split(",");
 			if (cols.length < 4) return false;
-			
 			name = cols[1];
 			metric = cols[2];
-			
 			parserHum.name = cols[1];
 			parserHum.metric = cols[2];
 			
@@ -49,7 +47,6 @@ public class HumiditySentenceParser extends PsenSentenceParser {
 			parserTem.metric = "N.A";
 			
 			try {
-			
 				floatValue = Float.parseFloat(cols[3]);
 				strValue = String.valueOf(floatValue);
 				
@@ -58,13 +55,11 @@ public class HumiditySentenceParser extends PsenSentenceParser {
 				
 				parserTem.floatValue = Float.parseFloat(cols[5]);
 				parserTem.strValue = String.valueOf(parserTem.floatValue);
-			
 			} catch (NumberFormatException e) {
 				strValue = cols[3];
 				parserHum.strValue = cols[3];
 				parserTem.strValue = cols[3];
 			}
-			
 			parsers[0] = parserHum;
 			parsers[1] = parserTem;
 			setLevel();
