@@ -22,6 +22,7 @@ package com.senspodapp.app;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 
+import com.senspodapp.parser.HumiditySentenceParser;
 import com.senspodapp.parser.PsenSentenceParser;
 import com.senspodapp.service.BundleKeys;
 
@@ -80,7 +81,7 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 	}
 
 	PsenSentenceParser parser = new PsenSentenceParser();
-
+	HumiditySentenceParser parserHum = new HumiditySentenceParser();
 	@Override
 	void receivedSentenceBundle(Bundle bundle) {
 		Bundle locationBundle = bundle.getBundle(BundleKeys.LOCATION_BUNDLE);
@@ -107,43 +108,57 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 		
 		String line = bundle.getString(BundleKeys.SENTENCE_LINE);
 		if (parser.match(line)) {
-			if (!hmDataType.containsKey(parser.getName())) {
-				TableRow tr = new TableRow(this);
-
-				TextView name = new TextView(this);
-				TextView metric = new TextView(this);
-				TextView value = new TextView(this);
-
-				name.setText(parser.getName());
-				name.setTextAppearance(this, style.TextAppearance_Medium);
-				name.setTextColor(columnColor);
-
-				metric.setText(parser.getMetric());
-				metric.setTextAppearance(this, style.TextAppearance_Medium);
-				metric.setTextColor(columnColor);
-
-				value.setText(parser.getStrValue());
-				value.setTextAppearance(this, style.TextAppearance_Medium);
-				value.setTextColor(valueColor);
-				value.setGravity(Gravity.RIGHT);
-				value.setId(mRowID);
-
-				tr.addView(name);
-				tr.addView(metric);
-				tr.addView(value);
-
-				hmDataType.put(parser.getName(), mRowID);
-				mSentencesTbl.addView(tr, new TableLayout.LayoutParams(TR_HEIGHT, TR_WIDTH));
-
-				++mRowID;
-			} 
-			else if (hmDataType.containsKey(parser.getName())) {
-				TextView updateValue = (TextView) findViewById(hmDataType.get(parser.getName()));
-				updateValue.setText(parser.getStrValue());
+			if (parserHum.match(line)) {
+				for (HumiditySentenceParser parser : parserHum.getParsers()) {
+					updateRow(parser);
+				}
+			}
+			else {
+				updateRow(parser);
 			}
 		}
 	}
+    
+	void updateRow(PsenSentenceParser parser) {
+		
+		if (!hmDataType.containsKey(parser.getName())) {
+			TableRow tr = new TableRow(this);
 
+			TextView name = new TextView(this);
+			TextView metric = new TextView(this);
+			TextView value = new TextView(this);
+
+			name.setText(parser.getName());
+			name.setTextAppearance(this, style.TextAppearance_Medium);
+			name.setTextColor(columnColor);
+
+			metric.setText(parser.getMetric());
+			metric.setTextAppearance(this, style.TextAppearance_Medium);
+			metric.setTextColor(columnColor);
+
+			value.setText(parser.getStrValue());
+			value.setTextAppearance(this, style.TextAppearance_Medium);
+			value.setTextColor(valueColor);
+			value.setGravity(Gravity.RIGHT);
+			value.setId(mRowID);
+
+			tr.addView(name);
+			tr.addView(metric);
+			tr.addView(value);
+
+			hmDataType.put(parser.getName(), mRowID);
+			mSentencesTbl.addView(tr, new TableLayout.LayoutParams(TR_HEIGHT, TR_WIDTH));
+
+			++mRowID;
+		} 
+		else if (hmDataType.containsKey(parser.getName())) {
+			TextView updateValue = (TextView) findViewById(hmDataType.get(parser.getName()));
+			updateValue.setText(parser.getStrValue());
+		}
+
+		
+	}
+	
 	@Override
 	void receivedSentenceLine(String line) {
 		// Never called, because we work with the Bundle in receivedSentenceBundle

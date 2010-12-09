@@ -20,7 +20,57 @@
 package com.senspodapp.parser;
 
 public class HumiditySentenceParser extends PsenSentenceParser {
+	
+	private HumiditySentenceParser[] parsers = new HumiditySentenceParser[2];
+	
 	public HumiditySentenceParser() {
 		super("$PSEN,Hum,");
+		
 	}
+	
+	private static HumiditySentenceParser parserHum = new HumiditySentenceParser();
+	private static HumiditySentenceParser parserTem = new HumiditySentenceParser();
+	
+	@Override
+	public boolean match(String line) {
+		reset();
+		int dataStartIndex = line.indexOf(pattern);
+		if (dataStartIndex > -1) {
+			String[] cols = line.substring(dataStartIndex).split(",");
+			if (cols.length < 4) return false;
+			
+			parserHum.name = cols[1];
+			parserHum.metric = cols[2];
+			
+			parserTem.name = cols[4];
+			parserTem.metric = "N.A";
+			
+			try {
+			
+				parserHum.floatValue = Float.parseFloat(cols[3]);
+				parserHum.strValue = String.valueOf(parserHum.floatValue);
+				
+				parserTem.floatValue = Float.parseFloat(cols[5]);
+				parserTem.strValue = String.valueOf(parserTem.floatValue);
+			
+			} catch (NumberFormatException e) {
+				parserHum.strValue = cols[3];
+				parserTem.strValue = cols[3];
+			}
+			
+			parsers[0] = parserHum;
+			parsers[1] = parserTem;
+			
+			return true;
+		} 
+		else {
+			return false;
+		}
+	}
+	
+	public 	HumiditySentenceParser[] getParsers() {
+			
+		return parsers;
+	}
+
 }
