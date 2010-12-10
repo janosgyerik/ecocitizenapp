@@ -19,8 +19,35 @@
 
 package com.senspodapp.parser;
 
-public class HumiditySentenceParser extends PsenSentenceParser {
-	public HumiditySentenceParser() {
+public class TemperatureSentenceParser extends PsenSentenceParser {
+	public TemperatureSentenceParser() {
 		super("$PSEN,Hum,");
 	}
+	
+	@Override
+	public boolean match(String line) {
+		reset();
+		int dataStartIndex = line.indexOf(pattern);
+		if (dataStartIndex > -1) {
+			String[] cols = line.substring(dataStartIndex).split(",");
+			if (cols.length < 4) return false;
+            
+			name = "Temperature"; 
+			metric = cols[4];
+			try {
+				floatValue = Float.parseFloat(cols[5]);
+				strValue = String.valueOf(floatValue);
+			} catch (NumberFormatException e) {
+				strValue = cols[5];
+			}
+			setLevel();
+
+			return true;
+		} 
+		else {
+			return false;
+		}
+	}
+
+	
 }

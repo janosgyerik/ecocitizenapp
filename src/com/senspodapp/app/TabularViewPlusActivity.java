@@ -22,8 +22,8 @@ package com.senspodapp.app;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 
-import com.senspodapp.parser.HumiditySentenceParser;
 import com.senspodapp.parser.PsenSentenceParser;
+import com.senspodapp.parser.TemperatureSentenceParser;
 import com.senspodapp.service.BundleKeys;
 
 import android.R.style;
@@ -81,7 +81,7 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 	}
 
 	PsenSentenceParser parser = new PsenSentenceParser();
-	HumiditySentenceParser parserHum = new HumiditySentenceParser();
+	TemperatureSentenceParser mTemperatureSentenceParser = new TemperatureSentenceParser();
 	@Override
 	void receivedSentenceBundle(Bundle bundle) {
 		Bundle locationBundle = bundle.getBundle(BundleKeys.LOCATION_BUNDLE);
@@ -106,11 +106,8 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 		
 		String line = bundle.getString(BundleKeys.SENTENCE_LINE);
 		if (parser.match(line)) {
-			if (parserHum.match(line)) {
-				for (HumiditySentenceParser parser : parserHum.getParsers()) {
-					updateRow(parser);
-				}
-			}
+			updateRow(parser);
+			if (mTemperatureSentenceParser.match(line)) updateRow(mTemperatureSentenceParser);
 			else {
 				updateRow(parser);
 			}
