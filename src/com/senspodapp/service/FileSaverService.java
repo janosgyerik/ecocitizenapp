@@ -348,6 +348,7 @@ public class FileSaverService extends Service {
 		try {
 			buffer = data.getBytes();
 			output.write(buffer);
+			output.write('\n');
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
