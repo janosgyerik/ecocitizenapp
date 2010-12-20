@@ -57,6 +57,7 @@ abstract class FileManagerActivity extends Activity {
 		setContentView(getLayoutResID());
 
 		buildFilenameLists();
+		createDummyFiles();
 
 		if (internalFilenames.isEmpty() && externalFilenames.isEmpty()) {
 			new AlertDialog.Builder(FileManagerActivity.this)
@@ -149,7 +150,7 @@ abstract class FileManagerActivity extends Activity {
 		return count;
 	}
 
-	protected void createDummyFiles() {
+	private void createDummyFiles() {
 		int minDummyFiles = getResources().getInteger(R.integer.min_dummy_files);
 		
 		int i = 0;
