@@ -4,13 +4,16 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Environment;
@@ -18,6 +21,7 @@ import android.util.Log;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.senspodapp.service.FileSaverService;
 
@@ -143,5 +147,89 @@ abstract class FileManagerActivity extends Activity {
 			e.printStackTrace();
 		}
 		return count;
+	}
+
+	protected void createDummyFiles() {
+		int minDummyFiles = getResources().getInteger(R.integer.min_dummy_files);
+		
+		int i = 0;
+		while (internalFilenames.size() < minDummyFiles) {
+			if (!createDummyInternalFile(++i)) break;
+		}
+		
+		if (isExternalStorageWritable()) {
+			i = 0;
+			while (externalFilenames.size() < minDummyFiles) {
+				if (!createDummyExternalFile(++i)) break;
+			}
+		}
+	}
+	
+	private boolean createDummyInternalFile(int index) {
+		String datestr = FileSaverService.DATEFORMAT.format(new Date());
+		String filename;
+		filename = String.format(
+				"%s%s-%d.%s",
+				FileSaverService.FILENAME_PREFIX,
+				datestr,
+				index,
+				FileSaverService.FILENAME_EXTENSION
+		);
+
+		try {
+			FileOutputStream output = openFileOutput(filename, Context.MODE_PRIVATE);
+			output.close();
+			internalFilenames.add(filename);
+			return true;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	private static boolean isExternalStorageWritable() {
+		return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
+	}
+
+	private boolean createDummyExternalFile(int index) {
+		if (!isExternalStorageWritable()) {
+			Toast.makeText(FileManagerActivity.this, "No external storage or not writable", Toast.LENGTH_LONG).show();
+			return false;
+		}
+
+		String datestr = FileSaverService.DATEFORMAT.format(new Date());
+		String filename = String.format(
+				"%s%s-%d.%s",
+				FileSaverService.FILENAME_PREFIX,
+				datestr,
+				index,
+				FileSaverService.FILENAME_EXTENSION
+		);
+		String filepath = externalDirname + "/" + filename;
+
+		try {
+			File file = new File(filepath);
+			if (!file.exists()) {
+				if (file.createNewFile()) {
+					externalFilenames.add(filename);
+					return true;
+				}
+				else {
+					Toast.makeText(FileManagerActivity.this, "Could not create file...", Toast.LENGTH_LONG).show();
+				}
+			}
+			else {
+				return true;
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 }
