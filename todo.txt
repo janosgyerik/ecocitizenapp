@@ -4,17 +4,14 @@ nice to have
 	support for multiple devices
 	FileSaverService with proper synchronization
 
-FileUploader
-	filename in mItemClicked
-	eliminate deleteFrom, et al
-
+critical
+	bug: shows connected to sensor even though it's not....
+	finish file uploader
 
 next
 	fix hardcoded values in debugtools
-	add prefs to save file
 	bug: sending mock GPS sometimes does not work
 	bug: sending mock GPS sometimes works even if AVD has no GPS support
-	bug: shows connected to sensor even though it's not....
 	? bug: android uploader gets killed
 	? bug: java.net.UnknownHostException
 
