@@ -169,11 +169,11 @@ public class FileUploader {
 				do {
 					line = line.replace(" ", "");
 					// TODO: clean this up, after android is cleaned up
-					if (line.matches(".*,_[^,].*")) {
+					if (line.matches(".*,_[^SG].*")) {
 						Log.d(TAG, "Applying workaround for FileSaver bug. To be deprecated soon.");
 						int pos = 0;
 						int start = -1;
-						while ((start = line.indexOf("_", pos)) > -1) {
+						while ((start = line.indexOf("_S", pos)) > -1 || (start = line.indexOf("_G", pos)) > -1) {
 							if (start + 1 < line.length() && line.charAt(start + 1) == ',') {
 								continue;
 							}
@@ -181,7 +181,7 @@ public class FileUploader {
 							if (!waitForStringResponse(storeBaseURL + newline)) {
 								return Status.UPLOAD_INTERRUPTED;
 							}
-							Log.d(TAG, "NEWLINE: " + newline);
+							//Log.d(TAG, "NEWLINE: " + newline);
 							pos = start + 1;
 						}
 						break;
