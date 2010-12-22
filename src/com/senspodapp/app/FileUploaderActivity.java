@@ -27,12 +27,14 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class FileUploaderActivity extends FileManagerActivity {
@@ -63,12 +65,14 @@ public class FileUploaderActivity extends FileManagerActivity {
 				.setCancelable(true)
 				.setPositiveButton(R.string.btn_yes, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
-						new UploadAllAsyncTask(
-								internalFilesArrayAdapter, 
-								getFilesDir(), 
-								internalFilenames, 
-								R.id.btn_upload_all_internal
-								).execute();
+						if (testUpload()) {
+							new UploadAllAsyncTask(
+									internalFilesArrayAdapter, 
+									getFilesDir(), 
+									internalFilenames, 
+									R.id.btn_upload_all_internal
+							).execute();
+						}
 					}
 				})
 				.setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
@@ -87,12 +91,14 @@ public class FileUploaderActivity extends FileManagerActivity {
 				.setCancelable(true)
 				.setPositiveButton(R.string.btn_yes, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
-						new UploadAllAsyncTask(
-								externalFilesArrayAdapter, 
-								externalDir,
-								externalFilenames, 
-								R.id.btn_upload_all_external
-								).execute();
+						if (testUpload()) {
+							new UploadAllAsyncTask(
+									externalFilesArrayAdapter, 
+									externalDir,
+									externalFilenames, 
+									R.id.btn_upload_all_external
+							).execute();
+						}
 					}
 				})
 				.setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
@@ -132,7 +138,7 @@ public class FileUploaderActivity extends FileManagerActivity {
 			}
 			for (String filename : filenames) {
 				File file = new File(mBasedir + "/" + filename);
-				if (file.isFile() && true) { // TODO upload here
+				if (file.isFile() && upload(file, true)) { 
 					publishProgress(filename);
 				}
 			}
@@ -167,7 +173,7 @@ public class FileUploaderActivity extends FileManagerActivity {
 			
 			if (!filename.startsWith(getString(R.string.label_none))) {
 				File file = new File(mBasedir + "/" + filename);
-				if (file.isFile() && true) { // TODO upload here
+				if (file.isFile() && upload(file, false)) { 
 					mFilesArrayAdapter.remove(filename);
 					if (mFilesArrayAdapter.isEmpty()) {
 						mFilesArrayAdapter.add(getString(R.string.label_none));
@@ -175,5 +181,59 @@ public class FileUploaderActivity extends FileManagerActivity {
 				}
 			}
 		}
-	}	
+	}
+	
+	private boolean testUpload() {
+		FileUploader uploader = new FileUploader(PreferenceManager.getDefaultSharedPreferences(this), null);
+
+		if (!uploader.isServerReachable()) {
+			Toast.makeText(this, R.string.fileuploader_msg_server_unreachable, Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		
+		if (!uploader.isLoginOK()) {
+			Toast.makeText(this, R.string.fileuploader_msg_login_failed, Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		
+		return true;
+	}
+	
+	private boolean upload(File file, boolean quiet) {
+		FileUploader uploader = new FileUploader(PreferenceManager.getDefaultSharedPreferences(this), file);
+		FileUploader.Status status = uploader.upload();
+		
+		if (status == FileUploader.Status.SUCCESS) {
+			return file.delete();
+		}
+		
+		if (quiet) return false;
+		
+		int msgID;
+		switch (status) {
+		case EMPTY_FILE:
+			msgID = R.string.fileuploader_msg_empty_file;
+			Toast.makeText(this, msgID, Toast.LENGTH_SHORT).show();
+			return true;
+		case EXCEPTION:
+			msgID = R.string.fileuploader_msg_exception;
+			break;
+		case LOGIN_FAILED:
+			msgID = R.string.fileuploader_msg_login_failed;
+			break;
+		case SERVER_UNREACHABLE:
+			msgID = R.string.fileuploader_msg_server_unreachable;
+			break;
+		case STARTSESSION_FAILED:
+			msgID = R.string.fileuploader_msg_startsession_failed;
+			break;
+		case UPLOAD_INTERRUPTED:
+			msgID = R.string.fileuploader_msg_upload_interrupted;
+			break;
+		default:
+			msgID = R.string.fileuploader_msg_unknown_error;
+		}
+		Toast.makeText(this, msgID, Toast.LENGTH_SHORT).show();
+		return false;
+	}
 }
