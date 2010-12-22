@@ -6,14 +6,14 @@ nice to have
 
 critical
 	bug: shows connected to sensor even though it's not....
-	finish file uploader
-		test with android without deleting, upload to local server only
-		clean up data from android
-		remove workaround code
+	preview and delete function in fileuploader
 	add support for zephyr
 
 next
 	implement commenting
+	finish file uploader
+		clean up data from android
+		remove workaround code
 	fix hardcoded values in debugtools
 	bug: sending mock GPS sometimes does not work
 	bug: sending mock GPS sometimes works even if AVD has no GPS support

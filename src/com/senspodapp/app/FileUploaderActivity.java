@@ -203,10 +203,7 @@ public class FileUploaderActivity extends FileManagerActivity {
 		FileUploader uploader = new FileUploader(PreferenceManager.getDefaultSharedPreferences(this), file);
 		FileUploader.Status status = uploader.upload();
 		
-		if (status == FileUploader.Status.SUCCESS) {
-			return file.delete();
-		}
-		
+		if (status == FileUploader.Status.SUCCESS) return true;
 		if (quiet) return false;
 		
 		int msgID;
