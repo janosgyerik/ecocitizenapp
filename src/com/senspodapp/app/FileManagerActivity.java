@@ -1,12 +1,9 @@
 package com.senspodapp.app;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -120,36 +117,6 @@ abstract class FileManagerActivity extends Activity {
 		}
 	}
 	
-	// TODO
-	int getFileRecordCount(File basedir, String filename) {
-		String path = basedir + "/" + filename;
-		File file = new File(path);
-		int count = 0;
-		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-			try {
-				String line;
-				while ((line = reader.readLine()) != null) {
-					++count;
-					if (line.indexOf("_S") > -1 || line.indexOf("_G") > -1) {
-						int start = -1;
-						while ((start = line.indexOf("_S", start + 1)) > -1 
-								|| ((start = line.indexOf("_G", start + 1)) > -1)) {
-							++count;
-						}
-					}
-				}
-			} 
-			catch (IOException e) {
-				e.printStackTrace();
-			}
-		} 
-		catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		return count;
-	}
-
 	private void createDummyFiles() {
 		int minDummyFiles = getResources().getInteger(R.integer.min_dummy_files);
 		
