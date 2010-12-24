@@ -23,6 +23,7 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 
 import com.senspodapp.parser.PsenSentenceParser;
+import com.senspodapp.parser.TemperatureSentenceParser;
 import com.senspodapp.service.BundleKeys;
 
 import android.R.style;
@@ -53,6 +54,10 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 	private static DecimalFormat latlonFormat = new DecimalFormat("* ###.00000");
 	private TextView mLatView;
 	private TextView mLonView;
+	private TextView mAccuracyView;
+	private TextView mAltitudeView;
+	private TextView mSpeedView;
+	private TextView mBearingView;
 
 	private HashMap<String, Integer> hmDataType = new HashMap<String, Integer>();
 	private int mRowID = 0;
@@ -67,12 +72,16 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 		mSentencesTbl = (TableLayout)findViewById(R.id.tblsentencesplus);
 		mLatView = (TextView)findViewById(R.id.latitude);
 		mLonView = (TextView)findViewById(R.id.longitude);
-
+		mAccuracyView = (TextView)findViewById(R.id.accuracy);
+		mAltitudeView = (TextView)findViewById(R.id.altitude);
+		mSpeedView = (TextView)findViewById(R.id.speed);
+		mBearingView = (TextView)findViewById(R.id.bearing);
+        
 		setupCommonButtons();
 	}
 
 	PsenSentenceParser parser = new PsenSentenceParser();
-
+	TemperatureSentenceParser mTemperatureSentenceParser = new TemperatureSentenceParser();
 	@Override
 	void receivedSentenceBundle(Bundle bundle) {
 		Bundle locationBundle = bundle.getBundle(BundleKeys.LOCATION_BUNDLE);
@@ -80,52 +89,71 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 		if (locationBundle == null) {
 			mLatView.setText("N.A.");
 			mLonView.setText("N.A.");
+			mAccuracyView.setText("N.A.");
+			mAltitudeView.setText("N.A.");
+			mSpeedView.setText("N.A.");
+			mBearingView.setText("N.A.");
 		}
 		else {
 			Location location = (Location)locationBundle.getParcelable(BundleKeys.LOCATION_LOC);
 			mLatView.setText(latlonFormat.format(location.getLatitude()));
 			mLonView.setText(latlonFormat.format(location.getLongitude()));
+			mAccuracyView.setText(latlonFormat.format(location.getAccuracy()));
+			mAltitudeView.setText(latlonFormat.format(location.getAltitude()));
+			mSpeedView.setText(latlonFormat.format(location.getSpeed()));
+			mBearingView.setText(latlonFormat.format(location.getBearing()));
 		}
 		
 		String line = bundle.getString(BundleKeys.SENTENCE_LINE);
 		if (parser.match(line)) {
-			if (!hmDataType.containsKey(parser.getName())) {
-				TableRow tr = new TableRow(this);
-
-				TextView name = new TextView(this);
-				TextView metric = new TextView(this);
-				TextView value = new TextView(this);
-
-				name.setText(parser.getName());
-				name.setTextAppearance(this, style.TextAppearance_Medium);
-				name.setTextColor(columnColor);
-
-				metric.setText(parser.getMetric());
-				metric.setTextAppearance(this, style.TextAppearance_Medium);
-				metric.setTextColor(columnColor);
-
-				value.setText(parser.getStrValue());
-				value.setTextAppearance(this, style.TextAppearance_Medium);
-				value.setTextColor(valueColor);
-				value.setGravity(Gravity.RIGHT);
-				value.setId(mRowID);
-
-				tr.addView(name);
-				tr.addView(metric);
-				tr.addView(value);
-
-				hmDataType.put(parser.getName(), mRowID);
-				mSentencesTbl.addView(tr, new TableLayout.LayoutParams(TR_HEIGHT, TR_WIDTH));
-
-				++mRowID;
-			} 
-			else if (hmDataType.containsKey(parser.getName())) {
-				TextView updateValue = (TextView) findViewById(hmDataType.get(parser.getName()));
-				updateValue.setText(parser.getStrValue());
+			updateRow(parser);
+			if (mTemperatureSentenceParser.match(line)) updateRow(mTemperatureSentenceParser);
+			else {
+				updateRow(parser);
 			}
 		}
 	}
+    
+	void updateRow(PsenSentenceParser parser) {
+		
+		if (!hmDataType.containsKey(parser.getName())) {
+			TableRow tr = new TableRow(this);
 
+			TextView name = new TextView(this);
+			TextView metric = new TextView(this);
+			TextView value = new TextView(this);
+
+			name.setText(parser.getName());
+			name.setTextAppearance(this, style.TextAppearance_Medium);
+			name.setTextColor(columnColor);
+
+			metric.setText(parser.getMetric());
+			metric.setTextAppearance(this, style.TextAppearance_Medium);
+			metric.setTextColor(columnColor);
+
+			value.setText(parser.getStrValue());
+			value.setTextAppearance(this, style.TextAppearance_Medium);
+			value.setTextColor(valueColor);
+			value.setGravity(Gravity.RIGHT);
+			value.setId(mRowID);
+
+			tr.addView(name);
+			tr.addView(metric);
+			tr.addView(value);
+
+			hmDataType.put(parser.getName(), mRowID);
+			mSentencesTbl.addView(tr, new TableLayout.LayoutParams(TR_HEIGHT, TR_WIDTH));
+
+			++mRowID;
+		} 
+		else if (hmDataType.containsKey(parser.getName())) {
+			TextView updateValue = (TextView) findViewById(hmDataType.get(parser.getName()));
+			updateValue.setText(parser.getStrValue());
+		}
+
+		
+	}
+	
 	@Override
 	void receivedSentenceLine(String line) {
 		// Never called, because we work with the Bundle in receivedSentenceBundle
