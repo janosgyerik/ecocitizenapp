@@ -47,7 +47,5 @@ public class TemperatureSentenceParser extends PsenSentenceParser {
 		else {
 			return false;
 		}
-	}
-
-	
+	}	
 }

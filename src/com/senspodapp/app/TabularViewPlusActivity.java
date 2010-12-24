@@ -69,6 +69,7 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 
 		// Set up the window layout
 		setContentView(R.layout.tabularviewplus);
+
 		mSentencesTbl = (TableLayout)findViewById(R.id.tblsentencesplus);
 		mLatView = (TextView)findViewById(R.id.latitude);
 		mLonView = (TextView)findViewById(R.id.longitude);
@@ -82,6 +83,7 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 
 	PsenSentenceParser parser = new PsenSentenceParser();
 	TemperatureSentenceParser mTemperatureSentenceParser = new TemperatureSentenceParser();
+	
 	@Override
 	void receivedSentenceBundle(Bundle bundle) {
 		Bundle locationBundle = bundle.getBundle(BundleKeys.LOCATION_BUNDLE);
@@ -107,7 +109,9 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 		String line = bundle.getString(BundleKeys.SENTENCE_LINE);
 		if (parser.match(line)) {
 			updateRow(parser);
-			if (mTemperatureSentenceParser.match(line)) updateRow(mTemperatureSentenceParser);
+			if (mTemperatureSentenceParser.match(line)) {
+				updateRow(mTemperatureSentenceParser);
+			}
 			else {
 				updateRow(parser);
 			}
@@ -115,7 +119,6 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 	}
     
 	void updateRow(PsenSentenceParser parser) {
-		
 		if (!hmDataType.containsKey(parser.getName())) {
 			TableRow tr = new TableRow(this);
 
@@ -126,16 +129,19 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 			name.setText(parser.getName());
 			name.setTextAppearance(this, style.TextAppearance_Medium);
 			name.setTextColor(columnColor);
+			name.setPadding(3, 3, 3, 3);
 
 			metric.setText(parser.getMetric());
 			metric.setTextAppearance(this, style.TextAppearance_Medium);
 			metric.setTextColor(columnColor);
+			metric.setPadding(3, 3, 3, 3);
 
 			value.setText(parser.getStrValue());
 			value.setTextAppearance(this, style.TextAppearance_Medium);
 			value.setTextColor(valueColor);
 			value.setGravity(Gravity.RIGHT);
 			value.setId(mRowID);
+			value.setPadding(3, 3, 3, 3);
 
 			tr.addView(name);
 			tr.addView(metric);
@@ -150,8 +156,6 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 			TextView updateValue = (TextView) findViewById(hmDataType.get(parser.getName()));
 			updateValue.setText(parser.getStrValue());
 		}
-
-		
 	}
 	
 	@Override

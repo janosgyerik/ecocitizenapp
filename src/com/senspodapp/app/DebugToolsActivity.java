@@ -63,5 +63,4 @@ public class DebugToolsActivity extends TabActivity {
 
 		tabHost.setCurrentTabByTag("tabularView+");
 	}
-
 }
