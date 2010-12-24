@@ -1,16 +1,13 @@
-nice to have
-	know the number of data records pending for upload
-	user profiles: anon, dev, janos, ...
-	support for multiple devices
-	FileSaverService with proper synchronization
-
 critical
+	bug: android loses internet in the middle of file upload when idle for several minutes
+		todo: measure exactly how many minutes it takes
 	bug: shows connected to sensor even though it's not....
-	preview and delete function in fileuploader
+	preview + delete function in fileuploader
 	add support for zephyr
 
 next
 	implement commenting
+	support for multiple devices at the same time
 	finish file uploader
 		clean up data from android
 		remove workaround code
@@ -27,6 +24,11 @@ optimization
 minor improvements
 	fileuploader: nicer progress indicator: full screen, modal + cancel
 	fileuploader: progress indicator while uploading single file
+
+nice to have
+	know the number of data records pending for upload
+	user profiles: anon, dev, janos, ...
+	FileSaverService with proper synchronization
 
 bugs
 	-
