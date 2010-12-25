@@ -80,7 +80,9 @@ public abstract class DeviceManagerClient extends Activity {
 		if (D) Log.d(TAG, "++ ON START ++");
 
 		connectDeviceManager();
+		
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+		
 		if (settings.getBoolean(PREFS_FILESAVE, true)) {
 			connectFileSaver();
 		} else {
