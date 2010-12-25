@@ -51,5 +51,11 @@
 			android:defaultValue="false"
 			android:title="@string/title_rtupload_preference"
 			android:summary="@string/summary_rtupload_preference" />
-
+			
+    <CheckBoxPreference
+			android:key="filesaver"
+			android:defaultValue="true"
+			android:title="@string/title_filesaver_preference"
+			android:summary="@string/summary_filesaver_preference" 
+			android:dialogTitle="@string/dialog_title_filesaver_preference" />
 </PreferenceScreen>

@@ -68,7 +68,12 @@
     <string name="title_rtupload_preference">Real-time uploading</string>
     <string name="summary_rtupload_preference">If enabled, sensor data will be uploaded in real-time</string>
     <string name="dialog_title_rtupload_preference">Real-time uploading</string>
-
+    
+    
+    <string name="title_filesaver_preference">Save to local storage</string>
+    <string name="summary_filesaver_preference">If enabled, sensor data will be saved to Android\'s external or internal storage</string>
+    <string name="dialog_title_filesaver_preference">Save to local storage</string>
+   
 
     <!-- Tree view -->
     <string name="btn_connect_device">Connect to sensor</string>
