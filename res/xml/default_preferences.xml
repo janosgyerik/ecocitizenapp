@@ -41,12 +41,6 @@
             android:dialogTitle="@string/dialog_title_api_key_preference" />
             
     <CheckBoxPreference
-            android:key="use_external_storage"
-            android:defaultValue="true"
-            android:title="@string/title_externalstorage_preference"
-            android:summary="@string/summary_externalstorage_preference" />
-            
-    <CheckBoxPreference
 			android:key="rtupload"
 			android:defaultValue="false"
 			android:title="@string/title_rtupload_preference"
@@ -58,4 +52,11 @@
 			android:title="@string/title_filesaver_preference"
 			android:summary="@string/summary_filesaver_preference" 
 			android:dialogTitle="@string/dialog_title_filesaver_preference" />
+
+    <CheckBoxPreference
+            android:key="use_external_storage"
+            android:defaultValue="true"
+            android:title="@string/title_externalstorage_preference"
+            android:summary="@string/summary_externalstorage_preference" />
+            
 </PreferenceScreen>

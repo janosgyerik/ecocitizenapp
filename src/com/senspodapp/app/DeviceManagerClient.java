@@ -55,7 +55,7 @@ public abstract class DeviceManagerClient extends Activity {
 	private static final int REQUEST_ENABLE_BT = 2;
 
 	private final static String PREFS_RTUPLOAD = "rtupload";
-	private final static String PREFS_FILESAVE = "filesaver";
+	private final static String PREFS_FILESAVER = "filesaver";
 
 	// Layout Views
 	TextView mTitle;
@@ -83,17 +83,16 @@ public abstract class DeviceManagerClient extends Activity {
 		
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 		
-		if (settings.getBoolean(PREFS_FILESAVE, true)) {
+		if (settings.getBoolean(PREFS_FILESAVER, true)) {
 			connectFileSaver();
-		} else {
-			if (mFileSaverService != null) {
-				try {
-					mFileSaverService.shutdown();
-				} catch (RemoteException e) {
-					e.printStackTrace();
-				}
-				disconnectFileSaver();
+		} 
+		else if (mFileSaverService != null) {
+			try {
+				mFileSaverService.shutdown();
+			} catch (RemoteException e) {
+				e.printStackTrace();
 			}
+			disconnectFileSaver();
 		}
 		
 		if (settings.getBoolean(PREFS_RTUPLOAD, false)) {
