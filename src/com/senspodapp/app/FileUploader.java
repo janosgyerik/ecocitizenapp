@@ -125,6 +125,23 @@ public class FileUploader {
 		}
 		return true;
 	}
+	
+	boolean waitForStringResponse(String storeBaseURL, String line) {
+		/* TODO
+		 * Do not upload GPS sentences.
+		 * This is not a very good thing to do (not clean).
+		 * But, the thing is, GPS sentences are kind of useless,
+		 * because GPS information is attached anyway using Android's
+		 * own GPS, which in our experience so far is better than
+		 * the GPS of sensors. So, these sentences are useless,
+		 * and just take up unnecessary bandwidth.
+		 * In the long term however, this kind of hard coding
+		 * should be controllable by advanced settings screen or something.
+		 */
+		if (line.startsWith("$GP")) return true;
+		
+		return waitForStringResponse(storeBaseURL + line);
+	}
 
 	public enum Status {
 		SUCCESS,
@@ -178,16 +195,16 @@ public class FileUploader {
 								continue;
 							}
 							String newline = line.substring(pos, start + 1);
-							if (!waitForStringResponse(storeBaseURL + newline)) {
+							
+							if (!waitForStringResponse(storeBaseURL, newline)) {
 								return Status.UPLOAD_INTERRUPTED;
 							}
-							//Log.d(TAG, "NEWLINE: " + newline);
 							pos = start + 1;
 						}
 						break;
 					}
 					else {
-						if (!waitForStringResponse(storeBaseURL + line)) {
+						if (!waitForStringResponse(storeBaseURL, line)) {
 							return Status.UPLOAD_INTERRUPTED;
 						}
 					}

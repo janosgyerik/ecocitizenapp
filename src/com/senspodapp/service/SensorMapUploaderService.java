@@ -189,6 +189,19 @@ public class SensorMapUploaderService extends Service {
 		if (indexOf_dollar > -1) {
 			line = line.substring(indexOf_dollar);
 		}
+		
+		/* TODO
+		 * Do not upload GPS sentences.
+		 * This is not a very good thing to do (not clean).
+		 * But, the thing is, GPS sentences are kind of useless,
+		 * because GPS information is attached anyway using Android's
+		 * own GPS, which in our experience so far is better than
+		 * the GPS of sensors. So, these sentences are useless,
+		 * and just take up unnecessary bandwidth.
+		 * In the long term however, this kind of hard coding
+		 * should be controllable by advanced settings screen or something.
+		 */
+		if (line.startsWith("$GP")) return;
 
 		Formatter formatter = new Formatter();
 		String datarecord;
