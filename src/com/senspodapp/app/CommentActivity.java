@@ -36,41 +36,51 @@ public class CommentActivity extends Activity {
 	// Debugging
 	private static final String TAG = "CommentActivity";
 	private static final boolean D = true;
+	
 	private static final String MSG_COMING_SOON = "Coming soon ..."; // TODO
+	
 	private TextView mYear;
 	private TextView mMonth;
 	private TextView mDay;
-	private Calendar mCalendar;
 	private Spinner  mHourSpinner;
 	private Spinner  mMinuteSpinner;
-	private ArrayAdapter <String> mHourAdapter;
-	private ArrayAdapter <String> mMinuteAdapter;
-	private String[] mHours;
-	private String[] mMinutes;
 
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (D) Log.d(TAG, "+++ ON CREATE +++");
+		
 		setContentView(R.layout.comment);
-		mHours = new String[24];
-		mMinutes = new String[60];
+		
+		mHourSpinner = (Spinner) findViewById(R.id.hour_spinner);
+		mMinuteSpinner = (Spinner) findViewById(R.id.minute_spinner);
+		mYear = (TextView) findViewById(R.id.comment_year);
+		mMonth = (TextView) findViewById(R.id.comment_month);
+		mDay = (TextView) findViewById(R.id.comment_day);
+		
+		String[] hours;
+		String[] minutes;
+		
+		hours = new String[24];
+		minutes = new String[60];
 
 		for (int count = 0; count < 24; ++count) {
-			mHours[count] = String.valueOf(count);
+			hours[count] = String.valueOf(count);
 		}
 
 		for (int count = 0; count < 60; ++count) {
-			mMinutes[count] = String.valueOf(count);
+			minutes[count] = String.valueOf(count);
 		}
 
-		mHourAdapter = new ArrayAdapter <String> (this, R.layout.customized_simple_spinner_item, mHours);
-		mMinuteAdapter = new ArrayAdapter <String> (this, R.layout.customized_simple_spinner_item, mMinutes);
-		mCalendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tokyo"));
+		ArrayAdapter <String> mHourAdapter = new ArrayAdapter <String> (this, R.layout.customized_simple_spinner_item, hours);
+		ArrayAdapter <String> mMinuteAdapter = new ArrayAdapter <String> (this, R.layout.customized_simple_spinner_item, minutes);
+		mHourSpinner.setAdapter(mHourAdapter);
+		mMinuteSpinner.setAdapter(mMinuteAdapter);
+       		
 		setTime();
-		Button btnUploadAll = (Button) findViewById(R.id.btn_comment);
-		btnUploadAll.setOnClickListener(new OnClickListener() {
+		Button btnSendComment = (Button) findViewById(R.id.btn_comment);
+		btnSendComment.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Toast.makeText(CommentActivity.this, MSG_COMING_SOON, Toast.LENGTH_LONG).show();
 			}
@@ -78,20 +88,13 @@ public class CommentActivity extends Activity {
 	}
 
 	void setTime() {
-		mYear = (TextView) findViewById(R.id.comment_year);
-		mMonth = (TextView) findViewById(R.id.comment_month);
-		mDay = (TextView) findViewById(R.id.comment_day);
-		mHourSpinner = (Spinner) findViewById(R.id.hour_spinner);
-		mMinuteSpinner = (Spinner) findViewById(R.id.minute_spinner);
-
-		mYear.setText(String.valueOf(mCalendar.get(Calendar.YEAR)));
-		mMonth.setText(String.valueOf(mCalendar.get(Calendar.MONTH) + 1));
-		mDay.setText(String.valueOf(mCalendar.get(Calendar.DAY_OF_MONTH)));
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tokyo"));
 		
-		mHourSpinner.setAdapter(mHourAdapter);
-		mHourSpinner.setSelection(mCalendar.get(Calendar.HOUR_OF_DAY));
-		mMinuteSpinner.setAdapter(mMinuteAdapter);
-		mMinuteSpinner.setSelection(mCalendar.get(Calendar.MINUTE));
+		mYear.setText(String.valueOf(calendar.get(Calendar.YEAR)));
+		mMonth.setText(String.valueOf(calendar.get(Calendar.MONTH) + 1));
+		mDay.setText(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
+		mHourSpinner.setSelection(calendar.get(Calendar.HOUR_OF_DAY));
+		mMinuteSpinner.setSelection(calendar.get(Calendar.MINUTE));
 	}
 
 }

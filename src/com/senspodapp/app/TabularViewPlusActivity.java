@@ -60,7 +60,6 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 	private TextView mAltitudeView;
 	private TextView mSpeedView;
 	private TextView mBearingView;
-    private Button mBtnComment;
 	
 	private HashMap<String, Integer> hmDataType = new HashMap<String, Integer>();
 	private int mRowID = 0;
@@ -80,10 +79,10 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 		mSpeedView = (TextView)findViewById(R.id.speed);
 		mBearingView = (TextView)findViewById(R.id.bearing);
         
-		mBtnComment = (Button) findViewById(R.id.btn_comment);
+		Button mBtnComment = (Button) findViewById(R.id.btn_comment);
 		mBtnComment.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				startComment();
+				startCommentActivity();
 			}
 		});
 		

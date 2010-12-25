@@ -450,7 +450,7 @@ public abstract class DeviceManagerClient extends Activity {
 		}
 	}
 
-	void startComment() {
+	void startCommentActivity() {
 		startActivity(new Intent(this, CommentActivity.class));
 	}
 	
