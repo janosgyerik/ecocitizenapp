@@ -46,7 +46,7 @@ public class FileUploader {
 
 	public static final int HTTP_STATUS_OK = 200;
 	public static final int WAITFOR_SENSORMAP_MILLIS = 1000;
-	public static final int WAITFOR_SENSORMAP_RETRYCNT = 30;
+	public static final int WAITFOR_SENSORMAP_RETRYCNT = 300;
 
 	private final String SENSORMAP_LOGIN_URL;
 	private final String SENSORMAP_STATUS_URL;

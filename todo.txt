@@ -1,6 +1,4 @@
 critical
-	bug: android loses internet in the middle of file upload when idle for several minutes
-		todo: measure exactly how many minutes it takes
 	bug: shows connected to sensor even though it's not....
 	preview + delete function in fileuploader
 	add support for zephyr
