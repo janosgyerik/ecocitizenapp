@@ -73,8 +73,8 @@ public class CommentActivity extends Activity {
 			minutes[count] = String.valueOf(count);
 		}
 
-		ArrayAdapter <String> mHourAdapter = new ArrayAdapter <String> (this, R.layout.customized_simple_spinner_item, hours);
-		ArrayAdapter <String> mMinuteAdapter = new ArrayAdapter <String> (this, R.layout.customized_simple_spinner_item, minutes);
+		ArrayAdapter <String> mHourAdapter = new ArrayAdapter <String> (this, android.R.layout.simple_spinner_item, hours);
+		ArrayAdapter <String> mMinuteAdapter = new ArrayAdapter <String> (this, android.R.layout.simple_spinner_item, minutes);
 		mHourSpinner.setAdapter(mHourAdapter);
 		mMinuteSpinner.setAdapter(mMinuteAdapter);
        		
@@ -88,7 +88,7 @@ public class CommentActivity extends Activity {
 	}
 
 	void setTime() {
-		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tokyo"));
+		Calendar calendar = Calendar.getInstance();
 		
 		mYear.setText(String.valueOf(calendar.get(Calendar.YEAR)));
 		mMonth.setText(String.valueOf(calendar.get(Calendar.MONTH) + 1));
