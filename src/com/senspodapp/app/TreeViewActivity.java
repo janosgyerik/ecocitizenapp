@@ -60,7 +60,7 @@ public class TreeViewActivity extends DeviceManagerClient {
 
 	private Button mBtnConnect;
 	private Button mBtnDisconnect;
-
+	
 	private boolean mForcePreferencesFromProps = false;
 
 	@Override
@@ -106,6 +106,13 @@ public class TreeViewActivity extends DeviceManagerClient {
 		if (mBluetoothAdapter == null) {
 			Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
 		}
+		
+		Button mBtnComment = (Button) findViewById(R.id.btn_comment);
+		mBtnComment.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				startCommentActivity();
+			}
+		});
 	}
 
 	@Override

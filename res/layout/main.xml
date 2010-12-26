@@ -49,4 +49,10 @@
     	android:stackFromBottom="true"
 		style="@style/btn"
     />
+    <Button android:id="@+id/btn_comment"
+		android:text="@string/btn_comment"
+    	android:stackFromBottom="true"
+    	android:visibility="gone"
+		style="@style/btn"
+    />
 </LinearLayout>

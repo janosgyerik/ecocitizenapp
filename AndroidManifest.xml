@@ -61,6 +61,10 @@
 		<activity android:name=".FileUploaderActivity" android:label="@string/fileuploader_activity"
 			android:theme="@android:style/Theme.Dialog" >
 		</activity>
+		
+		<activity android:name=".CommentActivity" android:label="@string/comment_activity"
+			android:theme="@android:style/Theme.Dialog" >
+		</activity>
 
 		<activity android:name=".DeviceListActivity" android:label="@string/devicelist_activity"
 			android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden" />
