@@ -186,7 +186,7 @@ public class FileUploader {
 				do {
 					line = line.replace(" ", "");
 					// TODO: clean this up, after android is cleaned up
-					if (line.matches(".*,_[^SG].*")) {
+					if (line.matches(".*,_[SG].*")) {
 						Log.d(TAG, "Applying workaround for FileSaver bug. To be deprecated soon.");
 						int pos = 0;
 						int start = -1;
