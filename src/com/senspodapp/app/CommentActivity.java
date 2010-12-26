@@ -20,7 +20,6 @@
 package com.senspodapp.app;
 
 import java.util.Calendar;
-import java.util.TimeZone;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
