@@ -103,6 +103,12 @@ public class FileRemoverActivity extends FileManagerActivity {
 				.show();
 			}
 		});
+
+		findViewById(R.id.btn_close).setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				finish();
+			}
+		});
 	}
 	
 	class DeleteAllAsyncTask extends AsyncTask<Void, String, Void> {
