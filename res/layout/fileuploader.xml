@@ -44,6 +44,7 @@
 	        android:text="@string/btn_upload_all"
 	        android:layout_weight="1"
 	        style="@style/btn"
+	        android:visibility="gone"
 	    />
     </LinearLayout>
     <TextView android:id="@+id/title_external_storage"
@@ -68,6 +69,9 @@
 	        android:text="@string/btn_upload_all"
 	        android:layout_weight="1"
 	        style="@style/btn"
+	        android:visibility="gone"
 	    />
     </LinearLayout>
+	<Button android:id="@+id/btn_close" android:text="@string/btn_close"
+		style="@style/btn" />
 </LinearLayout>

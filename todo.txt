@@ -17,14 +17,15 @@ tokyo marathon
 	release in marketplace
 
 critical
-	bug: shows connected to sensor even though it's not....
+	bug: shows connected to sensor even though it's not.... hard to reproduce!!!
 
 next
 	finish file uploader
+		do not show internal/external if there are no files
+		preview + delete function
 		check on sessions that crash the app
 		clean up data from android
 		remove workaround code
-	preview + delete function in fileuploader
 	!! support for multiple devices at the same time
 	! implement commenting
 	fix hardcoded values in debugtools

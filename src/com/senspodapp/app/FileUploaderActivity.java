@@ -109,6 +109,12 @@ public class FileUploaderActivity extends FileManagerActivity {
 				.show();
 			}
 		});
+		
+		findViewById(R.id.btn_close).setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				finish();
+			}
+		});
 	}
 	
 	class UploadAllAsyncTask extends AsyncTask<Void, String, Void> {
