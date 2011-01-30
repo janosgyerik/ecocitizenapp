@@ -1,14 +1,32 @@
+when connected
+	record some sample data file with zephyr
+	get a copy of the zephyr docs
+
+release in marketplace
+	read the docs and tune appropriately
+	reorganize pages and menus
+		hide low level or dangerous functionality
+	disable file saving
+	disable file upload
+	
+tokyo marathon
+	create dev map account for Joseph
+	create builder script for Joseph with preconfigured API key and URL 
+	get mobile internet to test realtime mode, or ask Joseph to do it
+	add support for zephyr
+	release in marketplace
+
 critical
 	bug: shows connected to sensor even though it's not....
-	preview + delete function in fileuploader
-	add support for zephyr
 
 next
-	implement commenting
-	support for multiple devices at the same time
 	finish file uploader
+		check on sessions that crash the app
 		clean up data from android
 		remove workaround code
+	preview + delete function in fileuploader
+	!! support for multiple devices at the same time
+	! implement commenting
 	fix hardcoded values in debugtools
 	bug: sending mock GPS sometimes does not work
 	bug: sending mock GPS sometimes works even if AVD has no GPS support

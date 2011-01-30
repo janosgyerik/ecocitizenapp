@@ -138,7 +138,7 @@ public class FileUploader {
 		 * In the long term however, this kind of hard coding
 		 * should be controllable by advanced settings screen or something.
 		 */
-		if (line.matches(",$GP")) return true;
+		if (line.indexOf(",$GP") > -1) return true;
 		
 		return waitForStringResponse(storeBaseURL + line);
 	}
