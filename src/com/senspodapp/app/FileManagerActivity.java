@@ -15,6 +15,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -68,15 +69,25 @@ abstract class FileManagerActivity extends Activity {
 			.show();
 		}
 
-		internalFilesArrayAdapter = new ArrayAdapter<String>(this, R.layout.filename);
-		configureArrayAdapter(internalFilesArrayAdapter, internalFilenames);
-		ListView internalFilesListView = (ListView)findViewById(R.id.internal_storage);
-		internalFilesListView.setAdapter(internalFilesArrayAdapter);
+		if (!internalFilenames.isEmpty()) {
+			internalFilesArrayAdapter = new ArrayAdapter<String>(this, R.layout.filename);
+			configureArrayAdapter(internalFilesArrayAdapter, internalFilenames);
+			ListView internalFilesListView = (ListView)findViewById(R.id.internal_storage);
+			internalFilesListView.setAdapter(internalFilesArrayAdapter);
+		}
+		else {
+			findViewById(R.id.internal_storage_section).setVisibility(View.GONE);
+		}
 
-		externalFilesArrayAdapter = new ArrayAdapter<String>(this, R.layout.filename);
-		configureArrayAdapter(externalFilesArrayAdapter, externalFilenames);
-		ListView externalFilesListView = (ListView)findViewById(R.id.external_storage);
-		externalFilesListView.setAdapter(externalFilesArrayAdapter);
+		if (!externalFilenames.isEmpty()) {
+			externalFilesArrayAdapter = new ArrayAdapter<String>(this, R.layout.filename);
+			configureArrayAdapter(externalFilesArrayAdapter, externalFilenames);
+			ListView externalFilesListView = (ListView)findViewById(R.id.external_storage);
+			externalFilesListView.setAdapter(externalFilesArrayAdapter);
+		}
+		else {
+			findViewById(R.id.external_storage_section).setVisibility(View.GONE);
+		}
 	}
 	
 	protected void buildFilenameLists() {

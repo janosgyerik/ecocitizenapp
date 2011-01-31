@@ -21,7 +21,6 @@ critical
 
 next
 	finish file uploader
-		do not show internal/external if there are no files
 		preview + delete function
 		check on sessions that crash the app
 		clean up data from android
