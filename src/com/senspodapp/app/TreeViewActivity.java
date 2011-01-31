@@ -113,6 +113,20 @@ public class TreeViewActivity extends DeviceManagerClient {
 				startCommentActivity();
 			}
 		});
+		
+		/*
+		Button mBtnTest = (Button) findViewById(R.id.btn_test);
+		mBtnTest.setVisibility(View.VISIBLE);
+		mBtnTest.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Intent intent = new Intent(TreeViewActivity.this, FileInfoActivity.class);
+				Bundle params = new Bundle();
+				params.putString(FileInfoActivity.BUNDLEKEY_FILENAME, "session_201101310819-3.csv");
+				intent.putExtras(params);
+				startActivity(intent);
+			}
+		});
+		*/
 	}
 
 	@Override

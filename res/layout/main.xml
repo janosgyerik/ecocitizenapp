@@ -55,4 +55,10 @@
     	android:visibility="gone"
 		style="@style/btn"
     />
+    <Button android:id="@+id/btn_test"
+		android:text="Fire Test"
+    	android:stackFromBottom="true"
+    	android:visibility="gone"
+		style="@style/btn"
+    />
 </LinearLayout>
