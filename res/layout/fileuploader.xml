@@ -26,9 +26,10 @@
    		android:id="@+id/internal_storage_section"
    		android:layout_width="fill_parent"
    		android:layout_height="wrap_content"
-   		height="0"
         android:layout_weight="1"
-    	android:orientation="vertical">
+   		height="0"
+    	android:orientation="vertical"
+    	>
 	    <TextView android:id="@+id/title_internal_storage"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
@@ -55,9 +56,10 @@
     	android:id="@+id/external_storage_section"
     	android:layout_width="fill_parent"
    		android:layout_height="wrap_content"
-   		height="0"
         android:layout_weight="1"
-    	android:orientation="vertical">
+   		height="0"
+    	android:orientation="vertical"
+    	>
 	    <TextView android:id="@+id/title_external_storage"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
@@ -80,6 +82,9 @@
 	    />
 	</LinearLayout>
 	
-	<Button android:id="@+id/btn_close" android:text="@string/btn_close"
-		style="@style/btn" />
+	<Button 
+		android:id="@+id/btn_close" 
+		android:text="@string/btn_close"
+		style="@style/btn" 
+		/>
 </LinearLayout>
