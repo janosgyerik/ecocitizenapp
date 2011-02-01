@@ -66,5 +66,9 @@
     	<item name="android:textColor">#ffffff</item>
     </style>
     
+    <style name="fileInfoLabelCol" parent="@android:style/TextAppearance.Small">
+    	<item name="android:paddingRight">3dip</item>
+    </style>
+    
     
 </resources>

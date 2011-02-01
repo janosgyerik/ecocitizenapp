@@ -62,6 +62,10 @@
 			android:theme="@android:style/Theme.Dialog" >
 		</activity>
 		
+		<activity android:name=".FileInfoActivity" android:label="@string/fileinfo_activity"
+			android:theme="@android:style/Theme.Dialog" >
+		</activity>
+		
 		<activity android:name=".CommentActivity" android:label="@string/comment_activity"
 			android:theme="@android:style/Theme.Dialog" >
 		</activity>

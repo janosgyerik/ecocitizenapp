@@ -15,7 +15,8 @@
     <string name="fileremover_activity">File Remover</string>
     <string name="comment_activity">Comment</string>
     <string name="msg_are_you_sure">Are you sure?</string> 
-    <string name="msg_no_files">There are no files.</string> 
+    <string name="msg_no_files">There are no files.</string>
+    <string name="fileinfo_activity">File Info</string> 
     
     <string name="not_connected">You are not connected to a device</string>
     <string name="title_connecting">connecting...</string>
@@ -94,6 +95,8 @@
     <string name="btn_text_mode">Switch to text</string>
     <string name="btn_hexa_mode">Switch to hexa</string>
     <string name="btn_comment">Comment</string>
+	<string name="btn_upload">Upload</string>
+	<string name="btn_delete">Delete</string>
     
     <!-- SensorMapUploaderService -->
     <string name="notification_smu_title">SensorMap Uploader Service</string>
@@ -120,5 +123,11 @@
 	<string name="fileuploader_msg_startsession_failed">The server did not return a valid session id.</string>
 	<string name="fileuploader_msg_unknown_error">Unknown error.</string>
 	<string name="fileuploader_msg_upload_interrupted">Upload was interrupted.</string>
+	
+	<!--  FileInfoActivity -->
+	<string name="fileinfo_filename">Filename</string>
+	<string name="fileinfo_date">Date</string>
+	<string name="fileinfo_size">Size</string>
+	<string name="fileinfo_recordnum">Records</string>
     
 </resources>
