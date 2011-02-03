@@ -129,5 +129,10 @@
 	<string name="fileinfo_date">Date</string>
 	<string name="fileinfo_size">Size</string>
 	<string name="fileinfo_recordnum">Records</string>
+	<string name="msg_upload_success">File was successfully uploaded.</string>
+	<string name="msg_upload_failure">File upload failed.</string>
+	<string name="msg_delete_success">File was successfully deleted.</string>
+	<string name="msg_delete_failure">File delete failed.</string>
+	<string name="msg_uploading">Uploading file. Please wait...</string>
     
 </resources>

@@ -25,6 +25,7 @@ import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -41,6 +42,15 @@ public class FileUploaderActivity extends FileManagerActivity {
 	// Debugging
 	private static final String TAG = "FileUploaderActivity";
 	private static final boolean D = true;
+	
+	enum StorageType {
+		INTERNAL,
+		EXTERNAL
+	}
+
+	// Members
+	private StorageType mCurrentStorageType;
+	private File mCurrentFile;
 
 	@Override
 	protected int getLayoutResID() {
@@ -53,10 +63,10 @@ public class FileUploaderActivity extends FileManagerActivity {
 		if (D) Log.d(TAG, "+++ ON CREATE +++");
 		
 		ListView internalFilesListView = (ListView)findViewById(R.id.internal_storage);
-		internalFilesListView.setOnItemClickListener(new ItemClickListener(internalFilesArrayAdapter, getFilesDir()));
+		internalFilesListView.setOnItemClickListener(new ItemClickListener(StorageType.INTERNAL, internalFilesArrayAdapter, getFilesDir()));
 
 		ListView externalFilesListView = (ListView)findViewById(R.id.external_storage);
-		externalFilesListView.setOnItemClickListener(new ItemClickListener(externalFilesArrayAdapter, externalDir));
+		externalFilesListView.setOnItemClickListener(new ItemClickListener(StorageType.EXTERNAL, externalFilesArrayAdapter, externalDir));
 		
 		findViewById(R.id.btn_upload_all_internal).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -144,7 +154,7 @@ public class FileUploaderActivity extends FileManagerActivity {
 			}
 			for (String filename : filenames) {
 				File file = new File(mBasedir + "/" + filename);
-				if (file.isFile() && upload(file, true)) { 
+				if (file.isFile() && upload(file)) { 
 					publishProgress(filename);
 				}
 			}
@@ -164,30 +174,6 @@ public class FileUploaderActivity extends FileManagerActivity {
 		}
 	}
 	
-	class ItemClickListener implements OnItemClickListener {
-		ArrayAdapter<String> mFilesArrayAdapter;
-		File mBasedir;
-		
-		public ItemClickListener(ArrayAdapter<String> filesArrayAdapter, File basedir) {
-			mFilesArrayAdapter = filesArrayAdapter;
-			mBasedir = basedir;
-		}
-		
-		public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3) {
-			ListView listView = (ListView) parent;
-			String filename = (String) listView.getItemAtPosition(position);
-			
-			if (!filename.startsWith(getString(R.string.label_none))) {
-				File file = new File(mBasedir + "/" + filename);
-				if (file.isFile() && upload(file, false)) { 
-					mFilesArrayAdapter.remove(filename);
-					if (mFilesArrayAdapter.isEmpty()) {
-						mFilesArrayAdapter.add(getString(R.string.label_none));
-					}
-				}
-			}
-		}
-	}
 	
 	private boolean testUpload() {
 		FileUploader uploader = new FileUploader(PreferenceManager.getDefaultSharedPreferences(this), null);
@@ -205,38 +191,49 @@ public class FileUploaderActivity extends FileManagerActivity {
 		return true;
 	}
 	
-	private boolean upload(File file, boolean quiet) {
+	private boolean upload(File file) {
 		FileUploader uploader = new FileUploader(PreferenceManager.getDefaultSharedPreferences(this), file);
 		FileUploader.Status status = uploader.upload();
 		
 		if (status == FileUploader.Status.SUCCESS) return true;
-		if (quiet) return false;
-		
-		int msgID;
-		switch (status) {
-		case EMPTY_FILE:
-			msgID = R.string.fileuploader_msg_empty_file;
-			Toast.makeText(this, msgID, Toast.LENGTH_SHORT).show();
-			return true;
-		case EXCEPTION:
-			msgID = R.string.fileuploader_msg_exception;
-			break;
-		case LOGIN_FAILED:
-			msgID = R.string.fileuploader_msg_login_failed;
-			break;
-		case SERVER_UNREACHABLE:
-			msgID = R.string.fileuploader_msg_server_unreachable;
-			break;
-		case STARTSESSION_FAILED:
-			msgID = R.string.fileuploader_msg_startsession_failed;
-			break;
-		case UPLOAD_INTERRUPTED:
-			msgID = R.string.fileuploader_msg_upload_interrupted;
-			break;
-		default:
-			msgID = R.string.fileuploader_msg_unknown_error;
-		}
-		Toast.makeText(this, msgID, Toast.LENGTH_SHORT).show();
 		return false;
+	}
+	
+	class ItemClickListener implements OnItemClickListener {
+		StorageType mStorageType;
+		ArrayAdapter<String> mFilesArrayAdapter;
+		File mBasedir;
+		
+		public ItemClickListener(StorageType storageType, ArrayAdapter<String> filesArrayAdapter, File basedir) {
+			mStorageType = storageType;
+			mFilesArrayAdapter = filesArrayAdapter;
+			mBasedir = basedir;
+		}
+		
+		public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3) {
+			ListView listView = (ListView) parent;
+			String filename = (String) listView.getItemAtPosition(position);
+			
+			// these will be used when the FileInfo activity returns
+			mCurrentStorageType = mStorageType;
+			mCurrentFile = new File(mBasedir + "/" + filename);
+			
+			Intent intent = new Intent(FileUploaderActivity.this, FileInfoWithUploadActivity.class);
+			Bundle params = new Bundle();
+			params.putString(FileInfoActivity.BUNDLEKEY_FILENAME, mBasedir + "/" + filename);
+			intent.putExtras(params);
+			startActivityForResult(intent, mStorageType.ordinal());
+		}
+	}
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (!mCurrentFile.exists()) { 
+			if (mCurrentStorageType == StorageType.INTERNAL) {
+				internalFilesArrayAdapter.remove(mCurrentFile.getName());
+			}
+			else if (mCurrentStorageType == StorageType.EXTERNAL) {
+				externalFilesArrayAdapter.remove(mCurrentFile.getName());
+			}
+		}
 	}
 }

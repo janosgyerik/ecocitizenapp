@@ -20,11 +20,19 @@ critical
 	bug: shows connected to sensor even though it's not.... hard to reproduce!!!
 
 next
-	finish file uploader
-		preview + delete function
+	file uploader "nice" implementation
+		- show ProgressDialog while building file info card
+		+ show file info card with buttons
+		- Upload btn begins upload in async mode
+		- Cancel btn can interrupt the upload
+		- progress bar is updated regularly
+		- Close button cancels upload
+		- show success/failure on completion
+		+ show/hide buttons on success/failure appropriately
+	clean up files on android
 		check on sessions that crash the app
-		clean up data from android
 		remove workaround code
+	remove fileremover activity
 	!! support for multiple devices at the same time
 	! implement commenting
 	fix hardcoded values in debugtools

@@ -119,9 +119,9 @@ public class TreeViewActivity extends DeviceManagerClient {
 		mBtnTest.setVisibility(View.VISIBLE);
 		mBtnTest.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				Intent intent = new Intent(TreeViewActivity.this, FileInfoActivity.class);
+				Intent intent = new Intent(TreeViewActivity.this, FileInfoWithUploadActivity.class);
 				Bundle params = new Bundle();
-				params.putString(FileInfoActivity.BUNDLEKEY_FILENAME, "session_201101310819-3.csv");
+				params.putString(FileInfoActivity.BUNDLEKEY_FILENAME, "/sdcard/Download/session_201102012023.csv");
 				intent.putExtras(params);
 				startActivity(intent);
 			}

@@ -1,3 +1,22 @@
+/*
+ * Copyright (C) 2010 Mobile Environmental Sensing For Sustainable Cities
+ *
+ * This file is part of SenspodApp.
+ *
+ * SenspodApp is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * SenspodApp is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with SenspodApp.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.senspodapp.app;
 
 import java.io.BufferedReader;
@@ -21,6 +40,9 @@ public class FileInfoActivity extends Activity {
 	// Debugging
 	private static final String TAG = "FileInfoActivity";
 	private static final boolean D = true;
+	
+	// Members
+	protected File mFile;
 	
 	// Constants
 	public static final String BUNDLEKEY_FILENAME = "fn";
@@ -51,13 +73,13 @@ public class FileInfoActivity extends Activity {
 		setContentView(R.layout.fileinfo);
 		
 		String filename = getIntent().getExtras().getString(BUNDLEKEY_FILENAME);
-		File file = new File(filename);
-		((TextView)findViewById(R.id.fileinfo_filename)).setText(file.getName());
-		((TextView)findViewById(R.id.fileinfo_size)).setText(bytesToString(file.length()));
-		((TextView)findViewById(R.id.fileinfo_date)).setText(timeToString(file.lastModified()));
-		int recordnum = getRecordNum(file);
+		mFile = new File(filename);
+		((TextView)findViewById(R.id.fileinfo_filename)).setText(mFile.getName());
+		((TextView)findViewById(R.id.fileinfo_size)).setText(bytesToString(mFile.length()));
+		((TextView)findViewById(R.id.fileinfo_date)).setText(timeToString(mFile.lastModified()));
+		int recordnum = getRecordNum(mFile);
 		((TextView)findViewById(R.id.fileinfo_recordnum)).setText(String.valueOf(recordnum));
-		((TextView)findViewById(R.id.fileinfo_content)).setText(getContentPreview(file, recordnum));
+		((TextView)findViewById(R.id.fileinfo_content)).setText(getContentPreview(mFile, recordnum));
 
 		findViewById(R.id.btn_close).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
