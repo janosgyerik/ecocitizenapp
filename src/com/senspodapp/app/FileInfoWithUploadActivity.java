@@ -88,7 +88,7 @@ public class FileInfoWithUploadActivity extends FileInfoActivity {
 		
 		protected void onPreExecute() {
 			mProgressDialog = ProgressDialog.show(FileInfoWithUploadActivity.this, 
-					"", FileInfoWithUploadActivity.this.getString(R.string.msg_uploading), false, true);
+					"", FileInfoWithUploadActivity.this.getString(R.string.msg_uploading), false, false);
 		}
 		
 		protected FileUploader.Status doInBackground(Void... params) {
