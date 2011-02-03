@@ -21,7 +21,6 @@ critical
 
 next
 	adjust upload url for offline data uploads
-	make tab images all different
 	clean up files on android
 		check on sessions that crash the app
 		remove workaround code
