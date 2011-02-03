@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.senspodapp.app" android:versionCode="1"
+	package="com.ecocitizen.app" android:versionCode="1"
 	android:versionName="1.0">
 	<application android:icon="@drawable/icon" android:label="@string/app_name">
-		<service android:name="com.senspodapp.service.DeviceManagerService"
+		<service android:name="com.ecocitizen.service.DeviceManagerService"
 			android:process=":remote_dm">
 			<intent-filter>
-				<action android:name="com.senspodapp.service.IDeviceManagerService" />
+				<action android:name="com.ecocitizen.service.IDeviceManagerService" />
 			</intent-filter>
 		</service>
 
-		<service android:name="com.senspodapp.service.SensorMapUploaderService"
+		<service android:name="com.ecocitizen.service.SensorMapUploaderService"
 			android:process=":remote_uploader">
 			<intent-filter>
-				<action android:name="com.senspodapp.service.ISensorMapUploaderService" />
+				<action android:name="com.ecocitizen.service.ISensorMapUploaderService" />
 			</intent-filter>
 		</service>
 
-		<service android:name="com.senspodapp.service.FileSaverService"
+		<service android:name="com.ecocitizen.service.FileSaverService"
 			android:process=":remote_filesaver">
 			<intent-filter>
-				<action android:name="com.senspodapp.service.IFileSaverService" />
+				<action android:name="com.ecocitizen.service.IFileSaverService" />
 			</intent-filter>
 		</service>
 
@@ -82,7 +82,7 @@
 			android:theme="@android:style/Theme.Translucent.NoTitleBar"
 			android:configChanges="orientation|keyboardHidden">
 			<intent-filter>
-				<action android:name="com.senspodapp.app.action.REQUEST_ENABLE" />
+				<action android:name="com.ecocitizen.app.action.REQUEST_ENABLE" />
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>
