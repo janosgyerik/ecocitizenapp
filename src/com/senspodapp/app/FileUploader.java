@@ -70,7 +70,7 @@ public class FileUploader {
 
 		SENSORMAP_LOGIN_URL = String.format("%slogin/%s/%s/", map_server_url, username, api_key);
 		SENSORMAP_STATUS_URL = String.format("%sstatus/", map_server_url);
-		SENSORMAP_STARTSESSION_URL = String.format("%sstartsession/%s/%s/", map_server_url, username, api_key);
+		SENSORMAP_STARTSESSION_URL = String.format("%sstartsession/%s/%s/1/", map_server_url, username, api_key);
 		SENSORMAP_STORE_URL = String.format("%sstore/%s/", map_server_url, username);
 		SENSORMAP_ENDSESSION_URL = String.format("%sendsession/%s/", map_server_url, username);
 	}
