@@ -20,7 +20,6 @@ critical
 	bug: shows connected to sensor even though it's not.... hard to reproduce!!!
 
 next
-	remove console from debugtools
 	adjust upload url for offline data uploads
 	make tab images all different
 	clean up files on android

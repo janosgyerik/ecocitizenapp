@@ -49,11 +49,13 @@ public class DebugToolsActivity extends TabActivity {
 				.setContent(intent);
 		tabHost.addTab(spec);
 
+		/*
 		intent = new Intent().setClass(this, ConsoleActivity.class);
 		spec = tabHost.newTabSpec("console").setIndicator("Console",
 				res.getDrawable(R.drawable.tab_console))
 				.setContent(intent);
 		tabHost.addTab(spec);
+		*/
 
 		/*
 		intent = new Intent().setClass(this, FileRemoverActivity.class);
