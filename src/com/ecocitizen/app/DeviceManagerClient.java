@@ -39,12 +39,11 @@ import backport.android.bluetooth.BluetoothAdapter;
 import backport.android.bluetooth.BluetoothDevice;
 
 import com.ecocitizen.service.BundleKeys;
-import com.ecocitizen.service.MessageType;
-import com.ecocitizen.app.R;
 import com.ecocitizen.service.IDeviceManagerService;
 import com.ecocitizen.service.IDeviceManagerServiceCallback;
 import com.ecocitizen.service.IFileSaverService;
 import com.ecocitizen.service.ISensorMapUploaderService;
+import com.ecocitizen.service.MessageType;
 
 public abstract class DeviceManagerClient extends Activity {
 	// Debugging

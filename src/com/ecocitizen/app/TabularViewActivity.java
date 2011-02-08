@@ -19,19 +19,18 @@
 
 package com.ecocitizen.app;
 
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Window;
+import android.widget.TableLayout;
+import android.widget.TextView;
+
 import com.ecocitizen.parser.BatterySentenceParser;
 import com.ecocitizen.parser.CO2SentenceParser;
 import com.ecocitizen.parser.COxSentenceParser;
 import com.ecocitizen.parser.HumiditySentenceParser;
 import com.ecocitizen.parser.NOxSentenceParser;
 import com.ecocitizen.parser.NoiseSentenceParser;
-import com.ecocitizen.app.R;
-
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Window;
-import android.widget.TableLayout;
-import android.widget.TextView;
 
 public class TabularViewActivity extends SimpleDeviceManagerClient {
 	// Debugging

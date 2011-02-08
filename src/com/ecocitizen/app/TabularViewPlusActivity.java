@@ -22,11 +22,6 @@ package com.ecocitizen.app;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 
-import com.ecocitizen.parser.PsenSentenceParser;
-import com.ecocitizen.parser.TemperatureSentenceParser;
-import com.ecocitizen.service.BundleKeys;
-import com.ecocitizen.app.R;
-
 import android.R.style;
 import android.graphics.Color;
 import android.location.Location;
@@ -39,6 +34,10 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import com.ecocitizen.parser.PsenSentenceParser;
+import com.ecocitizen.parser.TemperatureSentenceParser;
+import com.ecocitizen.service.BundleKeys;
 
 public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 	// Debugging

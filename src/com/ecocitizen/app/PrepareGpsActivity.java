@@ -1,7 +1,5 @@
 package com.ecocitizen.app;
 
-import com.ecocitizen.app.R;
-
 import android.app.Activity;
 import android.location.Location;
 import android.location.LocationListener;

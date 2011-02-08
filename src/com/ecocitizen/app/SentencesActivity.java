@@ -19,8 +19,6 @@
 
 package com.ecocitizen.app;
 
-import com.ecocitizen.app.R;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;

@@ -23,8 +23,6 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.ecocitizen.app.R;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;

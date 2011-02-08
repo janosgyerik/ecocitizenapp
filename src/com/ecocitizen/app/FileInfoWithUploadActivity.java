@@ -21,8 +21,6 @@ package com.ecocitizen.app;
 
 import java.io.File;
 
-import com.ecocitizen.app.R;
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;

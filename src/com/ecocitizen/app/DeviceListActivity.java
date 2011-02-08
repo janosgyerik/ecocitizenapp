@@ -19,8 +19,6 @@ package com.ecocitizen.app;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.ecocitizen.app.R;
-
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;

@@ -29,8 +29,6 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.ecocitizen.app.R;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;

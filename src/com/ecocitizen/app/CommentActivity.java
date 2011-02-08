@@ -21,8 +21,6 @@ package com.ecocitizen.app;
 
 import java.util.Calendar;
 
-import com.ecocitizen.app.R;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;

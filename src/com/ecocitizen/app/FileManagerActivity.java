@@ -22,7 +22,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.ecocitizen.service.FileSaverService;
-import com.ecocitizen.app.R;
 
 abstract class FileManagerActivity extends Activity {
 	// Debugging

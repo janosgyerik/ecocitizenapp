@@ -19,8 +19,6 @@
 
 package com.ecocitizen.app;
 
-import com.ecocitizen.app.R;
-
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
