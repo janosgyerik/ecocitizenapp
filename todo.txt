@@ -13,7 +13,6 @@ tokyo marathon
 	settings improvement
 		try to replace getSharedPreferences with getPreferences
 		after reset, username etc should reload itself
-		put map server settings in submenu
 	create dev+prod map account for Joseph
 	create builder script for Joseph with preconfigured API key and URL 
 	send a kit to Joseph and ask to test realtime mode

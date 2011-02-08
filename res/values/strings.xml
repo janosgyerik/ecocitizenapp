@@ -51,11 +51,11 @@
     
     <!--  Preferences -->
     <string name="title_username_preference">Username</string>
-    <string name="summary_username_preference">Username on EcoCitizen website</string>
+    <string name="summary_username_preference">Username on EcoCitizen map server</string>
     <string name="dialog_title_username_preference">Enter your EcoCitizen username</string>
     
     <string name="title_api_key_preference">API key</string>
-    <string name="summary_api_key_preference">API key for the EcoCitizen website</string>
+    <string name="summary_api_key_preference">API key for the EcoCitizen map</string>
     <string name="dialog_title_api_key_preference">Enter your EcoCitizen API key</string>
     
     <string name="title_map_server_url_preference">EcoCitizen URL</string>
@@ -136,7 +136,10 @@
 	<string name="msg_uploading">Uploading file. Please wait...</string>
 	
 	<!-- Settings, preferences -->
-	<string name="title_resetserversettings">Reset EcoCitizen map settings</string>
+	<string name="title_resetserversettings">Reset to defaults</string>
 	<string name="summary_resetserversettings">Reset username, URL, API key settings</string>
+	
+	<string name="category_mapserver">EcoCitizen map settings</string>
+	<string name="category_storage">Data storage related settings</string>
 	
 </resources>

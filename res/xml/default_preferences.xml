@@ -19,50 +19,56 @@
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.ecocitizen.app.ResetServerSettingsPreference
-            android:key="resetserversettings_preference"
-            android:title="@string/title_resetserversettings"
-            android:summary="@string/summary_resetserversettings"
-            android:defaultValue="" />
+	<PreferenceCategory android:title="@string/category_mapserver">
+	    <EditTextPreference
+	            android:key="username"
+	            android:defaultValue=""
+	            android:title="@string/title_username_preference"
+	            android:summary="@string/summary_username_preference"
+	            android:dialogTitle="@string/dialog_title_username_preference" />
+	            
+	    <EditTextPreference
+	            android:key="map_server_url"
+	            android:defaultValue="http://dev.sensormap.titan2x.com/api"
+	            android:title="@string/title_map_server_url_preference"
+	            android:summary="@string/summary_map_server_url_preference"
+	            android:dialogTitle="@string/dialog_title_map_server_url_preference" />
+	            
+	    <EditTextPreference
+	            android:key="api_key"
+	            android:defaultValue=""
+	            android:title="@string/title_api_key_preference"
+	            android:summary="@string/summary_api_key_preference"
+	            android:dialogTitle="@string/dialog_title_api_key_preference" />
 
-    <EditTextPreference
-            android:key="username"
-            android:defaultValue=""
-            android:title="@string/title_username_preference"
-            android:summary="@string/summary_username_preference"
-            android:dialogTitle="@string/dialog_title_username_preference" />
-            
-    <EditTextPreference
-            android:key="map_server_url"
-            android:defaultValue="http://dev.sensormap.titan2x.com/api"
-            android:title="@string/title_map_server_url_preference"
-            android:summary="@string/summary_map_server_url_preference"
-            android:dialogTitle="@string/dialog_title_map_server_url_preference" />
-            
-    <EditTextPreference
-            android:key="api_key"
-            android:defaultValue=""
-            android:title="@string/title_api_key_preference"
-            android:summary="@string/summary_api_key_preference"
-            android:dialogTitle="@string/dialog_title_api_key_preference" />
-            
-    <CheckBoxPreference
-			android:key="rtupload"
-			android:defaultValue="false"
-			android:title="@string/title_rtupload_preference"
-			android:summary="@string/summary_rtupload_preference" />
-			
-    <CheckBoxPreference
-			android:key="filesaver"
-			android:defaultValue="true"
-			android:title="@string/title_filesaver_preference"
-			android:summary="@string/summary_filesaver_preference" 
-			android:dialogTitle="@string/dialog_title_filesaver_preference" />
+	    <com.ecocitizen.app.ResetServerSettingsPreference
+	            android:key="resetserversettings_preference"
+	            android:title="@string/title_resetserversettings"
+	            android:summary="@string/summary_resetserversettings"
+	            android:defaultValue="" />
+	
+	</PreferenceCategory>
 
-    <CheckBoxPreference
-            android:key="use_external_storage"
-            android:defaultValue="true"
-            android:title="@string/title_externalstorage_preference"
-            android:summary="@string/summary_externalstorage_preference" />
+	 
+	<PreferenceCategory android:title="@string/category_storage">
+	    <CheckBoxPreference
+				android:key="rtupload"
+				android:defaultValue="false"
+				android:title="@string/title_rtupload_preference"
+				android:summary="@string/summary_rtupload_preference" />
+				
+	    <CheckBoxPreference
+				android:key="filesaver"
+				android:defaultValue="true"
+				android:title="@string/title_filesaver_preference"
+				android:summary="@string/summary_filesaver_preference" 
+				android:dialogTitle="@string/dialog_title_filesaver_preference" />
+	
+	    <CheckBoxPreference
+	            android:key="use_external_storage"
+	            android:defaultValue="true"
+	            android:title="@string/title_externalstorage_preference"
+	            android:summary="@string/summary_externalstorage_preference" />
+	</PreferenceCategory>           
             
 </PreferenceScreen>
