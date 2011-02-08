@@ -68,7 +68,7 @@ public abstract class DeviceManagerClient extends Activity {
 		super.onCreate(savedInstanceState);
 		if (D) Log.d(TAG, "+++ ON CREATE +++");
 
-		PreferenceManager.setDefaultValues(this, R.xml.default_preferences, false);
+		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
 		// Get local Bluetooth adapter
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
