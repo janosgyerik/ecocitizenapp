@@ -41,7 +41,6 @@ import android.widget.Toast;
 
 import com.ecocitizen.parser.CO2SentenceParser;
 import com.ecocitizen.service.BundleKeys;
-import com.ecocitizen.app.R;
 
 public class TreeViewActivity extends DeviceManagerClient {
 	// Debugging

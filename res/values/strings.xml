@@ -134,5 +134,9 @@
 	<string name="msg_delete_success">File was successfully deleted.</string>
 	<string name="msg_delete_failure">File delete failed.</string>
 	<string name="msg_uploading">Uploading file. Please wait...</string>
-    
+	
+	<!-- Settings, preferences -->
+	<string name="title_resetserversettings">Reset EcoCitizen map settings</string>
+	<string name="summary_resetserversettings">Reset username, URL, API key settings</string>
+	
 </resources>

@@ -19,6 +19,12 @@
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <com.ecocitizen.app.ResetServerSettingsPreference
+            android:key="resetserversettings_preference"
+            android:title="@string/title_resetserversettings"
+            android:summary="@string/summary_resetserversettings"
+            android:defaultValue="" />
+
     <EditTextPreference
             android:key="username"
             android:defaultValue=""

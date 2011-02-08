@@ -10,11 +10,17 @@ release in marketplace
 	create builder script with preconfigured API key and URL 
 	
 tokyo marathon
-	create dev map account for Joseph
+	settings improvement
+		after reset, username etc should reload itself
+		put map server settings in submenu
+		remove forcepreferencesfromprops stuff
+	create dev+prod map account for Joseph
 	create builder script for Joseph with preconfigured API key and URL 
-	get mobile internet to test realtime mode, or ask Joseph to do it
-	add support for zephyr
+	send a kit to Joseph and ask to test realtime mode
+		? does it work well, easily, reliably?
+		? is there a lag?
 	release in marketplace
+	add support for zephyr
 
 critical
 	bug: shows connected to sensor even though it's not.... hard to reproduce!!!
