@@ -28,6 +28,9 @@ on the deployment type, for example development / production.
     <string name="map_server_url">http://dev.ecomobilecitizen.com/api/</string>
     <string name="api_key">JRECsQLiWYisEsLS</string>
     
+    <bool name="rtupload">true</bool>
+    <bool name="filesaver">true</bool>
+    <bool name="use_external_storage">true</bool>
 
     <!-- For developers only -->
 

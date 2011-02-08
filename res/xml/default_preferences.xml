@@ -41,12 +41,6 @@
 	            android:summary="@string/summary_api_key_preference"
 	            android:dialogTitle="@string/dialog_title_api_key_preference" />
 
-	    <com.ecocitizen.app.ResetServerSettingsPreference
-	            android:key="resetserversettings_preference"
-	            android:title="@string/title_resetserversettings"
-	            android:summary="@string/summary_resetserversettings"
-	            android:defaultValue="" />
-	
 	</PreferenceCategory>
 
 	 
@@ -71,4 +65,14 @@
 	            android:summary="@string/summary_externalstorage_preference" />
 	</PreferenceCategory>           
             
+            
+	<PreferenceCategory android:title="@string/category_reset">
+	    <com.ecocitizen.app.ResetSettingsPreference
+	            android:key="resetsettings_preference"
+	            android:title="@string/title_resetsettings"
+	            android:summary="@string/summary_resetsettings"
+	            android:defaultValue="" />
+	</PreferenceCategory>           
+            
+	
 </PreferenceScreen>

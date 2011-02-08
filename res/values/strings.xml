@@ -72,7 +72,7 @@
     
     
     <string name="title_filesaver_preference">Save to local storage</string>
-    <string name="summary_filesaver_preference">If enabled, sensor data will be saved to Android\'s external or internal storage</string>
+    <string name="summary_filesaver_preference">If enabled, sensor data will be saved to Android\'s storage</string>
     <string name="dialog_title_filesaver_preference">Save to local storage</string>
    
 
@@ -136,10 +136,11 @@
 	<string name="msg_uploading">Uploading file. Please wait...</string>
 	
 	<!-- Settings, preferences -->
-	<string name="title_resetserversettings">Reset to defaults</string>
-	<string name="summary_resetserversettings">Reset username, URL, API key settings</string>
-	
 	<string name="category_mapserver">EcoCitizen map settings</string>
 	<string name="category_storage">Data storage related settings</string>
+	<string name="category_reset">Reset settings to defaults</string>
+	
+	<string name="title_resetsettings">Reset to defaults</string>
+	<string name="summary_resetsettings">Reset all settings to defaults</string>
 	
 </resources>

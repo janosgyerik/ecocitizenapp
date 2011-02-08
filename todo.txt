@@ -10,8 +10,6 @@ release in marketplace
 	create builder script with preconfigured API key and URL 
 	
 tokyo marathon
-	try to replace getSharedPreferences with getPreferences
-	create dev+prod map account for Joseph
 	create builder script for Joseph with preconfigured API key and URL 
 	send a kit to Joseph and ask to test realtime mode
 		? does it work well, easily, reliably?
