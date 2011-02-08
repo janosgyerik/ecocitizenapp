@@ -54,13 +54,13 @@
     <string name="summary_username_preference">Username on EcoCitizen map server</string>
     <string name="dialog_title_username_preference">Enter your EcoCitizen username</string>
     
-    <string name="title_api_key_preference">API key</string>
-    <string name="summary_api_key_preference">API key for the EcoCitizen map</string>
-    <string name="dialog_title_api_key_preference">Enter your EcoCitizen API key</string>
-    
     <string name="title_map_server_url_preference">EcoCitizen URL</string>
-    <string name="summary_map_server_url_preference">URL of the EcoCitizen API</string>
-    <string name="dialog_title_map_server_url_preference">Enter EcoCitizen API URL</string>
+    <string name="summary_map_server_url_preference">URL of EcoCitizen map API</string>
+    <string name="dialog_title_map_server_url_preference">Enter EcoCitizen map API URL</string>
+    
+    <string name="title_api_key_preference">API key</string>
+    <string name="summary_api_key_preference">API key for EcoCitizen map API</string>
+    <string name="dialog_title_api_key_preference">Enter your EcoCitizen map API key</string>
     
     <string name="title_externalstorage_preference">Use external storage</string>
     <string name="summary_externalstorage_preference">Try to save data files on external storage, or else on internal storage</string>

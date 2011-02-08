@@ -10,9 +10,7 @@ release in marketplace
 	create builder script with preconfigured API key and URL 
 	
 tokyo marathon
-	settings improvement
-		try to replace getSharedPreferences with getPreferences
-		after reset, username etc should reload itself
+	try to replace getSharedPreferences with getPreferences
 	create dev+prod map account for Joseph
 	create builder script for Joseph with preconfigured API key and URL 
 	send a kit to Joseph and ask to test realtime mode
@@ -33,6 +31,8 @@ next
 	fix hardcoded values in debugtools
 	bug: sending mock GPS sometimes does not work
 	bug: sending mock GPS sometimes works even if AVD has no GPS support
+	bug: username etc not updated in SettingsActivity after reset
+		probably implementing OnSharedPrefsChanged might do the trick
 	? bug: android uploader gets killed
 	? bug: java.net.UnknownHostException
 
