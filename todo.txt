@@ -2,17 +2,29 @@ when connected
 	record some sample data file with zephyr
 	get a copy of the zephyr docs
 
+new release
+	screenshots
+		tree page with different colors
+		main menu
+		tabular+
+		settings
+		file uploader
+		sentences ascii
+		sentences hexa
+	sensor map
+		merge Masafumi's changes, review, commit, release
+	release notes:
+- Tabular view shows more GPS details (speed, altitude, accuracy, bearing)
+- Cleaned up screens, removed unnecessary screens
+- File uploader tool with preview function and delete option
+- Hexadecimal view for binary data
+- Reorganized settings screen with more options and Reset button
+- Several other internal bugfixes
+
 release in marketplace
-	read the docs and tune appropriately
-	reorganize pages and menus
-		hide low level or dangerous functionality
-	realtime upload is off by default
-	create builder script with preconfigured API key and URL 
+	add a property to switch debugging on/off
 	
 tokyo marathon
-	send a kit to Joseph and ask to test realtime mode
-		? does it work well, easily, reliably?
-		? is there a lag?
 	release in marketplace
 	add support for zephyr
 
@@ -25,6 +37,7 @@ next
 		remove workaround code
 	!! support for multiple devices at the same time
 	! implement commenting
+		override onSaveInstanceState method to prevent losing text when another application (like a phone call) comes to the foreground
 	fix hardcoded values in debugtools
 	bug: sending mock GPS sometimes does not work
 	bug: sending mock GPS sometimes works even if AVD has no GPS support
@@ -34,22 +47,27 @@ next
 	? bug: java.net.UnknownHostException
 
 optimization
+	if and only if performance is crucial, follow the 'Designing for Performance' article in Dev Guide
+	try to rewrite nested linearlayouts with relativelayout
+	consider using ViewStubs
 	review comments in entire code, especially service code
 	improve button style by using different style parent? theme?
-	file uploader "nice" implementation
-		+ show file info card with buttons
-		+ Upload btn begins upload in async mode
-		- Cancel btn can interrupt the upload
-		- progress bar is updated regularly
-		- Close button cancels upload
-		+ show success/failure on completion
-		+ show/hide buttons on success/failure appropriately
+
+file uploader "nice" implementation
+	+ show file info card with buttons
+	+ Upload btn begins upload in async mode
+	- Cancel btn can interrupt the upload
+	- progress bar is updated regularly
+	- Close button cancels upload
+	+ show success/failure on completion
+	+ show/hide buttons on success/failure appropriately
 
 minor improvements
 	fileuploader: nicer progress indicator: full screen, modal + cancel
 	fileuploader: progress indicator while uploading single file
 
 nice to have
+	tweet current location and measurements
 	know the number of data records pending for upload
 	user profiles: anon, dev, janos, ...
 	FileSaverService with proper synchronization
