@@ -55,7 +55,7 @@ public class FileSaverService extends Service {
 	private static final String TAG = "FileSaverService";
 	private static final boolean D = true;
 
-	private static boolean SHOULD_CALL_STARTSESSION = false;
+	private static boolean WAS_STARTSESSION = false;
 	
 	public final static String EXTERNAL_TARGETDIR = "Download";
 	public final static String FILENAME_PREFIX = "session_";
@@ -201,9 +201,9 @@ public class FileSaverService extends Service {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case MessageType.SENTENCE:
-				if (SHOULD_CALL_STARTSESSION) {
+				if (! WAS_STARTSESSION) {
 					startSession();
-					SHOULD_CALL_STARTSESSION = false;
+					WAS_STARTSESSION = true;
 				}
 				receivedSentenceBundle((Bundle)msg.obj);
 				break;
@@ -213,7 +213,7 @@ public class FileSaverService extends Service {
 				endSession();
 				break;
 			case MessageType.SENSORCONNECTION_SUCCESS:
-				SHOULD_CALL_STARTSESSION = true;
+				WAS_STARTSESSION = false;
 				break;
 			default:
 				// drop all other message types
