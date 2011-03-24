@@ -64,7 +64,7 @@ public class FileSaverService extends Service {
 
 	private final static String PREFS_EXTERNAL_STORAGE = "use_external_storage";
 
-	private OutputStream output = null;
+	private OutputStream mWriter = null;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -315,7 +315,7 @@ public class FileSaverService extends Service {
 					FILENAME_EXTENSION
 			);
 			try {
-				output = new FileOutputStream(new File(filename));
+				mWriter = new FileOutputStream(new File(filename));
 			} catch (IOException e) {
 				e.printStackTrace();
 				startSession_internalStorage();
@@ -335,7 +335,7 @@ public class FileSaverService extends Service {
 				FILENAME_EXTENSION
 		);
 		try {
-			output = openFileOutput(filename, Context.MODE_PRIVATE);
+			mWriter = openFileOutput(filename, Context.MODE_PRIVATE);
 		} catch (FileNotFoundException fe) {
 			fe.printStackTrace();
 			shutdownSelf();
@@ -348,8 +348,8 @@ public class FileSaverService extends Service {
 	}
 	
 	void saveDataRecord(String data) {
-		if (output == null) return;
-		synchronized (output) {
+		if (mWriter == null) return;
+		synchronized (mWriter) {
 			// This can happen when incoming data and DISCONNECT cross each other.
 			// TODO A cleaner solution would be to:
 			// 1. block further input
@@ -359,8 +359,8 @@ public class FileSaverService extends Service {
 			byte[] buffer = null;
 			try {
 				buffer = data.getBytes();
-				output.write(buffer);
-				output.write('\n');
+				mWriter.write(buffer);
+				mWriter.write('\n');
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -371,14 +371,14 @@ public class FileSaverService extends Service {
 		if (D) Log.d(TAG, "ENDSESSION");
 		
 		// TODO see comment in saveDataRecord method
-		if (output == null) return;
-		synchronized (output) {
+		if (mWriter == null) return;
+		synchronized (mWriter) {
 			try {
-				output.close();
+				mWriter.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			output = null;
+			mWriter = null;
 		}
 	}
 }
