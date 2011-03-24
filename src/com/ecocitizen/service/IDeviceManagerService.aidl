@@ -29,8 +29,6 @@ interface IDeviceManagerService {
      */
     int getPid();
 
-    String getConnectedDeviceName();
-    
     void connectBluetoothDevice(in BluetoothDevice device);
     void connectLogplayer(in String assetName, in int messageInterval);
     void disconnectDevice(in String deviceName);

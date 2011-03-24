@@ -473,7 +473,6 @@ public abstract class DeviceManagerClient extends Activity {
 			// We want to monitor the service for as long as we are
 			// connected to it.
 			try {
-				setConnectedDeviceName(mService.getConnectedDeviceName());
 				mService.registerCallback(mCallback);
 			} 
 			catch (RemoteException e) {

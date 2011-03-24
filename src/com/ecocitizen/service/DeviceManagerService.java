@@ -131,14 +131,6 @@ public class DeviceManagerService extends Service {
 		public int getPid() {
 			return Process.myPid();
 		}
-
-		public String getConnectedDeviceName() throws RemoteException {
-			// TODO add support for multiple devices
-			for (SensorManager sm : mSensorManagers.values()) {
-				return sm.mDeviceName;
-			}
-			return null;
-		}
 	};
 
 	GpsLocationListener mLocationListener = new GpsLocationListener();
