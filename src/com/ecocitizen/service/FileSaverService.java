@@ -342,47 +342,29 @@ public class FileSaverService extends Service {
 			mWriter = openFileOutput(filename, Context.MODE_PRIVATE);
 		} catch (FileNotFoundException fe) {
 			fe.printStackTrace();
-			shutdownSelf();
+			stopSelf(); // the service is completely useless in this case
 		}	
 	}
 	
-	void shutdownSelf() {
-		Toast.makeText(this, "TODO: FileSaverService *should* shut down", Toast.LENGTH_SHORT).show();
-		// TODO
-	}
-	
 	void saveDataRecord(String data) {
-		if (mWriter == null) return;
-		synchronized (mWriter) {
-			// This can happen when incoming data and DISCONNECT cross each other.
-			// TODO A cleaner solution would be to:
-			// 1. block further input
-			// 2. write out buffer contents
-			// 3. shut down writer
-			
-			byte[] buffer = null;
-			try {
-				buffer = data.getBytes();
-				mWriter.write(buffer);
-				mWriter.write('\n');
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		byte[] buffer = null;
+		try {
+			buffer = data.getBytes();
+			mWriter.write(buffer);
+			mWriter.write('\n');
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
 	void endSession() {
 		if (D) Log.d(TAG, "ENDSESSION");
 		
-		// TODO see comment in saveDataRecord method
-		if (mWriter == null) return;
-		synchronized (mWriter) {
-			try {
-				mWriter.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			mWriter = null;
+		try {
+			mWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		mWriter = null;
 	}
 }

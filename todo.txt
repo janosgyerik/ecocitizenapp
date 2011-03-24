@@ -7,8 +7,7 @@ release in marketplace
 	
 critical
 	bug: scan for bt devices layout is broken
-	dirty synchronization in FileSaverService
-		see comments for cleaner implementation
+	bug: somehow, DeviceManagerService can NPE on line mSensorManager.get(deviceName).stop() in shutdownSensorManager method
 	bug: app gets into strange state after connection lost, sending session id 'null'
 	bug: shows connected to sensor even though it's not.... hard to reproduce!!!
 	improve data uploading throughput
