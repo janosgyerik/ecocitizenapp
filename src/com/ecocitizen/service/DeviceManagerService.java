@@ -213,7 +213,6 @@ public class DeviceManagerService extends Service {
 	};
 
 	void shutdownAllSensorManagers() {
-		Log.d(TAG, "shutdownAllSensorManagers");
 		mLocationListener.removeLocationUpdates();
 		
 		synchronized (mSensorManagers) {
@@ -225,7 +224,6 @@ public class DeviceManagerService extends Service {
 	}
 
 	void shutdownSensorManager(String deviceName) {
-		Log.d(TAG, "shutdownSensorManager " + deviceName);
 		if (mSensorManagers.containsKey(deviceName)) {
 			synchronized (mSensorManagers) {
 				mSensorManagers.get(deviceName).stop();
