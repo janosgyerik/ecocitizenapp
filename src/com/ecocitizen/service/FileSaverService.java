@@ -294,34 +294,38 @@ public class FileSaverService extends Service {
 
 		if (settings.getBoolean(PREFS_EXTERNAL_STORAGE, false)
 				&& Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-			String basedirectoryPath = String.format(
-					"%s/%s",
-					Environment.getExternalStorageDirectory().getPath(),
-					EXTERNAL_TARGETDIR
-			);
-			File directory = new File(basedirectoryPath); 
-			if (!directory.exists()) { 
-				if (!directory.mkdirs()) {
-					startSession_internalStorage();
-					return; 
-				}
-			}       
-			String datestr  = DATEFORMAT.format(new Date());
-			String filename = String.format(
-					"%s/%s%s.%s",
-					basedirectoryPath,
-					FILENAME_PREFIX,
-					datestr,
-					FILENAME_EXTENSION
-			);
-			try {
-				mWriter = new FileOutputStream(new File(filename));
-			} catch (IOException e) {
-				e.printStackTrace();
-				startSession_internalStorage();
-			}
+			startSession_externalStorage();
 		} 
 		else {
+			startSession_internalStorage();
+		}
+	}
+	
+	void startSession_externalStorage() {
+		String basedirectoryPath = String.format(
+				"%s/%s",
+				Environment.getExternalStorageDirectory().getPath(),
+				EXTERNAL_TARGETDIR
+		);
+		File directory = new File(basedirectoryPath); 
+		if (!directory.exists()) { 
+			if (!directory.mkdirs()) {
+				startSession_internalStorage();
+				return; 
+			}
+		}       
+		String datestr  = DATEFORMAT.format(new Date());
+		String filename = String.format(
+				"%s/%s%s.%s",
+				basedirectoryPath,
+				FILENAME_PREFIX,
+				datestr,
+				FILENAME_EXTENSION
+		);
+		try {
+			mWriter = new FileOutputStream(new File(filename));
+		} catch (IOException e) {
+			e.printStackTrace();
 			startSession_internalStorage();
 		}
 	}
