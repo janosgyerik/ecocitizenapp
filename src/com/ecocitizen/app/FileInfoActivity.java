@@ -47,7 +47,7 @@ public class FileInfoActivity extends Activity {
 	// Constants
 	public static final String BUNDLEKEY_FILENAME = "fn";
 	
-	static final int PREVIEWLINES = 3; // first N and last N lines will be shown in preview
+	static final int PREVIEWLINES = 5; // first N and last N lines will be shown in preview
 	
 	static final String[] ZZBYTEMARKER = new String[]{ "", "kb", "mb", "gb" };
 	static final DecimalFormat ZZBYTEFORMAT = new DecimalFormat("#.#"); // max 1 fraction digit
