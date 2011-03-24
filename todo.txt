@@ -6,7 +6,6 @@ release in marketplace
 	add a property to switch debugging on/off
 	
 critical
-	code cleansing: review DeviceManagerService and eliminate anything that looks not good. This core class must have rock solid implementation
 	dirty synchronization in FileSaverService
 		see comments for cleaner implementation
 	bug: app gets into strange state after connection lost, sending session id 'null'
@@ -24,6 +23,7 @@ next
 		check on sessions that crash the app
 		remove workaround code
 	!! support for multiple devices at the same time
+		add to menu 'connect another'
 	! implement commenting
 		override onSaveInstanceState method to prevent losing text when another application (like a phone call) comes to the foreground
 	fix hardcoded values in debugtools

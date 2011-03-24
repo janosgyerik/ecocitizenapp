@@ -44,10 +44,30 @@ public class DeviceManagerService extends Service {
 	private static final boolean D = true;
 	private static final boolean LOG_SENTENCES = false;
 
+	/**
+	 * List of callbacks that will receive notification on events:
+	 * - sensor connected, disconnected, lost, ...
+	 * - sentence received from sensor
+	 */
 	final RemoteCallbackList<IDeviceManagerServiceCallback> mCallbacks =
 		new RemoteCallbackList<IDeviceManagerServiceCallback>();
 
+	/**
+	 * Mapping of device name -> SensorManager
+	 * Many sensors can be connected at the same time, this hashmap
+	 * keeps track of connected (alive) sensors.
+	 */
 	HashMap<String, SensorManager> mSensorManagers = new HashMap<String, SensorManager>();
+
+	/**
+	 * Location listener, to get GPS location updates.
+	 * This object is passed to the constructor of SensorManager objects,
+	 * so that they attach GPS coordinates to their messages.
+	 * 
+	 * The location listener needs to be member object, because
+	 * Android location services are accessible through Context.
+	 */
+	GpsLocationListener mLocationListener = new GpsLocationListener();
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -67,23 +87,41 @@ public class DeviceManagerService extends Service {
 		return super.onUnbind(intent);
 	}
 
+	/**
+	 * When DeviceManager is created, create and initialize a location manager.
+	 * The location manager is used to attach GPS coordinates to incoming sensor data.
+	 */
 	@Override
 	public void onCreate() {
 		initLocationManager();
 	}
 
+	/**
+	 * Shutdown all related objects:
+	 * - all connected sensors
+	 * - all callback listeners
+	 * - remove location updates
+	 */
 	@Override
 	public void onDestroy() {
 		if (D) Log.d(TAG, "+++ ON DESTROY +++");
 
 		shutdownAllSensorManagers();
+		mLocationListener.removeLocationUpdates();
 
 		Toast.makeText(this, "Device Manager stopped", Toast.LENGTH_SHORT);
 
 		mCallbacks.kill();
 	}
 
+	/**
+	 * Handling of our service methods.
+	 */
 	private final IDeviceManagerService.Stub mBinder = new IDeviceManagerService.Stub() {
+		/**
+		 * Connect to a bluetooth device. 
+		 * The device connection is represented by a BluetoothDevice object.
+		 */
 		public void connectBluetoothDevice(BluetoothDevice device) {
 			String name = device.getName();
 			synchronized (mSensorManagers) {
@@ -94,6 +132,12 @@ public class DeviceManagerService extends Service {
 			}
 		}
 
+		/**
+		 * Connect to a logfile player, useful for debugging.
+		 * The device connection is represented by filename.
+		 * The message interval parameter controls the data transmission speed,
+		 * useful for stress tests.
+		 */
 		public void connectLogplayer(String assetFilename, int messageInterval) {
 			String name = assetFilename;
 			synchronized (mSensorManagers) {
@@ -116,6 +160,11 @@ public class DeviceManagerService extends Service {
 			stopSelf();
 		}
 
+		/**
+		 * Disconnect a device specified by name, where name is:
+		 * - Bluetooth device name for bluetooth devices
+		 * - filename for logfile players 
+		 */
 		public void disconnectDevice(String deviceName) throws RemoteException {
 			shutdownSensorManager(deviceName);
 		}
@@ -133,11 +182,9 @@ public class DeviceManagerService extends Service {
 		}
 	};
 
-	GpsLocationListener mLocationListener = new GpsLocationListener();
-
 	/**
 	 * Our Handler to execute operations on the main thread.
-	 * This is used to dispatch sentences to the callbacks.
+	 * This is used to dispatch sentences to the callback listeners.
 	 */
 	private final Handler mHandler = new Handler() {
 		@Override
@@ -205,8 +252,6 @@ public class DeviceManagerService extends Service {
 	};
 
 	void shutdownAllSensorManagers() {
-		mLocationListener.removeLocationUpdates();
-		
 		synchronized (mSensorManagers) {
 			for (SensorManager sm : mSensorManagers.values()) {
 				sm.stop();
@@ -231,5 +276,5 @@ public class DeviceManagerService extends Service {
 	public void initLocationManager() {
 		mLocationListener.setLocationManager((LocationManager)getSystemService(Context.LOCATION_SERVICE));
 	}
-
+	
 }
