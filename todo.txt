@@ -2,36 +2,23 @@ when connected
 	record some sample data file with zephyr
 	get a copy of the zephyr docs
 
-new release
-	screenshots
-		tree page with different colors
-		main menu
-		tabular+
-		settings
-		file uploader
-		sentences ascii
-		sentences hexa
-	sensor map
-		merge Masafumi's changes, review, commit, release
-	release notes:
-- Tabular view shows more GPS details (speed, altitude, accuracy, bearing)
-- Cleaned up screens, removed unnecessary screens
-- File uploader tool with preview function and delete option
-- Hexadecimal view for binary data
-- Reorganized settings screen with more options and Reset button
-- Several other internal bugfixes
-
 release in marketplace
 	add a property to switch debugging on/off
 	
-tokyo marathon
-	release in marketplace
-	add support for zephyr
-
 critical
+	dirty synchronization in FileSaverService
+		see comments for cleaner implementation
+	bug: app gets into strange state after connection lost, sending session id 'null'
 	bug: shows connected to sensor even though it's not.... hard to reproduce!!!
+	improve data uploading throughput
+		test slowness, confirm and quantify
+		pack multiple messages in one transmission
+		repeat test, confirm improvement
+		automatically adjust sending buffer size
+
 
 next
+	add support for zephyr
 	clean up files on android
 		check on sessions that crash the app
 		remove workaround code

@@ -326,7 +326,7 @@ public class FileSaverService extends Service {
 		}
 	}
 
-	void  startSession_internalStorage() {
+	void startSession_internalStorage() {
 		String datestr  = DATEFORMAT.format(new Date());
 		String filename = String.format(
 				"%s%s.%s",
@@ -348,24 +348,37 @@ public class FileSaverService extends Service {
 	}
 	
 	void saveDataRecord(String data) {
-		byte[] buffer = null;
-		try {
-			buffer = data.getBytes();
-			output.write(buffer);
-			output.write('\n');
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (output == null) return;
+		synchronized (output) {
+			// This can happen when incoming data and DISCONNECT cross each other.
+			// TODO A cleaner solution would be to:
+			// 1. block further input
+			// 2. write out buffer contents
+			// 3. shut down writer
+			
+			byte[] buffer = null;
+			try {
+				buffer = data.getBytes();
+				output.write(buffer);
+				output.write('\n');
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
 	void endSession() {
 		if (D) Log.d(TAG, "ENDSESSION");
+		
+		// TODO see comment in saveDataRecord method
 		if (output == null) return;
-		try {
-			output.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		synchronized (output) {
+			try {
+				output.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			output = null;
 		}
-		output = null;
 	}
 }
