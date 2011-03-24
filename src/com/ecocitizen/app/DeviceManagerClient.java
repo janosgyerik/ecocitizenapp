@@ -62,6 +62,8 @@ public abstract class DeviceManagerClient extends Activity {
 
 	// Local Bluetooth adapter
 	BluetoothAdapter mBluetoothAdapter = null;
+	
+	String mConnectedDeviceName = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -323,8 +325,7 @@ public abstract class DeviceManagerClient extends Activity {
 	void disconnectSensor() {
 		if (mService != null) {
 			try {
-				// will disconnect all devices
-				mService.disconnectDevice(null); 
+				mService.disconnectDevice(mConnectedDeviceName);
 			}
 			catch (RemoteException e) {
 				// Bummer eh. Not much we can do here.
@@ -440,6 +441,8 @@ public abstract class DeviceManagerClient extends Activity {
 	}
 
 	void setConnectedDeviceName(String connectedDeviceName) {
+		mConnectedDeviceName = connectedDeviceName;
+		
 		if (connectedDeviceName == null) {
 			mTitle.setText(R.string.title_not_connected);
 		} 

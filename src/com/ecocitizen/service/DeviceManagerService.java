@@ -21,9 +21,7 @@ package com.ecocitizen.service;
 
 import java.io.IOException;
 import java.io.InputStream;
-
-import com.ecocitizen.service.IDeviceManagerService;
-import com.ecocitizen.service.IDeviceManagerServiceCallback;
+import java.util.HashMap;
 
 import android.app.Service;
 import android.content.Context;
@@ -45,6 +43,11 @@ public class DeviceManagerService extends Service {
 	private static final String TAG = "DeviceManagerService";
 	private static final boolean D = true;
 	private static final boolean LOG_SENTENCES = false;
+
+	final RemoteCallbackList<IDeviceManagerServiceCallback> mCallbacks =
+		new RemoteCallbackList<IDeviceManagerServiceCallback>();
+
+	HashMap<String, SensorManager> mSensorManagers = new HashMap<String, SensorManager>();
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -73,38 +76,39 @@ public class DeviceManagerService extends Service {
 	public void onDestroy() {
 		if (D) Log.d(TAG, "+++ ON DESTROY +++");
 
-		shutdownSensorManager();
+		shutdownAllSensorManagers();
 
 		Toast.makeText(this, "Device Manager stopped", Toast.LENGTH_SHORT);
 
 		mCallbacks.kill();
 	}
 
-	final RemoteCallbackList<IDeviceManagerServiceCallback> mCallbacks =
-		new RemoteCallbackList<IDeviceManagerServiceCallback>();
-
-	SensorManager mSensorManager = null;
-
 	private final IDeviceManagerService.Stub mBinder = new IDeviceManagerService.Stub() {
 		public void connectBluetoothDevice(BluetoothDevice device) {
-			// TODO: add support for multiple devices
-			if (mSensorManager != null) return;
+			String name = device.getName();
+			synchronized (mSensorManagers) {
+				if (mSensorManagers.containsKey(name)) return;
 
-			mSensorManager = new BluetoothSensorManager(mHandler, mLocationListener, device);
+				SensorManager sm = new BluetoothSensorManager(mHandler, mLocationListener, device);
+				mSensorManagers.put(name, sm);
+			}
 		}
 
 		public void connectLogplayer(String assetFilename, int messageInterval) {
-			// TODO: add support for multiple devices
-			if (mSensorManager != null) return;
+			String name = assetFilename;
+			synchronized (mSensorManagers) {
+				if (mSensorManagers.containsKey(name)) return;
 
-			try {
-				InputStream instream = getAssets().open(assetFilename);
-				mSensorManager = new LogplayerSensorManager(mHandler, mLocationListener, instream, messageInterval, assetFilename);
-				mSensorManager.start();
-			}
-			catch (IOException e) {
-				e.printStackTrace();
-				return;
+				try {
+					InputStream instream = getAssets().open(assetFilename);
+					SensorManager sm = new LogplayerSensorManager(mHandler, mLocationListener, instream, messageInterval, assetFilename);
+					sm.start();
+					mSensorManagers.put(name, sm);
+				}
+				catch (IOException e) {
+					e.printStackTrace();
+					return;
+				}
 			}
 		}
 
@@ -130,8 +134,10 @@ public class DeviceManagerService extends Service {
 
 		public String getConnectedDeviceName() throws RemoteException {
 			// TODO add support for multiple devices
-			if (mSensorManager == null) return null;
-			return mSensorManager.mDeviceName;
+			for (SensorManager sm : mSensorManagers.values()) {
+				return sm.mDeviceName;
+			}
+			return null;
 		}
 	};
 
@@ -206,19 +212,30 @@ public class DeviceManagerService extends Service {
 		}
 	};
 
-	void shutdownSensorManager() {
-		// TODO: add support for multiple devices: loop over each connected  
-		// device name and call the overloaded method with device name.
-		shutdownSensorManager(null);
+	void shutdownAllSensorManagers() {
+		Log.d(TAG, "shutdownAllSensorManagers");
+		mLocationListener.removeLocationUpdates();
+		
+		synchronized (mSensorManagers) {
+			for (SensorManager sm : mSensorManagers.values()) {
+				sm.stop();
+			}
+			mSensorManagers.clear();
+		}
 	}
 
 	void shutdownSensorManager(String deviceName) {
-		if (mSensorManager == null) return;
-
-		mLocationListener.removeLocationUpdates();
-
-		mSensorManager.stop();
-		mSensorManager = null;
+		Log.d(TAG, "shutdownSensorManager " + deviceName);
+		if (mSensorManagers.containsKey(deviceName)) {
+			synchronized (mSensorManagers) {
+				mSensorManagers.get(deviceName).stop();
+				mSensorManagers.remove(deviceName);
+				
+				if (mSensorManagers.isEmpty()) {
+					mLocationListener.removeLocationUpdates();
+				}
+			}
+		}
 	}
 
 	public void initLocationManager() {
