@@ -84,7 +84,6 @@ public class DeviceManagerService extends Service {
 		new RemoteCallbackList<IDeviceManagerServiceCallback>();
 
 	SensorManager mSensorManager = null;
-	String mConnectedDeviceName = null;
 
 	private final IDeviceManagerService.Stub mBinder = new IDeviceManagerService.Stub() {
 		public void connectBluetoothDevice(BluetoothDevice device) {
@@ -130,7 +129,9 @@ public class DeviceManagerService extends Service {
 		}
 
 		public String getConnectedDeviceName() throws RemoteException {
-			return mConnectedDeviceName;
+			// TODO add support for multiple devices
+			if (mSensorManager == null) return null;
+			return mSensorManager.mDeviceName;
 		}
 	};
 
@@ -150,7 +151,6 @@ public class DeviceManagerService extends Service {
 			case MessageType.SENSORCONNECTION_LOST: 
 			case MessageType.SENSORCONNECTION_DISCONNECTSELF: {
 				final String deviceName = (String)msg.obj;
-				mConnectedDeviceName = deviceName;
 				if (msg.what == MessageType.SENSORCONNECTION_SUCCESS) {
 					mLocationListener.requestLocationUpdates();
 				}
@@ -216,7 +216,6 @@ public class DeviceManagerService extends Service {
 		if (mSensorManager == null) return;
 
 		mLocationListener.removeLocationUpdates();
-		mConnectedDeviceName = null;
 
 		mSensorManager.stop();
 		mSensorManager = null;
