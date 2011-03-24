@@ -67,7 +67,7 @@ public class DeviceManagerService extends Service {
 	 * The location listener needs to be member object, because
 	 * Android location services are accessible through Context.
 	 */
-	GpsLocationListener mLocationListener = new GpsLocationListener();
+	GpsLocationListener mLocationListener;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -93,7 +93,7 @@ public class DeviceManagerService extends Service {
 	 */
 	@Override
 	public void onCreate() {
-		initLocationManager();
+		mLocationListener = new GpsLocationListener((LocationManager)getSystemService(Context.LOCATION_SERVICE));
 	}
 
 	/**
@@ -271,10 +271,6 @@ public class DeviceManagerService extends Service {
 				}
 			}
 		}
-	}
-
-	public void initLocationManager() {
-		mLocationListener.setLocationManager((LocationManager)getSystemService(Context.LOCATION_SERVICE));
 	}
 	
 }

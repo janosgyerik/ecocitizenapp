@@ -47,13 +47,13 @@ public class GpsLocationListener implements LocationListener {
 	static final int    MIN_TIME = 1000;
 	static final float  MIN_DISTANCE = .1f;
 
-	void setLocationManager(LocationManager locationManager) {
+	public GpsLocationListener(LocationManager locationManager) {
 		mLocationManager = locationManager;
-		/*
-		for (String provider : mLocationManager.getAllProviders()) {
-			Log.d(TAG, "location provider=" + provider + ", isEnabled=" + mLocationManager.isProviderEnabled(provider));
+		if (D) {
+			for (String provider : mLocationManager.getAllProviders()) {
+				Log.d(TAG, "location provider=" + provider + ", isEnabled=" + mLocationManager.isProviderEnabled(provider));
+			}
 		}
-		 */
 	}
 
 	void requestLocationUpdates() {
