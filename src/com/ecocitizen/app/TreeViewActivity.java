@@ -108,20 +108,6 @@ public class TreeViewActivity extends DeviceManagerClient {
 				startCommentActivity();
 			}
 		});
-		
-		/*
-		Button mBtnTest = (Button) findViewById(R.id.btn_test);
-		mBtnTest.setVisibility(View.VISIBLE);
-		mBtnTest.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				Intent intent = new Intent(TreeViewActivity.this, FileInfoWithUploadActivity.class);
-				Bundle params = new Bundle();
-				params.putString(FileInfoActivity.BUNDLEKEY_FILENAME, "/sdcard/Download/session_201102012023.csv");
-				intent.putExtras(params);
-				startActivity(intent);
-			}
-		});
-		*/
 	}
 
 	@Override
@@ -193,8 +179,8 @@ public class TreeViewActivity extends DeviceManagerClient {
 			treepage.setBackgroundResource(resID);
 			Bundle locationBundle = bundle.getBundle(BundleKeys.LOCATION_BUNDLE);
 			if (locationBundle == null) {
-				mLatView.setText("N.A.");
-				mLonView.setText("N.A.");
+				mLatView.setText(getString(R.string.common_na));
+				mLonView.setText(getString(R.string.common_na));
 			}
 			else {
 				Location location = (Location)locationBundle.getParcelable(BundleKeys.LOCATION_LOC);

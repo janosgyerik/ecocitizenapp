@@ -143,4 +143,7 @@
 	<string name="title_resetsettings">Reset to defaults</string>
 	<string name="summary_resetsettings">Reset all settings to defaults</string>
 	
+	<!-- common strings -->
+	<string name="common_na">N.A.</string>
+	
 </resources>
