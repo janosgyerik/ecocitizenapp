@@ -6,6 +6,10 @@ release in marketplace
 	add a property to switch debugging on/off
 	
 critical
+	bug: messages between DeviceManagerService and SensorManager are not well designed
+	bug: several bugs on debugtools
+		connect to sensor button should not be shown when connected
+		disconnect device menu does not work
 	bug: scan for bt devices layout is broken
 	bug: somehow, DeviceManagerService can NPE on line mSensorManager.get(deviceName).stop() in shutdownSensorManager method
 	bug: app gets into strange state after connection lost, sending session id 'null'

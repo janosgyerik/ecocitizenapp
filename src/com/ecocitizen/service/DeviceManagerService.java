@@ -56,6 +56,10 @@ public class DeviceManagerService extends Service {
 	 * Mapping of device name -> SensorManager
 	 * Many sensors can be connected at the same time, this hashmap
 	 * keeps track of connected (alive) sensors.
+	 * 
+	 * Important: sensors can be added and removed via RPC calls by clients,
+	 * and defunct sensors are removed automatically. All these operations might
+	 * not always happen on the same thread, and therefore need synchronization. 
 	 */
 	HashMap<String, SensorManager> mSensorManagers = new HashMap<String, SensorManager>();
 
@@ -157,6 +161,7 @@ public class DeviceManagerService extends Service {
 		}
 
 		public void shutdown() throws RemoteException {
+			shutdownAllSensorManagers();
 			stopSelf();
 		}
 
@@ -184,7 +189,9 @@ public class DeviceManagerService extends Service {
 
 	/**
 	 * Our Handler to execute operations on the main thread.
-	 * This is used to dispatch sentences to the callback listeners.
+	 * 
+	 * The handler is shared to all SensorManager objects to 
+	 * report their connection states and to dispatch to callback listeners.
 	 */
 	private final Handler mHandler = new Handler() {
 		@Override
@@ -196,6 +203,7 @@ public class DeviceManagerService extends Service {
 			case MessageType.SENSORCONNECTION_LOST: 
 			case MessageType.SENSORCONNECTION_DISCONNECTSELF: {
 				final String deviceName = (String)msg.obj;
+				if (D) Log.d(TAG, "what = " + msg.what + ", deviceName = " + deviceName);
 				if (msg.what == MessageType.SENSORCONNECTION_SUCCESS) {
 					mLocationListener.requestLocationUpdates();
 				}
@@ -203,7 +211,6 @@ public class DeviceManagerService extends Service {
 					shutdownSensorManager(deviceName);
 				}
 				final int N = mCallbacks.beginBroadcast();
-				if (D) Log.d(TAG, "what = " + msg.what + ", deviceName = " + deviceName);
 				for (int i = 0; i < N; ++i) {
 					try {
 						switch (msg.what) {
@@ -261,8 +268,8 @@ public class DeviceManagerService extends Service {
 	}
 
 	void shutdownSensorManager(String deviceName) {
-		if (mSensorManagers.containsKey(deviceName)) {
-			synchronized (mSensorManagers) {
+		synchronized (mSensorManagers) {
+			if (mSensorManagers.containsKey(deviceName)) {
 				mSensorManagers.get(deviceName).stop();
 				mSensorManagers.remove(deviceName);
 				
