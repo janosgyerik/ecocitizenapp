@@ -5,7 +5,15 @@ when connected
 release in marketplace
 	add a property to switch debugging on/off
 	
+when have android
+	make sure BluetoothSensorManager still works...
+
 critical
+	bug: remove setHandler and setGpsLocationListener in SensorManager
+	bug: connecting to a sensor should be synchronized and return bool
+		only connection lost messages will be necessary from sensors
+		gui client should use modal progress bar while connecting
+	bug: connecting to logplayer should be synchronized and return bool
 	bug: messages between DeviceManagerService and SensorManager are not well designed
 	bug: several bugs in debugtools
 		connect to sensor button should not be shown when connected
@@ -21,6 +29,10 @@ critical
 
 
 next
+	create the foundation for detecting sensor types and using different drivers based on sensor type
+		use ascii reader with senspods
+		use binary reader (zephyr reader) with zephyr
+		apply unit type overrides (ppm instead of V for COx from senspods)
 	add support for zephyr
 	clean up files on android
 		check on sessions that crash the app

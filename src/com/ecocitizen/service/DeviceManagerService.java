@@ -131,8 +131,11 @@ public class DeviceManagerService extends Service {
 			synchronized (mSensorManagers) {
 				if (mSensorManagers.containsKey(name)) return;
 
-				SensorManager sm = new BluetoothSensorManager(mHandler, mLocationListener, device);
-				mSensorManagers.put(name, sm);
+				BluetoothSensorManager sm = new BluetoothSensorManager(mHandler, mLocationListener, device);
+				if (sm.connect()) {
+					mSensorManagers.put(name, sm);
+					// TODO send back 'sensor added' to callback listeners
+				}
 			}
 		}
 
