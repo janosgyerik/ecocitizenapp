@@ -9,7 +9,6 @@ when have android
 	make sure BluetoothSensorManager still works...
 
 critical
-	bug: remove setHandler and setGpsLocationListener in SensorManager
 	bug: connecting to a sensor should be synchronized and return bool
 		only connection lost messages will be necessary from sensors
 		gui client should use modal progress bar while connecting

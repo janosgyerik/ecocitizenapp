@@ -34,18 +34,17 @@ abstract public class SensorManager {
 	String mSensorId;
 	String mDeviceName;
 
-	// handler of the owner object, for sending sentences and notifications
+	/**
+	 * Shared Handler received from the owner object, 
+	 * for sending sentences and lifecycle event notifications.
+	 */
 	Handler mHandler;
 
-	void setHandler(Handler handler) {
-		mHandler = handler;
-	}
-
+	/** 
+	 * Shared location listener received from the owner object,
+	 * for attaching GPS info to sentence data.
+	 */
 	GpsLocationListener mGpsLocationListener;
-
-	void setGpsLocationListener(GpsLocationListener gpsLocationListener) {
-		mGpsLocationListener = gpsLocationListener;
-	}
 
 	Bundle getSensorDataBundle(String sentence) {
 		Bundle bundle = new Bundle();
