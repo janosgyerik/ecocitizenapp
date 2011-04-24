@@ -55,13 +55,14 @@ public class LogplayerSensorManager extends SensorManager {
 		mDeviceName = filename;
 	}
 
-	@Override
-	public synchronized void start() {
+	public boolean connect() {
 		// Start the thread to manage the connection and perform transmissions
 		mConnectedThread = new ConnectedThread();
 		mConnectedThread.start();
 
 		sendToHandler(MessageType.SENSORCONNECTION_SUCCESS);
+		
+		return true;
 	}
 
 	/**

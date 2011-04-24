@@ -127,6 +127,8 @@ public class DeviceManagerService extends Service {
 		 * The device connection is represented by a BluetoothDevice object.
 		 */
 		public void connectBluetoothDevice(BluetoothDevice device) {
+			// TODO should return true/false on success, failure
+			// TODO ... and any additional messages as text
 			String name = device.getName();
 			synchronized (mSensorManagers) {
 				if (mSensorManagers.containsKey(name)) return;
@@ -134,7 +136,6 @@ public class DeviceManagerService extends Service {
 				BluetoothSensorManager sm = new BluetoothSensorManager(mHandler, mLocationListener, device);
 				if (sm.connect()) {
 					mSensorManagers.put(name, sm);
-					// TODO send back 'sensor added' to callback listeners
 				}
 			}
 		}
@@ -146,15 +147,18 @@ public class DeviceManagerService extends Service {
 		 * useful for stress tests.
 		 */
 		public void connectLogplayer(String assetFilename, int messageInterval) {
+			// TODO should return true/false on success, failure
+			// TODO ... and any additional messages as text
 			String name = assetFilename;
 			synchronized (mSensorManagers) {
 				if (mSensorManagers.containsKey(name)) return;
 
 				try {
 					InputStream instream = getAssets().open(assetFilename);
-					SensorManager sm = new LogplayerSensorManager(mHandler, mLocationListener, instream, messageInterval, assetFilename);
-					sm.start();
-					mSensorManagers.put(name, sm);
+					LogplayerSensorManager sm = new LogplayerSensorManager(mHandler, mLocationListener, instream, messageInterval, assetFilename);
+					if (sm.connect()) {
+						mSensorManagers.put(name, sm);
+					}
 				}
 				catch (IOException e) {
 					e.printStackTrace();
