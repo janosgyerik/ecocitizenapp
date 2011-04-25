@@ -9,6 +9,15 @@ when have android
 	make sure BluetoothSensorManager still works...
 
 critical
+	finish up bt handling
+		handle explicit user disconnect from bt
+		clean up messages
+		hide connect to sensor button after connection is established
+	use sensor id instead of name in DeviceManagerService
+	critical bug: pairing no longer works from inside the app due to thread
+		the thread never returns until pairing is properly finished
+		and the app appears hung
+		device disconnect is also not detected, worse than before
 	design the steps to change the screens and create tasks in redmine
 	design the steps to make it work with zephyr and create tasks in redmine
 	create system diagram and upload to wiki
@@ -22,7 +31,9 @@ critical
 	bug: several bugs in debugtools
 		connect to sensor button should not be shown when connected
 		disconnect device menu does not work
-	bug: scan for bt devices layout is broken
+	bug: scan for bt devices layout is completely broken
+		and on first scan device names come up as null
+		-> add to kit instructions: pair devices before starting the app
 	bug: app gets into strange state after connection lost, sending session id 'null'
 	bug: shows connected to sensor even though it's not.... hard to reproduce!!!
 	improve data uploading throughput

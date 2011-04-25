@@ -127,15 +127,20 @@ public class DeviceManagerService extends Service {
 		 * The device connection is represented by a BluetoothDevice object.
 		 */
 		public void connectBluetoothDevice(BluetoothDevice device) {
-			// TODO should return true/false on success, failure
-			// TODO ... and any additional messages as text
 			String name = device.getName();
 			synchronized (mSensorManagers) {
 				if (mSensorManagers.containsKey(name)) return;
 
-				BluetoothSensorManager sm = new BluetoothSensorManager(mHandler, mLocationListener, device);
-				if (sm.connect()) {
+				try {
+					BluetoothSensorManager sm = 
+						new BluetoothSensorManager(mHandler, mLocationListener, device);
+					sm.connect();
 					mSensorManagers.put(name, sm);
+				}
+				catch (Exception e) {
+					// Success or failure will be communicated back 
+					// to the caller by messages on the Handler.
+					return;
 				}
 			}
 		}
@@ -147,8 +152,6 @@ public class DeviceManagerService extends Service {
 		 * useful for stress tests.
 		 */
 		public void connectLogplayer(String assetFilename, int messageInterval) {
-			// TODO should return true/false on success, failure
-			// TODO ... and any additional messages as text
 			String name = assetFilename;
 			synchronized (mSensorManagers) {
 				if (mSensorManagers.containsKey(name)) return;
@@ -161,6 +164,8 @@ public class DeviceManagerService extends Service {
 					}
 				}
 				catch (IOException e) {
+					// Success or failure will be communicated back 
+					// to the caller by messages on the Handler.
 					e.printStackTrace();
 					return;
 				}
@@ -268,7 +273,7 @@ public class DeviceManagerService extends Service {
 	void shutdownAllSensorManagers() {
 		synchronized (mSensorManagers) {
 			for (SensorManager sm : mSensorManagers.values()) {
-				sm.stop();
+				sm.shutdown();
 			}
 			mSensorManagers.clear();
 		}
@@ -277,7 +282,7 @@ public class DeviceManagerService extends Service {
 	void shutdownSensorManager(String deviceName) {
 		synchronized (mSensorManagers) {
 			if (mSensorManagers.containsKey(deviceName)) {
-				mSensorManagers.get(deviceName).stop();
+				mSensorManagers.get(deviceName).shutdown();
 				mSensorManagers.remove(deviceName);
 				
 				if (mSensorManagers.isEmpty()) {

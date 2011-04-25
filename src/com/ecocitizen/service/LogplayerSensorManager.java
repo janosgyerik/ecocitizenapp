@@ -45,14 +45,10 @@ public class LogplayerSensorManager extends SensorManager {
 	 */
 	public LogplayerSensorManager(Handler handler, GpsLocationListener gpsLocationListener,
 			InputStream instream, int messageInterval, String filename) {
-		mHandler = handler;
-		mGpsLocationListener = gpsLocationListener;
+		super(filename, filename, handler, gpsLocationListener);
 
 		mMessageInterval = messageInterval;
 		mmInStream = instream;
-
-		mSensorId = filename;
-		mDeviceName = filename;
 	}
 
 	public boolean connect() {
@@ -60,7 +56,7 @@ public class LogplayerSensorManager extends SensorManager {
 		mConnectedThread = new ConnectedThread();
 		mConnectedThread.start();
 
-		sendToHandler(MessageType.SENSORCONNECTION_SUCCESS);
+		connectionSuccess();
 		
 		return true;
 	}
@@ -73,7 +69,7 @@ public class LogplayerSensorManager extends SensorManager {
 		if (mConnectedThread != null) mConnectedThread.shutdown();
 		if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
 
-		sendToHandler(MessageType.SENSORCONNECTION_NONE);
+		connectionNone();
 	}
 
 	/**
@@ -98,8 +94,7 @@ public class LogplayerSensorManager extends SensorManager {
 					String line = reader.readLine();
 					if (line != null) {
 						hasReadAnything = true;
-						Bundle bundle = getSensorDataBundle(line);
-						mHandler.obtainMessage(MessageType.SENTENCE, bundle).sendToTarget();
+						sendSentenceLine(line);
 						try {
 							Thread.sleep(mMessageInterval);
 						}
@@ -157,5 +152,11 @@ public class LogplayerSensorManager extends SensorManager {
 			}
 		}
 
+	}
+
+	@Override
+	public void shutdown() {
+		// TODO Auto-generated method stub
+		
 	}
 }

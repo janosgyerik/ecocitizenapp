@@ -26,7 +26,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.UUID;
 
-import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import backport.android.bluetooth.BluetoothDevice;
@@ -46,6 +45,7 @@ public class BluetoothSensorManager extends SensorManager {
 	private static final UUID MY_UUID = UUID.fromString("0E8783DA-BB85-4225-948F-F0EAB948C5FF");
 
 	// Member fields
+	private ConnectThread mConnectThread;
 	private ConnectedThread mConnectedThread;
 
 	/**
@@ -59,77 +59,54 @@ public class BluetoothSensorManager extends SensorManager {
 	 */
 	public BluetoothSensorManager(Handler handler, GpsLocationListener gpsLocationListener, 
 			BluetoothDevice device) {
-		mHandler = handler;
-		mGpsLocationListener = gpsLocationListener;
-
-		mSensorId = device.getAddress().replaceAll(":", "_");
-		mDeviceName = device.getName();
+		super(getDeviceId(device), device.getName(), handler, gpsLocationListener);
 		
 		mDevice = device;
 	}
+	
+	private static String getDeviceId(BluetoothDevice device) {
+		return device.getAddress().replaceAll(":", "_");
+	}
+	
+	public synchronized void connect() throws Exception {
+        // Cancel any thread attempting to make a connection
+        if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
 
-	/**
-	 * Start the ConnectThread to initiate a connection to a remote device.
-	 */
-	public boolean connect() {
-		if (D) Log.d(TAG, "connecting to: " + mDevice);
+        // Cancel any thread currently running a connection
+        if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
 
-		if (mConnectedThread != null) {
-			Log.e(TAG, "Invalid state. You are not supposed to call connect() twice.");
-			// TODO send a text message about the error
-			return false;
-		}
-		
-		// Get a BluetoothSocket for a connection with the given BluetoothDevice
-		BluetoothSocket btSocket = null;
-		try {
-			btSocket = mDevice.createRfcommSocketToServiceRecord(MY_UUID);
-		} 
-		catch (IOException e) {
-			Log.e(TAG, "create() failed", e);
-			// TODO send a text message about the error
-			return false;
-		}
-
-		// Make a connection to the BluetoothSocket
-		try {
-			// This is a blocking call and will only return on a
-			// successful connection or an exception
-			btSocket.connect();
-		} 
-		catch (IOException e) {
-			Log.e(TAG, "btSocket.connect() failed", e);
-			// TODO send a text message about the error
-
-			// Close the socket
-			try {
-				btSocket.close();
-			} catch (IOException e2) {
-				Log.e(TAG, "unable to close() socket during connection failure", e2);
-			}
-			return false;
-		}
-
-		if (D) Log.d(TAG, "connected");
-
-		// Start the thread to manage the connection and perform transmissions
-		mConnectedThread = new ConnectedThread(btSocket);
-		mConnectedThread.start();
-
-		connectionSuccess(); // TODO this is just for information
-		
-		return true;
+        try {
+			mConnectThread = new ConnectThread();
+	    	mConnectThread.start();
+        }
+        catch (Exception e) {
+        	// TODO send a connection failed message
+        	throw e; // propagate to caller
+        }
 	}
 
-	/**
-	 * Stop all threads
-	 */
-	public void stop() {
-		if (D) Log.d(TAG, "stop");
-		if (mConnectedThread != null) mConnectedThread.shutdown();
-		if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
+    public synchronized void connected(BluetoothSocket socket) {
+        // Cancel the thread that completed the connection
+        if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
 
-		connectionNone(); // TODO this is just for information
+        // Cancel any thread currently running a connection
+        if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
+
+        try {
+	        // Start the thread to manage the connection and perform transmissions
+	        mConnectedThread = new ConnectedThread(socket);
+	        mConnectedThread.start();
+        }
+        catch (Exception e) {
+        	// TODO send a connection failed message
+        }
+    }
+    
+	@Override
+	public void shutdown() {
+		if (D) Log.d(TAG, "stop");
+        if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
+		if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
 	}
 
 	/**
@@ -149,6 +126,64 @@ public class BluetoothSensorManager extends SensorManager {
 		// Perform the write unsynchronized
 		r.write(out);
 	}
+	
+	/**
+	 * This thread runs while creating a connection with a remote device.
+	 * It shuts itself down after successful connection.
+	 */
+	private class ConnectThread extends Thread {
+        private final BluetoothSocket mmSocket;
+
+        public ConnectThread() throws Exception {
+            BluetoothSocket tmp = null;
+
+            // Get a BluetoothSocket for a connection with the
+            // given BluetoothDevice
+            try {
+                tmp = mDevice.createRfcommSocketToServiceRecord(MY_UUID);
+            } catch (IOException e) {
+                Log.e(TAG, "create() failed", e);
+                throw new Exception("failed to create bluetooth socket");
+            }
+            mmSocket = tmp;
+        }
+
+        public void run() {
+            Log.i(TAG, "BEGIN mConnectThread");
+            setName("ConnectThread");
+
+            // Make a connection to the BluetoothSocket
+            try {
+                // This is a blocking call and will only return on a
+                // successful connection or an exception
+                mmSocket.connect();
+            } catch (IOException e) {
+                // Close the socket
+                try {
+                    mmSocket.close();
+                } catch (IOException e2) {
+                    Log.e(TAG, "unable to close() socket during connection failure", e2);
+                }
+                return;
+            }
+
+            // Reset the ConnectThread because we're done
+            synchronized (BluetoothSensorManager.this) {
+                mConnectThread = null;
+            }
+
+            // Start the connected thread
+            connected(mmSocket);
+        }
+
+        public void cancel() {
+            try {
+                mmSocket.close();
+            } catch (IOException e) {
+                Log.e(TAG, "close() of connect socket failed", e);
+            }
+        }
+	}
 
 	/**
 	 * This thread runs during a connection with a remote device.
@@ -158,8 +193,10 @@ public class BluetoothSensorManager extends SensorManager {
 		private final BluetoothSocket mmSocket;
 		private final InputStream mmInStream;
 		private final OutputStream mmOutStream;
+		
+		private boolean stop;
 
-		public ConnectedThread(BluetoothSocket socket) {
+		public ConnectedThread(BluetoothSocket socket) throws Exception {
 			Log.d(TAG, "create ConnectedThread");
 			mmSocket = socket;
 			InputStream tmpIn = null;
@@ -172,44 +209,57 @@ public class BluetoothSensorManager extends SensorManager {
 			} 
 			catch (IOException e) {
 				Log.e(TAG, "temp sockets not created", e);
+				throw new Exception("failed to setup input/output streams");
 			}
 
 			mmInStream = tmpIn;
 			mmOutStream = tmpOut;
 		}
 
-		private boolean stop = false;
-
-		public void shutdown() {
-			stop = true;
-			if (mmInStream != null) {
-				try {
-					mmInStream.close();
-				} 
-				catch (IOException e) {
-					Log.e(TAG, "close() of InputStream failed.");
-				}
-			}
-		}   
-
 		public void run() {
 			Log.i(TAG, "BEGIN mConnectedThread");
 
 			BufferedReader reader = new BufferedReader(new InputStreamReader(mmInStream));
+			
+			stop = false;
 
 			while (! stop) {
 				try {
 					String line = reader.readLine();
 					if (line != null) {
-						Bundle bundle = getSensorDataBundle(line);
-						mHandler.obtainMessage(MessageType.SENTENCE, bundle).sendToTarget();
+						sendSentenceLine(line);
 					}
 				} catch (IOException e) {
 					Log.e(TAG, "disconnected", e);
-					connectionLost(); // TODO make sure this cleans up the SensorManager properly
-					// TODO this is MORE than just information msg, SensorManager must be removed
+					// TODO This is not normal disconnect.
+					// Send message back on handler, 'connection lost'
 					break;			
 				}
+			}
+			
+			stopped();
+		}
+		
+		private void stopped() {
+			try {
+				mmInStream.close();
+			} 
+			catch (IOException e) {
+				Log.e(TAG, "close() of InputStream failed.");
+			}
+			
+			try {
+				mmOutStream.close();
+			} 
+			catch (IOException e) {
+				Log.e(TAG, "close() of OutputStream failed.");
+			}
+			
+			try {
+				mmSocket.close();
+			} 
+			catch (IOException e) {
+				Log.e(TAG, "close() of connect socket failed", e);
 			}
 		}
 
@@ -227,12 +277,8 @@ public class BluetoothSensorManager extends SensorManager {
 		}
 
 		public void cancel() {
-			try {
-				mmSocket.close();
-			} 
-			catch (IOException e) {
-				Log.e(TAG, "close() of connect socket failed", e);
-			}
+			stop = true;
 		}
 	}
+
 }
