@@ -420,6 +420,9 @@ public abstract class DeviceManagerClient extends Activity {
 		case REQUEST_CONNECT_DEVICE:
 			// When DeviceListActivity returns with a device to connect
 			if (resultCode == Activity.RESULT_OK) {
+				// Cancel discovery because it will slow down a connection
+				mBluetoothAdapter.cancelDiscovery();
+				
 				// Get the device MAC address
 				String address = data.getExtras()
 				.getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
