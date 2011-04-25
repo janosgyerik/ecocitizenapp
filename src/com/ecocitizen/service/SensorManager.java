@@ -52,19 +52,6 @@ abstract public class SensorManager {
 	 */
 	private final GpsLocationListener mGpsLocationListener;
 	
-	private static final int STATE_NONE = 0;
-	private static final int STATE_CONNECTED = 1;
-	private static final int STATE_CONNECTING = 2;
-	private int mState = STATE_NONE;
-	
-	/*
-	private SensorManager() {
-		this.mSensorId = null;
-		this.mSensorName = null;
-		this.mHandler = null;
-		this.mGpsLocationListener = null;
-	}
-	*/
 	
 	SensorManager(String sensorId, String sensorName, 
 			Handler handler, GpsLocationListener gpsLocationListener) {
@@ -100,21 +87,19 @@ abstract public class SensorManager {
 	/**
 	 * Send message to owner's handler.
 	 */
-	private void sendToHandler(int messageType) {
+	private void sendSensorNameMsg(int messageType) {
 		switch (messageType) {
-		case MessageType.SENSORCONNECTION_SUCCESS:
-			mHandler.obtainMessage(messageType, mSensorName).sendToTarget();
-			break;
-		case MessageType.SENSORCONNECTION_DISCONNECTSELF:
-		case MessageType.SENSORCONNECTION_FAILED:
-		case MessageType.SENSORCONNECTION_LOST:
-		case MessageType.SENSORCONNECTION_NONE:
+		case MessageType.SM_CONNECTED:
+		case MessageType.SM_DISCONNECT_SELF:
+		case MessageType.SM_CONNECT_FAILED:
+		case MessageType.SM_CONNECTION_LOST:
+		case MessageType.SM_DISCONNECTED:
 			mHandler.obtainMessage(messageType, mSensorName).sendToTarget();
 			break;
 		}
 	}
 	
-	void sendSentenceLine(String line) {
+	void sendSentenceLineMsg(String line) {
 		Bundle bundle = getSensorDataBundle(line);
 		mHandler.obtainMessage(MessageType.SENTENCE, bundle).sendToTarget();
 	}
@@ -122,35 +107,35 @@ abstract public class SensorManager {
 	/**
 	 * Connection established, notify owner's handler.
 	 */
-	void connectionSuccess() {
-		sendToHandler(MessageType.SENSORCONNECTION_SUCCESS);
+	void sendConnectedMsg() {
+		sendSensorNameMsg(MessageType.SM_CONNECTED);
 	}
 
 	/**
 	 * Connection failed, notify owner's handler.
 	 */
-	void connectionFailed() {
-		sendToHandler(MessageType.SENSORCONNECTION_FAILED);
+	void sendConnectFailedMsg() {
+		sendSensorNameMsg(MessageType.SM_CONNECT_FAILED);
 	}
 
 	/**
 	 * Connection lost, notify owner's handler.
 	 */
-	void connectionLost() {
-		sendToHandler(MessageType.SENSORCONNECTION_LOST);
+	void sendConnectionLostMsg() {
+		sendSensorNameMsg(MessageType.SM_CONNECTION_LOST);
 	}
 
 	/**
-	 * Connection none, notify owner's handler.
+	 * Disconnected, notify owner's handler.
 	 */
-	void connectionNone() {
-		sendToHandler(MessageType.SENSORCONNECTION_NONE);
+	void sendDisconnectedMsg() {
+		sendSensorNameMsg(MessageType.SM_DISCONNECTED);
 	}
 
 	/**
-	 * connectionDisconnectSelf, notify owner's handler.
+	 * Disconnected self, notify owner's handler.
 	 */
-	void connectionDisconnectSelf() {
-		sendToHandler(MessageType.SENSORCONNECTION_DISCONNECTSELF);
+	void sendDisconnectSelfMsg() {
+		sendSensorNameMsg(MessageType.SM_DISCONNECT_SELF);
 	}
 }

@@ -207,12 +207,12 @@ public class FileSaverService extends Service {
 				}
 				receivedSentenceBundle((Bundle)msg.obj);
 				break;
-			case MessageType.SENSORCONNECTION_FAILED:
-			case MessageType.SENSORCONNECTION_LOST:
-			case MessageType.SENSORCONNECTION_NONE:
+			case MessageType.SM_CONNECT_FAILED:
+			case MessageType.SM_CONNECTION_LOST:
+			case MessageType.SM_DISCONNECTED:
 				endSession();
 				break;
-			case MessageType.SENSORCONNECTION_SUCCESS:
+			case MessageType.SM_CONNECTED:
 				WAS_STARTSESSION = false;
 				break;
 			default:
@@ -273,19 +273,19 @@ public class FileSaverService extends Service {
 		}
 
 		public void receivedSensorConnectionNone() {
-			mHandler.obtainMessage(MessageType.SENSORCONNECTION_NONE).sendToTarget();
+			mHandler.obtainMessage(MessageType.SM_DISCONNECTED).sendToTarget();
 		}
 
 		public void receivedSensorConnectionFailed(String deviceName) {
-			mHandler.obtainMessage(MessageType.SENSORCONNECTION_FAILED, deviceName).sendToTarget();
+			mHandler.obtainMessage(MessageType.SM_CONNECT_FAILED, deviceName).sendToTarget();
 		}
 
 		public void receivedSensorConnectionLost(String deviceName) {
-			mHandler.obtainMessage(MessageType.SENSORCONNECTION_LOST, deviceName).sendToTarget();
+			mHandler.obtainMessage(MessageType.SM_CONNECTION_LOST, deviceName).sendToTarget();
 		}
 
 		public void receivedSensorConnectionSuccess(String deviceName) {
-			mHandler.obtainMessage(MessageType.SENSORCONNECTION_SUCCESS, deviceName).sendToTarget();
+			mHandler.obtainMessage(MessageType.SM_CONNECTED, deviceName).sendToTarget();
 		}
 	};
 

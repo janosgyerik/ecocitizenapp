@@ -56,7 +56,7 @@ public class LogplayerSensorManager extends SensorManager {
 		mConnectedThread = new ConnectedThread();
 		mConnectedThread.start();
 
-		connectionSuccess();
+		sendConnectedMsg();
 		
 		return true;
 	}
@@ -69,7 +69,7 @@ public class LogplayerSensorManager extends SensorManager {
 		if (mConnectedThread != null) mConnectedThread.shutdown();
 		if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
 
-		connectionNone();
+		sendDisconnectedMsg();
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class LogplayerSensorManager extends SensorManager {
 					String line = reader.readLine();
 					if (line != null) {
 						hasReadAnything = true;
-						sendSentenceLine(line);
+						sendSentenceLineMsg(line);
 						try {
 							Thread.sleep(mMessageInterval);
 						}
@@ -102,19 +102,19 @@ public class LogplayerSensorManager extends SensorManager {
 						}
 					}
 					else {
-						connectionDisconnectSelf();
+						sendDisconnectSelfMsg();
 						break;
 					}
 				} 
 				catch (IOException e) {
 					Log.e(TAG, "disconnected", e);
-					connectionLost();
+					sendConnectionLostMsg();
 					break;			
 				}
 				catch (Exception e) {
 					// Sometimes, NullPointerException can happen during shutdown...
 					Log.e(TAG, "disconnected", e);
-					connectionLost();
+					sendConnectionLostMsg();
 					break;			
 					/*
 					 * E/AndroidRuntime(  957): java.lang.NullPointerException
