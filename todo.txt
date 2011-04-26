@@ -9,10 +9,8 @@ when have android
 	make sure BluetoothSensorManager still works...
 
 critical
-	finish up bt handling
-		handle explicit user disconnect from bt
-		clean up messages
-		hide connect to sensor button after connection is established
+	but: connect to non-existent bt sensor works but it shouldn't
+		disconnect from non-existent bt sensor does nothing
 	use sensor id instead of name in DeviceManagerService
 	critical bug: pairing no longer works from inside the app due to thread
 		the thread never returns until pairing is properly finished

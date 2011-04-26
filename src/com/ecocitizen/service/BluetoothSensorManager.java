@@ -80,7 +80,7 @@ public class BluetoothSensorManager extends SensorManager {
 	    	mConnectThread.start();
         }
         catch (Exception e) {
-        	// TODO send a connection failed message
+        	this.sendConnectFailedMsg();
         	throw e; // propagate to caller
         }
 	}
@@ -98,7 +98,7 @@ public class BluetoothSensorManager extends SensorManager {
 	        mConnectedThread.start();
         }
         catch (Exception e) {
-        	// TODO send a connection failed message
+        	this.sendConnectFailedMsg();
         }
     }
     
@@ -221,6 +221,8 @@ public class BluetoothSensorManager extends SensorManager {
 
 			BufferedReader reader = new BufferedReader(new InputStreamReader(mmInStream));
 			
+			BluetoothSensorManager.this.sendConnectedMsg();
+			
 			stop = false;
 
 			while (! stop) {
@@ -231,16 +233,18 @@ public class BluetoothSensorManager extends SensorManager {
 					}
 				} catch (IOException e) {
 					Log.e(TAG, "disconnected", e);
-					// TODO This is not normal disconnect.
-					// Send message back on handler, 'connection lost'
-					break;			
+					stop = true;
+					closeFileHandles();
+					BluetoothSensorManager.this.sendConnectionLostMsg();
+					return;
 				}
 			}
 			
-			stopped();
+			closeFileHandles();
+			BluetoothSensorManager.this.sendDisconnectedMsg();
 		}
 		
-		private void stopped() {
+		private void closeFileHandles() {
 			try {
 				mmInStream.close();
 			} 
