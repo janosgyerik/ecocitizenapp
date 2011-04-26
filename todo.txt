@@ -8,32 +8,26 @@ release in marketplace
 when have android
 	make sure BluetoothSensorManager still works...
 
+known issues to add to wiki
+	known issue: connect to non-existent bluetooth sensor works (it shouldn't)
+		workaround: do not connect to non-existent bluetooth sensors
+		workaround: quit the application and restart
+	known issue: cannot disconnect from non-existent bluetooth sensor
+		workaround: do not connect to non-existent bluetooth sensors
+		workaround: quit the application and restart
+	known issue: bluetooth device name appears 'null' on first scan
+		workaround: scan again
+	known issue: connecting to a bluetooth device that has not been paired yet is confusing
+		workaround: pair the device in advance using android menu: Settings / Wireless controls / Bluetooth settings / Scan for devices
+
 critical
-	but: connect to non-existent bt sensor works but it shouldn't
-		disconnect from non-existent bt sensor does nothing
 	use sensor id instead of name in DeviceManagerService
-	critical bug: pairing no longer works from inside the app due to thread
-		the thread never returns until pairing is properly finished
-		and the app appears hung
-		device disconnect is also not detected, worse than before
-	design the steps to change the screens and create tasks in redmine
 	design the steps to make it work with zephyr and create tasks in redmine
 	create system diagram and upload to wiki
-	change connectLogplayer to return bool
-	change connectBluetoothDevice to return bool
-	clean up messages coming from DeviceManagerService
-		sensor connection is handled with connect* returning bool
-		additional error messages are returned as text messages
-		disconnect and sensor errors are returned as messages
-		the change will affect both client and server sides
 	bug: several bugs in debugtools
 		connect to sensor button should not be shown when connected
 		disconnect device menu does not work
-	bug: scan for bt devices layout is completely broken
-		and on first scan device names come up as null
-		-> add to kit instructions: pair devices before starting the app
 	bug: app gets into strange state after connection lost, sending session id 'null'
-	bug: shows connected to sensor even though it's not.... hard to reproduce!!!
 	improve data uploading throughput
 		test slowness, confirm and quantify
 		pack multiple messages in one transmission
