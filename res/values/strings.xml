@@ -97,6 +97,7 @@
     <string name="btn_comment">Comment</string>
 	<string name="btn_upload">Upload</string>
 	<string name="btn_delete">Delete</string>
+
     
     <!-- SensorMapUploaderService -->
     <string name="notification_smu_title">EcoCitizen Uploader Service</string>

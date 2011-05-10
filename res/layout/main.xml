@@ -24,16 +24,46 @@
     android:background="@drawable/background1"
     android:id="@+id/treepage"
     >
-    <TextView android:id="@+id/co2"
-    	style="@style/co2"
-    	android:gravity="center"
-	/>
-    <TextView android:id="@+id/lat"
-    	style="@style/latlon"
-    />
-    <TextView android:id="@+id/lon"
-    	style="@style/latlon"
-    />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:orientation="horizontal" 
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content" 
+    	android:id="@+id/co2"
+    	>
+    	<TextView android:id="@+id/co2name"
+    		style="@style/co2NameMetric"
+    		android:gravity="center"
+    		android:layout_weight="1"
+		/>
+    	<TextView android:id="@+id/co2val"
+    		style="@style/co2Val"
+    		android:gravity="center"
+    		android:layout_weight="1"
+		/>
+		<TextView android:id="@+id/co2metric"
+    		style="@style/co2NameMetric"
+    		android:gravity="center"
+    		android:layout_weight="1"
+		/>
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:orientation="horizontal" 
+    	 android:layout_width="fill_parent"
+    	android:layout_height="wrap_content" 
+    	android:id="@+id/latlon"
+    	>
+    	<TextView android:id="@+id/lat"
+    		style="@style/latlon"
+    		android:gravity="center"
+    		android:layout_weight="1"
+    	/>
+    	<TextView android:id="@+id/lon"
+    		style="@style/latlon"
+    		android:gravity="center"
+    		android:layout_weight="1"
+    	/>
+    </LinearLayout>
     <ListView android:id="@+id/vspace"
     	android:layout_width="fill_parent"
     	android:layout_height="fill_parent"

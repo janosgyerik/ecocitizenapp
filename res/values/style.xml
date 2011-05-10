@@ -18,11 +18,17 @@
     along with EcoCitizen.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <style name="co2" parent="@android:style/TextAppearance.Medium">
+    <style name="co2Val" parent="@android:style/TextAppearance.Medium">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
     	<item name="android:paddingTop">30px</item>
     	<item name="android:textSize">48px</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="co2NameMetric" parent="@android:style/TextAppearance.Medium">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:typeface">monospace</item>
     </style>
 
@@ -69,6 +75,9 @@
     <style name="fileInfoLabelCol" parent="@android:style/TextAppearance.Small">
     	<item name="android:paddingRight">3dip</item>
     </style>
+    
+
+    
     
     
 </resources>
