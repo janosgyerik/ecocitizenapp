@@ -5,9 +5,6 @@ when connected
 release in marketplace
 	add a property to switch debugging on/off
 	
-when have android
-	make sure BluetoothSensorManager still works...
-
 known issues to add to wiki
 	known issue: connect to non-existent bluetooth sensor works (it shouldn't)
 		workaround: do not connect to non-existent bluetooth sensors

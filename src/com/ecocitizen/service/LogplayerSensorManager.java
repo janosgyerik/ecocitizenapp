@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
