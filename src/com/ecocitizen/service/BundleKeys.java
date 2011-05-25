@@ -28,5 +28,8 @@ public abstract class BundleKeys {
 	public static final String LOCATION_DTZ = "LDZ";
 	public static final String LOCATION_LATLON_ID = "LLL";
 	public static final String LOCATION_LOC = "LOC";
+	
+	protected static final String COMMENT_DTZ = "CDZ";
+	protected static final String COMMENT_LINE = "CCC";
 
 }

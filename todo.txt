@@ -19,6 +19,7 @@ known issues to add to wiki
 
 critical
 	rename main.xml to treeview.xml
+	CommentActivity should return comment+dtz to caller activity
 	use sensor id instead of name in DeviceManagerService
 	in FileUploadActivity make items 1.5 times taller
 	change FileSaverService.FILENAME_PREFIX from "session_" to "EcoCitizen_"

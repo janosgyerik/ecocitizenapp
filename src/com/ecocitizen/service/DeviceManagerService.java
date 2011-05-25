@@ -197,6 +197,14 @@ public class DeviceManagerService extends Service {
 		public int getPid() {
 			return Process.myPid();
 		}
+
+		public void sendComment(String dtz, String comment) throws RemoteException {
+			Bundle bundle = new Bundle();
+			bundle.putBundle(BundleKeys.LOCATION_BUNDLE, mLocationListener.getLastLocationBundle());
+			bundle.putString(BundleKeys.COMMENT_DTZ, dtz);
+			bundle.putString(BundleKeys.COMMENT_LINE, comment);
+			mHandler.obtainMessage(MessageType.COMMENT, bundle).sendToTarget();
+		}
 	};
 
 	/**
