@@ -63,7 +63,8 @@ public class LogplayerSensorManager extends SensorManager {
 	/**
 	 * Stop all threads
 	 */
-	public synchronized void stop() {
+	@Override
+	public void shutdown() {
 		if (D) Log.d(TAG, "stop");
 		if (mConnectedThread != null) mConnectedThread.shutdown();
 		if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
@@ -153,9 +154,4 @@ public class LogplayerSensorManager extends SensorManager {
 
 	}
 
-	@Override
-	public void shutdown() {
-		// TODO Auto-generated method stub
-		
-	}
 }

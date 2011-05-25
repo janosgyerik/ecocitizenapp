@@ -23,7 +23,6 @@ critical
 	create system diagram and upload to wiki
 	bug: several bugs in debugtools
 		connect to sensor button should not be shown when connected
-		disconnect device menu does not work
 	bug: app gets into strange state after connection lost, sending session id 'null'
 	improve data uploading throughput
 		test slowness, confirm and quantify
