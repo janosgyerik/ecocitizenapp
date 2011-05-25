@@ -34,6 +34,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -106,7 +107,7 @@ public class TreeViewActivity extends DeviceManagerClient {
 			Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
 		}
 		
-		Button mBtnComment = (Button) findViewById(R.id.btn_comment);
+		ImageButton mBtnComment = (ImageButton) findViewById(R.id.btn_comment);
 		mBtnComment.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				startCommentActivity();
