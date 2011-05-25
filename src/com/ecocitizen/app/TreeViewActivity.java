@@ -47,8 +47,10 @@ public class TreeViewActivity extends DeviceManagerClient {
 	private static final boolean D = true;
 
 	// Layout Views
-	private TextView mCO2View;
+	private TextView mCO2ValView;
 	private static DecimalFormat co2Format = new DecimalFormat("0");
+	private TextView mCO2NameView;
+	private TextView mCO2MetricView;
 	private TextView mLatView;
 	private TextView mLonView;
 	private static DecimalFormat latlonFormat = new DecimalFormat("* ###.00000");
@@ -73,7 +75,9 @@ public class TreeViewActivity extends DeviceManagerClient {
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
 
 		// Set up layout components
-		mCO2View = (TextView)findViewById(R.id.co2);
+		mCO2ValView = (TextView)findViewById(R.id.co2val);
+		mCO2NameView = (TextView)findViewById(R.id.co2name);
+		mCO2MetricView = (TextView)findViewById(R.id.co2metric);
 		mLatView = (TextView)findViewById(R.id.lat);
 		mLonView = (TextView)findViewById(R.id.lon);
 
@@ -171,7 +175,9 @@ public class TreeViewActivity extends DeviceManagerClient {
 	void receivedSentenceBundle(Bundle bundle) {
 		String line = bundle.getString(BundleKeys.SENTENCE_LINE);
 		if (parser.match(line)) {
-			mCO2View.setText(co2Format.format(parser.getFloatValue()));
+			mCO2ValView.setText(co2Format.format(parser.getFloatValue()));
+			mCO2NameView.setText(parser.getName());
+			mCO2MetricView.setText(parser.getMetric());
 
 			String imgname = IMG_PREFIX + parser.getLevel();
 			int resID = getResources().getIdentifier(imgname, DEF_TYPE, DEF_PACKAGE);
