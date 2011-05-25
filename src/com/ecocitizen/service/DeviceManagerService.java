@@ -71,7 +71,7 @@ public class DeviceManagerService extends Service {
 	 * The location listener needs to be member object, because
 	 * Android location services are accessible through Context.
 	 */
-	GpsLocationListener mLocationListener;
+	GpsLocationListener mGpsLocationListener;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -97,7 +97,7 @@ public class DeviceManagerService extends Service {
 	 */
 	@Override
 	public void onCreate() {
-		mLocationListener = new GpsLocationListener((LocationManager)getSystemService(Context.LOCATION_SERVICE));
+		mGpsLocationListener = new GpsLocationListener((LocationManager)getSystemService(Context.LOCATION_SERVICE));
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class DeviceManagerService extends Service {
 		if (D) Log.d(TAG, "+++ ON DESTROY +++");
 
 		shutdownAllSensorManagers();
-		mLocationListener.removeLocationUpdates();
+		mGpsLocationListener.removeLocationUpdates();
 
 		Toast.makeText(this, "Device Manager stopped", Toast.LENGTH_SHORT);
 
@@ -133,7 +133,7 @@ public class DeviceManagerService extends Service {
 
 				try {
 					BluetoothSensorManager sm = 
-						new BluetoothSensorManager(mHandler, mLocationListener, device);
+						new BluetoothSensorManager(mHandler, mGpsLocationListener, device);
 					sm.connect();
 					mSensorManagers.put(name, sm);
 				}
@@ -158,7 +158,7 @@ public class DeviceManagerService extends Service {
 
 				try {
 					InputStream instream = getAssets().open(assetFilename);
-					LogplayerSensorManager sm = new LogplayerSensorManager(mHandler, mLocationListener, instream, messageInterval, assetFilename);
+					LogplayerSensorManager sm = new LogplayerSensorManager(mHandler, mGpsLocationListener, instream, messageInterval, assetFilename);
 					if (sm.connect()) {
 						mSensorManagers.put(name, sm);
 					}
@@ -200,7 +200,7 @@ public class DeviceManagerService extends Service {
 
 		public void sendComment(String dtz, String comment) throws RemoteException {
 			Bundle bundle = new Bundle();
-			bundle.putBundle(BundleKeys.LOCATION_BUNDLE, mLocationListener.getLastLocationBundle());
+			bundle.putBundle(BundleKeys.LOCATION_BUNDLE, mGpsLocationListener.getLastLocationBundle());
 			bundle.putString(BundleKeys.COMMENT_DTZ, dtz);
 			bundle.putString(BundleKeys.COMMENT_LINE, comment);
 			mHandler.obtainMessage(MessageType.COMMENT, bundle).sendToTarget();
@@ -225,7 +225,7 @@ public class DeviceManagerService extends Service {
 				final String deviceName = (String)msg.obj;
 				if (D) Log.d(TAG, "what = " + msg.what + ", deviceName = " + deviceName);
 				if (msg.what == MessageType.SM_CONNECTED) {
-					mLocationListener.requestLocationUpdates();
+					mGpsLocationListener.requestLocationUpdates();
 				}
 				else {
 					shutdownSensorManager(deviceName);
@@ -294,7 +294,7 @@ public class DeviceManagerService extends Service {
 				mSensorManagers.remove(deviceName);
 				
 				if (mSensorManagers.isEmpty()) {
-					mLocationListener.removeLocationUpdates();
+					mGpsLocationListener.removeLocationUpdates();
 				}
 			}
 		}
