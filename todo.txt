@@ -18,7 +18,6 @@ known issues to add to wiki
 		workaround: pair the device in advance using android menu: Settings / Wireless controls / Bluetooth settings / Scan for devices
 
 critical
-	rename main.xml to treeview.xml
 	CommentActivity should return comment+dtz to caller activity
 	use sensor id instead of name in DeviceManagerService
 	in FileUploadActivity make items 1.5 times taller

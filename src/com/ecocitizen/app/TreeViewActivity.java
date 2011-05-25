@@ -72,7 +72,7 @@ public class TreeViewActivity extends DeviceManagerClient {
 
 		// Set up the window layout
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-		setContentView(R.layout.main);
+		setContentView(R.layout.treeview);
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
 
 		// Set up layout components
