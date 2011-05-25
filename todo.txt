@@ -20,8 +20,6 @@ known issues to add to wiki
 critical
 	CommentActivity should return comment+dtz to caller activity
 	use sensor id instead of name in DeviceManagerService
-	change FileSaverService.FILENAME_PREFIX from "session_" to "EcoCitizen_"
-		for backwards compatibility, files saved with "session_" should continue to work
 	design the steps to make it work with zephyr and create tasks in redmine
 	create system diagram and upload to wiki
 	bug: disconnect device menu does not work in debugtools

@@ -98,7 +98,8 @@ abstract class FileManagerActivity extends Activity {
 	private void buildInternalFilenamesList() {
 		internalFilenames = new LinkedList<String>();
 		for (String filename : fileList()) {
-			if (filename.startsWith(FileSaverService.FILENAME_PREFIX) 
+			if ((filename.startsWith(FileSaverService.FILENAME_PREFIX) 
+					|| filename.startsWith(FileSaverService.FILENAME_PREFIX_LEGACY)) 
 					&& filename.endsWith(FileSaverService.FILENAME_EXTENSION)) { 
 				internalFilenames.add(filename);
 			}
@@ -110,7 +111,8 @@ abstract class FileManagerActivity extends Activity {
 		if (externalDir.isDirectory()) {
 			for (File file : externalDir.listFiles()) {
 				String filename = file.getName();
-				if (filename.startsWith(FileSaverService.FILENAME_PREFIX) 
+				if ((filename.startsWith(FileSaverService.FILENAME_PREFIX) 
+						|| filename.startsWith(FileSaverService.FILENAME_PREFIX_LEGACY)) 
 						&& filename.endsWith(FileSaverService.FILENAME_EXTENSION)) { 
 					externalFilenames.add(file.getName());
 				}

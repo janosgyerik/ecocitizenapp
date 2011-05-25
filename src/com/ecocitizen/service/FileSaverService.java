@@ -58,7 +58,8 @@ public class FileSaverService extends Service {
 	private static boolean WAS_STARTSESSION = false;
 	
 	public final static String EXTERNAL_TARGETDIR = "Download";
-	public final static String FILENAME_PREFIX = "session_";
+	public final static String FILENAME_PREFIX = "EcoCitizen_";
+	public final static String FILENAME_PREFIX_LEGACY = "session_";
 	public final static String FILENAME_EXTENSION = "csv";
 	public final static SimpleDateFormat DATEFORMAT = new SimpleDateFormat("yyyyMMddHHmm");
 
