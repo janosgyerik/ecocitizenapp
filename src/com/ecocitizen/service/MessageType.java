@@ -27,5 +27,7 @@ public abstract class MessageType {
 	public final static int SM_DISCONNECT_SELF = 15;
 
 	public final static int SENTENCE = 21;
+	
+	public final static int COMMENT = 31;
 
 }
