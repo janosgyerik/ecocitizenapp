@@ -25,6 +25,13 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 
+/*
+ * To test in emulator:
+ * 0. The AVD must have GPS support enabled in Hardware properties.
+ * 1. telnet localhost 5554
+ * 2. geo fix -82.411629 28.054553
+ *            ^^^ LONG   ^^^ LAT
+ */
 public class GpsLocationListener implements LocationListener {
 	// Debugging
 	private static final String TAG = "GpsLocationListener";
