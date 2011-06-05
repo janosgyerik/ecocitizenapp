@@ -206,9 +206,9 @@ public class TreeViewActivity extends DeviceManagerClient {
 				
 				lat_val = Location.convert(location.getLatitude(), Location.FORMAT_SECONDS).split(":", 0);
 				lon_val = Location.convert(location.getLongitude(), Location.FORMAT_SECONDS).split(":", 0);
-				mLatValView.setText(lat_val[0] + "ก" + lat_val[1] + "'" +
+				mLatValView.setText(lat_val[0] + "ยบ" + lat_val[1] + "'" +
 						lat_val[2].substring(0, lat_val[2].indexOf('.')) + "\"");
-				mLonValView.setText(lon_val[0] + "ก" + lon_val[1] + "'" +
+				mLonValView.setText(lon_val[0] + "ยบ" + lon_val[1] + "'" +
 						lon_val[2].substring(0, lon_val[2].indexOf('.')) + "\"");
 			}
 		}
