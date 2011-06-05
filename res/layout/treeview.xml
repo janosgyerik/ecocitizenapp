@@ -49,20 +49,35 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     	android:orientation="horizontal" 
-    	 android:layout_width="fill_parent"
+    	android:layout_width="fill_parent"
     	android:layout_height="wrap_content" 
     	android:id="@+id/latlon"
     	>
-    	<TextView android:id="@+id/lat"
-    		style="@style/latlon"
+    	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    		android:orientation="horizontal"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
     		android:gravity="center"
     		android:layout_weight="1"
-    	/>
-    	<TextView android:id="@+id/lon"
-    		style="@style/latlon"
+    		>
+    		<TextView android:id="@+id/latname" style="@style/latlon" />
+    		<TextView android:id="@+id/latval" style="@style/latlon" />
+    	</LinearLayout>
+    	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    		android:orientation="horizontal"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
     		android:gravity="center"
     		android:layout_weight="1"
-    	/>
+    		>
+    		<TextView android:id = "@+id/lonname"
+    			style="@style/latlon"
+    		/>
+    		<TextView android:id="@+id/lonval"
+    			style="@style/latlon"
+    		/>
+    	</LinearLayout>
+
     </LinearLayout>
     <ListView android:id="@+id/vspace"
     	android:layout_width="fill_parent"
