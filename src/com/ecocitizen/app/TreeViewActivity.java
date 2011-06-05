@@ -51,9 +51,11 @@ public class TreeViewActivity extends DeviceManagerClient {
 	private static DecimalFormat co2Format = new DecimalFormat("0");
 	private TextView mCO2NameView;
 	private TextView mCO2MetricView;
-	private TextView mLatView;
-	private TextView mLonView;
-	private static DecimalFormat latlonFormat = new DecimalFormat("* ###.00000");
+	private TextView mLatNameView;
+	private TextView mLatValView;
+	private TextView mLonNameView;
+	private TextView mLonValView;
+	//private static DecimalFormat latlonFormat = new DecimalFormat("* ###.00000");
 
 	private static final String IMG_PREFIX = "treebg_level_";
 	private static final String DEF_PACKAGE = "com.ecocitizen.app";
@@ -78,8 +80,10 @@ public class TreeViewActivity extends DeviceManagerClient {
 		mCO2ValView = (TextView)findViewById(R.id.co2val);
 		mCO2NameView = (TextView)findViewById(R.id.co2name);
 		mCO2MetricView = (TextView)findViewById(R.id.co2metric);
-		mLatView = (TextView)findViewById(R.id.lat);
-		mLonView = (TextView)findViewById(R.id.lon);
+		mLatNameView = (TextView)findViewById(R.id.latname);
+		mLatValView = (TextView)findViewById(R.id.latval);
+		mLonNameView = (TextView)findViewById(R.id.lonname);
+		mLonValView = (TextView)findViewById(R.id.lonval);
 
 		// Set up the button to connect/disconnect sensors
 		mBtnConnect = (Button)findViewById(R.id.btn_connect_device);
@@ -195,6 +199,8 @@ public class TreeViewActivity extends DeviceManagerClient {
 			mCO2ValView.setText(co2Format.format(parser.getFloatValue()));
 			mCO2NameView.setText(parser.getName());
 			mCO2MetricView.setText(parser.getMetric());
+			mLatNameView.setText("lat.=");
+			mLonNameView.setText("long.=");
 
 			String imgname = IMG_PREFIX + parser.getLevel();
 			int resID = getResources().getIdentifier(imgname, DEF_TYPE, DEF_PACKAGE);
@@ -202,13 +208,20 @@ public class TreeViewActivity extends DeviceManagerClient {
 			treepage.setBackgroundResource(resID);
 			Bundle locationBundle = bundle.getBundle(BundleKeys.LOCATION_BUNDLE);
 			if (locationBundle == null) {
-				mLatView.setText("N.A.");
-				mLonView.setText("N.A.");
+				mLatValView.setText("N.A");
+				mLonValView.setText("N.A");
 			}
 			else {
+				String lat_val[], lon_val[];
+				
 				Location location = (Location)locationBundle.getParcelable(BundleKeys.LOCATION_LOC);
-				mLatView.setText(latlonFormat.format(location.getLatitude()));
-				mLonView.setText(latlonFormat.format(location.getLongitude()));
+				
+				lat_val = Location.convert(location.getLatitude(), Location.FORMAT_SECONDS).split(":", 0);
+				lon_val = Location.convert(location.getLongitude(), Location.FORMAT_SECONDS).split(":", 0);
+				mLatValView.setText(lat_val[0] + "Åã" + lat_val[1] + "'" +
+						lat_val[2].substring(0, lat_val[2].indexOf('.')) + "\"");
+				mLonValView.setText(lon_val[0] + "Åã" + lon_val[1] + "'" +
+						lon_val[2].substring(0, lon_val[2].indexOf('.')) + "\"");
 			}
 		}
 	}
