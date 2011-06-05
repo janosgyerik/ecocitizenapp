@@ -76,8 +76,43 @@
     	<item name="android:paddingRight">3dip</item>
     </style>
     
+    <style name="boxName" parent="@android:style/TextAppearance.Medium">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    	<item name="android:textSize">22px</item>
+    	<item name="android:gravity">top</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+    
+    <style name="boxValMetric" parent="@android:style/TextAppearance.Medium">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:typeface">monospace</item>
+        <item name="android:paddingRight">3dip</item>
+        <item name="android:textColor">#ee0</item>
+    </style>
+    
+    <style name="boxImage">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">80px</item>
+        <item name="android:scaleType">fitEnd</item>
+        <item name="android:src">@drawable/tree1</item>
+        
+    </style>
 
+    <style name="recordTRH" parent="@android:style/TextAppearance.Medium">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">22px</item>
+        <item name="android:typeface">monospace</item>
+    </style>
     
-    
-    
+    <style name="recordlatlon" parent="@android:style/TextAppearance.Small">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:typeface">monospace</item>
+        <item name="android:paddingRight">3dip</item>
+        <item name="android:textColor">#ee0</item>
+    </style>
 </resources>
