@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<!--
+		Copyright (C) 2010 Mobile Environmental Sensing For Sustainable Cities
+
+		This file is part of EcoCitizen. EcoCitizen is free software: you can
+		redistribute it and/or modify it under the terms of the GNU General
+		Public License as published by the Free Software Foundation, either
+		version 3 of the License, or (at your option) any later version.
+
+		EcoCitizen is distributed in the hope that it will be useful, but
+		WITHOUT ANY WARRANTY; without even the implied warranty of
+		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+		General Public License for more details. You should have received a
+		copy of the GNU General Public License along with EcoCitizen. If not,
+		see <http://www.gnu.org/licenses/>.
+	-->
+<LinearLayout android:id="@+id/linearLayout1"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:background="@drawable/background1" android:orientation="vertical">
+	
+	<ListView android:id="@+id/vspace"
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:layout_weight="1"
+    />
+    
+	<TableLayout android:id="@+id/boxes" 
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content">
+		<TableRow android:id="@+id/boxRow1" 
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content">
+			<include android:id="@+id/boxtop_left" 
+				layout="@layout/box"
+				android:layout_weight="1" />
+			<include android:id="@+id/boxtop_right" 
+				layout="@layout/box"
+				android:layout_weight="1" />
+		</TableRow>
+		<TableRow android:id="@+id/boxRow1" 
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content">
+			<include android:id="@+id/boxbottom_left" 
+				layout="@layout/box"
+				android:layout_weight="1" />
+			<include android:id="@+id/boxbottom_right" 
+				layout="@layout/box"
+				android:layout_weight="1" />
+		</TableRow>
+	</TableLayout>
+
+    <ListView android:id="@+id/vspace"
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:layout_weight="1"
+    />
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="horizontal" 
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" 
+		android:id="@+id/t_rh">
+		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:orientation="horizontal">
+			<TextView android:id="@+id/T_name" 
+				android:text="T"
+				style="@style/recordTRH" />
+			<TextView android:text="="
+				style="@style/recordTRH" />
+			<TextView android:id="@+id/T_val" 
+				style="@style/recordTRH" />
+			<TextView android:id="@+id/T_metric" 
+				android:text=" grad C"
+				style="@style/recordTRH" />
+		</LinearLayout>
+		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:layout_width="fill_parent" 
+			android:layout_height="wrap_content"
+			android:orientation="horizontal" 
+			android:layout_marginLeft="20px">
+			<TextView android:id="@+id/RH_name" 
+				android:text="RH"
+				style="@style/recordTRH" />
+			<TextView android:text="="
+				style="@style/recordTRH" />
+			<TextView android:id="@+id/RH_val" 
+				style="@style/recordTRH" />
+			<TextView android:id="@+id/RH_metric" 
+				android:text="%"
+				style="@style/recordTRH" />
+		</LinearLayout>
+	</LinearLayout>
+	
+	<ListView android:id="@+id/vspace"
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:layout_weight="1"
+    />
+	
+	<ImageView android:id="@+id/titleDivider"
+		android:layout_width="fill_parent" 
+		android:layout_height="1dip"
+		android:src="@android:drawable/divider_horizontal_dark"
+		android:scaleType="fitXY" 
+		android:gravity="fill_horizontal"
+		android:layout_marginLeft="10dip" 
+		android:layout_marginRight="10dip" />
+
+	<ListView android:id="@+id/vspace"
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:layout_weight="1"
+    />
+    
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="horizontal" 
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" 
+		android:id="@+id/latlon">
+		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:orientation="horizontal">
+			<TextView android:id="@+id/lat_name" 
+				android:text="lat."
+				style="@style/recordlatlon" />
+			<TextView android:text="="
+				style="@style/recordlatlon" />
+			<TextView android:id="@+id/lat_val"	
+				style="@style/recordlatlon" />
+			<TextView android:id="@+id/lat_metric" 
+				android:text="N"
+				style="@style/recordlatlon" />
+		</LinearLayout>
+		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:layout_width="fill_parent" 
+			android:layout_height="wrap_content"
+			android:orientation="horizontal" 
+			android:layout_marginLeft="20px">
+			<TextView android:id="@+id/lon_name" 
+				android:text="long."
+				style="@style/recordlatlon" />
+			<TextView  android:text="="
+				style="@style/recordlatlon" />
+			<TextView android:id="@+id/lon_val"
+				style="@style/recordlatlon" />
+			<TextView android:id="@+id/lon_metric" 
+				android:text="E"
+				style="@style/recordlatlon" />
+		</LinearLayout>
+	</LinearLayout>
+	    
+	<ListView android:id="@+id/vspace"
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:layout_weight="1"
+    />
+
+    <Button android:id="@+id/btn_connect_device"
+		android:text="@string/btn_connect_device"
+    	android:stackFromBottom="true"
+		style="@style/btn"
+    />
+    <Button android:id="@+id/btn_disconnect_device"
+		android:text="@string/btn_disconnect_device"
+    	android:stackFromBottom="true"
+    	android:visibility="gone"
+		style="@style/btn"
+    />
+    <Button android:id="@+id/btn_comment"
+		android:text="@string/btn_comment"
+    	android:stackFromBottom="true"
+    	android:visibility="gone"
+		style="@style/btn"
+    />
+    <Button android:id="@+id/btn_test"
+		android:text="Fire Test"
+    	android:stackFromBottom="true"
+    	android:visibility="gone"
+		style="@style/btn"
+    />
+</LinearLayout>
+
+

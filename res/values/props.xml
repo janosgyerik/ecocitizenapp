@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2010 Mobile Environmental Sensing For Sustainable Cities
+    
+    This file is part of EcoCitizen.
+
+    EcoCitizen is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    EcoCitizen is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with EcoCitizen.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!-- 
+Rename this file to props.xml and adjust the values appropriately depending
+on the deployment type, for example development / production.
+-->
+<resources>
+    <!-- Application default properties -->
+
+    <string name="username">anon</string>
+    <string name="map_server_url">http://dev.ecomobilecitizen.com/api/</string>
+    <string name="api_key">JRECsQLiWYisEsLS</string>
+    
+    <bool name="rtupload">true</bool>
+    <bool name="filesaver">true</bool>
+    <bool name="use_external_storage">true</bool>
+
+    <!-- For developers only -->
+
+    <string name="logplayer_sensor_id">apiv3</string>
+    <string name="logplayer_filename">CO2SenspodSample1.txt</string>
+    <integer name="logplayer_msg_interval">1000</integer>
+
+    <integer name="min_dummy_files">0</integer>
+
+</resources>
