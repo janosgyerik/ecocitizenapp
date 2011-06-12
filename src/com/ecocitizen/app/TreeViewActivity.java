@@ -169,11 +169,9 @@ public class TreeViewActivity extends DeviceManagerClient {
 		case R.id.menu_fileuploader:
 			startActivity(new Intent(this, FileUploaderActivity.class));
 			return true;
-			/*
-		case R.id.menu_indication:
+		case R.id.menu_multisensorview:
 			startActivity(new Intent(this, MultiSensorViewActivity.class));
 			return true;
-			*/
 		}
 		return false;
 	}
