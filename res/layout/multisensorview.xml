@@ -17,7 +17,7 @@
 <LinearLayout android:id="@+id/linearLayout1"
 	android:layout_width="fill_parent" android:layout_height="fill_parent"
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:background="@drawable/background1" android:orientation="vertical">
+	android:background="@drawable/background2" android:orientation="vertical">
 	
 	<ListView android:id="@+id/vspace"
     	android:layout_width="fill_parent"
