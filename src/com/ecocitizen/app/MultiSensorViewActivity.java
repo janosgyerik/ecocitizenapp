@@ -45,8 +45,6 @@ public class MultiSensorViewActivity extends SimpleDeviceManagerClient {
 	// Constants
 	private final int box_num = 4;
 	
-	private static DecimalFormat latlonFormat = new DecimalFormat("* ###.00000");
-	
 	private TextView mLatView;
 	private TextView mLonView;
 	private TextView mTView;
@@ -105,10 +103,10 @@ public class MultiSensorViewActivity extends SimpleDeviceManagerClient {
 		parser_box[3] = new NoiseSentenceParser();
 		
 		if (locationBundle == null) {
-			mLatView.setText("N.A");
-			mLonView.setText("N.A");
-			mTView.setText("N.A");
-			mRHView.setText("N.A");
+			mLatView.setText(R.string.common_na);
+			mLonView.setText(R.string.common_na);
+			mTView.setText(R.string.common_na);
+			mRHView.setText(R.string.common_na);
 		}
 		else {
 			String lat_val[], lon_val[];
@@ -117,9 +115,9 @@ public class MultiSensorViewActivity extends SimpleDeviceManagerClient {
 			
 			lat_val = Location.convert(location.getLatitude(), Location.FORMAT_SECONDS).split(":", 0);
 			lon_val = Location.convert(location.getLongitude(), Location.FORMAT_SECONDS).split(":", 0);
-			mLatView.setText(lat_val[0] + "Åã" + lat_val[1] + "'" +
+			mLatView.setText(lat_val[0] + "¬∫" + lat_val[1] + "'" +
 					lat_val[2].substring(0, lat_val[2].indexOf('.')) + "\"");
-			mLonView.setText(lon_val[0] + "Åã" + lon_val[1] + "'" +
+			mLonView.setText(lon_val[0] + "¬∫" + lon_val[1] + "'" +
 					lon_val[2].substring(0, lon_val[2].indexOf('.')) + "\"");
 			mTView.setText("24.5");
 			mRHView.setText("35");
