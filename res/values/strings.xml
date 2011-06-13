@@ -14,7 +14,7 @@
     <string name="fileuploader_activity">File Uploader</string>
     <string name="fileremover_activity">File Remover</string>
     <string name="comment_activity">Comment</string>
-    <string name="multisensor_activity">Indication</string>
+    <string name="multisensorview_activity">MultiSensor View</string>
     <string name="msg_are_you_sure">Are you sure?</string> 
     <string name="msg_no_files">There are no files.</string>
     <string name="fileinfo_activity">File Info</string> 
@@ -49,7 +49,7 @@
     <string name="menu_debugtools">Debug Tools</string>
     <string name="menu_preparegps">Prepare GPS</string>
     <string name="menu_fileuploader">Upload data</string>
-    <string name="menu_indication">indication</string>
+    <string name="menu_multisensorview">MultiSensor View</string>
     
     <!--  Preferences -->
     <string name="title_username_preference">Username</string>

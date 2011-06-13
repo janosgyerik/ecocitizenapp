@@ -36,6 +36,6 @@
 		android:title="@string/menu_fileuploader" />
 	<item android:id="@+id/menu_quit" android:icon="@android:drawable/ic_lock_power_off"
 		android:title="@string/menu_quit" />
-	<item android:id="@+id/menu_multisensorview"
+	<item android:id="@+id/menu_multisensorview" android:icon="@drawable/settings"
 		android:title="@+string/menu_multisensorview"/>
 </menu>

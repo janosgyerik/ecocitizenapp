@@ -47,7 +47,7 @@
 		<activity android:name=".TabularViewPlusActivity" android:label="@string/tabularviewplus_activity">
 		</activity>
 		
-		<activity android:name=".MultiSensorViewActivity" android:label="@string/multisensor_activity">
+		<activity android:name=".MultiSensorViewActivity" android:label="@string/multisensorview_activity">
 		</activity>
 		
 		<activity android:name=".FileRemoverActivity" android:label="@string/fileremover_activity">
