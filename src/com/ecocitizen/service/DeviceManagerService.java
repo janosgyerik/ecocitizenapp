@@ -235,7 +235,7 @@ public class DeviceManagerService extends Service {
 					try {
 						switch (msg.what) {
 						case MessageType.SM_DISCONNECTED:
-							mCallbacks.getBroadcastItem(i).receivedSensorConnectionNone();
+							mCallbacks.getBroadcastItem(i).receivedSensorConnectionDisconnected(deviceName);
 							break;
 						case MessageType.SM_CONNECTED:
 							mCallbacks.getBroadcastItem(i).receivedSensorConnectionSuccess(deviceName);

@@ -19,6 +19,9 @@
 
 package com.ecocitizen.app;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -63,7 +66,7 @@ public abstract class DeviceManagerClient extends Activity {
 	// Local Bluetooth adapter
 	BluetoothAdapter mBluetoothAdapter = null;
 	
-	String mConnectedDeviceName = null;
+	Set<String> mConnectedDeviceNames = new HashSet<String>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -323,9 +326,13 @@ public abstract class DeviceManagerClient extends Activity {
 	}
 
 	void disconnectSensor() {
+		disconnectSensor(mConnectedDeviceNames.iterator().next());
+	}
+	
+	void disconnectSensor(String deviceName) {
 		if (mService != null) {
 			try {
-				mService.disconnectDevice(mConnectedDeviceName);
+				mService.disconnectDevice(deviceName);
 			}
 			catch (RemoteException e) {
 				// Bummer eh. Not much we can do here.
@@ -391,21 +398,22 @@ public abstract class DeviceManagerClient extends Activity {
 
 	abstract void receivedSentenceLine(String line);
 
-	// The Handler that gets information back from the BluetoothSensorService
+	// The Handler that gets information back from the DeviceManagerService
 	final Handler mHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
+			Log.d(TAG, "handleMessage " + msg.what + " " + msg.obj);
 			switch (msg.what) {
 			case MessageType.SENTENCE:
 				receivedSentenceBundle((Bundle)msg.obj);
 				break;
 			case MessageType.SM_CONNECTED:
-				setConnectedDeviceName((String)msg.obj);
+				addConnectedDeviceName((String)msg.obj);
 				break;
 			case MessageType.SM_DISCONNECTED:
 			case MessageType.SM_CONNECT_FAILED:
 			case MessageType.SM_CONNECTION_LOST:
-				setConnectedDeviceName(null);
+				removeConnectedDeviceName((String)msg.obj);
 				break;
 			default:
 				// drop all other message types
@@ -443,16 +451,38 @@ public abstract class DeviceManagerClient extends Activity {
 		}
 	}
 
-	void setConnectedDeviceName(String connectedDeviceName) {
-		mConnectedDeviceName = connectedDeviceName;
-		
-		if (connectedDeviceName == null) {
-			mTitle.setText(R.string.title_not_connected);
-		} 
-		else {
-			mTitle.setText(R.string.title_connected_to);
-			mTitle.append(connectedDeviceName);
+	void addConnectedDeviceName(String deviceName) {
+		mConnectedDeviceNames.add(deviceName);
+		onConnectedDeviceNamesUpdated();
+	}
+	
+	void removeConnectedDeviceName(String deviceName) {
+		mConnectedDeviceNames.remove(deviceName);
+		onConnectedDeviceNamesUpdated();
+	}
+	
+	void clearConnectedDeviceNames() {
+		mConnectedDeviceNames.clear();
+		onConnectedDeviceNamesUpdated();
+	}
+	
+	void onConnectedDeviceNamesUpdated() {
+		updateTitle();
+	}
+	
+	void updateTitle() {
+		String newTitle;
+		if (mConnectedDeviceNames.isEmpty()) {
+			newTitle = getString(R.string.title_not_connected);
 		}
+		else if (mConnectedDeviceNames.size() == 1) {
+			String deviceName = mConnectedDeviceNames.iterator().next();
+			newTitle = getString(R.string.title_connected_to) + deviceName;
+		}
+		else {
+			newTitle = mConnectedDeviceNames.size() + getString(R.string.title_connected_to_n_devices);
+		}
+		mTitle.setText(newTitle);
 	}
 
 	void startCommentActivity() {
@@ -497,7 +527,7 @@ public abstract class DeviceManagerClient extends Activity {
 			// unexpectedly disconnected -- that is, its process crashed.
 			mService = null;
 
-			setConnectedDeviceName(null);
+			clearConnectedDeviceNames();
 
 			Toast.makeText(DeviceManagerClient.this, "Remote service crashed",
 					Toast.LENGTH_SHORT).show();
@@ -519,8 +549,8 @@ public abstract class DeviceManagerClient extends Activity {
 			mHandler.obtainMessage(MessageType.SENTENCE, bundle).sendToTarget();
 		}
 
-		public void receivedSensorConnectionNone() {
-			mHandler.obtainMessage(MessageType.SM_DISCONNECTED).sendToTarget();
+		public void receivedSensorConnectionDisconnected(String deviceName) {
+			mHandler.obtainMessage(MessageType.SM_DISCONNECTED, deviceName).sendToTarget();
 		}
 
 		public void receivedSensorConnectionFailed(String deviceName) {

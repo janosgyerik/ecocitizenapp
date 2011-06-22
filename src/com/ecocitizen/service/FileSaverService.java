@@ -273,8 +273,8 @@ public class FileSaverService extends Service {
 			mHandler.obtainMessage(MessageType.SENTENCE, bundle).sendToTarget();
 		}
 
-		public void receivedSensorConnectionNone() {
-			mHandler.obtainMessage(MessageType.SM_DISCONNECTED).sendToTarget();
+		public void receivedSensorConnectionDisconnected(String deviceName) {
+			mHandler.obtainMessage(MessageType.SM_DISCONNECTED, deviceName).sendToTarget();
 		}
 
 		public void receivedSensorConnectionFailed(String deviceName) {

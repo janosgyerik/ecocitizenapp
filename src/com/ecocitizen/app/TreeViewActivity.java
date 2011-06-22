@@ -218,9 +218,9 @@ public class TreeViewActivity extends DeviceManagerClient {
 	}
 
 	@Override
-	void setConnectedDeviceName(String connectedDeviceName) {
-		super.setConnectedDeviceName(connectedDeviceName);
-		if (connectedDeviceName == null) {
+	void onConnectedDeviceNamesUpdated() {
+		super.onConnectedDeviceNamesUpdated();
+		if (mConnectedDeviceNames.isEmpty()) {
 			mBtnConnect.setVisibility(View.VISIBLE);
 			mBtnDisconnect.setVisibility(View.GONE);
 		}

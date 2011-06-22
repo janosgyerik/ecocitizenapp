@@ -29,7 +29,6 @@ support for multiple devices
 ============================
 - make DeviceManagerClient handle multiple devices
 	add new menu option: connect to another sensor
-	when clicking disconnect sensor, disconnect the last sensor
 - when clicking disconnect sensor
 	if there is only one connected sensor, disconnect it
 	if there are many connected sensors 

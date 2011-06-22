@@ -21,8 +21,9 @@
     
     <string name="not_connected">You are not connected to a device</string>
     <string name="title_connecting">connecting...</string>
-    <string name="title_connected_to">source: </string>
+    <string name="title_connected_to"></string>
     <string name="title_not_connected">not connected</string>
+    <string name="title_connected_to_n_devices"> devices</string>
 
     <!--  DeviceListActivity -->
     <string name="scanning">scanning for devices...</string>
