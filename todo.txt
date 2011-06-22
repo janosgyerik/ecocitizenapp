@@ -1,47 +1,44 @@
 when connected
-	record some sample data file with zephyr
-	get a copy of the zephyr docs
+==============
+- record some sample data file with zephyr
+- get a copy of the zephyr docs
+	- confirm the protocol details (basically the language of Zephyr)
+
 
 release in marketplace
-	add a property to switch debugging on/off
+======================
+- add a property to switch debugging on/off
 	
-known issues to add to wiki
-	known issue: connect to non-existent bluetooth sensor works (it shouldn't)
-		workaround: do not connect to non-existent bluetooth sensors
-		workaround: quit the application and restart
-	known issue: cannot disconnect from non-existent bluetooth sensor
-		workaround: do not connect to non-existent bluetooth sensors
-		workaround: quit the application and restart
-	known issue: bluetooth device name appears 'null' on first scan
-		workaround: scan again
-	known issue: connecting to a bluetooth device that has not been paired yet is confusing
-		workaround: pair the device in advance using android menu: Settings / Wireless controls / Bluetooth settings / Scan for devices
 
 critical
-	CommentActivity should return comment+dtz to caller activity
-	use sensor id instead of name in DeviceManagerService
-	design the steps to make it work with zephyr and create tasks in redmine
-	create system diagram and upload to wiki
-	bug: disconnect device menu does not work in debugtools
-	bug: app gets into strange state after connection lost, sending session id 'null'
-	improve data uploading throughput
-		test slowness, confirm and quantify
-		pack multiple messages in one transmission
-		repeat test, confirm improvement
-		automatically adjust sending buffer size
+========
+- CommentActivity should return comment+dtz to caller activity
+- use sensor id instead of name in DeviceManagerService
+- design the steps to make it work with zephyr and create tasks in redmine
+- create system diagram and upload to wiki
+- bug: disconnect device menu does not work in debugtools
+- bug: app gets into strange state after connection lost, sending session id 'null'
+- improve data uploading throughput
+	test slowness, confirm and quantify
+	pack multiple messages in one transmission
+	repeat test, confirm improvement
+	automatically adjust sending buffer size
+
 
 support for multiple devices
-	make DeviceManagerClient handle multiple devices
-		when clicking disconnect sensor, disconnect all connected sensors
-		add new menu option: connect to sensor
-	when clicking disconnect sensor
-		if there is only one connected sensor, disconnect it
-		if there are many connected sensors 
-			pop up a dialog and ask which one to disconnect
-			option to disconnect all
+============================
+- make DeviceManagerClient handle multiple devices
+	add new menu option: connect to another sensor
+	when clicking disconnect sensor, disconnect the last sensor
+- when clicking disconnect sensor
+	if there is only one connected sensor, disconnect it
+	if there are many connected sensors 
+		pop up a dialog and ask which one to disconnect
+		option to disconnect all
 
 
 next
+====
 	make it possible to cancel upload in FileInfoWithUploadActivity
 		tip: the activity is launched from FileUploaderActivity
 		tip: make ProgressDialog cancelable
@@ -66,14 +63,18 @@ next
 	? bug: android uploader gets killed
 	? bug: java.net.UnknownHostException
 
+
 optimization
+============
 	if and only if performance is crucial, follow the 'Designing for Performance' article in Dev Guide
 	try to rewrite nested linearlayouts with relativelayout
 	consider using ViewStubs
 	review comments in entire code, especially service code
 	improve button style by using different style parent? theme?
 
+
 file uploader "nice" implementation
+===================================
 	+ show file info card with buttons
 	+ Upload btn begins upload in async mode
 	- Cancel btn can interrupt the upload
@@ -82,19 +83,29 @@ file uploader "nice" implementation
 	+ show success/failure on completion
 	+ show/hide buttons on success/failure appropriately
 
+
 minor improvements
+==================
 	fileuploader: nicer progress indicator: full screen, modal + cancel
 	fileuploader: progress indicator while uploading single file
 
+
 nice to have
-	tweet current location and measurements
-	know the number of data records pending for upload
-	user profiles: anon, dev, janos, ...
-	FileSaverService with proper synchronization
+============
+- tweet current location and measurements
+- know the number of data records pending for upload
+- user profiles: anon, dev, janos, ...
+- FileSaverService with proper synchronization
+
 
 bugs
-	-
+====
+-
+
 
 possibly bluetooth backport bugs
+================================
 	cannot detect connection failure to paired device, when the paired device is off (and also when out of range?)
 	when calling mmInStream.close(), keyDispatchingTimedOut happens, dumping CPU usage and other debug infos and eventually kill the application itself
+
+
