@@ -20,6 +20,7 @@
 package com.ecocitizen.app;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import android.app.Activity;
@@ -480,7 +481,11 @@ public abstract class DeviceManagerClient extends Activity {
 			newTitle = getString(R.string.title_connected_to) + deviceName;
 		}
 		else {
-			newTitle = mConnectedDeviceNames.size() + getString(R.string.title_connected_to_n_devices);
+			Iterator<String> iterator = mConnectedDeviceNames.iterator();
+			newTitle = iterator.next();
+			while (iterator.hasNext()) {
+				newTitle += ", " + iterator.next();
+			}
 		}
 		mTitle.setText(newTitle);
 	}
