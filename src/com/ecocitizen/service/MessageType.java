@@ -20,11 +20,10 @@
 package com.ecocitizen.service;
 
 public abstract class MessageType {
-	public final static int SM_DISCONNECTED = 11;
-	public final static int SM_CONNECTED = 12;
-	public final static int SM_CONNECT_FAILED = 13;
+	public final static int SM_CONNECTION_FAILED = 11;
+	public final static int SM_CONNECTION_OPEN = 12;
+	public final static int SM_CONNECTION_CLOSED = 13;
 	public final static int SM_CONNECTION_LOST = 14;
-	public final static int SM_CONNECTION_CLOSED = 15;
 
 	public final static int SENTENCE = 21;
 	

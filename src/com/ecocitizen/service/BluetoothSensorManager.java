@@ -241,7 +241,7 @@ public class BluetoothSensorManager extends SensorManager {
 			
 			if (stop) {
 				// clean disconnect
-				BluetoothSensorManager.this.sendDisconnectedMsg();
+				BluetoothSensorManager.this.sendConnectionClosedMsg();
 			}
 			else {
 				// interrupt, abrupt disconnect, connection lost

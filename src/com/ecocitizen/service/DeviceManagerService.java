@@ -217,14 +217,13 @@ public class DeviceManagerService extends Service {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case MessageType.SM_DISCONNECTED:
-			case MessageType.SM_CONNECTED:
-			case MessageType.SM_CONNECT_FAILED:
-			case MessageType.SM_CONNECTION_LOST: 
-			case MessageType.SM_CONNECTION_CLOSED: {
+			case MessageType.SM_CONNECTION_FAILED:
+			case MessageType.SM_CONNECTION_OPEN:
+			case MessageType.SM_CONNECTION_CLOSED: 
+			case MessageType.SM_CONNECTION_LOST: {
 				final String deviceName = (String)msg.obj;
 				if (D) Log.d(TAG, "what = " + msg.what + ", deviceName = " + deviceName);
-				if (msg.what == MessageType.SM_CONNECTED) {
+				if (msg.what == MessageType.SM_CONNECTION_OPEN) {
 					mGpsLocationListener.requestLocationUpdates();
 				}
 				else {
@@ -234,14 +233,14 @@ public class DeviceManagerService extends Service {
 				for (int i = 0; i < N; ++i) {
 					try {
 						switch (msg.what) {
-						case MessageType.SM_DISCONNECTED:
-							mCallbacks.getBroadcastItem(i).receivedSensorConnectionDisconnected(deviceName);
+						case MessageType.SM_CONNECTION_FAILED:
+							mCallbacks.getBroadcastItem(i).receivedSensorConnectionFailed(deviceName);
 							break;
-						case MessageType.SM_CONNECTED:
+						case MessageType.SM_CONNECTION_OPEN:
 							mCallbacks.getBroadcastItem(i).receivedSensorConnectionSuccess(deviceName);
 							break;
-						case MessageType.SM_CONNECT_FAILED:
-							mCallbacks.getBroadcastItem(i).receivedSensorConnectionFailed(deviceName);
+						case MessageType.SM_CONNECTION_CLOSED:
+							mCallbacks.getBroadcastItem(i).receivedSensorConnectionClosed(deviceName);
 							break;
 						case MessageType.SM_CONNECTION_LOST:
 							mCallbacks.getBroadcastItem(i).receivedSensorConnectionLost(deviceName);

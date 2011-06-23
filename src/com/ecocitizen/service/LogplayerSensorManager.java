@@ -69,7 +69,7 @@ public class LogplayerSensorManager extends SensorManager {
 		if (mConnectedThread != null) mConnectedThread.shutdown();
 		if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
 
-		sendDisconnectedMsg();
+		sendConnectionClosedMsg();
 	}
 
 	/**

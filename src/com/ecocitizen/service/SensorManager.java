@@ -89,11 +89,10 @@ abstract public class SensorManager {
 	 */
 	private void sendSensorNameMsg(int messageType) {
 		switch (messageType) {
-		case MessageType.SM_CONNECTED:
-		case MessageType.SM_CONNECT_FAILED:
-		case MessageType.SM_CONNECTION_LOST:
-		case MessageType.SM_DISCONNECTED:
+		case MessageType.SM_CONNECTION_FAILED:
+		case MessageType.SM_CONNECTION_OPEN:
 		case MessageType.SM_CONNECTION_CLOSED:
+		case MessageType.SM_CONNECTION_LOST:
 			mHandler.obtainMessage(messageType, mSensorName).sendToTarget();
 			break;
 		}
@@ -105,24 +104,17 @@ abstract public class SensorManager {
 	}
 
 	/**
-	 * Connection established, notify owner's handler.
-	 */
-	void sendConnectedMsg() {
-		sendSensorNameMsg(MessageType.SM_CONNECTED);
-	}
-
-	/**
 	 * Connection failed, notify owner's handler.
 	 */
 	void sendConnectFailedMsg() {
-		sendSensorNameMsg(MessageType.SM_CONNECT_FAILED);
+		sendSensorNameMsg(MessageType.SM_CONNECTION_FAILED);
 	}
 
 	/**
-	 * Connection lost, notify owner's handler.
+	 * Connection established, notify owner's handler.
 	 */
-	void sendConnectionLostMsg() {
-		sendSensorNameMsg(MessageType.SM_CONNECTION_LOST);
+	void sendConnectedMsg() {
+		sendSensorNameMsg(MessageType.SM_CONNECTION_OPEN);
 	}
 
 	/**
@@ -133,9 +125,9 @@ abstract public class SensorManager {
 	}
 
 	/**
-	 * Disconnected, notify owner's handler.
+	 * Connection lost, notify owner's handler.
 	 */
-	void sendDisconnectedMsg() {
-		sendSensorNameMsg(MessageType.SM_DISCONNECTED);
+	void sendConnectionLostMsg() {
+		sendSensorNameMsg(MessageType.SM_CONNECTION_LOST);
 	}
 }
