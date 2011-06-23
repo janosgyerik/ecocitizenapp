@@ -55,7 +55,7 @@ public class FileSaverService extends Service {
 	private static final String TAG = "FileSaverService";
 	private static final boolean D = true;
 
-	private static boolean WAS_STARTSESSION = false;
+	private boolean shouldCallStartSession;
 	
 	public final static String EXTERNAL_TARGETDIR = "Download";
 	public final static String FILENAME_PREFIX = "EcoCitizen_";
@@ -202,14 +202,14 @@ public class FileSaverService extends Service {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case MessageType.SENTENCE:
-				if (! WAS_STARTSESSION) {
+				if (shouldCallStartSession) {
 					startSession();
-					WAS_STARTSESSION = true;
+					shouldCallStartSession = false;
 				}
 				receivedSentenceBundle((Bundle)msg.obj);
 				break;
 			case MessageType.SM_CONNECTION_OPEN:
-				WAS_STARTSESSION = false;
+				shouldCallStartSession = true;
 				break;
 			case MessageType.SM_CONNECTION_CLOSED:
 			case MessageType.SM_CONNECTION_LOST:

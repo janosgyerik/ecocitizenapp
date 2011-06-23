@@ -60,7 +60,7 @@ public class SensorMapUploaderService extends Service {
 	private static final String TAG = "SensorMapUploaderService";
 	private static final boolean D = true;
 
-	private static boolean SHOULD_CALL_STARTSESSION = false;
+	private boolean shouldCallStartSession;
 
 	private NotificationManager mNotificationManager;
 
@@ -246,14 +246,14 @@ public class SensorMapUploaderService extends Service {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case MessageType.SENTENCE:
-				if (SHOULD_CALL_STARTSESSION) {
+				if (shouldCallStartSession) {
 					startSession();
-					SHOULD_CALL_STARTSESSION = false;
+					shouldCallStartSession = false;
 				}
 				receivedSentenceBundle((Bundle)msg.obj);
 				break;
 			case MessageType.SM_CONNECTION_OPEN:
-				SHOULD_CALL_STARTSESSION = true;
+				shouldCallStartSession = true;
 				break;
 			case MessageType.SM_CONNECTION_CLOSED:
 			case MessageType.SM_CONNECTION_LOST:
