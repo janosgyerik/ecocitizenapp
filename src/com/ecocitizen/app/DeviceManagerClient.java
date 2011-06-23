@@ -408,11 +408,11 @@ public abstract class DeviceManagerClient extends Activity {
 			case MessageType.SENTENCE:
 				receivedSentenceBundle((Bundle)msg.obj);
 				break;
-			case MessageType.SM_CONNECTION_OPEN:
+			case MessageType.SM_DEVICE_ADDED:
 				addConnectedDeviceName((String)msg.obj);
 				break;
-			case MessageType.SM_CONNECTION_CLOSED:
-			case MessageType.SM_CONNECTION_LOST:
+			case MessageType.SM_DEVICE_CLOSED:
+			case MessageType.SM_DEVICE_LOST:
 				removeConnectedDeviceName((String)msg.obj);
 				break;
 			default:
@@ -553,20 +553,20 @@ public abstract class DeviceManagerClient extends Activity {
 			mHandler.obtainMessage(MessageType.SENTENCE, bundle).sendToTarget();
 		}
 
-		public void receivedSensorConnectionFailed(String deviceName) {
+		public void receivedConnectionFailed(String deviceName) {
 			mHandler.obtainMessage(MessageType.SM_CONNECTION_FAILED, deviceName).sendToTarget();
 		}
 
-		public void receivedSensorConnectionSuccess(String deviceName) {
-			mHandler.obtainMessage(MessageType.SM_CONNECTION_OPEN, deviceName).sendToTarget();
+		public void receivedDeviceAdded(String deviceName) {
+			mHandler.obtainMessage(MessageType.SM_DEVICE_ADDED, deviceName).sendToTarget();
 		}
 
-		public void receivedSensorConnectionClosed(String deviceName) {
-			mHandler.obtainMessage(MessageType.SM_CONNECTION_CLOSED, deviceName).sendToTarget();
+		public void receivedDeviceClosed(String deviceName) {
+			mHandler.obtainMessage(MessageType.SM_DEVICE_CLOSED, deviceName).sendToTarget();
 		}
 
-		public void receivedSensorConnectionLost(String deviceName) {
-			mHandler.obtainMessage(MessageType.SM_CONNECTION_LOST, deviceName).sendToTarget();
+		public void receivedDeviceLost(String deviceName) {
+			mHandler.obtainMessage(MessageType.SM_DEVICE_LOST, deviceName).sendToTarget();
 		}
 	};
 

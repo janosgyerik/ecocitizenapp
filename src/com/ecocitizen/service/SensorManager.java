@@ -90,9 +90,9 @@ abstract public class SensorManager {
 	private void sendSensorNameMsg(int messageType) {
 		switch (messageType) {
 		case MessageType.SM_CONNECTION_FAILED:
-		case MessageType.SM_CONNECTION_OPEN:
-		case MessageType.SM_CONNECTION_CLOSED:
-		case MessageType.SM_CONNECTION_LOST:
+		case MessageType.SM_DEVICE_ADDED:
+		case MessageType.SM_DEVICE_CLOSED:
+		case MessageType.SM_DEVICE_LOST:
 			mHandler.obtainMessage(messageType, mSensorName).sendToTarget();
 			break;
 		}
@@ -114,20 +114,20 @@ abstract public class SensorManager {
 	 * Connection established, notify owner's handler.
 	 */
 	void sendConnectedMsg() {
-		sendSensorNameMsg(MessageType.SM_CONNECTION_OPEN);
+		sendSensorNameMsg(MessageType.SM_DEVICE_ADDED);
 	}
 
 	/**
 	 * Connection closed (no more data), notify owner's handler.
 	 */
 	void sendConnectionClosedMsg() {
-		sendSensorNameMsg(MessageType.SM_CONNECTION_CLOSED);
+		sendSensorNameMsg(MessageType.SM_DEVICE_CLOSED);
 	}
 
 	/**
 	 * Connection lost, notify owner's handler.
 	 */
 	void sendConnectionLostMsg() {
-		sendSensorNameMsg(MessageType.SM_CONNECTION_LOST);
+		sendSensorNameMsg(MessageType.SM_DEVICE_LOST);
 	}
 }

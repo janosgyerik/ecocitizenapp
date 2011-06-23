@@ -24,8 +24,8 @@ import android.os.Bundle;
 oneway interface IDeviceManagerServiceCallback {
 	void receivedSentenceBundle(in Bundle bundle);
 	
-	void receivedSensorConnectionFailed(String deviceName);
-	void receivedSensorConnectionSuccess(String deviceName);
-	void receivedSensorConnectionClosed(String deviceName);
-	void receivedSensorConnectionLost(String deviceName);
+	void receivedConnectionFailed(String deviceName);
+	void receivedDeviceAdded(String deviceName);
+	void receivedDeviceClosed(String deviceName);
+	void receivedDeviceLost(String deviceName);
 }
