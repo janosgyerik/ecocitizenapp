@@ -102,7 +102,7 @@ public class LogplayerSensorManager extends SensorManager {
 						}
 					}
 					else {
-						sendDisconnectSelfMsg();
+						sendConnectionClosedMsg();
 						break;
 					}
 				} 

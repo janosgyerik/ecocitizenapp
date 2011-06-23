@@ -27,11 +27,18 @@ critical
 
 support for multiple devices
 ============================
-- make DeviceManagerClient handle multiple devices
-	add new menu option: connect to another sensor
+- new message to signal connection closed
+- new message to signal that there are no sensors connected
+	- triggered when all sensormanagers have disconnected
+	- update existing clients to not end session on sensor disconnect
+- clean up the menu
+	- Connect a device
+	- Connect another device
+	- Disconnect device
+	- Disconnect a device
 - when clicking disconnect sensor
-	if there is only one connected sensor, disconnect it
-	if there are many connected sensors 
+	- if there is only one connected sensor, disconnect it
+	- if there are many connected sensors 
 		pop up a dialog and ask which one to disconnect
 		option to disconnect all
 

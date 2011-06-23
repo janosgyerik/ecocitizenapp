@@ -24,7 +24,7 @@ public abstract class MessageType {
 	public final static int SM_CONNECTED = 12;
 	public final static int SM_CONNECT_FAILED = 13;
 	public final static int SM_CONNECTION_LOST = 14;
-	public final static int SM_DISCONNECT_SELF = 15;
+	public final static int SM_CONNECTION_CLOSED = 15;
 
 	public final static int SENTENCE = 21;
 	

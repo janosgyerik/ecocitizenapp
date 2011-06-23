@@ -221,7 +221,7 @@ public class DeviceManagerService extends Service {
 			case MessageType.SM_CONNECTED:
 			case MessageType.SM_CONNECT_FAILED:
 			case MessageType.SM_CONNECTION_LOST: 
-			case MessageType.SM_DISCONNECT_SELF: {
+			case MessageType.SM_CONNECTION_CLOSED: {
 				final String deviceName = (String)msg.obj;
 				if (D) Log.d(TAG, "what = " + msg.what + ", deviceName = " + deviceName);
 				if (msg.what == MessageType.SM_CONNECTED) {

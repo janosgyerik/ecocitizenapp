@@ -90,10 +90,10 @@ abstract public class SensorManager {
 	private void sendSensorNameMsg(int messageType) {
 		switch (messageType) {
 		case MessageType.SM_CONNECTED:
-		case MessageType.SM_DISCONNECT_SELF:
 		case MessageType.SM_CONNECT_FAILED:
 		case MessageType.SM_CONNECTION_LOST:
 		case MessageType.SM_DISCONNECTED:
+		case MessageType.SM_CONNECTION_CLOSED:
 			mHandler.obtainMessage(messageType, mSensorName).sendToTarget();
 			break;
 		}
@@ -126,16 +126,16 @@ abstract public class SensorManager {
 	}
 
 	/**
+	 * Connection closed (no more data), notify owner's handler.
+	 */
+	void sendConnectionClosedMsg() {
+		sendSensorNameMsg(MessageType.SM_CONNECTION_CLOSED);
+	}
+
+	/**
 	 * Disconnected, notify owner's handler.
 	 */
 	void sendDisconnectedMsg() {
 		sendSensorNameMsg(MessageType.SM_DISCONNECTED);
-	}
-
-	/**
-	 * Disconnected self, notify owner's handler.
-	 */
-	void sendDisconnectSelfMsg() {
-		sendSensorNameMsg(MessageType.SM_DISCONNECT_SELF);
 	}
 }
