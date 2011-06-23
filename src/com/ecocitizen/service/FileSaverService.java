@@ -55,7 +55,7 @@ public class FileSaverService extends Service {
 	private static final String TAG = "FileSaverService";
 	private static final boolean D = true;
 
-	private boolean shouldCallStartSession;
+	private boolean shouldStartSession = true;
 	
 	public final static String EXTERNAL_TARGETDIR = "Download";
 	public final static String FILENAME_PREFIX = "EcoCitizen_";
@@ -202,18 +202,15 @@ public class FileSaverService extends Service {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case MessageType.SENTENCE:
-				if (shouldCallStartSession) {
+				if (shouldStartSession) {
 					startSession();
-					shouldCallStartSession = false;
+					shouldStartSession = false;
 				}
 				receivedSentenceBundle((Bundle)msg.obj);
 				break;
-			case MessageType.SM_DEVICE_ADDED:
-				shouldCallStartSession = true;
-				break;
-			case MessageType.SM_DEVICE_CLOSED:
-			case MessageType.SM_DEVICE_LOST:
+			case MessageType.SM_ALL_DEVICES_GONE:
 				endSession();
+				shouldStartSession = true;
 				break;
 			default:
 				// drop all other message types
@@ -287,9 +284,15 @@ public class FileSaverService extends Service {
 		public void receivedDeviceLost(String deviceName) {
 			mHandler.obtainMessage(MessageType.SM_DEVICE_LOST, deviceName).sendToTarget();
 		}
+		
+		public void receivedAllDevicesGone() {
+			mHandler.obtainMessage(MessageType.SM_ALL_DEVICES_GONE).sendToTarget();
+		}
 	};
 
 	void startSession() {
+		if (D) Log.d(TAG, "STARTSESSION");
+		
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 
 		if (settings.getBoolean(PREFS_EXTERNAL_STORAGE, false)
@@ -324,6 +327,7 @@ public class FileSaverService extends Service {
 		);
 		try {
 			mWriter = new FileOutputStream(new File(filename));
+			if (D) Log.d(TAG, "STARTSESSION " + filename);
 		} catch (IOException e) {
 			e.printStackTrace();
 			startSession_internalStorage();
@@ -340,6 +344,7 @@ public class FileSaverService extends Service {
 		);
 		try {
 			mWriter = openFileOutput(filename, Context.MODE_PRIVATE);
+			if (D) Log.d(TAG, "STARTSESSION " + filename);
 		} catch (FileNotFoundException fe) {
 			fe.printStackTrace();
 			stopSelf(); // the service is completely useless in this case

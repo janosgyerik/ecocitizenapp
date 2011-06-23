@@ -568,6 +568,10 @@ public abstract class DeviceManagerClient extends Activity {
 		public void receivedDeviceLost(String deviceName) {
 			mHandler.obtainMessage(MessageType.SM_DEVICE_LOST, deviceName).sendToTarget();
 		}
+
+		public void receivedAllDevicesGone() {
+			mHandler.obtainMessage(MessageType.SM_ALL_DEVICES_GONE).sendToTarget();
+		}
 	};
 
 	private ISensorMapUploaderService mSensorMapUploaderService = null;

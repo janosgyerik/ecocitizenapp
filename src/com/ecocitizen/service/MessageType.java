@@ -24,6 +24,7 @@ public abstract class MessageType {
 	public final static int SM_DEVICE_ADDED = 12;
 	public final static int SM_DEVICE_CLOSED = 13;
 	public final static int SM_DEVICE_LOST = 14;
+	public final static int SM_ALL_DEVICES_GONE = 15;
 
 	public final static int SENTENCE = 21;
 	

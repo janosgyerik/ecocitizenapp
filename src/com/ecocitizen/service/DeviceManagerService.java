@@ -220,7 +220,8 @@ public class DeviceManagerService extends Service {
 			case MessageType.SM_CONNECTION_FAILED:
 			case MessageType.SM_DEVICE_ADDED:
 			case MessageType.SM_DEVICE_CLOSED: 
-			case MessageType.SM_DEVICE_LOST: {
+			case MessageType.SM_DEVICE_LOST: 
+			{
 				final String deviceName = (String)msg.obj;
 				if (D) Log.d(TAG, "what = " + msg.what + ", deviceName = " + deviceName);
 				if (msg.what == MessageType.SM_DEVICE_ADDED) {
@@ -241,9 +242,15 @@ public class DeviceManagerService extends Service {
 							break;
 						case MessageType.SM_DEVICE_CLOSED:
 							mCallbacks.getBroadcastItem(i).receivedDeviceClosed(deviceName);
+							if (mSensorManagers.isEmpty()) {
+								mCallbacks.getBroadcastItem(i).receivedAllDevicesGone();
+							}
 							break;
 						case MessageType.SM_DEVICE_LOST:
 							mCallbacks.getBroadcastItem(i).receivedDeviceLost(deviceName);
+							if (mSensorManagers.isEmpty()) {
+								mCallbacks.getBroadcastItem(i).receivedAllDevicesGone();
+							}
 							break;
 						}
 					}

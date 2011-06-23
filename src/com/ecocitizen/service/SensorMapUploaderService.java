@@ -60,7 +60,7 @@ public class SensorMapUploaderService extends Service {
 	private static final String TAG = "SensorMapUploaderService";
 	private static final boolean D = true;
 
-	private boolean shouldCallStartSession;
+	private boolean shouldStartSession = true;
 
 	private NotificationManager mNotificationManager;
 
@@ -246,18 +246,15 @@ public class SensorMapUploaderService extends Service {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case MessageType.SENTENCE:
-				if (shouldCallStartSession) {
+				if (shouldStartSession) {
 					startSession();
-					shouldCallStartSession = false;
+					shouldStartSession = false;
 				}
 				receivedSentenceBundle((Bundle)msg.obj);
 				break;
-			case MessageType.SM_DEVICE_ADDED:
-				shouldCallStartSession = true;
-				break;
-			case MessageType.SM_DEVICE_CLOSED:
-			case MessageType.SM_DEVICE_LOST:
+			case MessageType.SM_ALL_DEVICES_GONE:
 				endSession();
+				shouldStartSession = true;
 				break;
 			default:
 				// drop all other message types
@@ -330,6 +327,10 @@ public class SensorMapUploaderService extends Service {
 
 		public void receivedDeviceLost(String deviceName) {
 			mHandler.obtainMessage(MessageType.SM_DEVICE_LOST, deviceName).sendToTarget();
+		}
+
+		public void receivedAllDevicesGone() {
+			mHandler.obtainMessage(MessageType.SM_ALL_DEVICES_GONE).sendToTarget();
 		}
 	};
 

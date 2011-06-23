@@ -27,9 +27,7 @@ critical
 
 support for multiple devices
 ============================
-- new message to signal that there are no sensors connected
-	- triggered when all sensormanagers have disconnected
-	- update existing clients to not end session on sensor disconnect
+- remove the duplication in IDeviceManagerServiceCallback stubs
 - clean up the menu
 	- Connect a device
 	- Connect another device

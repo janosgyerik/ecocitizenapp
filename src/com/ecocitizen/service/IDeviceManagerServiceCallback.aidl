@@ -28,4 +28,5 @@ oneway interface IDeviceManagerServiceCallback {
 	void receivedDeviceAdded(String deviceName);
 	void receivedDeviceClosed(String deviceName);
 	void receivedDeviceLost(String deviceName);
+	void receivedAllDevicesGone();
 }
