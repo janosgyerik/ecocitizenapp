@@ -26,11 +26,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Formatter;
-
-import com.ecocitizen.service.IDeviceManagerService;
-import com.ecocitizen.service.IDeviceManagerServiceCallback;
-import com.ecocitizen.service.IFileSaverService;
 
 import android.app.Service;
 import android.content.ComponentName;
@@ -38,7 +33,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -157,42 +151,8 @@ public class FileSaverService extends Service {
 	void receivedSentenceBundle(Bundle bundle) {
 		if (! active) return;
 		
-		String line = bundle.getString(BundleKeys.SENTENCE_LINE);
-		int indexOf_dollar = line.indexOf('$'); 
-		if (indexOf_dollar > -1) {
-			line = line.substring(indexOf_dollar);
-		}
+		String datarecord = BundleTools.convertToDataRecord(bundle, false);
 
-		Formatter formatter = new Formatter();
-		String datarecord;
-		Bundle locationBundle = bundle.getBundle(BundleKeys.LOCATION_BUNDLE);
-		if (locationBundle == null) {
-			String format = "SENTENCE,%s,%s,%s,_";
-			datarecord = formatter.format(
-					format,
-					bundle.getString(BundleKeys.SENTENCE_SENSOR_ID),
-					bundle.getString(BundleKeys.SENTENCE_DTZ),
-					line
-			).toString();
-		}
-		else {
-			String format = "GPS,%s,%d,%f,%f,AndroidGps,%f,%f,%f,%f,_,SENTENCE,%s,%s,%s,_";
-			Location location = (Location)locationBundle.getParcelable(BundleKeys.LOCATION_LOC);
-			datarecord = formatter.format(
-					format,
-					locationBundle.getString(BundleKeys.LOCATION_DTZ),
-					locationBundle.getInt(BundleKeys.LOCATION_LATLON_ID),
-					location.getLatitude(),
-					location.getLongitude(),
-					location.getAccuracy(),
-					location.getAltitude(),
-					location.getBearing(),
-					location.getSpeed(),
-					bundle.getString(BundleKeys.SENTENCE_SENSOR_ID),
-					bundle.getString(BundleKeys.SENTENCE_DTZ),
-					line
-			).toString();
-		}
 		saveDataRecord(datarecord);
 	}
 
