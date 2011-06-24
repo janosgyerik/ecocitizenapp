@@ -97,8 +97,6 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:minHeight">80px</item>
         <item name="android:scaleType">fitEnd</item>
-        <item name="android:src">@drawable/tree1</item>
-        
     </style>
 
     <style name="recordTRH" parent="@android:style/TextAppearance.Medium">

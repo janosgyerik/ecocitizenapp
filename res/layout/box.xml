@@ -18,7 +18,7 @@
 			style="@style/boxName">
 		</TextView>
 		<ImageView android:id="@+id/box_image" 
-			android:src="@drawable/tree1"
+			android:src="@drawable/tree_0"
 		    style="@style/boxImage">
 		</ImageView>
 	</LinearLayout>

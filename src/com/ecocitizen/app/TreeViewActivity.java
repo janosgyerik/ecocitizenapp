@@ -57,7 +57,7 @@ public class TreeViewActivity extends DeviceManagerClient {
 	private TextView mLonNameView;
 	private TextView mLonValView;
 
-	private static final String IMG_PREFIX = "treebg_level_";
+	private static final String IMG_PREFIX = "treebg_";
 	private static final String DEF_PACKAGE = "com.ecocitizen.app";
 	private static final String DEF_TYPE = "drawable";
 
