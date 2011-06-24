@@ -26,7 +26,7 @@ public class PsenSentenceParser {
 	String name;
 	int level;
 
-	static int[] levelBoundaries = new int[]{};
+	static double[] levelBoundaries = new double[]{};
 
 	String pattern = "$PSEN,";
 
