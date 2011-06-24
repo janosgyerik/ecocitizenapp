@@ -49,6 +49,7 @@ import android.widget.Toast;
 
 import com.ecocitizen.app.TreeViewActivity;
 import com.ecocitizen.common.BundleTools;
+import com.ecocitizen.common.MessageType;
 
 public class SensorMapUploaderService extends Service {
 	// Debugging

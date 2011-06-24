@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 
 import com.ecocitizen.common.BundleKeys;
+import com.ecocitizen.common.MessageType;
 
 import android.app.Service;
 import android.content.Context;

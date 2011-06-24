@@ -17,7 +17,7 @@
  * along with EcoCitizen.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ecocitizen.service;
+package com.ecocitizen.common;
 
 public abstract class MessageType {
 	public final static int SM_CONNECTION_FAILED = 11;
