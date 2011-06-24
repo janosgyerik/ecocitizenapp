@@ -20,6 +20,7 @@
 package com.ecocitizen.app;
 
 import java.text.DecimalFormat;
+
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,7 +29,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ecocitizen.common.BundleKeys;
+import com.ecocitizen.common.SentenceBundle;
 import com.ecocitizen.parser.CO2SentenceParser;
 import com.ecocitizen.parser.COxSentenceParser;
 import com.ecocitizen.parser.NOxSentenceParser;
@@ -94,15 +95,15 @@ public class MultiSensorViewActivity extends SimpleDeviceManagerClient {
 	}
 
 	@Override
-	void receivedSentenceBundle(Bundle bundle) {
+	void receivedSentenceBundle(SentenceBundle bundle) {
 		
-		Bundle locationBundle = bundle.getBundle(BundleKeys.LOCATION_BUNDLE);
+		Location location = bundle.getLocation();
 		parser_box[0] = new CO2SentenceParser();
 		parser_box[1] = new NOxSentenceParser();
 		parser_box[2] = new COxSentenceParser();
 		parser_box[3] = new NoiseSentenceParser();
 		
-		if (locationBundle == null) {
+		if (location == null) {
 			mLatView.setText(R.string.common_na);
 			mLonView.setText(R.string.common_na);
 			mTView.setText(R.string.common_na);
@@ -110,8 +111,6 @@ public class MultiSensorViewActivity extends SimpleDeviceManagerClient {
 		}
 		else {
 			String lat_val[], lon_val[];
-			
-			Location location = (Location)locationBundle.getParcelable(BundleKeys.LOCATION_LOC);
 			
 			lat_val = Location.convert(location.getLatitude(), Location.FORMAT_SECONDS).split(":", 0);
 			lon_val = Location.convert(location.getLongitude(), Location.FORMAT_SECONDS).split(":", 0);
@@ -124,7 +123,7 @@ public class MultiSensorViewActivity extends SimpleDeviceManagerClient {
 		}
 	
 		
-		String line = bundle.getString(BundleKeys.SENTENCE_LINE);
+		String line = bundle.getSentenceLine();
 		for (int i = 0 ; i < box_num; i++) {
 			if (parser_box[i].match(line)) {
 				updateBox(parser_box[i], i);
@@ -136,10 +135,5 @@ public class MultiSensorViewActivity extends SimpleDeviceManagerClient {
 		mBoxName[i].setText(parser.getName());
 		mBoxVal[i].setText(valFormat.format(parser.getFloatValue()));
 		mBoxMetric[i].setText(parser.getMetric());
-	}
-    
-	@Override
-	void receivedSentenceLine(String line) {
-		// Never called, because we work with the Bundle in receivedSentenceBundle
 	}
 }

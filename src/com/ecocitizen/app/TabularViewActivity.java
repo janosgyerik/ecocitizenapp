@@ -25,6 +25,7 @@ import android.view.Window;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import com.ecocitizen.common.SentenceBundle;
 import com.ecocitizen.parser.BatterySentenceParser;
 import com.ecocitizen.parser.CO2SentenceParser;
 import com.ecocitizen.parser.COxSentenceParser;
@@ -69,7 +70,9 @@ public class TabularViewActivity extends SimpleDeviceManagerClient {
 	CO2SentenceParser co2Parser = new CO2SentenceParser();
 
 	@Override
-	void receivedSentenceLine(String line) {
+	void receivedSentenceBundle(SentenceBundle bundle) {
+		String line = bundle.getSentenceLine();
+		
 		if (battParser.match(line)) {
 			TextView batt_metric = (TextView) mSentencesTbl.findViewById(R.id.batt_metric);
 			TextView batt_value = (TextView) mSentencesTbl.findViewById(R.id.batt_value);

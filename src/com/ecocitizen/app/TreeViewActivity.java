@@ -40,6 +40,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ecocitizen.common.BundleKeys;
+import com.ecocitizen.common.SentenceBundle;
 import com.ecocitizen.parser.CO2SentenceParser;
 
 public class TreeViewActivity extends DeviceManagerClient {
@@ -179,8 +180,8 @@ public class TreeViewActivity extends DeviceManagerClient {
 	CO2SentenceParser parser = new CO2SentenceParser();
 
 	@Override
-	void receivedSentenceBundle(Bundle bundle) {
-		String line = bundle.getString(BundleKeys.SENTENCE_LINE);
+	void receivedSentenceBundle(SentenceBundle bundle) {
+		String line = bundle.getSentenceLine();
 		if (parser.match(line)) {
 			mCO2ValView.setText(co2Format.format(parser.getFloatValue()));
 			mCO2NameView.setText(parser.getName());
@@ -192,15 +193,14 @@ public class TreeViewActivity extends DeviceManagerClient {
 			int resID = getResources().getIdentifier(imgname, DEF_TYPE, DEF_PACKAGE);
 			LinearLayout treepage = (LinearLayout) findViewById(R.id.treepage);
 			treepage.setBackgroundResource(resID);
-			Bundle locationBundle = bundle.getBundle(BundleKeys.LOCATION_BUNDLE);
-			if (locationBundle == null) {
+			
+			Location location = bundle.getLocation();
+			if (location == null) {
 				mLatValView.setText(getString(R.string.common_na));
 				mLonValView.setText(getString(R.string.common_na));
 			}
 			else {
 				String lat_val[], lon_val[];
-				
-				Location location = (Location)locationBundle.getParcelable(BundleKeys.LOCATION_LOC);
 				
 				lat_val = Location.convert(location.getLatitude(), Location.FORMAT_SECONDS).split(":", 0);
 				lon_val = Location.convert(location.getLongitude(), Location.FORMAT_SECONDS).split(":", 0);
@@ -210,11 +210,6 @@ public class TreeViewActivity extends DeviceManagerClient {
 						lon_val[2].substring(0, lon_val[2].indexOf('.')) + "\"");
 			}
 		}
-	}
-
-	@Override
-	void receivedSentenceLine(String line) {
-		// Never called, because we work with the Bundle in receivedSentenceBundle
 	}
 
 	@Override

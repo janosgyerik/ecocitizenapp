@@ -19,6 +19,8 @@
 
 package com.ecocitizen.app;
 
+import com.ecocitizen.common.SentenceBundle;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -81,7 +83,9 @@ public class SentencesActivity extends SimpleDeviceManagerClient {
 	}
 	
 	@Override
-	void receivedSentenceLine(String line) {
+	void receivedSentenceBundle(SentenceBundle bundle) {
+		String line = bundle.getSentenceLine();
+		
 		if (mMode.equals(HEXA)) {
 			StringBuilder builder = new StringBuilder();
 			for (int b : line.getBytes()) {

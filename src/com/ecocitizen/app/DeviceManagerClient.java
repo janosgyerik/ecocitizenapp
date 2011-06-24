@@ -42,8 +42,8 @@ import android.widget.Toast;
 import backport.android.bluetooth.BluetoothAdapter;
 import backport.android.bluetooth.BluetoothDevice;
 
-import com.ecocitizen.common.BundleKeys;
 import com.ecocitizen.common.MessageType;
+import com.ecocitizen.common.SentenceBundle;
 import com.ecocitizen.service.IDeviceManagerService;
 import com.ecocitizen.service.IDeviceManagerServiceCallback;
 import com.ecocitizen.service.IFileSaverService;
@@ -388,16 +388,7 @@ public abstract class DeviceManagerClient extends Activity {
 		if (D) Log.d(TAG, "--- ON DESTROY ---");
 	}
 
-	void receivedSentenceBundle(Bundle bundle) {
-		String line = bundle.getString(BundleKeys.SENTENCE_LINE);
-		int indexOf_dollar = line.indexOf('$'); 
-		if (indexOf_dollar > -1) {
-			line = line.substring(indexOf_dollar);
-		}
-		receivedSentenceLine(line);
-	}
-
-	abstract void receivedSentenceLine(String line);
+	abstract void receivedSentenceBundle(SentenceBundle bundle);
 
 	// The Handler that gets information back from the DeviceManagerService
 	final Handler mHandler = new Handler() {
@@ -406,7 +397,7 @@ public abstract class DeviceManagerClient extends Activity {
 			Log.d(TAG, "handleMessage " + msg.what + " " + msg.obj);
 			switch (msg.what) {
 			case MessageType.SENTENCE:
-				receivedSentenceBundle((Bundle)msg.obj);
+				receivedSentenceBundle(new SentenceBundle((Bundle)msg.obj));
 				break;
 			case MessageType.SM_DEVICE_ADDED:
 				addConnectedDeviceName((String)msg.obj);

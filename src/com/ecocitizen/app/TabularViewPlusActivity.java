@@ -36,6 +36,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.ecocitizen.common.BundleKeys;
+import com.ecocitizen.common.SentenceBundle;
 import com.ecocitizen.parser.PsenSentenceParser;
 import com.ecocitizen.parser.TemperatureSentenceParser;
 
@@ -94,19 +95,18 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 	TemperatureSentenceParser mTemperatureSentenceParser = new TemperatureSentenceParser();
 	
 	@Override
-	void receivedSentenceBundle(Bundle bundle) {
-		Bundle locationBundle = bundle.getBundle(BundleKeys.LOCATION_BUNDLE);
+	void receivedSentenceBundle(SentenceBundle bundle) {
+		Location location = bundle.getLocation();
 		
-		if (locationBundle == null) {
-			mLatView.setText("N.A.");
-			mLonView.setText("N.A.");
-			mAccuracyView.setText("N.A.");
-			mAltitudeView.setText("N.A.");
-			mSpeedView.setText("N.A.");
-			mBearingView.setText("N.A.");
+		if (location == null) {
+			mLatView.setText(R.string.common_na);
+			mLonView.setText(R.string.common_na);
+			mAccuracyView.setText(R.string.common_na);
+			mAltitudeView.setText(R.string.common_na);
+			mSpeedView.setText(R.string.common_na);
+			mBearingView.setText(R.string.common_na);
 		}
 		else {
-			Location location = (Location)locationBundle.getParcelable(BundleKeys.LOCATION_LOC);
 			mLatView.setText(latlonFormat.format(location.getLatitude()));
 			mLonView.setText(latlonFormat.format(location.getLongitude()));
 			mAccuracyView.setText(latlonFormat.format(location.getAccuracy()));
@@ -115,7 +115,7 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 			mBearingView.setText(latlonFormat.format(location.getBearing()));
 		}
 		
-		String line = bundle.getString(BundleKeys.SENTENCE_LINE);
+		String line = bundle.getSentenceLine();
 		if (parser.match(line)) {
 			updateRow(parser);
 			if (mTemperatureSentenceParser.match(line)) {
@@ -165,10 +165,5 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 			TextView updateValue = (TextView) findViewById(hmDataType.get(parser.getName()));
 			updateValue.setText(parser.getStrValue());
 		}
-	}
-	
-	@Override
-	void receivedSentenceLine(String line) {
-		// Never called, because we work with the Bundle in receivedSentenceBundle
 	}
 }
