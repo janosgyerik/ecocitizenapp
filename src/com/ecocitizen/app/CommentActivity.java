@@ -26,10 +26,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 public class CommentActivity extends Activity {
@@ -39,12 +38,8 @@ public class CommentActivity extends Activity {
 	
 	private static final String MSG_COMING_SOON = "Coming soon ..."; // TODO
 	
-	private TextView mYear;
-	private TextView mMonth;
-	private TextView mDay;
-	private Spinner  mHourSpinner;
-	private Spinner  mMinuteSpinner;
-
+	private TextView mCurrentDateView;
+	private TimePicker mTimePicker;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -53,31 +48,9 @@ public class CommentActivity extends Activity {
 		
 		setContentView(R.layout.comment);
 		
-		mHourSpinner = (Spinner) findViewById(R.id.hour_spinner);
-		mMinuteSpinner = (Spinner) findViewById(R.id.minute_spinner);
-		mYear = (TextView) findViewById(R.id.comment_year);
-		mMonth = (TextView) findViewById(R.id.comment_month);
-		mDay = (TextView) findViewById(R.id.comment_day);
+		mCurrentDateView = (TextView)findViewById(R.id.comment_dt);
+		mTimePicker = (TimePicker)findViewById(R.id.comment_time_picker);
 		
-		String[] hours;
-		String[] minutes;
-		
-		hours = new String[24];
-		minutes = new String[60];
-
-		for (int count = 0; count < 24; ++count) {
-			hours[count] = String.valueOf(count);
-		}
-
-		for (int count = 0; count < 60; ++count) {
-			minutes[count] = String.valueOf(count);
-		}
-
-		ArrayAdapter <String> mHourAdapter = new ArrayAdapter <String> (this, android.R.layout.simple_spinner_item, hours);
-		ArrayAdapter <String> mMinuteAdapter = new ArrayAdapter <String> (this, android.R.layout.simple_spinner_item, minutes);
-		mHourSpinner.setAdapter(mHourAdapter);
-		mMinuteSpinner.setAdapter(mMinuteAdapter);
-       		
 		setTime();
 		Button btnSendComment = (Button) findViewById(R.id.btn_comment);
 		btnSendComment.setOnClickListener(new OnClickListener() {
@@ -89,12 +62,13 @@ public class CommentActivity extends Activity {
 
 	void setTime() {
 		Calendar calendar = Calendar.getInstance();
+		mCurrentDateView.setText(calendar.getTime().toLocaleString());
 		
-		mYear.setText(String.valueOf(calendar.get(Calendar.YEAR)));
-		mMonth.setText(String.valueOf(calendar.get(Calendar.MONTH) + 1));
-		mDay.setText(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
-		mHourSpinner.setSelection(calendar.get(Calendar.HOUR_OF_DAY));
-		mMinuteSpinner.setSelection(calendar.get(Calendar.MINUTE));
+		int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+		int currentMinute = calendar.get(Calendar.MINUTE);
+		
+		mTimePicker.setCurrentHour(currentHour);
+		mTimePicker.setCurrentMinute(currentMinute);
 	}
 
 }

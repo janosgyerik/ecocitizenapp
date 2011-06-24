@@ -115,4 +115,9 @@
         <item name="android:paddingRight">3dip</item>
         <item name="android:textColor">#ee0</item>
     </style>
+    
+    <style name="datetime" parent="@android:style/TextAppearance.Medium">
+        <item name="android:typeface">monospace</item>
+        <item name="android:padding">3dip</item>
+    </style>
 </resources>
