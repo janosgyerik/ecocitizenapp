@@ -15,15 +15,23 @@
 # You should have received a copy of the GNU General Public License
 # along with EcoCitizen.  If not, see <http://www.gnu.org/licenses/>.
 #
-source:=images
+treebg_dir:=treebg
+tree_dir:=tree
 target:=../res/drawable
 
-co2level0:=$(patsubst $(source)/%,%,$(wildcard $(source)/co2level_*.jpg))
-co2level:=$(patsubst %,$(target)/%,$(co2level0))
+treebg0:=$(patsubst $(treebg_dir)/%,%,$(wildcard $(treebg_dir)/treebg_*.jpg))
+treebg_target:=$(patsubst %,$(target)/%,$(treebg0))
 
-all: $(co2level)
+tree0:=$(patsubst $(tree_dir)/%,%,$(wildcard $(tree_dir)/tree_*.png))
+tree_target:=$(patsubst %,$(target)/%,$(tree0))
 
-$(target)/%.jpg: $(source)/%.jpg
+all: $(treebg_target) $(tree_target)
+
+$(target)/%.jpg: $(treebg_dir)/%.jpg
 	convert -geometry 480x -crop 240x+120+0 $< $@
+	identify $@
+
+$(target)/%.png: $(tree_dir)/%.png
+	convert -crop 370x370+300+265 -geometry 55x $< $@
 	identify $@
 
