@@ -19,6 +19,9 @@
 
 package com.ecocitizen.service;
 
+import com.ecocitizen.common.BundleKeys;
+import com.ecocitizen.common.Util;
+
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;

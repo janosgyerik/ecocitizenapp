@@ -17,24 +17,19 @@
  * along with EcoCitizen.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ecocitizen.service;
+package com.ecocitizen.common;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
+public abstract class BundleKeys {
+	public static final String SENTENCE_DTZ = "SDZ";
+	public static final String SENTENCE_LINE = "SSS";
+	public static final String SENTENCE_SENSOR_ID = "SID";
 
-/**
- * Collection of utility methods
- */
-public abstract class Util {
-	public static float convertNmeaToGps(float nmea) {
-		return (int)(nmea / 100) + (nmea % 100) / 60;
-	}
+	public static final String LOCATION_BUNDLE = "LBB";
+	public static final String LOCATION_DTZ = "LDZ";
+	public static final String LOCATION_LATLON_ID = "LLL";
+	public static final String LOCATION_LOC = "LOC";
+	
+	public static final String COMMENT_DTZ = "CDZ";
+	public static final String COMMENT_LINE = "CCC";
 
-	static final SimpleDateFormat dtFormat = new SimpleDateFormat("yyyyMMddHHmmss.S");
-
-	public static final String getCurrentDTZ() {
-		return String.format("%s,%d", dtFormat.format(new Date()), 
-				TimeZone.getDefault().getRawOffset() / 3600000);
-	}
 }

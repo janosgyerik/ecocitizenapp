@@ -39,8 +39,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ecocitizen.common.BundleKeys;
 import com.ecocitizen.parser.CO2SentenceParser;
-import com.ecocitizen.service.BundleKeys;
 
 public class TreeViewActivity extends DeviceManagerClient {
 	// Debugging

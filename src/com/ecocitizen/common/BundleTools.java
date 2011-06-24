@@ -1,6 +1,7 @@
-package com.ecocitizen.service;
+package com.ecocitizen.common;
 
 import java.util.Formatter;
+
 
 import android.location.Location;
 import android.os.Bundle;

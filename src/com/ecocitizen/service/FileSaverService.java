@@ -27,6 +27,8 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.ecocitizen.common.BundleTools;
+
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;

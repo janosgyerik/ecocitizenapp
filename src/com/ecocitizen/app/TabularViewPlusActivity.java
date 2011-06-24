@@ -35,9 +35,9 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.ecocitizen.common.BundleKeys;
 import com.ecocitizen.parser.PsenSentenceParser;
 import com.ecocitizen.parser.TemperatureSentenceParser;
-import com.ecocitizen.service.BundleKeys;
 
 public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 	// Debugging

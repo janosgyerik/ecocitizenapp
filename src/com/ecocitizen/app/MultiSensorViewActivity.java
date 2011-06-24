@@ -28,12 +28,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ecocitizen.common.BundleKeys;
 import com.ecocitizen.parser.CO2SentenceParser;
 import com.ecocitizen.parser.COxSentenceParser;
 import com.ecocitizen.parser.NOxSentenceParser;
 import com.ecocitizen.parser.NoiseSentenceParser;
 import com.ecocitizen.parser.PsenSentenceParser;
-import com.ecocitizen.service.BundleKeys;
 
 public class MultiSensorViewActivity extends SimpleDeviceManagerClient {
 	// Debugging

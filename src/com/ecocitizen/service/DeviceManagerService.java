@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 
+import com.ecocitizen.common.BundleKeys;
+
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;

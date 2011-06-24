@@ -42,7 +42,7 @@ import android.widget.Toast;
 import backport.android.bluetooth.BluetoothAdapter;
 import backport.android.bluetooth.BluetoothDevice;
 
-import com.ecocitizen.service.BundleKeys;
+import com.ecocitizen.common.BundleKeys;
 import com.ecocitizen.service.IDeviceManagerService;
 import com.ecocitizen.service.IDeviceManagerServiceCallback;
 import com.ecocitizen.service.IFileSaverService;
