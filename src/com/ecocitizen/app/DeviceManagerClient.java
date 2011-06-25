@@ -42,6 +42,7 @@ import android.widget.Toast;
 import backport.android.bluetooth.BluetoothAdapter;
 import backport.android.bluetooth.BluetoothDevice;
 
+import com.ecocitizen.common.DeviceManagerServiceCallback;
 import com.ecocitizen.common.MessageType;
 import com.ecocitizen.common.SentenceBundle;
 import com.ecocitizen.service.IDeviceManagerService;
@@ -533,40 +534,9 @@ public abstract class DeviceManagerClient extends Activity {
 	};
 
 	/**
-	 * This implementation is used to receive callbacks from the remote
-	 * service.
+	 * Callback to receive calls from the remote service.
 	 */
-	private IDeviceManagerServiceCallback mCallback = new IDeviceManagerServiceCallback.Stub() {
-		/**
-		 * Note that IPC calls are dispatched through a thread
-		 * pool running in each process, so the code executing here will
-		 * NOT be running in our main thread like most other things -- so,
-		 * to update the UI, we need to use a Handler to hop over there.
-		 */
-		public void receivedSentenceBundle(Bundle bundle) {
-			mHandler.obtainMessage(MessageType.SENTENCE, bundle).sendToTarget();
-		}
-
-		public void receivedConnectionFailed(String deviceName) {
-			mHandler.obtainMessage(MessageType.SM_CONNECTION_FAILED, deviceName).sendToTarget();
-		}
-
-		public void receivedDeviceAdded(String deviceName) {
-			mHandler.obtainMessage(MessageType.SM_DEVICE_ADDED, deviceName).sendToTarget();
-		}
-
-		public void receivedDeviceClosed(String deviceName) {
-			mHandler.obtainMessage(MessageType.SM_DEVICE_CLOSED, deviceName).sendToTarget();
-		}
-
-		public void receivedDeviceLost(String deviceName) {
-			mHandler.obtainMessage(MessageType.SM_DEVICE_LOST, deviceName).sendToTarget();
-		}
-
-		public void receivedAllDevicesGone() {
-			mHandler.obtainMessage(MessageType.SM_ALL_DEVICES_GONE).sendToTarget();
-		}
-	};
+	private IDeviceManagerServiceCallback mCallback = new DeviceManagerServiceCallback(mHandler);
 
 	private ISensorMapUploaderService mSensorMapUploaderService = null;
 
