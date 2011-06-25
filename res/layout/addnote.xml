@@ -18,14 +18,14 @@
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 
-	<TextView android:id="@+id/comment_dt" style="@style/datetime" 
+	<TextView android:id="@+id/addnote_dt" style="@style/datetime" 
 		android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 
-	<TimePicker android:id="@+id/comment_time_picker" android:visibility="gone"
+	<TimePicker android:id="@+id/addnote_time_picker" android:visibility="gone"
 		android:layout_height="wrap_content" android:layout_width="wrap_content"></TimePicker>
 		
-	<EditText android:id="@+id/comment_text" android:lines="3" android:gravity="top"
+	<EditText android:id="@+id/addnote_text" android:lines="5" android:gravity="top"
 		android:layout_height="wrap_content" android:layout_width="fill_parent"></EditText>
-	<Button android:id="@+id/btn_comment" android:text="@string/btn_comment"
+	<Button android:id="@+id/btn_addnote" android:text="@string/btn_addnote"
 		android:stackFromBottom="true" style="@style/btn" />
 </LinearLayout>

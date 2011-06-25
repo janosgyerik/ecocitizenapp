@@ -485,7 +485,7 @@ public abstract class DeviceManagerClient extends Activity {
 	}
 
 	void startCommentActivity() {
-		startActivity(new Intent(this, CommentActivity.class));
+		startActivity(new Intent(this, AddNoteActivity.class));
 	}
 
 	private IDeviceManagerService mService = null;

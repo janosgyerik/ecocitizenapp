@@ -31,9 +31,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-public class CommentActivity extends Activity {
+public class AddNoteActivity extends Activity {
 	// Debugging
-	private static final String TAG = "CommentActivity";
+	private static final String TAG = "AddNoteActivity";
 	private static final boolean D = true;
 	
 	private static final String MSG_COMING_SOON = "Coming soon ..."; // TODO
@@ -46,16 +46,16 @@ public class CommentActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		if (D) Log.d(TAG, "+++ ON CREATE +++");
 		
-		setContentView(R.layout.comment);
+		setContentView(R.layout.addnote);
 		
-		mCurrentDateView = (TextView)findViewById(R.id.comment_dt);
-		mTimePicker = (TimePicker)findViewById(R.id.comment_time_picker);
+		mCurrentDateView = (TextView)findViewById(R.id.addnote_dt);
+		mTimePicker = (TimePicker)findViewById(R.id.addnote_time_picker);
 		
 		setTime();
-		Button btnSendComment = (Button) findViewById(R.id.btn_comment);
-		btnSendComment.setOnClickListener(new OnClickListener() {
+		Button btnAddNote = (Button) findViewById(R.id.btn_addnote);
+		btnAddNote.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				Toast.makeText(CommentActivity.this, MSG_COMING_SOON, Toast.LENGTH_LONG).show();
+				Toast.makeText(AddNoteActivity.this, MSG_COMING_SOON, Toast.LENGTH_LONG).show();
 			}
 		});
 	}
