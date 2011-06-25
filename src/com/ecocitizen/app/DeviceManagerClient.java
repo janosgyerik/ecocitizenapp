@@ -327,7 +327,7 @@ public abstract class DeviceManagerClient extends Activity {
 	}
 
 	void disconnectSensor() {
-		disconnectSensor(mConnectedDeviceNames.iterator().next());
+		disconnectSensor(null);
 	}
 	
 	void disconnectSensor(String deviceName) {

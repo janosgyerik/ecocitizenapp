@@ -186,7 +186,17 @@ public class DeviceManagerService extends Service {
 		 * - filename for logfile players 
 		 */
 		public void disconnectDevice(String deviceName) throws RemoteException {
-			shutdownSensorManager(deviceName);
+			if (deviceName == null) {
+				synchronized (mSensorManagers) {
+					if (!mSensorManagers.isEmpty()) {
+						deviceName = mSensorManagers.keySet().iterator().next();
+						shutdownSensorManager(deviceName);
+					}
+				}
+			}
+			else {
+				shutdownSensorManager(deviceName);
+			}
 		}
 
 		public void registerCallback(IDeviceManagerServiceCallback cb) {
