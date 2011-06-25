@@ -39,7 +39,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ecocitizen.common.BundleKeys;
 import com.ecocitizen.common.SentenceBundle;
 import com.ecocitizen.parser.CO2SentenceParser;
 
@@ -102,9 +101,9 @@ public class TreeViewActivity extends DeviceManagerClient {
 		mBtnDisconnect.setVisibility(View.GONE);
 
 		// Set up the custom title
-		mTitle = (TextView) findViewById(R.id.title_left_text);
-		mTitle.setText(R.string.app_name);
-		mTitle = (TextView) findViewById(R.id.title_right_text);
+		TextView title = (TextView) findViewById(R.id.title_left_text);
+		title.setText(R.string.app_name);
+		mDeviceListTextView = (TextView) findViewById(R.id.title_right_text);
 
 		// If the adapter is null, then Bluetooth is not supported
 		if (mBluetoothAdapter == null) {

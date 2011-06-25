@@ -54,9 +54,9 @@ public class TabularViewActivity extends SimpleDeviceManagerClient {
 		setupCommonButtons();
 
 		// Set up the custom title
-		mTitle = (TextView) findViewById(R.id.title_left_text);
-		mTitle.setText(R.string.tabularview_activity);
-		mTitle = (TextView) findViewById(R.id.title_right_text);
+		mDeviceListTextView = (TextView) findViewById(R.id.title_left_text);
+		mDeviceListTextView.setText(R.string.tabularview_activity);
+		mDeviceListTextView = (TextView) findViewById(R.id.title_right_text);
 
 		mSentencesTbl = (TableLayout)findViewById(R.id.tblsentences);
 	}

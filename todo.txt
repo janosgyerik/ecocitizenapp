@@ -12,10 +12,15 @@ release in marketplace
 
 critical
 ========
-- CommentActivity should return comment+dtz to caller activity
+- bug: proper handling for title and custom title in all derived classes of DeviceManagerClient 
+- create class diagram and upload to wiki, see dilemmagame for how to do it
+- bug: connected device names should be loaded when connecting to device manager
+	- before disconnect messages are received
+	- may be good to be tolerant to disconnect of unknown devices
 - use sensor id instead of name in DeviceManagerService
+- finish CommentActivity
+	- return comment+dtz to caller activity
 - design the steps to make it work with zephyr and create tasks in redmine
-- create system diagram and upload to wiki
 - bug: disconnect device menu does not work in debugtools
 - bug: app gets into strange state after connection lost, sending session id 'null'
 - improve data uploading throughput

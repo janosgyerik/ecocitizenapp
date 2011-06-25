@@ -62,7 +62,7 @@ public abstract class DeviceManagerClient extends Activity {
 	private final static String PREFS_FILESAVER = "filesaver";
 
 	// Layout Views
-	TextView mTitle;
+	TextView mDeviceListTextView;
 
 	// Local Bluetooth adapter
 	BluetoothAdapter mBluetoothAdapter = null;
@@ -458,10 +458,13 @@ public abstract class DeviceManagerClient extends Activity {
 	}
 	
 	void onConnectedDeviceNamesUpdated() {
-		updateTitle();
+		updateDeviceListTextView();
 	}
 	
-	void updateTitle() {
+	void updateDeviceListTextView() {
+		// Skip this, if the activity does not support such view.
+		if (mDeviceListTextView == null) return;
+		
 		String newTitle;
 		if (mConnectedDeviceNames.isEmpty()) {
 			newTitle = getString(R.string.title_not_connected);
@@ -477,7 +480,7 @@ public abstract class DeviceManagerClient extends Activity {
 				newTitle += ", " + iterator.next();
 			}
 		}
-		mTitle.setText(newTitle);
+		mDeviceListTextView.setText(newTitle);
 	}
 
 	void startCommentActivity() {
