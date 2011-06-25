@@ -21,6 +21,8 @@ package com.ecocitizen.app;
 
 import java.util.Calendar;
 
+import com.ecocitizen.app.util.FinishActivityClickListener;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -52,12 +54,16 @@ public class AddNoteActivity extends Activity {
 		mTimePicker = (TimePicker)findViewById(R.id.addnote_time_picker);
 		
 		setTime();
+		
 		Button btnAddNote = (Button) findViewById(R.id.btn_addnote);
 		btnAddNote.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Toast.makeText(AddNoteActivity.this, MSG_COMING_SOON, Toast.LENGTH_LONG).show();
 			}
 		});
+		
+		Button btnCancel = (Button) findViewById(R.id.btn_cancel);
+		btnCancel.setOnClickListener(new FinishActivityClickListener(this));
 	}
 
 	void setTime() {

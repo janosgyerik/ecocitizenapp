@@ -26,6 +26,12 @@
 		
 	<EditText android:id="@+id/addnote_text" android:lines="5" android:gravity="top"
 		android:layout_height="wrap_content" android:layout_width="fill_parent"></EditText>
-	<Button android:id="@+id/btn_addnote" android:text="@string/btn_addnote"
-		android:stackFromBottom="true" style="@style/btn" />
+
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+		<Button android:id="@+id/btn_cancel" android:text="@string/btn_cancel"
+			style="@style/horizontalButton" />
+		<Button android:id="@+id/btn_addnote" android:text="@string/btn_addnote"
+			style="@style/horizontalButton" />
+	</LinearLayout>
 </LinearLayout>
