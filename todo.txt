@@ -8,36 +8,40 @@ when connected
 release in marketplace
 ======================
 - add a property to switch debugging on/off
-	
+- complete support for zephyr
+- follow through the steps in android docs
 
-critical
-========
-- bug: proper handling for title and custom title in all derived classes of DeviceManagerClient 
-- create class diagram and upload to wiki, see dilemmagame for how to do it
-- bug: connected device names should be loaded when connecting to device manager
-	- before disconnect messages are received
-	- may be good to be tolerant to disconnect of unknown devices
-- use sensor id instead of name in DeviceManagerService
+
+current focus
+=============
+- unit tests. it's really a waste of time to test things without it
 - finish CommentActivity
 	- return comment+dtz to caller activity
-- design the steps to make it work with zephyr and create tasks in redmine
-- bug: disconnect device menu does not work in debugtools
-- bug: app gets into strange state after connection lost, sending session id 'null'
-- improve data uploading throughput
-	test slowness, confirm and quantify
-	pack multiple messages in one transmission
-	repeat test, confirm improvement
-	automatically adjust sending buffer size
+	- override onSaveInstanceState method to prevent losing text when another application (like a phone call) comes to the foreground
+- clean up variable visibility in .app
+- add class diagram for .app
+- add class diagrams to wiki with additional explanatory text
+
+
+clean up the navigation and the menus
+=====================================
+- add small connect and disconnect buttons on data view screens
+	treeview
+	multisensor view
+	debug tools
+- make the menu uniform across data view screens
+	treeview
+	multisensor view
+	debug tools
+- remove connect and disconnect buttons from the menu
+- bug: proper handling for title and custom title in all derived classes of DeviceManagerClient 
+	what are ViewStubs and can they help here?
+- bug: connected device names should be loaded when connecting to device manager
+	- may be good to be tolerant to disconnect of unknown devices
 
 
 support for multiple devices
 ============================
-- remove the duplication in IDeviceManagerServiceCallback stubs
-- clean up the menu
-	- Connect a device
-	- Connect another device
-	- Disconnect device
-	- Disconnect a device
 - when clicking disconnect sensor
 	- if there is only one connected sensor, disconnect it
 	- if there are many connected sensors 
@@ -45,57 +49,71 @@ support for multiple devices
 		option to disconnect all
 
 
+support for zephyr
+==================
+- record some sample binary data from zephyr
+- analyze the data and the protocol docs, figure out how to formulate sentences
+- create the framework of appropriate drivers to use in bluetooth readers
+
+
+critical for next experiment
+============================
+- bug: app gets into strange state after connection lost, sending session id 'null'
+- improve data uploading throughput
+	test slowness, confirm and quantify
+	pack multiple messages in one transmission
+	repeat test, confirm improvement
+	automatically adjust sending buffer size
+	! an alternative solution is to use an alternative high speed uploader class
+
+
 next
 ====
-	make it possible to cancel upload in FileInfoWithUploadActivity
-		tip: the activity is launched from FileUploaderActivity
-		tip: make ProgressDialog cancelable
-	add progress bar while uploading a file in FileInfoWithUploadActivity
-		tip: AsyncTask.onProgressUpdate
-		since we know number of lines, this should be possible
-	! implement commenting
-		override onSaveInstanceState method to prevent losing text when another application (like a phone call) comes to the foreground
-	create the foundation for detecting sensor types and using different drivers based on sensor type
-		use ascii reader with senspods
-		use binary reader (zephyr reader) with zephyr
-		apply unit type overrides (ppm instead of V for COx from senspods)
-	add support for zephyr
-	clean up files on android
-		check on sessions that crash the app
-		remove workaround code
-	!! support for multiple devices at the same time
-		add to menu 'connect another'
-	fix hardcoded values in debugtools
-	bug: username etc not updated in SettingsActivity after reset
-		probably implementing OnSharedPrefsChanged might do the trick
-	? bug: android uploader gets killed
-	? bug: java.net.UnknownHostException
+- bug to redmine: username etc not updated in SettingsActivity after reset
+	probably implementing OnSharedPrefsChanged might do the trick
+- make it possible to cancel upload in FileInfoWithUploadActivity
+	tip: the activity is launched from FileUploaderActivity
+	tip: make ProgressDialog cancelable
+- add progress bar while uploading a file in FileInfoWithUploadActivity
+	tip: AsyncTask.onProgressUpdate
+	since we know number of lines, this should be possible
+- create the foundation for detecting sensor types and using different drivers based on sensor type
+	use ascii reader with senspods
+	use binary reader (zephyr reader) with zephyr
+	apply unit type overrides (ppm instead of V for COx from senspods)
+- clean up files on android
+	check on sessions that crash the app
+	remove workaround code
+- fix hardcoded values in debugtools
+? bug: android uploader gets killed
+? bug: java.net.UnknownHostException
 
 
 optimization
 ============
-	if and only if performance is crucial, follow the 'Designing for Performance' article in Dev Guide
-	try to rewrite nested linearlayouts with relativelayout
-	consider using ViewStubs
-	review comments in entire code, especially service code
-	improve button style by using different style parent? theme?
+- use sensor id instead of name in DeviceManagerService
+- if and only if performance is crucial, follow the 'Designing for Performance' article in Dev Guide
+- try to rewrite nested linearlayouts with relativelayout
+- consider using ViewStubs
+- review comments in entire code, especially service code
+- improve button style by using different style parent? theme?
 
 
 file uploader "nice" implementation
 ===================================
-	+ show file info card with buttons
-	+ Upload btn begins upload in async mode
-	- Cancel btn can interrupt the upload
-	- progress bar is updated regularly
-	- Close button cancels upload
-	+ show success/failure on completion
-	+ show/hide buttons on success/failure appropriately
++ show file info card with buttons
++ Upload btn begins upload in async mode
+- Cancel btn can interrupt the upload
+- progress bar is updated regularly
+- Close button cancels upload
++ show success/failure on completion
++ show/hide buttons on success/failure appropriately
 
 
 minor improvements
 ==================
-	fileuploader: nicer progress indicator: full screen, modal + cancel
-	fileuploader: progress indicator while uploading single file
+- fileuploader: nicer progress indicator: full screen, modal + cancel
+- fileuploader: progress indicator while uploading single file
 
 
 nice to have
@@ -104,11 +122,6 @@ nice to have
 - know the number of data records pending for upload
 - user profiles: anon, dev, janos, ...
 - FileSaverService with proper synchronization
-
-
-bugs
-====
--
 
 
 possibly bluetooth backport bugs
