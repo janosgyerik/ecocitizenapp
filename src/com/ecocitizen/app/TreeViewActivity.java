@@ -57,9 +57,9 @@ public class TreeViewActivity extends DeviceManagerClient {
 	private TextView mLonNameView;
 	private TextView mLonValView;
 
-	private static final String IMG_PREFIX = "treebg_";
-	private static final String DEF_PACKAGE = "com.ecocitizen.app";
-	private static final String DEF_TYPE = "drawable";
+	private static final String TREEBG_PREFIX = "treebg_";
+	private static final String TREEBG_PACKAGE = "com.ecocitizen.app";
+	private static final String TREEBG_TYPE = "drawable";
 
 	private Button mBtnConnect;
 	private Button mBtnDisconnect;
@@ -188,8 +188,12 @@ public class TreeViewActivity extends DeviceManagerClient {
 			mLatNameView.setText("lat.=");
 			mLonNameView.setText("long.=");
 
-			String imgname = IMG_PREFIX + parser.getLevel();
-			int resID = getResources().getIdentifier(imgname, DEF_TYPE, DEF_PACKAGE);
+			String imgname = TREEBG_PREFIX + parser.getLevel();
+			int resID = getResources().getIdentifier(imgname, TREEBG_TYPE, TREEBG_PACKAGE);
+			if (resID == 0) {
+				resID = R.drawable.treebg_max;
+			}
+			
 			LinearLayout treepage = (LinearLayout) findViewById(R.id.treepage);
 			treepage.setBackgroundResource(resID);
 			
