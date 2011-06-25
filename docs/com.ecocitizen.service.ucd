@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="com.ecocitizen.service_3" size="902,647" id="com.ecocitizen.service" metadata="uml2-1.0" initialized="true" tag="1000" key="32303037303533312D313030302045636F436974697A656E2F6A616E6F73">
+  <children xsi:type="editmodel:InterfaceEditModel" name="IFileSaverService" location="31,425" size="127,132" id="com.ecocitizen.service/IFileSaverService" runTimeClassModel="deactivate(),activate(),com.ecocitizen.service.IFileSaverService.Stub,getPid(),shutdown()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="66,72">
+      <children xsi:type="editmodel:MethodEditModel" name="activate" id="com.ecocitizen.service/IFileSaverService#activate()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="deactivate" id="com.ecocitizen.service/IFileSaverService#deactivate()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPid" id="com.ecocitizen.service/IFileSaverService#getPid()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="shutdown" id="com.ecocitizen.service/IFileSaverService#shutdown()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="157,195"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" name="ISensorMapUploaderService" location="257,425" size="184,132" id="com.ecocitizen.service/ISensorMapUploaderService" runTimeClassModel="activate(),deactivate(),shutdown(),getPid(),com.ecocitizen.service.ISensorMapUploaderService.Stub">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="66,72">
+      <children xsi:type="editmodel:MethodEditModel" name="activate" id="com.ecocitizen.service/ISensorMapUploaderService#activate()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="deactivate" id="com.ecocitizen.service/ISensorMapUploaderService#deactivate()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPid" id="com.ecocitizen.service/ISensorMapUploaderService#getPid()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="shutdown" id="com.ecocitizen.service/ISensorMapUploaderService#shutdown()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="157,195"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="DeviceManagerService" location="489,15" size="157,139" id="com.ecocitizen.service/DeviceManagerService" runTimeClassModel="onUnbind(Landroid.content.Intent;),onCreate(),onBind(Landroid.content.Intent;),onDestroy(),onRebind(Landroid.content.Intent;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="66,90">
+      <children xsi:type="editmodel:MethodEditModel" name="onBind" id="com.ecocitizen.service/DeviceManagerService#onBind(Landroid.content.Intent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onCreate" id="com.ecocitizen.service/DeviceManagerService#onCreate()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onDestroy" id="com.ecocitizen.service/DeviceManagerService#onDestroy()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onRebind" id="com.ecocitizen.service/DeviceManagerService#onRebind(Landroid.content.Intent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onUnbind" id="com.ecocitizen.service/DeviceManagerService#onUnbind(Landroid.content.Intent;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="com.ecocitizen.service/DeviceManagerService->Soyatec::Import" source="//@children.2" target="//@children.9" targetEnd="//@children.2/@sourceConnections.0/@children.2" label="//@children.2/@sourceConnections.0/@children.0" sourceEnd="//@children.2/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import»" size="54,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="76,139" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="76,0"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="com.ecocitizen.service/DeviceManagerService-Soyatec::Import->com.ecocitizen.service/IDeviceManagerServiceCallback" source="//@children.2" target="//@children.5" targetEnd="//@children.2/@sourceConnections.1/@children.2" label="//@children.2/@sourceConnections.1/@children.0" sourceEnd="//@children.2/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="34,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,69" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="204,69"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="com.ecocitizen.service/DeviceManagerService->Soyatec::Import" source="//@children.2" target="//@children.7" targetEnd="//@children.2/@sourceConnections.2/@children.2" label="//@children.2/@sourceConnections.2/@children.0" sourceEnd="//@children.2/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import, Instantiate»" size="99,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="157,69" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,69"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="SensorMapUploaderService" location="258,254" size="181,139" id="com.ecocitizen.service/SensorMapUploaderService" runTimeClassModel="onUnbind(Landroid.content.Intent;),onCreate(),onBind(Landroid.content.Intent;),onDestroy(),onRebind(Landroid.content.Intent;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="66,90">
+      <children xsi:type="editmodel:MethodEditModel" name="onBind" id="com.ecocitizen.service/SensorMapUploaderService#onBind(Landroid.content.Intent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onCreate" id="com.ecocitizen.service/SensorMapUploaderService#onCreate()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onDestroy" id="com.ecocitizen.service/SensorMapUploaderService#onDestroy()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onRebind" id="com.ecocitizen.service/SensorMapUploaderService#onRebind(Landroid.content.Intent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onUnbind" id="com.ecocitizen.service/SensorMapUploaderService#onUnbind(Landroid.content.Intent;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="com.ecocitizen.service/SensorMapUploaderService-Soyatec::Import->com.ecocitizen.service/IDeviceManagerServiceCallback" source="//@children.3" target="//@children.5" targetEnd="//@children.3/@sourceConnections.0/@children.2" label="//@children.3/@sourceConnections.0/@children.0" sourceEnd="//@children.3/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="34,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="85,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="118,168"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="com.ecocitizen.service/SensorMapUploaderService->Standard::Call" source="//@children.3" target="//@children.4" targetEnd="//@children.3/@sourceConnections.1/@children.2" label="//@children.3/@sourceConnections.1/@children.0" sourceEnd="//@children.3/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import»" size="54,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="5,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="160,167"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.6/@sourceConnections.1 //@children.3/@sourceConnections.1" name="IDeviceManagerService" location="15,15" size="160,204" id="com.ecocitizen.service/IDeviceManagerService" runTimeClassModel="connectLogplayer(Ljava.lang.String;I),unregisterCallback(Lcom.ecocitizen.service.IDeviceManagerServiceCallback;),sendComment(Ljava.lang.String;Ljava.lang.String;),com.ecocitizen.service.IDeviceManagerService.Stub,getPid(),shutdown(),registerCallback(Lcom.ecocitizen.service.IDeviceManagerServiceCallback;),connectBluetoothDevice(Lbackport.android.bluetooth.BluetoothDevice;),disconnectDevice(Ljava.lang.String;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="119,144">
+      <children xsi:type="editmodel:MethodEditModel" name="connectBluetoothDevice" id="com.ecocitizen.service/IDeviceManagerService#connectBluetoothDevice(Lbackport.android.bluetooth.BluetoothDevice;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="connectLogplayer" id="com.ecocitizen.service/IDeviceManagerService#connectLogplayer(Ljava.lang.String;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="disconnectDevice" id="com.ecocitizen.service/IDeviceManagerService#disconnectDevice(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPid" id="com.ecocitizen.service/IDeviceManagerService#getPid()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="registerCallback" id="com.ecocitizen.service/IDeviceManagerService#registerCallback(Lcom.ecocitizen.service.IDeviceManagerServiceCallback;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="sendComment" id="com.ecocitizen.service/IDeviceManagerService#sendComment(Ljava.lang.String;Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="shutdown" id="com.ecocitizen.service/IDeviceManagerService#shutdown()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="unregisterCallback" id="com.ecocitizen.service/IDeviceManagerService#unregisterCallback(Lcom.ecocitizen.service.IDeviceManagerServiceCallback;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="210,267"/>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="com.ecocitizen.service/IDeviceManagerService-Soyatec::Import->com.ecocitizen.service/IDeviceManagerServiceCallback" source="//@children.4" target="//@children.5" targetEnd="//@children.4/@sourceConnections.0/@children.2" label="//@children.4/@sourceConnections.0/@children.0" sourceEnd="//@children.4/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="34,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="160,83" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,83"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.2/@sourceConnections.1 //@children.4/@sourceConnections.0 //@children.6/@sourceConnections.0 //@children.3/@sourceConnections.0" name="IDeviceManagerServiceCallback" location="225,15" size="204,168" id="com.ecocitizen.service/IDeviceManagerServiceCallback" runTimeClassModel="receivedDeviceClosed(Ljava.lang.String;),receivedDeviceLost(Ljava.lang.String;),receivedConnectionFailed(Ljava.lang.String;),com.ecocitizen.service.IDeviceManagerServiceCallback.Stub,receivedDeviceAdded(Ljava.lang.String;),receivedAllDevicesGone(),receivedSentenceBundle(Landroid.os.Bundle;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="125,108">
+      <children xsi:type="editmodel:MethodEditModel" name="receivedAllDevicesGone" id="com.ecocitizen.service/IDeviceManagerServiceCallback#receivedAllDevicesGone()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="receivedConnectionFailed" id="com.ecocitizen.service/IDeviceManagerServiceCallback#receivedConnectionFailed(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="receivedDeviceAdded" id="com.ecocitizen.service/IDeviceManagerServiceCallback#receivedDeviceAdded(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="receivedDeviceClosed" id="com.ecocitizen.service/IDeviceManagerServiceCallback#receivedDeviceClosed(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="receivedDeviceLost" id="com.ecocitizen.service/IDeviceManagerServiceCallback#receivedDeviceLost(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="receivedSentenceBundle" id="com.ecocitizen.service/IDeviceManagerServiceCallback#receivedSentenceBundle(Landroid.os.Bundle;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="216,231"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="FileSaverService" location="33,254" size="124,139" id="com.ecocitizen.service/FileSaverService" runTimeClassModel="fILENAME_EXTENSION,fILENAME_PREFIX_LEGACY,onUnbind(Landroid.content.Intent;),onBind(Landroid.content.Intent;),onCreate(),onDestroy(),eXTERNAL_TARGETDIR,fILENAME_PREFIX,dATEFORMAT,onRebind(Landroid.content.Intent;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="149,90"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="66,90">
+      <children xsi:type="editmodel:MethodEditModel" name="onBind" id="com.ecocitizen.service/FileSaverService#onBind(Landroid.content.Intent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onCreate" id="com.ecocitizen.service/FileSaverService#onCreate()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onDestroy" id="com.ecocitizen.service/FileSaverService#onDestroy()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onRebind" id="com.ecocitizen.service/FileSaverService#onRebind(Landroid.content.Intent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onUnbind" id="com.ecocitizen.service/FileSaverService#onUnbind(Landroid.content.Intent;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="com.ecocitizen.service/FileSaverService-Soyatec::Import->com.ecocitizen.service/IDeviceManagerServiceCallback" source="//@children.6" target="//@children.5" targetEnd="//@children.6/@sourceConnections.0/@children.2" label="//@children.6/@sourceConnections.0/@children.0" sourceEnd="//@children.6/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="34,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="124,9" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="15,168"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="com.ecocitizen.service/FileSaverService->Standard::Call" source="//@children.6" target="//@children.4" targetEnd="//@children.6/@sourceConnections.1/@children.2" label="//@children.6/@sourceConnections.1/@children.0" sourceEnd="//@children.6/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import»" size="54,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="62,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="80,204"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.8/@sourceConnections.2 //@children.9/@sourceConnections.0 //@children.2/@sourceConnections.2 //@children.10/@sourceConnections.1" name="GpsLocationListener" location="691,15" size="147,193" id="com.ecocitizen.service/GpsLocationListener" runTimeClassModel="GpsLocationListener(Landroid.location.LocationManager;),requestLocationUpdates(),getLastLocationBundle(),removeLocationUpdates(),onProviderEnabled(Ljava.lang.String;),onStatusChanged(Ljava.lang.String;ILandroid.os.Bundle;),onProviderDisabled(Ljava.lang.String;),onLocationChanged(Landroid.location.Location;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="120,144">
+      <children xsi:type="editmodel:MethodEditModel" name="GpsLocationListener" id="com.ecocitizen.service/GpsLocationListener#GpsLocationListener(Landroid.location.LocationManager;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getLastLocationBundle" id="com.ecocitizen.service/GpsLocationListener#getLastLocationBundle()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onLocationChanged" id="com.ecocitizen.service/GpsLocationListener#onLocationChanged(Landroid.location.Location;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onProviderDisabled" id="com.ecocitizen.service/GpsLocationListener#onProviderDisabled(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onProviderEnabled" id="com.ecocitizen.service/GpsLocationListener#onProviderEnabled(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onStatusChanged" id="com.ecocitizen.service/GpsLocationListener#onStatusChanged(Ljava.lang.String;ILandroid.os.Bundle;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removeLocationUpdates" id="com.ecocitizen.service/GpsLocationListener#removeLocationUpdates()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="requestLocationUpdates" id="com.ecocitizen.service/GpsLocationListener#requestLocationUpdates()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="BluetoothSensorManager" location="481,485" size="170,103" id="com.ecocitizen.service/BluetoothSensorManager" runTimeClassModel="BluetoothSensorManager(Landroid.os.Handler;Lcom.ecocitizen.service.GpsLocationListener;Lbackport.android.bluetooth.BluetoothDevice;),connect(),shutdown()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="123,54">
+      <children xsi:type="editmodel:MethodEditModel" name="BluetoothSensorManager" id="com.ecocitizen.service/BluetoothSensorManager#BluetoothSensorManager(Landroid.os.Handler;Lcom.ecocitizen.service.GpsLocationListener;Lbackport.android.bluetooth.BluetoothDevice;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="connect" id="com.ecocitizen.service/BluetoothSensorManager#connect()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="shutdown" id="com.ecocitizen.service/BluetoothSensorManager#shutdown()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" targetConnections="//@children.10/@sourceConnections.0" autoLocated="true" id="com.ecocitizen.service/SensorManager&lt;-com.ecocitizen.service/BluetoothSensorManager" source="//@children.8" target="//@children.9" targetEnd="//@children.8/@sourceConnections.0/@children.1" sourceEnd="//@children.8/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="128,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="20,192" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="com.ecocitizen.service/BluetoothSensorManager-Standard::Derive->com.ecocitizen.service/SensorManager" source="//@children.8" target="//@children.9" targetEnd="//@children.8/@sourceConnections.1/@children.2" label="//@children.8/@sourceConnections.1/@children.0" sourceEnd="//@children.8/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Derive»" size="33,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="85,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="77,193"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="com.ecocitizen.service/BluetoothSensorManager-Soyatec::Import->com.ecocitizen.service/GpsLocationListener" source="//@children.8" target="//@children.7" targetEnd="//@children.8/@sourceConnections.2/@children.2" label="//@children.8/@sourceConnections.2/@children.0" sourceEnd="//@children.8/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="34,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="109,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="28,193"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.8/@sourceConnections.0 //@children.8/@sourceConnections.1 //@children.2/@sourceConnections.0 //@children.10/@sourceConnections.2" name="SensorManager" location="489,200" size="154,193" id="com.ecocitizen.service/SensorManager" runTimeClassModel="sendConnectFailedMsg(),connect(),sendConnectionLostMsg(),sendSentenceLineMsg(Ljava.lang.String;),shutdown(),SensorManager(Ljava.lang.String;Ljava.lang.String;Landroid.os.Handler;Lcom.ecocitizen.service.GpsLocationListener;),sendConnectedMsg(),sendConnectionClosedMsg()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="131,144">
+      <children xsi:type="editmodel:MethodEditModel" name="SensorManager" id="com.ecocitizen.service/SensorManager#SensorManager(Ljava.lang.String;Ljava.lang.String;Landroid.os.Handler;Lcom.ecocitizen.service.GpsLocationListener;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="connect" id="com.ecocitizen.service/SensorManager#connect()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="sendConnectFailedMsg" id="com.ecocitizen.service/SensorManager#sendConnectFailedMsg()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="sendConnectedMsg" id="com.ecocitizen.service/SensorManager#sendConnectedMsg()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="sendConnectionClosedMsg" id="com.ecocitizen.service/SensorManager#sendConnectionClosedMsg()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="sendConnectionLostMsg" id="com.ecocitizen.service/SensorManager#sendConnectionLostMsg()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="sendSentenceLineMsg" id="com.ecocitizen.service/SensorManager#sendSentenceLineMsg(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="shutdown" id="com.ecocitizen.service/SensorManager#shutdown()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="com.ecocitizen.service/SensorManager->Standard::Call" source="//@children.9" target="//@children.7" targetEnd="//@children.9/@sourceConnections.0/@children.2" label="//@children.9/@sourceConnections.0/@children.0" sourceEnd="//@children.9/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import»" size="54,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="154,3" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,188"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="LogplayerSensorManager" location="667,485" size="171,103" id="com.ecocitizen.service/LogplayerSensorManager" runTimeClassModel="connect(),LogplayerSensorManager(Landroid.os.Handler;Lcom.ecocitizen.service.GpsLocationListener;Ljava.io.InputStream;ILjava.lang.String;),shutdown()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="123,54">
+      <children xsi:type="editmodel:MethodEditModel" name="LogplayerSensorManager" id="com.ecocitizen.service/LogplayerSensorManager#LogplayerSensorManager(Landroid.os.Handler;Lcom.ecocitizen.service.GpsLocationListener;Ljava.io.InputStream;ILjava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="connect" id="com.ecocitizen.service/LogplayerSensorManager#connect()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="shutdown" id="com.ecocitizen.service/LogplayerSensorManager#shutdown()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="com.ecocitizen.service/SensorManager&lt;-com.ecocitizen.service/LogplayerSensorManager" source="//@children.10" target="//@children.8/@sourceConnections.0" targetEnd="//@children.10/@sourceConnections.0/@children.1" sourceEnd="//@children.10/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="85,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="com.ecocitizen.service/LogplayerSensorManager-Soyatec::Import->com.ecocitizen.service/GpsLocationListener" source="//@children.10" target="//@children.7" targetEnd="//@children.10/@sourceConnections.1/@children.2" label="//@children.10/@sourceConnections.1/@children.0" sourceEnd="//@children.10/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="34,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="97,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="73,193"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="com.ecocitizen.service/LogplayerSensorManager-Standard::Derive->com.ecocitizen.service/SensorManager" source="//@children.10" target="//@children.9" targetEnd="//@children.10/@sourceConnections.2/@children.2" label="//@children.10/@sourceConnections.2/@children.0" sourceEnd="//@children.10/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Derive»" size="33,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="45,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="152,193"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" properties="wireOptions=5;Product=eUML2" autoName="false"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel" gridVisibility="false">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" showPopupBars="true" showConnectionHandles="true" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" showDependencyStereotype="true" showInterfaceStereotype="true" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+</editmodel:ClassDiagramEditModel>
