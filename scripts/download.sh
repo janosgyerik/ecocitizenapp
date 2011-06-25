@@ -33,12 +33,14 @@ args=
 #arg=
 #flag=off
 list=off
+delete=off
 #param=
 while [ $# != 0 ]; do
     case $1 in
     -h|--help) usage ;;
 #    -f|--flag) flag=on ;;
     -l|--list|--ls) list=on ;;
+    --delete|--del) delete=on ;;
 #    --no-flag) flag=off ;;
 #    -p|--param) shift; param=$1 ;;
 #    --) shift; while [ $# != 0 ]; do args="$args \"$1\""; shift; done; break ;;
@@ -62,6 +64,11 @@ list() {
     adb shell ls $basedir | grep -E $pattern | tr -d '\r'
 }
 
+delete() {
+    echo rm $basedir/$1
+    adb shell rm $basedir/$1
+}
+
 pull() {
     adb pull $basedir/$1 "$download_dir"/$1
     echo saved to $download_dir/$1
@@ -69,6 +76,8 @@ pull() {
 
 if test $list = on; then
     list
+elif test $delete = on; then
+    list | while read file; do delete $file; done
 else
     mkdir -p "$download_dir"
     list | while read file; do pull $file; done
