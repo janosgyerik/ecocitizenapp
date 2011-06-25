@@ -24,6 +24,10 @@ public class DeviceManagerServiceCallback extends
 		mHandler.obtainMessage(MessageType.SENTENCE, bundle).sendToTarget();
 	}
 
+	public void receivedNoteBundle(Bundle bundle) {
+		mHandler.obtainMessage(MessageType.NOTE, bundle).sendToTarget();
+	}
+
 	public void receivedConnectionFailed(String deviceName) {
 		mHandler.obtainMessage(MessageType.SM_CONNECTION_FAILED, deviceName).sendToTarget();
 	}

@@ -15,6 +15,8 @@ release in marketplace
 current focus
 =============
 - unit tests. it's really a waste of time to test things without it
+- bugfix: onLocationChanged prob never returns null
+- bugfix: replace BundleTools with SentenceBundle
 - finish CommentActivity
 	- return comment+dtz to caller activity
 	- override onSaveInstanceState method to prevent losing text when another application (like a phone call) comes to the foreground

@@ -23,6 +23,7 @@ import android.os.Bundle;
 
 oneway interface IDeviceManagerServiceCallback {
 	void receivedSentenceBundle(in Bundle bundle);
+	void receivedNoteBundle(in Bundle bundle);
 	
 	void receivedConnectionFailed(String deviceName);
 	void receivedDeviceAdded(String deviceName);

@@ -294,6 +294,21 @@ public class DeviceManagerService extends Service {
 				}
 				mCallbacks.finishBroadcast();
 			} break;
+			case MessageType.NOTE: {
+				// Broadcast to all clients
+				final int N = mCallbacks.beginBroadcast();
+				final Bundle bundle = (Bundle)msg.obj;
+				for (int i = 0; i < N; ++i) {
+					try {
+						mCallbacks.getBroadcastItem(i).receivedNoteBundle(bundle);
+					}
+					catch (RemoteException e) {
+						// The RemoteCallbackList will take care of removing
+						// the dead object for us.
+					}
+				}
+				mCallbacks.finishBroadcast();
+			} break;
 			default:
 				super.handleMessage(msg);
 			}

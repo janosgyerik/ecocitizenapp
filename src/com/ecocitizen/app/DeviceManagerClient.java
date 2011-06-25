@@ -44,6 +44,7 @@ import backport.android.bluetooth.BluetoothDevice;
 
 import com.ecocitizen.common.DeviceManagerServiceCallback;
 import com.ecocitizen.common.MessageType;
+import com.ecocitizen.common.NoteBundle;
 import com.ecocitizen.common.SentenceBundle;
 import com.ecocitizen.service.IDeviceManagerService;
 import com.ecocitizen.service.IDeviceManagerServiceCallback;
@@ -390,6 +391,10 @@ public abstract class DeviceManagerClient extends Activity {
 	}
 
 	abstract void receivedSentenceBundle(SentenceBundle bundle);
+	
+	void receivedNoteBundle(NoteBundle bundle) {
+		Log.i(TAG, "+++NOTE: " + bundle);
+	}
 
 	// The Handler that gets information back from the DeviceManagerService
 	final Handler mHandler = new Handler() {
@@ -399,6 +404,9 @@ public abstract class DeviceManagerClient extends Activity {
 			switch (msg.what) {
 			case MessageType.SENTENCE:
 				receivedSentenceBundle(new SentenceBundle((Bundle)msg.obj));
+				break;
+			case MessageType.NOTE:
+				receivedNoteBundle(new NoteBundle((Bundle)msg.obj));
 				break;
 			case MessageType.SM_DEVICE_ADDED:
 				addConnectedDeviceName((String)msg.obj);

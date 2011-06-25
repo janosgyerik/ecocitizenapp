@@ -22,7 +22,13 @@ package com.ecocitizen.app;
 import java.util.Calendar;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,13 +37,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ecocitizen.app.util.FinishActivityClickListener;
+import com.ecocitizen.service.IDeviceManagerService;
 
 public class AddNoteActivity extends Activity {
 	// Debugging
 	private static final String TAG = "AddNoteActivity";
 	private static final boolean D = true;
-	
-	private static final String MSG_COMING_SOON = "Coming soon ..."; // TODO
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -53,11 +58,64 @@ public class AddNoteActivity extends Activity {
 		Button btnAddNote = (Button) findViewById(R.id.btn_addnote);
 		btnAddNote.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				Toast.makeText(AddNoteActivity.this, MSG_COMING_SOON, Toast.LENGTH_LONG).show();
+				if (mService != null) {
+					try {
+						mService.addNote(null, "DTZ", "THE_NOTE");
+						finish();
+					} catch (RemoteException e) {
+						Toast.makeText(AddNoteActivity.this, "could not send the note", Toast.LENGTH_LONG).show();
+						e.printStackTrace();
+					}
+				}
+				else {
+					Toast.makeText(AddNoteActivity.this, "could not connect to service", Toast.LENGTH_LONG).show();
+				}
 			}
 		});
 		
 		Button btnCancel = (Button) findViewById(R.id.btn_cancel);
 		btnCancel.setOnClickListener(new FinishActivityClickListener(this));
 	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		if (D) Log.d(TAG, "++ ON START ++");
+
+		connectDeviceManager();
+	}		
+
+	void connectDeviceManager() {
+		// Start the service if not already running
+		startService(new Intent(IDeviceManagerService.class.getName()));
+
+		// Establish connection with the service.
+		getApplicationContext().bindService(new Intent(IDeviceManagerService.class.getName()),
+				mConnection, Context.BIND_AUTO_CREATE);
+	}
+
+	private IDeviceManagerService mService = null;
+
+	/**
+	 * Class for interacting with the main interface of the service.
+	 */
+	private ServiceConnection mConnection = new ServiceConnection() {
+		public void onServiceConnected(ComponentName className, IBinder service) {
+			// This is called when the connection with the service has been
+			// established, giving us the service object we can use to
+			// interact with the service.  We are communicating with our
+			// service through an IDL interface, so get a client-side
+			// representation of that from the raw service object.
+			mService = IDeviceManagerService.Stub.asInterface(service);
+		}
+
+		public void onServiceDisconnected(ComponentName className) {
+			// This is called when the connection with the service has been
+			// unexpectedly disconnected -- that is, its process crashed.
+			mService = null;
+
+			Toast.makeText(AddNoteActivity.this, "Remote service crashed",
+					Toast.LENGTH_SHORT).show();
+		}
+	};
 }
