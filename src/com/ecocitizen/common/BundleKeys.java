@@ -20,6 +20,7 @@
 package com.ecocitizen.common;
 
 public abstract class BundleKeys {
+
 	public static final String SENTENCE_DTZ = "SDZ";
 	public static final String SENTENCE_LINE = "SSS";
 	public static final String SENTENCE_SENSOR_ID = "SID";
@@ -29,7 +30,9 @@ public abstract class BundleKeys {
 	public static final String LOCATION_LATLON_ID = "LLL";
 	public static final String LOCATION_LOC = "LOC";
 	
-	public static final String COMMENT_DTZ = "CDZ";
-	public static final String COMMENT_LINE = "CCC";
+	public static final String NOTE_LOC_START = "NLS";
+	public static final String NOTE_LOC_END = "NLE";
+	public static final String NOTE_DTZ = "NDZ";
+	public static final String NOTE_LINE = "NNN";
 
 }

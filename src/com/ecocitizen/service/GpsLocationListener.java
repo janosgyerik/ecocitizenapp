@@ -76,6 +76,10 @@ public class GpsLocationListener implements LocationListener {
 		mLocationManager.removeUpdates(this);
 	}
 
+	public Location getLastLocation() {
+		return mLastLocation;
+	}
+
 	public Bundle getLastLocationBundle() {
 		return mLastLocation == null ? null : mLastKnownLocationBundle;
 	}

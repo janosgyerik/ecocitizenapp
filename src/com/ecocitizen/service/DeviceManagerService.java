@@ -29,6 +29,7 @@ import com.ecocitizen.common.MessageType;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -211,12 +212,14 @@ public class DeviceManagerService extends Service {
 			return Process.myPid();
 		}
 
-		public void sendComment(String dtz, String comment) throws RemoteException {
+		public void addNote(Location location, String dtz, String note)
+				throws RemoteException {
 			Bundle bundle = new Bundle();
-			bundle.putBundle(BundleKeys.LOCATION_BUNDLE, mGpsLocationListener.getLastLocationBundle());
-			bundle.putString(BundleKeys.COMMENT_DTZ, dtz);
-			bundle.putString(BundleKeys.COMMENT_LINE, comment);
-			mHandler.obtainMessage(MessageType.COMMENT, bundle).sendToTarget();
+			bundle.putParcelable(BundleKeys.NOTE_LOC_START, location);
+			bundle.putParcelable(BundleKeys.NOTE_LOC_END, mGpsLocationListener.getLastLocation());
+			bundle.putString(BundleKeys.NOTE_DTZ, dtz);
+			bundle.putString(BundleKeys.NOTE_LINE, note);
+			mHandler.obtainMessage(MessageType.NOTE, bundle).sendToTarget();
 		}
 	};
 

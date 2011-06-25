@@ -28,6 +28,6 @@ public abstract class MessageType {
 
 	public final static int SENTENCE = 21;
 	
-	public final static int COMMENT = 31;
+	public final static int NOTE = 31;
 
 }
