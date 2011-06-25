@@ -21,8 +21,6 @@ package com.ecocitizen.app;
 
 import java.util.Calendar;
 
-import com.ecocitizen.app.util.FinishActivityClickListener;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,8 +28,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.ecocitizen.app.util.FinishActivityClickListener;
 
 public class AddNoteActivity extends Activity {
 	// Debugging
@@ -40,9 +39,6 @@ public class AddNoteActivity extends Activity {
 	
 	private static final String MSG_COMING_SOON = "Coming soon ..."; // TODO
 	
-	private TextView mCurrentDateView;
-	private TimePicker mTimePicker;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,10 +46,9 @@ public class AddNoteActivity extends Activity {
 		
 		setContentView(R.layout.addnote);
 		
-		mCurrentDateView = (TextView)findViewById(R.id.addnote_dt);
-		mTimePicker = (TimePicker)findViewById(R.id.addnote_time_picker);
-		
-		setTime();
+		Calendar calendar = Calendar.getInstance();
+		TextView currentDateView = (TextView)findViewById(R.id.addnote_dt);
+		currentDateView.setText(calendar.getTime().toLocaleString());
 		
 		Button btnAddNote = (Button) findViewById(R.id.btn_addnote);
 		btnAddNote.setOnClickListener(new OnClickListener() {
@@ -65,16 +60,4 @@ public class AddNoteActivity extends Activity {
 		Button btnCancel = (Button) findViewById(R.id.btn_cancel);
 		btnCancel.setOnClickListener(new FinishActivityClickListener(this));
 	}
-
-	void setTime() {
-		Calendar calendar = Calendar.getInstance();
-		mCurrentDateView.setText(calendar.getTime().toLocaleString());
-		
-		int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-		int currentMinute = calendar.get(Calendar.MINUTE);
-		
-		mTimePicker.setCurrentHour(currentHour);
-		mTimePicker.setCurrentMinute(currentMinute);
-	}
-
 }
