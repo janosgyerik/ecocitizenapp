@@ -29,8 +29,8 @@ import android.util.Log;
 
 public class LogplayerSensorManager extends SensorManager {
 	// Debugging
-	static final String TAG = "LogplayerService";
-	static final boolean D = true;
+	private static final String TAG = "LogplayerService";
+	private static final boolean D = true;
 
 	// Member fields
 	private InputStream mmInStream = null;

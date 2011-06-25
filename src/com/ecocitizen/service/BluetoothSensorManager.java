@@ -85,7 +85,7 @@ public class BluetoothSensorManager extends SensorManager {
         }
 	}
 
-    public synchronized void connected(BluetoothSocket socket) {
+    private synchronized void connected(BluetoothSocket socket) {
         // Cancel the thread that completed the connection
         if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
 
@@ -114,7 +114,7 @@ public class BluetoothSensorManager extends SensorManager {
 	 * @param out The bytes to write
 	 * @see ConnectedThread#write(byte[])
 	 */
-	public void write(byte[] out) {
+	private void write(byte[] out) {
 		if (mConnectedThread == null) return;
 		
 		// Create temporary object

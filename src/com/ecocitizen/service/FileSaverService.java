@@ -114,17 +114,17 @@ public class FileSaverService extends Service {
 		}
 	};
 
-	void activate() {
+	private void activate() {
 		active = true;
 		connectDeviceManager();
 	}
 
-	void deactivate() {
+	private void deactivate() {
 		active = false;
 		disconnectDeviceManager();
 	}
 
-	void connectDeviceManager() {
+	private void connectDeviceManager() {
 		// Start the service if not already running
 		startService(new Intent(IDeviceManagerService.class.getName()));
 		// Establish connection with the service.
@@ -132,7 +132,7 @@ public class FileSaverService extends Service {
 				mConnection, Context.BIND_AUTO_CREATE);
 	}
 
-	void disconnectDeviceManager() {
+	private void disconnectDeviceManager() {
 		if (mService != null) {
 			try {
 				mService.unregisterCallback(mCallback);
@@ -149,9 +149,9 @@ public class FileSaverService extends Service {
 		}
 	}
 
-	boolean active = false;
+	private boolean active = false;
 
-	void receivedSentenceBundle(Bundle bundle) {
+	private void receivedSentenceBundle(Bundle bundle) {
 		if (! active) return;
 		
 		String datarecord = BundleTools.convertToDataRecord(bundle, false);
@@ -160,7 +160,7 @@ public class FileSaverService extends Service {
 	}
 
 	// The Handler that gets information back from the BluetoothSensorService
-	final Handler mHandler = new Handler() {
+	private final Handler mHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
@@ -253,7 +253,7 @@ public class FileSaverService extends Service {
 		}
 	};
 
-	void startSession() {
+	private void startSession() {
 		if (D) Log.d(TAG, "STARTSESSION");
 		
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
@@ -267,7 +267,7 @@ public class FileSaverService extends Service {
 		}
 	}
 	
-	void startSession_externalStorage() {
+	private void startSession_externalStorage() {
 		String basedirectoryPath = String.format(
 				"%s/%s",
 				Environment.getExternalStorageDirectory().getPath(),
@@ -297,7 +297,7 @@ public class FileSaverService extends Service {
 		}
 	}
 
-	void startSession_internalStorage() {
+	private void startSession_internalStorage() {
 		String datestr  = DATEFORMAT.format(new Date());
 		String filename = String.format(
 				"%s%s.%s",
@@ -314,7 +314,7 @@ public class FileSaverService extends Service {
 		}	
 	}
 	
-	void saveDataRecord(String data) {
+	private void saveDataRecord(String data) {
 		byte[] buffer = null;
 		try {
 			buffer = data.getBytes();
@@ -325,7 +325,7 @@ public class FileSaverService extends Service {
 		}
 	}
 
-	void endSession() {
+	private void endSession() {
 		if (D) Log.d(TAG, "ENDSESSION");
 		
 		try {

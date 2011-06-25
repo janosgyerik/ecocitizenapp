@@ -137,13 +137,13 @@ public class SensorMapUploaderService extends Service {
 		}
 	};
 
-	void activate() {
+	private void activate() {
 		active = true;
 
 		connectDeviceManager();
 	}
 
-	void deactivate() {
+	private void deactivate() {
 		active = false;
 
 		disconnectDeviceManager();
@@ -152,7 +152,7 @@ public class SensorMapUploaderService extends Service {
 		// TODO do not cancel other messages, we still need them to track sessions
 	}
 
-	void connectDeviceManager() {
+	private void connectDeviceManager() {
 		// Start the service if not already running
 		startService(new Intent(IDeviceManagerService.class.getName()));
 
@@ -161,7 +161,7 @@ public class SensorMapUploaderService extends Service {
 				mConnection, Context.BIND_AUTO_CREATE);
 	}
 
-	void disconnectDeviceManager() {
+	private void disconnectDeviceManager() {
 		if (mService != null) {
 			try {
 				mService.unregisterCallback(mCallback);
@@ -179,9 +179,9 @@ public class SensorMapUploaderService extends Service {
 		}
 	}
 
-	boolean active = false;
+	private boolean active = false;
 
-	void receivedSentenceBundle(Bundle bundle) {
+	private void receivedSentenceBundle(Bundle bundle) {
 		if (! active) return;
 		
 		String datarecord = BundleTools.convertToDataRecord(bundle, true);
@@ -191,7 +191,7 @@ public class SensorMapUploaderService extends Service {
 	}
 
 	// The Handler that gets information back from the BluetoothSensorService
-	final Handler mHandler = new Handler() {
+	private final Handler mHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
@@ -288,51 +288,49 @@ public class SensorMapUploaderService extends Service {
 	// web service handling 
 	//////////////////////////////////////////////////////////////////////////
 
-	public static final int HTTP_STATUS_OK = 200;
+	private static final int HTTP_STATUS_OK = 200;
 
-	public static final int WAITFOR_SENSORMAP_MILLIS   = 30000;
-	public static final int WAITFOR_PREFSCHANGE_MILLIS = 10000;
+	private static final int WAITFOR_SENSORMAP_MILLIS   = 30000;
+	private static final int WAITFOR_PREFSCHANGE_MILLIS = 10000;
 
-	String SENSORMAP_LOGIN_URL;
-	String SENSORMAP_STATUS_URL;
-	String SENSORMAP_STARTSESSION_URL;
-	String SENSORMAP_STORE_URL;
-	String SENSORMAP_ENDSESSION_URL;
-	final String SENSORMAP_API_VERSION = "4";
+	private String SENSORMAP_STATUS_URL;
+	private String SENSORMAP_STARTSESSION_URL;
+	private String SENSORMAP_STORE_URL;
+	private String SENSORMAP_ENDSESSION_URL;
+	private final String SENSORMAP_API_VERSION = "4";
 
 	// Member variables
-	String username;
-	String api_key;
-	String map_server_url;
+	private String username;
+	private String api_key;
+	private String map_server_url;
 
 	private String mSessionId = null;
 
-	void reloadConfiguration() {
+	private void reloadConfiguration() {
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 		username = settings.getString("username", "");
 		map_server_url = settings.getString("map_server_url", "");
 		api_key = settings.getString("api_key", "");
 
-		SENSORMAP_LOGIN_URL = String.format("%slogin/%s/%s", map_server_url, username, api_key);
 		SENSORMAP_STATUS_URL = String.format("%sstatus/", map_server_url);
 		SENSORMAP_STARTSESSION_URL = String.format("%sstartsession/%s/%s/", map_server_url, username, api_key);
 		SENSORMAP_STORE_URL = String.format("%sstore/%s/", map_server_url, username);
 		SENSORMAP_ENDSESSION_URL = String.format("%sendsession/%s/", map_server_url, username);
 	}
 
-	void startSession() {
+	private void startSession() {
 		if (D) Log.d(TAG, "STARTSESSION");
 		mSessionId = null;
 		waitForSensorMapReachable();
 		waitForStartSession();
 	}
 
-	void uploadDataRecord(String data) {
+	private void uploadDataRecord(String data) {
 		//if (D) Log.d(TAG, "STORE = " + data);
 		waitForStore(data);
 	}
 
-	void endSession() {
+	private void endSession() {
 		if (D) Log.d(TAG, "ENDSESSION");
 		if (mSessionId != null) waitForEndSession();
 	}
@@ -344,7 +342,7 @@ public class SensorMapUploaderService extends Service {
 	 * @param url
 	 * @return
 	 */
-	String getStringResponse(String url) {
+	private String getStringResponse(String url) {
 		if (D) Log.d(TAG, url);
 		HttpClient client = new DefaultHttpClient();
 		HttpGet request = new HttpGet(url);
@@ -375,7 +373,7 @@ public class SensorMapUploaderService extends Service {
 		}
 	}
 
-	void waitForSensorMapReachable() {
+	private void waitForSensorMapReachable() {
 		while (active) {
 			if (mSessionId == null) reloadConfiguration();
 
@@ -395,7 +393,7 @@ public class SensorMapUploaderService extends Service {
 		}
 	}
 
-	void waitForAccountInfoChange() {
+	private void waitForAccountInfoChange() {
 		updateStatus(Status.LOGINERROR);
 
 		String old_username = username;
@@ -421,7 +419,7 @@ public class SensorMapUploaderService extends Service {
 		}
 	}
 
-	void waitForStartSession() {
+	private void waitForStartSession() {
 		while (active) {
 			mSessionId = getStringResponse(SENSORMAP_STARTSESSION_URL);
 			if (mSessionId == null) {
@@ -441,7 +439,7 @@ public class SensorMapUploaderService extends Service {
 		}
 	}
 
-	void waitForStore(String data) {
+	private void waitForStore(String data) {
 		data = data.replace(" ", "");
 		while (active) {
 			String ret = getStringResponse(SENSORMAP_STORE_URL + mSessionId + "/" 
@@ -460,7 +458,7 @@ public class SensorMapUploaderService extends Service {
 		}
 	}
 
-	void waitForEndSession() {
+	private void waitForEndSession() {
 		while (active) {
 			String ret = getStringResponse(SENSORMAP_ENDSESSION_URL + mSessionId + "/"); 
 			if (ret == null) {
@@ -477,7 +475,7 @@ public class SensorMapUploaderService extends Service {
 		}
 	}
 
-	void updateStatus(Status status) {
+	private void updateStatus(Status status) {
 		if (this.status == status) return;
 		this.status = status;
 

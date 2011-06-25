@@ -40,22 +40,22 @@ public class GpsLocationListener implements LocationListener {
 	private static final String TAG = "GpsLocationListener";
 	private static final boolean D = true;
 
-	LocationManager mLocationManager = null;
-	Location mLastLocation = null;
-	Location mLastKnownLocation = null;
-	Bundle mLastKnownLocationBundle = new Bundle();
+	private LocationManager mLocationManager = null;
+	private Location mLastLocation = null;
+	private Location mLastKnownLocation = null;
+	private Bundle mLastKnownLocationBundle = new Bundle();
 
 	// This is used to identify locations that have identical latlon.
 	// It is incremented when a location update is received with 
 	// different latlon then the previous location.
 	// When attaching GPS data to sensor data, 0 is used for latlon_id
 	// when there is no GPS data, and the location should be flagged invalid.
-	int latlon_id = 0; 
+	private int latlon_id = 0; 
 
 	// TODO: Perhaps these should be in SharedPreferences
-	static final String PROVIDER = "gps";
-	static final int    MIN_TIME = 1000;
-	static final float  MIN_DISTANCE = .1f;
+	private static final String PROVIDER = "gps";
+	private static final int    MIN_TIME = 1000;
+	private static final float  MIN_DISTANCE = .1f;
 
 	public GpsLocationListener(LocationManager locationManager) {
 		mLocationManager = locationManager;
@@ -66,26 +66,26 @@ public class GpsLocationListener implements LocationListener {
 		}
 	}
 
-	void requestLocationUpdates() {
+	public void requestLocationUpdates() {
 		if (mLocationManager == null) return;
 		mLocationManager.requestLocationUpdates(PROVIDER, MIN_TIME, MIN_DISTANCE, this);
 	}
 
-	void removeLocationUpdates() {
+	public void removeLocationUpdates() {
 		if (mLocationManager == null) return;
 		mLocationManager.removeUpdates(this);
 	}
 
-	void updateLastKnownLocation(Location location) {
+	public Bundle getLastLocationBundle() {
+		return mLastLocation == null ? null : mLastKnownLocationBundle;
+	}
+
+	private void updateLastKnownLocation(Location location) {
 		++latlon_id;
 		mLastKnownLocation = location;
 		mLastKnownLocationBundle.putString(BundleKeys.LOCATION_DTZ, Util.getCurrentDTZ());
 		mLastKnownLocationBundle.putInt(BundleKeys.LOCATION_LATLON_ID, latlon_id);
 		mLastKnownLocationBundle.putParcelable(BundleKeys.LOCATION_LOC, mLastKnownLocation);
-	}
-
-	public Bundle getLastLocationBundle() {
-		return mLastLocation == null ? null : mLastKnownLocationBundle;
 	}
 
 	public void onLocationChanged(Location location) {

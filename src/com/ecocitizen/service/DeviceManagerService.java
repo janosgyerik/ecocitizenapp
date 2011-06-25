@@ -52,7 +52,7 @@ public class DeviceManagerService extends Service {
 	 * - sensor connected, disconnected, lost, ...
 	 * - sentence received from sensor
 	 */
-	final RemoteCallbackList<IDeviceManagerServiceCallback> mCallbacks =
+	private final RemoteCallbackList<IDeviceManagerServiceCallback> mCallbacks =
 		new RemoteCallbackList<IDeviceManagerServiceCallback>();
 
 	/**
@@ -64,7 +64,7 @@ public class DeviceManagerService extends Service {
 	 * and defunct sensors are removed automatically. All these operations might
 	 * not always happen on the same thread, and therefore need synchronization. 
 	 */
-	HashMap<String, SensorManager> mSensorManagers = new HashMap<String, SensorManager>();
+	private HashMap<String, SensorManager> mSensorManagers = new HashMap<String, SensorManager>();
 
 	/**
 	 * Location listener, to get GPS location updates.
@@ -74,7 +74,7 @@ public class DeviceManagerService extends Service {
 	 * The location listener needs to be member object, because
 	 * Android location services are accessible through Context.
 	 */
-	GpsLocationListener mGpsLocationListener;
+	private GpsLocationListener mGpsLocationListener;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -297,7 +297,7 @@ public class DeviceManagerService extends Service {
 		}
 	};
 
-	void shutdownAllSensorManagers() {
+	private void shutdownAllSensorManagers() {
 		synchronized (mSensorManagers) {
 			for (SensorManager sm : mSensorManagers.values()) {
 				sm.shutdown();
@@ -306,7 +306,7 @@ public class DeviceManagerService extends Service {
 		}
 	}
 
-	void shutdownSensorManager(String deviceName) {
+	private void shutdownSensorManager(String deviceName) {
 		synchronized (mSensorManagers) {
 			if (mSensorManagers.containsKey(deviceName)) {
 				mSensorManagers.get(deviceName).shutdown();
