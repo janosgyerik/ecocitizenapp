@@ -32,6 +32,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ecocitizen.app.util.FinishActivityClickListener;
@@ -42,6 +43,8 @@ public class AddNoteActivity extends Activity {
 	private static final String TAG = "AddNoteActivity";
 	private static final boolean D = true;
 	
+	private Bundle mStartLocationBundle;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -56,17 +59,24 @@ public class AddNoteActivity extends Activity {
 		Button btnAddNote = (Button) findViewById(R.id.btn_addnote);
 		btnAddNote.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				if (mService != null) {
-					try {
-						mService.addNote(null, "DTZ", "THE_NOTE");
-						finish();
-					} catch (RemoteException e) {
-						Toast.makeText(AddNoteActivity.this, "could not send the note", Toast.LENGTH_LONG).show();
-						e.printStackTrace();
-					}
+				TextView noteView = (TextView) findViewById(R.id.addnote_text);
+				String note = noteView.getText().toString().replace('\n', ' ').replace('\r', ' ').trim();
+				if (note.equals("")) {
+					finish();
 				}
 				else {
-					Toast.makeText(AddNoteActivity.this, "could not connect to service", Toast.LENGTH_LONG).show();
+					if (mService != null) {
+						try {
+							mService.addNote(mStartLocationBundle, note);
+							finish();
+						} catch (RemoteException e) {
+							Toast.makeText(AddNoteActivity.this, "could not send the note", Toast.LENGTH_LONG).show();
+							e.printStackTrace();
+						}
+					}
+					else {
+						Toast.makeText(AddNoteActivity.this, "could not connect to service", Toast.LENGTH_LONG).show();
+					}
 				}
 			}
 		});
@@ -81,9 +91,17 @@ public class AddNoteActivity extends Activity {
 		if (D) Log.d(TAG, "++ ON START ++");
 
 		connectDeviceManager();
-	}		
+	}
+	
+	@Override
+	public void onDestroy() {
+		disconnectDeviceManager();
 
-	void connectDeviceManager() {
+		super.onDestroy();
+		if (D) Log.d(TAG, "--- ON DESTROY ---");
+	}
+
+	private void connectDeviceManager() {
 		// Start the service if not already running
 		startService(new Intent(IDeviceManagerService.class.getName()));
 
@@ -91,6 +109,16 @@ public class AddNoteActivity extends Activity {
 		getApplicationContext().bindService(new Intent(IDeviceManagerService.class.getName()),
 				mConnection, Context.BIND_AUTO_CREATE);
 	}
+	
+	private void disconnectDeviceManager() {
+		if (mService != null) {
+			mService = null;
+
+			// Detach our existing connection.
+			getApplicationContext().unbindService(mConnection);
+		}
+	}
+
 
 	private IDeviceManagerService mService = null;
 
@@ -105,6 +133,12 @@ public class AddNoteActivity extends Activity {
 			// service through an IDL interface, so get a client-side
 			// representation of that from the raw service object.
 			mService = IDeviceManagerService.Stub.asInterface(service);
+			
+			try {
+				mStartLocationBundle = mService.getLocationBundle();
+			} catch (RemoteException e) {
+				mStartLocationBundle = null;
+			}
 		}
 
 		public void onServiceDisconnected(ComponentName className) {

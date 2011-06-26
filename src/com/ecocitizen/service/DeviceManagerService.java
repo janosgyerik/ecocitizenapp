@@ -23,13 +23,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 
-import com.ecocitizen.common.BundleKeys;
-import com.ecocitizen.common.MessageType;
-
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,6 +37,10 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.widget.Toast;
 import backport.android.bluetooth.BluetoothDevice;
+
+import com.ecocitizen.common.BundleKeys;
+import com.ecocitizen.common.MessageType;
+import com.ecocitizen.common.NoteBundle;
 
 public class DeviceManagerService extends Service {
 	// Debugging
@@ -212,14 +212,15 @@ public class DeviceManagerService extends Service {
 			return Process.myPid();
 		}
 
-		public void addNote(Location location, String dtz, String note)
+		public void addNote(Bundle startLocationBundle, String note)
 				throws RemoteException {
-			Bundle bundle = new Bundle();
-			bundle.putParcelable(BundleKeys.NOTE_LOC_START, location);
-			bundle.putParcelable(BundleKeys.NOTE_LOC_END, mGpsLocationListener.getLastLocation());
-			bundle.putString(BundleKeys.NOTE_DTZ, dtz);
-			bundle.putString(BundleKeys.NOTE_LINE, note);
-			mHandler.obtainMessage(MessageType.NOTE, bundle).sendToTarget();
+			NoteBundle noteBundle =
+				new NoteBundle(startLocationBundle, mGpsLocationListener.getLastLocationBundle(), note);
+			mHandler.obtainMessage(MessageType.NOTE, noteBundle.getBundle()).sendToTarget();
+		}
+
+		public Bundle getLocationBundle() throws RemoteException {
+			return mGpsLocationListener.getLastLocationBundle();
 		}
 	};
 

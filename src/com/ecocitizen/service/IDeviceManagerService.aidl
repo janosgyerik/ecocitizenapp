@@ -20,7 +20,6 @@
 package com.ecocitizen.service;
 
 import backport.android.bluetooth.BluetoothDevice;
-import android.location.Location;
 import com.ecocitizen.service.IDeviceManagerServiceCallback;
 
 interface IDeviceManagerService {
@@ -32,7 +31,8 @@ interface IDeviceManagerService {
     void connectBluetoothDevice(in BluetoothDevice device);
     void connectLogplayer(in String assetName, in int messageInterval);
     void disconnectDevice(in String deviceName);
-    void addNote(in Location location, in String dtz, in String note);
+    void addNote(in Bundle startLocationBundle, in String note);
+    Bundle getLocationBundle();
 	
     void registerCallback(in IDeviceManagerServiceCallback cb);
     void unregisterCallback(in IDeviceManagerServiceCallback cb);
