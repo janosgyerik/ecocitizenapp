@@ -63,7 +63,7 @@ public class NoteBundle extends AbstractBundleWrapper {
 		String datarecord = new Formatter().format(
 				"NOTE,%s,%s,_",
 				dtz,
-				getNote() // TODO base64 encode
+				Base64.encodeBytes(getNote().getBytes())
 				).toString();
 		if (startLocationBundle != null) {
 			datarecord += "," + new LocationBundle(startLocationBundle);
