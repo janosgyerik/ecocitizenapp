@@ -42,28 +42,27 @@ public class GpsLocationListener implements LocationListener {
 
 	private LocationManager mLocationManager = null;
 	private Location mLastLocation = null;
-	private Location mLastKnownLocation = null;
-	private Bundle mLastKnownLocationBundle = new Bundle();
+	private Bundle mLastLocationBundle = new Bundle();
 
 	// This is used to identify locations that have identical latlon.
 	// It is incremented when a location update is received with 
 	// different latlon then the previous location.
 	// When attaching GPS data to sensor data, 0 is used for latlon_id
 	// when there is no GPS data, and the location should be flagged invalid.
-	private int latlon_id = 0; 
+	private int latlonID = 0; 
 
 	// TODO: Perhaps these should be in SharedPreferences
-	private static final String PROVIDER = "gps";
+	private static final String PROVIDER = LocationManager.GPS_PROVIDER;
 	private static final int    MIN_TIME = 1000;
 	private static final float  MIN_DISTANCE = .1f;
 
 	public GpsLocationListener(LocationManager locationManager) {
 		mLocationManager = locationManager;
-		if (D) {
-			for (String provider : mLocationManager.getAllProviders()) {
-				Log.d(TAG, "location provider=" + provider + ", isEnabled=" + mLocationManager.isProviderEnabled(provider));
-			}
+		/*
+		for (String provider : mLocationManager.getAllProviders()) {
+			Log.d(TAG, "location provider=" + provider + ", isEnabled=" + mLocationManager.isProviderEnabled(provider));
 		}
+		*/
 	}
 
 	public void requestLocationUpdates() {
@@ -81,32 +80,30 @@ public class GpsLocationListener implements LocationListener {
 	}
 
 	public Bundle getLastLocationBundle() {
-		return mLastLocation == null ? null : mLastKnownLocationBundle;
+		return mLastLocation == null ? null : mLastLocationBundle;
 	}
 
 	private void updateLastKnownLocation(Location location) {
-		++latlon_id;
-		mLastKnownLocation = location;
-		mLastKnownLocationBundle.putString(BundleKeys.LOCATION_DTZ, Util.getCurrentDTZ());
-		mLastKnownLocationBundle.putInt(BundleKeys.LOCATION_LATLON_ID, latlon_id);
-		mLastKnownLocationBundle.putParcelable(BundleKeys.LOCATION_LOC, mLastKnownLocation);
+		++latlonID;
+		mLastLocation = location;
+		mLastLocationBundle.putString(BundleKeys.LOCATION_DTZ, Util.getCurrentDTZ());
+		mLastLocationBundle.putInt(BundleKeys.LOCATION_LATLON_ID, latlonID);
+		mLastLocationBundle.putParcelable(BundleKeys.LOCATION_LOC, mLastLocation);
 	}
 
 	public void onLocationChanged(Location location) {
-		mLastLocation = location;
-
-		if (location == null) return;
-
-		if (mLastKnownLocation == null) {
+		if (mLastLocation == null) {
 			updateLastKnownLocation(location);
 		}
-		else if (location.getLatitude() == mLastKnownLocation.getLatitude()
-				&& location.getLongitude() == mLastKnownLocation.getLongitude()) {
-			// same latlon
+		else if (location.getLatitude() == mLastLocation.getLatitude()
+				&& location.getLongitude() == mLastLocation.getLongitude()) {
+			// same latlon as last one
 		}
 		else {
 			updateLastKnownLocation(location);
 		}
+		
+		mLastLocation = location;
 	}
 
 	public void onProviderDisabled(String provider) {
