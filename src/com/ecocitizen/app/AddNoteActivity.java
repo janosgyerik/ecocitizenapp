@@ -19,8 +19,6 @@
 
 package com.ecocitizen.app;
 
-import java.util.Calendar;
-
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -32,8 +30,8 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ecocitizen.app.util.FinishActivityClickListener;
@@ -51,9 +49,9 @@ public class AddNoteActivity extends Activity {
 		
 		setContentView(R.layout.addnote);
 		
-		Calendar calendar = Calendar.getInstance();
-		TextView currentDateView = (TextView)findViewById(R.id.addnote_dt);
-		currentDateView.setText(calendar.getTime().toLocaleString());
+		LayoutParams params = getWindow().getAttributes();
+		params.width = LayoutParams.FILL_PARENT;
+		getWindow().setAttributes(params);
 		
 		Button btnAddNote = (Button) findViewById(R.id.btn_addnote);
 		btnAddNote.setOnClickListener(new OnClickListener() {
