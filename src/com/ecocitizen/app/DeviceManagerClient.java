@@ -393,7 +393,7 @@ public abstract class DeviceManagerClient extends Activity {
 	abstract void receivedSentenceBundle(SentenceBundle bundle);
 	
 	void receivedNoteBundle(NoteBundle bundle) {
-		Log.i(TAG, "+++NOTE: " + bundle);
+		Log.i(TAG, "receivedNoteBundle = " + bundle);
 	}
 
 	// The Handler that gets information back from the DeviceManagerService

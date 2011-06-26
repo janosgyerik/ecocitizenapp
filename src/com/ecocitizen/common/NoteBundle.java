@@ -6,9 +6,10 @@ import android.os.Bundle;
 
 public class NoteBundle extends AbstractBundleWrapper {
 	
-	private String note;
 	private Bundle startLocationBundle;
 	private Bundle endLocationBundle;
+	private String dtz;
+	private String note;
 
 	/**
 	 * Use this constructor when extracting a Bundle received from somewhere.
@@ -17,6 +18,11 @@ public class NoteBundle extends AbstractBundleWrapper {
 	 */
 	public NoteBundle(Bundle bundle) {
 		super(bundle);
+		
+		startLocationBundle = bundle.getParcelable(BundleKeys.NOTE_LOC_START);
+		endLocationBundle = bundle.getParcelable(BundleKeys.NOTE_LOC_END);
+		dtz = bundle.getString(BundleKeys.NOTE_DTZ);
+		note = bundle.getString(BundleKeys.NOTE_LINE);
 	}
 
 	/**
@@ -29,8 +35,10 @@ public class NoteBundle extends AbstractBundleWrapper {
 	public NoteBundle(Bundle startLocationBundle, Bundle endLocationBundle,
 			String note) {
 		this(makeBundle(startLocationBundle, endLocationBundle, note));
+		
 		this.startLocationBundle = startLocationBundle;
 		this.endLocationBundle = endLocationBundle;
+		this.dtz = Util.getCurrentDTZ();
 		this.note = note;
 	}
 
@@ -38,8 +46,9 @@ public class NoteBundle extends AbstractBundleWrapper {
 		Bundle bundle = new Bundle();
 		bundle.putParcelable(BundleKeys.NOTE_LOC_START, startLocationBundle);
 		bundle.putParcelable(BundleKeys.NOTE_LOC_END, endLocationBundle);
-		bundle.putString(BundleKeys.NOTE_DTZ, null);
+		bundle.putString(BundleKeys.NOTE_DTZ, Util.getCurrentDTZ());
 		bundle.putString(BundleKeys.NOTE_LINE, note);
+		
 		return bundle;
 	}
 
@@ -53,14 +62,14 @@ public class NoteBundle extends AbstractBundleWrapper {
 	public String toString() {
 		String datarecord = new Formatter().format(
 				"NOTE,%s,%s,_",
-				Util.getCurrentDTZ(),
+				dtz,
 				getNote() // TODO base64 encode
 				).toString();
 		if (startLocationBundle != null) {
-			datarecord += "," + startLocationBundle;
+			datarecord += "," + new LocationBundle(startLocationBundle);
 		}
 		if (endLocationBundle != null) {
-			datarecord += "," + endLocationBundle;
+			datarecord += "," + new LocationBundle(endLocationBundle);
 		}
 		return datarecord;
 	}

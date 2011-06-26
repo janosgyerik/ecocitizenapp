@@ -58,6 +58,12 @@ public class GpsLocationListener implements LocationListener {
 
 	public GpsLocationListener(LocationManager locationManager) {
 		mLocationManager = locationManager;
+		
+		// this is sometimes useful for debugging
+		//
+		//Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		//onLocationChanged(location);
+		
 		/*
 		for (String provider : mLocationManager.getAllProviders()) {
 			Log.d(TAG, "location provider=" + provider + ", isEnabled=" + mLocationManager.isProviderEnabled(provider));

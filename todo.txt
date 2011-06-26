@@ -14,12 +14,22 @@ release in marketplace
 
 current focus
 =============
-- unit tests. it's really a waste of time to test things without it
-- bugfix: onLocationChanged prob never returns null
+- ??: it seems two GpsLocationListeners are created, why?
+- test cases
+	- sensor connection
+		- connect to device
+		- the right messages received
+		- new session log file opened
+	- comment
+		- subscribe to callbacks
+		- start fake gps
+		- send comment
+		- comment received with gps
+		- + simulate no gps
+		- + similate no start gps
 - bugfix: replace BundleTools with SentenceBundle
-- finish CommentActivity
-	- return comment+dtz to caller activity
-	- override onSaveInstanceState method to prevent losing text when another application (like a phone call) comes to the foreground
+- redmine: AddNote activity: override onSaveInstanceState method to prevent losing text when another application (like a phone call) comes to the foreground
+- redmine: configuration reloading issue
 - clean up variable visibility in .app
 - add class diagram for .app
 - add class diagrams to wiki with additional explanatory text
