@@ -400,7 +400,9 @@ public abstract class DeviceManagerClient extends Activity {
 	final Handler mHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
-			Log.d(TAG, "handleMessage " + msg.what + " " + msg.obj);
+			if (msg.what != MessageType.SENTENCE) {
+				if (D) Log.d(TAG, "handleMessage " + msg.what + " " + msg.obj);
+			}
 			switch (msg.what) {
 			case MessageType.SENTENCE:
 				receivedSentenceBundle(new SentenceBundle((Bundle)msg.obj));
