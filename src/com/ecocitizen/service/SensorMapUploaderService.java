@@ -51,6 +51,7 @@ import com.ecocitizen.app.TreeViewActivity;
 import com.ecocitizen.common.BundleTools;
 import com.ecocitizen.common.DeviceManagerServiceCallback;
 import com.ecocitizen.common.MessageType;
+import com.ecocitizen.common.NoteBundle;
 
 public class SensorMapUploaderService extends Service {
 	// Debugging
@@ -191,6 +192,11 @@ public class SensorMapUploaderService extends Service {
 		}
 	}
 
+	private void receivedNoteBundle(Bundle bundle) {
+		if (! active) return;
+		uploadDataRecord(new NoteBundle(bundle).toString());
+	}
+
 	// The Handler that gets information back from the BluetoothSensorService
 	private final Handler mHandler = new Handler() {
 		@Override
@@ -202,6 +208,13 @@ public class SensorMapUploaderService extends Service {
 					shouldStartSession = false;
 				}
 				receivedSentenceBundle((Bundle)msg.obj);
+				break;
+			case MessageType.NOTE:
+				if (shouldStartSession) {
+					startSession();
+					shouldStartSession = false;
+				}
+				receivedNoteBundle((Bundle)msg.obj);
 				break;
 			case MessageType.SM_ALL_DEVICES_GONE:
 				endSession();

@@ -18,7 +18,7 @@
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 
-	<EditText android:id="@+id/addnote_text" android:lines="5" android:gravity="top" android:text="testing"
+	<EditText android:id="@+id/addnote_text" android:lines="5" android:gravity="top" 
 		android:layout_height="wrap_content" android:layout_width="fill_parent"></EditText>
 
 	<LinearLayout android:orientation="horizontal"

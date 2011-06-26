@@ -27,10 +27,6 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.ecocitizen.common.BundleTools;
-import com.ecocitizen.common.DeviceManagerServiceCallback;
-import com.ecocitizen.common.MessageType;
-
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
@@ -47,6 +43,11 @@ import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.ecocitizen.common.BundleTools;
+import com.ecocitizen.common.DeviceManagerServiceCallback;
+import com.ecocitizen.common.MessageType;
+import com.ecocitizen.common.NoteBundle;
 
 public class FileSaverService extends Service {
 	// Debugging
@@ -159,6 +160,11 @@ public class FileSaverService extends Service {
 
 		saveDataRecord(datarecord);
 	}
+	
+	private void receivedNoteBundle(Bundle bundle) {
+		if (! active) return;
+		saveDataRecord(new NoteBundle(bundle).toString());
+	}
 
 	// The Handler that gets information back from the BluetoothSensorService
 	private final Handler mHandler = new Handler() {
@@ -171,6 +177,13 @@ public class FileSaverService extends Service {
 					shouldStartSession = false;
 				}
 				receivedSentenceBundle((Bundle)msg.obj);
+				break;
+			case MessageType.NOTE:
+				if (shouldStartSession) {
+					startSession();
+					shouldStartSession = false;
+				}
+				receivedNoteBundle((Bundle)msg.obj);
 				break;
 			case MessageType.SM_ALL_DEVICES_GONE:
 				endSession();
