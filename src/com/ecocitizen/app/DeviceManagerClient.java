@@ -306,26 +306,21 @@ public abstract class DeviceManagerClient extends Activity {
 		if (mService != null) {
 			if (mBluetoothAdapter != null) {
 				if (mBluetoothAdapter.isEnabled()) {
-					// Launch the DeviceListActivity to see devices and do scan
-					Intent serverIntent = new Intent(this, DeviceListActivity.class);
-					startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
+					launchDeviceListActivity();
 				}
 				else {
 					launchRequestEnableBT();
 				}
 			}
 			else {
-				try {
-					String assetName = getString(R.string.logplayer_filename);
-					int messageInterval = getResources().getInteger(R.integer.logplayer_msg_interval);
-					mService.connectLogplayer(assetName, messageInterval);
-				}
-				catch (RemoteException e) {
-					// Bummer eh. Not much we can do here.
-					Log.e(TAG, "Exception during connect to sensor.");
-				}
+				launchDeviceListActivity();
 			}
 		}
+	}
+	
+	private void launchDeviceListActivity() {
+		Intent serverIntent = new Intent(this, DeviceListActivity.class);
+		startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
 	}
 
 	void disconnectSensor() {
@@ -357,12 +352,11 @@ public abstract class DeviceManagerClient extends Activity {
 		}
 	}
 
-	void connectLogplayer() {
+	void connectLogplayer(String filename) {
 		if (mService != null) {
 			try {
-				String assetName = getString(R.string.logplayer_filename);
 				int messageInterval = getResources().getInteger(R.integer.logplayer_msg_interval);
-				mService.connectLogplayer(assetName, messageInterval);
+				mService.connectLogplayer(filename, messageInterval);
 			}
 			catch (RemoteException e) {
 				// Bummer eh. Not much we can do here.
@@ -436,9 +430,18 @@ public abstract class DeviceManagerClient extends Activity {
 				// Get the device MAC address
 				String address = data.getExtras()
 				.getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
+				
+				// Get the dummy device filename
+				String dummyDeviceName = 
+					data.getExtras().getString(DeviceListActivity.EXTRA_DUMMY_DEVICE);
 
-				BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
-				connectBluetoothDevice(device);
+				if (address != null) {
+					BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
+					connectBluetoothDevice(device);
+				}
+				else if (dummyDeviceName != null) {
+					connectLogplayer(dummyDeviceName);
+				}
 			}
 			break;
 		case REQUEST_ENABLE_BT:

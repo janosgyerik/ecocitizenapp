@@ -51,9 +51,11 @@ public class DeviceListActivity extends Activity {
 
     // Return Intent extra
     public static String EXTRA_DEVICE_ADDRESS = "device_address";
+    public static String EXTRA_DUMMY_DEVICE = "dummy";
 
     // Member fields
     private BluetoothAdapter mBtAdapter;
+    private ArrayAdapter<String> mDummyDevicesArrayAdapter;
     private ArrayAdapter<String> mPairedDevicesArrayAdapter;
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
     private Set<String> mNewDevicesSet;
@@ -95,6 +97,15 @@ public class DeviceListActivity extends Activity {
         ListView newDevicesListView = (ListView) findViewById(R.id.new_devices);
         newDevicesListView.setAdapter(mNewDevicesArrayAdapter);
         newDevicesListView.setOnItemClickListener(mDeviceClickListener);
+
+        // Setup the dummy devices list
+        mDummyDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.device_name);
+        mDummyDevicesArrayAdapter.add(getString(R.string.logfile1));
+        mDummyDevicesArrayAdapter.add(getString(R.string.logfile2));
+        mDummyDevicesArrayAdapter.add(getString(R.string.logfile3));
+        ListView dummyListView = (ListView) findViewById(R.id.dummy_devices);
+        dummyListView.setAdapter(mDummyDevicesArrayAdapter);
+        dummyListView.setOnItemClickListener(mDummyDeviceClickListener);
 
         // Register for broadcasts when a device is discovered
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
@@ -172,6 +183,24 @@ public class DeviceListActivity extends Activity {
             // Create the result Intent and include the MAC address
             Intent intent = new Intent();
             intent.putExtra(EXTRA_DEVICE_ADDRESS, address);
+
+            // Set result and finish this Activity
+            setResult(Activity.RESULT_OK, intent);
+            finish();
+        }
+    };
+
+    // The on-click listener for dummy devices
+    private OnItemClickListener mDummyDeviceClickListener = new OnItemClickListener() {
+        public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
+            // Cancel discovery because it's costly
+            mBtAdapter.cancelDiscovery();
+
+            String dummyDeviceName = ((TextView) v).getText().toString();
+
+            // Create the result Intent and include the device name
+            Intent intent = new Intent();
+            intent.putExtra(EXTRA_DUMMY_DEVICE, dummyDeviceName);
 
             // Set result and finish this Activity
             setResult(Activity.RESULT_OK, intent);

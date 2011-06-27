@@ -14,6 +14,8 @@ release in marketplace
 
 current focus
 =============
+- bug: npe when logfile replay finished in FileSaverService.endSession(FileSaverService.java:315)
+- cosmetic: rename dummy devices to somthing better in DeviceListActivity
 - ??: it seems two GpsLocationListeners are created, why?
 - test cases
 	- sensor connection
@@ -30,6 +32,8 @@ current focus
 - bugfix: replace BundleTools with SentenceBundle
 - redmine: AddNote activity: override onSaveInstanceState method to prevent losing text when another application (like a phone call) comes to the foreground
 - redmine: configuration reloading issue
+- redmine: add preferences option to enable 'Expert mode'
+	- in DeviceListActivity show dummy devices only in Expert mode
 - clean up variable visibility in .app
 - add class diagram for .app
 - add class diagrams to wiki with additional explanatory text

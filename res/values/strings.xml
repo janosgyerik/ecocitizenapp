@@ -33,6 +33,11 @@
     <string name="title_paired_devices">Paired Devices</string>
     <string name="title_other_devices">Other Available Devices</string>
     <string name="button_scan">Scan for devices</string>
+    
+    <string name="title_dummy_devices">Dummy Devices</string>
+    <string name="logfile1">CO2Sample1.txt</string>
+    <string name="logfile2">CO2Sample2.txt</string>
+    <string name="logfile3">PollutionSample1.txt</string>
 
     <!-- Options Menu -->
     <string name="menu_home">Home</string>

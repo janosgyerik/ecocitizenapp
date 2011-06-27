@@ -18,6 +18,18 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
+    <TextView android:id="@+id/title_dummy_devices"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/title_dummy_devices"
+        android:background="#666"
+        android:textColor="#fff"
+        android:paddingLeft="5dp"
+    />
+    <ListView android:id="@+id/dummy_devices"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+    />
     <TextView android:id="@+id/title_paired_devices"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
