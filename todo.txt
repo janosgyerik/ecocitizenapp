@@ -7,7 +7,7 @@ when connected
 
 release in marketplace
 ======================
-- add a property to switch debugging on/off
+- add a property to switch debugging on/off - perhaps in props.xml?
 - complete support for zephyr
 - follow through the steps in android docs
 
@@ -15,7 +15,6 @@ release in marketplace
 current focus
 =============
 - bug: disconnect sensor and endsession seem be sent twice to logplayer. After the fix, also clean up endSession implementation in FileSaverService
-- cosmetic: rename dummy devices to somthing better in DeviceListActivity
 - DeviceListActivity improvement
 	- rename 'dummy devices' to something better
 	- make dummy device items as wide as bt ones, with two lines

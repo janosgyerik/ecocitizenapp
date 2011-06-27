@@ -424,22 +424,26 @@ public abstract class DeviceManagerClient extends Activity {
 		case REQUEST_CONNECT_DEVICE:
 			// When DeviceListActivity returns with a device to connect
 			if (resultCode == Activity.RESULT_OK) {
-				// Cancel discovery because it will slow down a connection
-				mBluetoothAdapter.cancelDiscovery();
-				
-				// Get the device MAC address
-				String address = data.getExtras()
-				.getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
+				if (mBluetoothAdapter != null) {
+					// Cancel discovery because it will slow down a connection
+					mBluetoothAdapter.cancelDiscovery();
+					
+					// Get the device MAC address
+					String address = 
+						data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
+					
+					if (address != null) {
+						BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
+						connectBluetoothDevice(device);
+						break;
+					}
+				}
 				
 				// Get the dummy device filename
 				String dummyDeviceName = 
 					data.getExtras().getString(DeviceListActivity.EXTRA_DUMMY_DEVICE);
 
-				if (address != null) {
-					BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
-					connectBluetoothDevice(device);
-				}
-				else if (dummyDeviceName != null) {
+				if (dummyDeviceName != null) {
 					connectLogplayer(dummyDeviceName);
 				}
 			}
