@@ -308,7 +308,8 @@ public class FileSaverService extends Service {
 		}
 	}
 
-	private void endSession() {
+	private synchronized void endSession() {
+		if (mWriter == null) return;
 		if (D) Log.d(TAG, "ENDSESSION");
 		
 		try {

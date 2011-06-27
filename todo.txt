@@ -14,8 +14,13 @@ release in marketplace
 
 current focus
 =============
-- bug: npe when logfile replay finished in FileSaverService.endSession(FileSaverService.java:315)
+- bug: disconnect sensor and endsession seem be sent twice to logplayer. After the fix, also clean up endSession implementation in FileSaverService
 - cosmetic: rename dummy devices to somthing better in DeviceListActivity
+- DeviceListActivity improvement
+	- rename 'dummy devices' to something better
+	- make dummy device items as wide as bt ones, with two lines
+	- give descriptive names to logfile resources
+	- show dummy devices only in 'Expert mode'
 - ??: it seems two GpsLocationListeners are created, why?
 - test cases
 	- sensor connection
