@@ -35,6 +35,7 @@ current focus
 		- + similate no start gps
 - bugfix: replace BundleTools with SentenceBundle
 - redmine: AddNote activity: override onSaveInstanceState method to prevent losing text when another application (like a phone call) comes to the foreground
+- bug: list of connected device names is not updated after resume
 - redmine: configuration reloading issue
 - redmine: add preferences option to enable 'Expert mode'
 	- in DeviceListActivity show dummy devices only in Expert mode

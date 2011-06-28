@@ -1,0 +1,9 @@
+Usage: make TARGET
+
+all: 
+	Regenerate treebg_* and tree_* images in res/drawable/
+
+screenshots:
+	For each image file in screenshots/*, crop out a 320x480 piece.
+	(Useful for cutting off the uninteresting part of the emulator.)
+

@@ -17,7 +17,9 @@
 #
 treebg_dir:=treebg
 tree_dir:=tree
+screenshots_dir:=screenshots
 target:=../res/drawable
+tmp:=/tmp
 
 treebg0:=$(patsubst $(treebg_dir)/%,%,$(wildcard $(treebg_dir)/treebg_*.jpg))
 treebg_target:=$(patsubst %,$(target)/%,$(treebg0))
@@ -25,7 +27,21 @@ treebg_target:=$(patsubst %,$(target)/%,$(treebg0))
 tree0:=$(patsubst $(tree_dir)/%,%,$(wildcard $(tree_dir)/tree_*.png))
 tree_target:=$(patsubst %,$(target)/%,$(tree0))
 
+screenshots0:=$(patsubst $(screenshots_dir)/%,%,$(wildcard $(screenshots_dir)/*.png))
+screenshots_target:=$(patsubst %,$(tmp)/%,$(screenshots0))
+
+
+default:
+	@cat Makefile.readme
+
+treebg: $(treebg_target)
+
+tree: $(tree_target)
+
 all: $(treebg_target) $(tree_target)
+
+screenshots: $(screenshots_target)
+
 
 $(target)/%.jpg: $(treebg_dir)/%.jpg
 	convert -geometry 480x -crop 240x+120+0 $< $@
@@ -35,3 +51,5 @@ $(target)/%.png: $(tree_dir)/%.png
 	convert -crop 370x370+300+265 -geometry 55x $< $@
 	identify $@
 
+$(tmp)/%.png: $(screenshots_dir)/%.png
+	convert -crop 328x488+64+70 $< $@
