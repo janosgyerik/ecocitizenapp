@@ -114,7 +114,7 @@ public class BluetoothSensorManager extends SensorManager {
 	 * @param out The bytes to write
 	 * @see ConnectedThread#write(byte[])
 	 */
-	private void write(byte[] out) {
+	public void write(byte[] out) {
 		if (mConnectedThread == null) return;
 		
 		// Create temporary object
