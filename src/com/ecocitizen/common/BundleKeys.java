@@ -21,9 +21,9 @@ package com.ecocitizen.common;
 
 public abstract class BundleKeys {
 
+	public static final String SENTENCE_SENSOR_ID = "SID";
 	public static final String SENTENCE_DTZ = "SDZ";
 	public static final String SENTENCE_LINE = "SSS";
-	public static final String SENTENCE_SENSOR_ID = "SID";
 
 	public static final String LOCATION_BUNDLE = "LBB";
 	public static final String LOCATION_DTZ = "LDZ";

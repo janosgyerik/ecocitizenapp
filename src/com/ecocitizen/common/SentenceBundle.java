@@ -6,7 +6,9 @@ import android.os.Bundle;
 public class SentenceBundle {
 	
 	private Bundle bundle;
+	private String sensorID;
 	private String sentenceLine;
+	
 	private boolean locationIsNull = false;
 	private Location location;
 
@@ -17,6 +19,13 @@ public class SentenceBundle {
 	 */
 	public SentenceBundle(Bundle bundle) {
 		this.bundle = bundle;
+	}
+
+	public String getSensorID() {
+		if (sensorID == null) {
+			sensorID = bundle.getString(BundleKeys.SENTENCE_SENSOR_ID);
+		}
+		return sensorID;
 	}
 
 	public String getSentenceLine() {
