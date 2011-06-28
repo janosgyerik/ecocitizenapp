@@ -83,13 +83,6 @@ public class MultiSensorViewActivity extends SimpleDeviceManagerClient {
             mBoxVal[i].setText("--");
             mBoxMetric[i].setText("--");
 		}
-        
-		Button mBtnComment = (Button) findViewById(R.id.btn_comment);
-		mBtnComment.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				startCommentActivity();
-			}
-		});
 		
 		setupCommonButtons();
 	}
