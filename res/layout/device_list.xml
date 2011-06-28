@@ -18,15 +18,15 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-    <TextView android:id="@+id/title_dummy_devices"
+    <TextView android:id="@+id/title_logfile_devices"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/title_dummy_devices"
+        android:text="@string/title_logfile_devices"
         android:background="#666"
         android:textColor="#fff"
         android:paddingLeft="5dp"
     />
-    <ListView android:id="@+id/dummy_devices"
+    <ListView android:id="@+id/logfile_devices"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
     />

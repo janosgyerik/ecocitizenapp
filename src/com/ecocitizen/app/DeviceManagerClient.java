@@ -430,7 +430,7 @@ public abstract class DeviceManagerClient extends Activity {
 					
 					// Get the device MAC address
 					String address = 
-						data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
+						data.getExtras().getString(DeviceListActivity.EXTRA_BLUETOOTH_MAC);
 					
 					if (address != null) {
 						BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
@@ -441,7 +441,7 @@ public abstract class DeviceManagerClient extends Activity {
 				
 				// Get the dummy device filename
 				String dummyDeviceName = 
-					data.getExtras().getString(DeviceListActivity.EXTRA_DUMMY_DEVICE);
+					data.getExtras().getString(DeviceListActivity.EXTRA_LOGFILE_DEVICE);
 
 				if (dummyDeviceName != null) {
 					connectLogplayer(dummyDeviceName);

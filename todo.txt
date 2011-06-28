@@ -16,10 +16,9 @@ current focus
 =============
 - bug: disconnect sensor and endsession seem be sent twice to logplayer. After the fix, also clean up endSession implementation in FileSaverService
 - DeviceListActivity improvement
-	- rename 'dummy devices' to something better
-	- make dummy device items as wide as bt ones, with two lines
+	- make logfile device items as wide as bt ones, with two lines
 	- give descriptive names to logfile resources
-	- show dummy devices only in 'Expert mode'
+	- show logfile devices only in 'Debug mode'
 - ??: it seems two GpsLocationListeners are created, why?
 - test cases
 	- sensor connection
@@ -34,12 +33,9 @@ current focus
 		- + simulate no gps
 		- + similate no start gps
 - bugfix: replace BundleTools with SentenceBundle
-- redmine: AddNote activity: override onSaveInstanceState method to prevent losing text when another application (like a phone call) comes to the foreground
 - bug: list of connected device names is not updated after resume
 - remove unique-ish ids from layout xml, they do not need to be so unique
-- redmine: configuration reloading issue
-- redmine: add preferences option to enable 'Expert mode'
-	- in DeviceListActivity show dummy devices only in Expert mode
+- configuration reloading issue
 - clean up variable visibility in .app
 - add class diagram for .app
 - add class diagrams to wiki with additional explanatory text
@@ -113,12 +109,12 @@ next
 
 optimization
 ============
+- AddNote activity: override onSaveInstanceState method to prevent losing text when another application (like a phone call) comes to the foreground
 - use sensor id instead of name in DeviceManagerService
 - if and only if performance is crucial, follow the 'Designing for Performance' article in Dev Guide
 - try to rewrite nested linearlayouts with relativelayout
 - consider using ViewStubs
 - review comments in entire code, especially service code
-- improve button style by using different style parent? theme?
 
 
 file uploader "nice" implementation

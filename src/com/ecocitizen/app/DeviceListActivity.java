@@ -50,8 +50,8 @@ public class DeviceListActivity extends Activity {
     private static final boolean D = true;
 
     // Return Intent extra
-    public static String EXTRA_DEVICE_ADDRESS = "device_address";
-    public static String EXTRA_DUMMY_DEVICE = "dummy";
+    public static String EXTRA_BLUETOOTH_MAC = "bt_mac";
+    public static String EXTRA_LOGFILE_DEVICE = "logfile";
 
     // Member fields
     private BluetoothAdapter mBtAdapter;
@@ -61,7 +61,7 @@ public class DeviceListActivity extends Activity {
     
     private Button scanButton;
     
-    private ArrayAdapter<String> mDummyDevicesArrayAdapter;
+    private ArrayAdapter<String> mLogfileDevicesArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,14 +77,14 @@ public class DeviceListActivity extends Activity {
         // Initialize the button to perform device discovery
         scanButton = (Button) findViewById(R.id.button_scan);
 
-        // Setup the dummy devices list
-        mDummyDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.device_name);
-        mDummyDevicesArrayAdapter.add(getString(R.string.logfile1));
-        mDummyDevicesArrayAdapter.add(getString(R.string.logfile2));
-        mDummyDevicesArrayAdapter.add(getString(R.string.logfile3));
-        ListView dummyListView = (ListView) findViewById(R.id.dummy_devices);
-        dummyListView.setAdapter(mDummyDevicesArrayAdapter);
-        dummyListView.setOnItemClickListener(mDummyDeviceClickListener);
+        // Setup the logfile devices list
+        mLogfileDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.device_name);
+        mLogfileDevicesArrayAdapter.add(getString(R.string.logfile1));
+        mLogfileDevicesArrayAdapter.add(getString(R.string.logfile2));
+        mLogfileDevicesArrayAdapter.add(getString(R.string.logfile3));
+        ListView logfileListView = (ListView) findViewById(R.id.logfile_devices);
+        logfileListView.setAdapter(mLogfileDevicesArrayAdapter);
+        logfileListView.setOnItemClickListener(mLogfileDeviceClickListener);
 
         // Get the local Bluetooth adapter
         mBtAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -189,7 +189,7 @@ public class DeviceListActivity extends Activity {
 
             // Create the result Intent and include the MAC address
             Intent intent = new Intent();
-            intent.putExtra(EXTRA_DEVICE_ADDRESS, address);
+            intent.putExtra(EXTRA_BLUETOOTH_MAC, address);
 
             // Set result and finish this Activity
             setResult(Activity.RESULT_OK, intent);
@@ -197,19 +197,19 @@ public class DeviceListActivity extends Activity {
         }
     };
 
-    // The on-click listener for dummy devices
-    private OnItemClickListener mDummyDeviceClickListener = new OnItemClickListener() {
+    // The on-click listener for logfile devices
+    private OnItemClickListener mLogfileDeviceClickListener = new OnItemClickListener() {
         public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
         	if (mBtAdapter != null) {
         		// Cancel discovery because it's costly
         		mBtAdapter.cancelDiscovery();
         	}
 
-            String dummyDeviceName = ((TextView) v).getText().toString();
+            String logfileDeviceName = ((TextView) v).getText().toString();
 
             // Create the result Intent and include the device name
             Intent intent = new Intent();
-            intent.putExtra(EXTRA_DUMMY_DEVICE, dummyDeviceName);
+            intent.putExtra(EXTRA_LOGFILE_DEVICE, logfileDeviceName);
 
             // Set result and finish this Activity
             setResult(Activity.RESULT_OK, intent);
