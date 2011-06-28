@@ -19,7 +19,7 @@ treebg_dir:=treebg
 tree_dir:=tree
 screenshots_dir:=screenshots
 target:=../res/drawable
-tmp:=/tmp
+tmp:=/tmp/EcoCitizen
 
 treebg0:=$(patsubst $(treebg_dir)/%,%,$(wildcard $(treebg_dir)/treebg_*.jpg))
 treebg_target:=$(patsubst %,$(target)/%,$(treebg0))
@@ -52,4 +52,5 @@ $(target)/%.png: $(tree_dir)/%.png
 	identify $@
 
 $(tmp)/%.png: $(screenshots_dir)/%.png
-	convert -crop 328x488+64+70 $< $@
+	@mkdir -p $(tmp)
+	convert -crop 328x488+64+70 -scale '70%' $< $@
