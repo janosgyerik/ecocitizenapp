@@ -24,8 +24,7 @@ import java.text.DecimalFormat;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -54,9 +53,14 @@ public class MultiSensorViewActivity extends SimpleDeviceManagerClient {
 	private TextView[] mBoxName = new TextView[box_num];
 	private TextView[] mBoxVal = new TextView[box_num];
 	private TextView[] mBoxMetric = new TextView[box_num];
+	private ImageView[] mBoxImage = new ImageView[box_num];
 	
-	PsenSentenceParser[] parser_box = new PsenSentenceParser[box_num];
+	private PsenSentenceParser[] parser_box = new PsenSentenceParser[box_num];
 	
+	private static final String TREE_PREFIX = "tree_";
+	private static final String TREE_PACKAGE = "com.ecocitizen.app";
+	private static final String TREE_TYPE = "drawable";
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -77,11 +81,16 @@ public class MultiSensorViewActivity extends SimpleDeviceManagerClient {
 		for(int i = 0 ; i < boxIds.length; i++) {  
             LinearLayout box = (LinearLayout) findViewById(boxIds[i]);  
             mBoxName[i] = (TextView)box.findViewById(R.id.box_name);  
-            mBoxVal[i] = (TextView)box.findViewById(R.id.box_val);  
-            mBoxMetric[i] = (TextView)box.findViewById(R.id.box_metric); 
             mBoxName[i].setText("--");
+            
+            mBoxVal[i] = (TextView)box.findViewById(R.id.box_val);  
             mBoxVal[i].setText("--");
+            
+            mBoxMetric[i] = (TextView)box.findViewById(R.id.box_metric); 
             mBoxMetric[i].setText("--");
+            
+            mBoxImage[i] = (ImageView)box.findViewById(R.id.box_image); 
+            mBoxImage[i].setImageResource(R.drawable.tree_min);
 		}
 		
 		setupCommonButtons();
@@ -128,5 +137,12 @@ public class MultiSensorViewActivity extends SimpleDeviceManagerClient {
 		mBoxName[i].setText(parser.getName());
 		mBoxVal[i].setText(valFormat.format(parser.getFloatValue()));
 		mBoxMetric[i].setText(parser.getMetric());
+		
+		String imgname = TREE_PREFIX + parser.getLevel();
+		int resID = getResources().getIdentifier(imgname, TREE_TYPE, TREE_PACKAGE);
+		if (resID == 0) {
+			resID = R.drawable.tree_max;
+		}
+		mBoxImage[i].setImageResource(resID);
 	}
 }
