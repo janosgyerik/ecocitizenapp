@@ -1,9 +1,11 @@
-package com.ecocitizen.common;
+package com.ecocitizen.common.bundlewrapper;
+
+import com.ecocitizen.common.BundleKeys;
 
 import android.location.Location;
 import android.os.Bundle;
 
-public class SentenceBundle {
+public class SentenceBundleWrapper {
 	
 	private Bundle bundle;
 	private String sensorID;
@@ -17,7 +19,7 @@ public class SentenceBundle {
 	 * 
 	 * @param bundle
 	 */
-	public SentenceBundle(Bundle bundle) {
+	public SentenceBundleWrapper(Bundle bundle) {
 		this.bundle = bundle;
 	}
 

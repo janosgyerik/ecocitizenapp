@@ -35,7 +35,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.ecocitizen.common.SentenceBundle;
+import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
 import com.ecocitizen.parser.PsenSentenceParser;
 import com.ecocitizen.parser.TemperatureSentenceParser;
 
@@ -94,7 +94,7 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 	TemperatureSentenceParser mTemperatureSentenceParser = new TemperatureSentenceParser();
 	
 	@Override
-	void receivedSentenceBundle(SentenceBundle bundle) {
+	void receivedSentenceBundle(SentenceBundleWrapper bundle) {
 		Location location = bundle.getLocation();
 		
 		if (location == null) {

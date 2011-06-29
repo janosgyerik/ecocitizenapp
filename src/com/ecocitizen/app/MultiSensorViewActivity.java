@@ -28,7 +28,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ecocitizen.common.SentenceBundle;
+import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
 import com.ecocitizen.parser.CO2SentenceParser;
 import com.ecocitizen.parser.COxSentenceParser;
 import com.ecocitizen.parser.NOxSentenceParser;
@@ -97,7 +97,7 @@ public class MultiSensorViewActivity extends SimpleDeviceManagerClient {
 	}
 
 	@Override
-	void receivedSentenceBundle(SentenceBundle bundle) {
+	void receivedSentenceBundle(SentenceBundleWrapper bundle) {
 		
 		Location location = bundle.getLocation();
 		parser_box[0] = new CO2SentenceParser();

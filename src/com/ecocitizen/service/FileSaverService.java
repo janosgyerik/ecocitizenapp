@@ -47,7 +47,7 @@ import android.widget.Toast;
 import com.ecocitizen.common.BundleTools;
 import com.ecocitizen.common.DeviceManagerServiceCallback;
 import com.ecocitizen.common.MessageType;
-import com.ecocitizen.common.NoteBundle;
+import com.ecocitizen.common.bundlewrapper.NoteBundleWrapper;
 
 public class FileSaverService extends Service {
 	// Debugging
@@ -163,7 +163,7 @@ public class FileSaverService extends Service {
 	
 	private void receivedNoteBundle(Bundle bundle) {
 		if (! active) return;
-		saveDataRecord(new NoteBundle(bundle).toString());
+		saveDataRecord(new NoteBundleWrapper(bundle).toString());
 	}
 
 	// The Handler that gets information back from the BluetoothSensorService

@@ -1,4 +1,4 @@
-package com.ecocitizen.common;
+package com.ecocitizen.common.bundlewrapper;
 
 import android.os.Bundle;
 

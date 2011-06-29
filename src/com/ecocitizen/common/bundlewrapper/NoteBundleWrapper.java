@@ -1,10 +1,14 @@
-package com.ecocitizen.common;
+package com.ecocitizen.common.bundlewrapper;
 
 import java.util.Formatter;
 
+import com.ecocitizen.common.Base64;
+import com.ecocitizen.common.BundleKeys;
+import com.ecocitizen.common.Util;
+
 import android.os.Bundle;
 
-public class NoteBundle extends AbstractBundleWrapper {
+public class NoteBundleWrapper extends AbstractBundleWrapper {
 	
 	private Bundle startLocationBundle;
 	private Bundle endLocationBundle;
@@ -16,7 +20,7 @@ public class NoteBundle extends AbstractBundleWrapper {
 	 * 
 	 * @param bundle
 	 */
-	public NoteBundle(Bundle bundle) {
+	public NoteBundleWrapper(Bundle bundle) {
 		super(bundle);
 		
 		startLocationBundle = bundle.getParcelable(BundleKeys.NOTE_LOC_START);
@@ -32,7 +36,7 @@ public class NoteBundle extends AbstractBundleWrapper {
 	 * @param endLocationBundle
 	 * @param note
 	 */
-	public NoteBundle(Bundle startLocationBundle, Bundle endLocationBundle,
+	public NoteBundleWrapper(Bundle startLocationBundle, Bundle endLocationBundle,
 			String note) {
 		this(makeBundle(startLocationBundle, endLocationBundle, note));
 		
@@ -66,10 +70,10 @@ public class NoteBundle extends AbstractBundleWrapper {
 				Base64.encodeBytes(getNote().getBytes())
 				).toString();
 		if (startLocationBundle != null) {
-			datarecord += "," + new LocationBundle(startLocationBundle);
+			datarecord += "," + new LocationBundleWrapper(startLocationBundle);
 		}
 		if (endLocationBundle != null) {
-			datarecord += "," + new LocationBundle(endLocationBundle);
+			datarecord += "," + new LocationBundleWrapper(endLocationBundle);
 		}
 		return datarecord;
 	}

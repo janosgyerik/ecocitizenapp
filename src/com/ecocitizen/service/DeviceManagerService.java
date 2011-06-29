@@ -40,7 +40,7 @@ import backport.android.bluetooth.BluetoothDevice;
 
 import com.ecocitizen.common.BundleKeys;
 import com.ecocitizen.common.MessageType;
-import com.ecocitizen.common.NoteBundle;
+import com.ecocitizen.common.bundlewrapper.NoteBundleWrapper;
 
 public class DeviceManagerService extends Service {
 	// Debugging
@@ -214,8 +214,8 @@ public class DeviceManagerService extends Service {
 
 		public void addNote(Bundle startLocationBundle, String note)
 				throws RemoteException {
-			NoteBundle noteBundle =
-				new NoteBundle(startLocationBundle, mGpsLocationListener.getLastLocationBundle(), note);
+			NoteBundleWrapper noteBundle =
+				new NoteBundleWrapper(startLocationBundle, mGpsLocationListener.getLastLocationBundle(), note);
 			mHandler.obtainMessage(MessageType.NOTE, noteBundle.getBundle()).sendToTarget();
 		}
 

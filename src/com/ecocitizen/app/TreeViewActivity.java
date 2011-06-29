@@ -39,7 +39,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ecocitizen.common.SentenceBundle;
+import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
 import com.ecocitizen.parser.CO2SentenceParser;
 
 public class TreeViewActivity extends DeviceManagerClient {
@@ -179,7 +179,7 @@ public class TreeViewActivity extends DeviceManagerClient {
 	CO2SentenceParser parser = new CO2SentenceParser();
 
 	@Override
-	void receivedSentenceBundle(SentenceBundle bundle) {
+	void receivedSentenceBundle(SentenceBundleWrapper bundle) {
 		String line = bundle.getSentenceLine();
 		if (parser.match(line)) {
 			mCO2ValView.setText(co2Format.format(parser.getFloatValue()));

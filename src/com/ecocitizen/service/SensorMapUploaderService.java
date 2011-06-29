@@ -51,7 +51,7 @@ import com.ecocitizen.app.TreeViewActivity;
 import com.ecocitizen.common.BundleTools;
 import com.ecocitizen.common.DeviceManagerServiceCallback;
 import com.ecocitizen.common.MessageType;
-import com.ecocitizen.common.NoteBundle;
+import com.ecocitizen.common.bundlewrapper.NoteBundleWrapper;
 
 public class SensorMapUploaderService extends Service {
 	// Debugging
@@ -194,7 +194,7 @@ public class SensorMapUploaderService extends Service {
 
 	private void receivedNoteBundle(Bundle bundle) {
 		if (! active) return;
-		uploadDataRecord(new NoteBundle(bundle).toString());
+		uploadDataRecord(new NoteBundleWrapper(bundle).toString());
 	}
 
 	// The Handler that gets information back from the BluetoothSensorService

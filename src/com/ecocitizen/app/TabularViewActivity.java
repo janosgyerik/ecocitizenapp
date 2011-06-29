@@ -25,7 +25,7 @@ import android.view.Window;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-import com.ecocitizen.common.SentenceBundle;
+import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
 import com.ecocitizen.parser.BatterySentenceParser;
 import com.ecocitizen.parser.CO2SentenceParser;
 import com.ecocitizen.parser.COxSentenceParser;
@@ -70,7 +70,7 @@ public class TabularViewActivity extends SimpleDeviceManagerClient {
 	CO2SentenceParser co2Parser = new CO2SentenceParser();
 
 	@Override
-	void receivedSentenceBundle(SentenceBundle bundle) {
+	void receivedSentenceBundle(SentenceBundleWrapper bundle) {
 		String line = bundle.getSentenceLine();
 		
 		if (battParser.match(line)) {

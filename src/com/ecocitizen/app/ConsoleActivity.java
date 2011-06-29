@@ -19,7 +19,7 @@
 
 package com.ecocitizen.app;
 
-import com.ecocitizen.common.SentenceBundle;
+import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -74,7 +74,7 @@ public class ConsoleActivity extends SimpleDeviceManagerClient {
 	}
 
 	@Override
-	void receivedSentenceBundle(SentenceBundle bundle) {
+	void receivedSentenceBundle(SentenceBundleWrapper bundle) {
 		mSentencesArrayAdapter.add(bundle.getSentenceLine());
 	}
 }

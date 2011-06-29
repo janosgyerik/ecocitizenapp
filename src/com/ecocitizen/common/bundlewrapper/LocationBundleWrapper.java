@@ -1,11 +1,13 @@
-package com.ecocitizen.common;
+package com.ecocitizen.common.bundlewrapper;
 
 import java.util.Formatter;
+
+import com.ecocitizen.common.BundleKeys;
 
 import android.location.Location;
 import android.os.Bundle;
 
-public class LocationBundle extends AbstractBundleWrapper {
+public class LocationBundleWrapper extends AbstractBundleWrapper {
 	
 	private final Location location;
 	private final int latlonID;
@@ -16,7 +18,7 @@ public class LocationBundle extends AbstractBundleWrapper {
 	 * 
 	 * @param bundle
 	 */
-	public LocationBundle(Bundle bundle) {
+	public LocationBundleWrapper(Bundle bundle) {
 		super(bundle);
 		
 		location = (Location)bundle.getParcelable(BundleKeys.LOCATION_LOC);
