@@ -5,7 +5,6 @@ import java.util.Formatter;
 import android.os.Bundle;
 
 import com.ecocitizen.common.Base64;
-import com.ecocitizen.common.Util;
 
 public class NoteBundleWrapper extends AbstractBundleWrapper {
 	
@@ -45,7 +44,7 @@ public class NoteBundleWrapper extends AbstractBundleWrapper {
 		Bundle bundle = new Bundle();
 		bundle.putParcelable(BB_LOC_START, startLocationBundle);
 		bundle.putParcelable(BB_LOC_END, endLocationBundle);
-		bundle.putString(BB_DTZ, Util.getCurrentDTZ());
+		bundle.putString(BB_DTZ, getCurrentDTZ());
 		bundle.putString(BB_LINE, note);
 		
 		return bundle;

@@ -19,9 +19,6 @@
 
 package com.ecocitizen.common;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
 
 /**
  * Collection of utility methods
@@ -29,12 +26,5 @@ import java.util.TimeZone;
 public abstract class Util {
 	public static float convertNmeaToGps(float nmea) {
 		return (int)(nmea / 100) + (nmea % 100) / 60;
-	}
-
-	static final SimpleDateFormat dtFormat = new SimpleDateFormat("yyyyMMddHHmmss.S");
-
-	public static final String getCurrentDTZ() {
-		return String.format("%s,%d", dtFormat.format(new Date()), 
-				TimeZone.getDefault().getRawOffset() / 3600000);
 	}
 }

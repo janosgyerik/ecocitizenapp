@@ -5,8 +5,6 @@ import java.util.Formatter;
 import android.location.Location;
 import android.os.Bundle;
 
-import com.ecocitizen.common.Util;
-
 public class SentenceBundleWrapper extends AbstractBundleWrapper {
 	
 	private final static String BB_SENSOR_ID = "1";
@@ -46,7 +44,7 @@ public class SentenceBundleWrapper extends AbstractBundleWrapper {
 			Bundle locationBundle) {
 		Bundle bundle = new Bundle();
 		bundle.putString(BB_SENSOR_ID, sensorId);
-		bundle.putString(BB_DTZ, Util.getCurrentDTZ());
+		bundle.putString(BB_DTZ, getCurrentDTZ());
 		bundle.putString(BB_SENTENCE, sentence);
 		bundle.putParcelable(BB_LOCATION, locationBundle);
 		

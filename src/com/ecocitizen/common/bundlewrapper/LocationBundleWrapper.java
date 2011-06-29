@@ -2,8 +2,6 @@ package com.ecocitizen.common.bundlewrapper;
 
 import java.util.Formatter;
 
-import com.ecocitizen.common.Util;
-
 import android.location.Location;
 import android.os.Bundle;
 
@@ -35,7 +33,7 @@ public class LocationBundleWrapper extends AbstractBundleWrapper {
 	public void updateLocation(Location location, int latlonID) {
 		getBundle().putParcelable(BB_LOCATION, location);
 		getBundle().putInt(BB_LATLON_ID, latlonID);
-		getBundle().putString(BB_DTZ, Util.getCurrentDTZ());
+		getBundle().putString(BB_DTZ, getCurrentDTZ());
 	}
 
 	public Location getLocation() {
