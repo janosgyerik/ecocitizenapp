@@ -5,7 +5,7 @@ import java.util.Formatter;
 import android.location.Location;
 import android.os.Bundle;
 
-public class LocationBundle {
+public class LocationBundle extends AbstractBundleWrapper {
 	
 	private final Location location;
 	private final int latlonID;
@@ -17,6 +17,8 @@ public class LocationBundle {
 	 * @param bundle
 	 */
 	public LocationBundle(Bundle bundle) {
+		super(bundle);
+		
 		location = (Location)bundle.getParcelable(BundleKeys.LOCATION_LOC);
 		if (location != null) {
 			latlonID = bundle.getInt(BundleKeys.LOCATION_LATLON_ID);
