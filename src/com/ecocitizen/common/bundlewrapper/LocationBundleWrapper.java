@@ -21,12 +21,13 @@ public class LocationBundleWrapper extends AbstractBundleWrapper {
 	public LocationBundleWrapper(Bundle bundle) {
 		super(bundle);
 		
-		location = (Location)bundle.getParcelable(BundleKeys.LOCATION_LOC);
-		if (location != null) {
+		if (bundle != null) {
+			location = (Location)bundle.getParcelable(BundleKeys.LOCATION_LOC);
 			latlonID = bundle.getInt(BundleKeys.LOCATION_LATLON_ID);
 			dtz = bundle.getString(BundleKeys.LOCATION_DTZ);
 		}
 		else {
+			location = null;
 			latlonID = 0;
 			dtz = null;
 		}
@@ -34,6 +35,10 @@ public class LocationBundleWrapper extends AbstractBundleWrapper {
 
 	public Location getLocation() {
 		return location;
+	}
+	
+	public boolean isNull() {
+		return location == null;
 	}
 		
 	public String toString() {

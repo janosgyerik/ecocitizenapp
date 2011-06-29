@@ -44,10 +44,10 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.ecocitizen.common.BundleTools;
 import com.ecocitizen.common.DeviceManagerServiceCallback;
 import com.ecocitizen.common.MessageType;
 import com.ecocitizen.common.bundlewrapper.NoteBundleWrapper;
+import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
 
 public class FileSaverService extends Service {
 	// Debugging
@@ -156,7 +156,7 @@ public class FileSaverService extends Service {
 	private void receivedSentenceBundle(Bundle bundle) {
 		if (! active) return;
 		
-		String datarecord = BundleTools.convertToDataRecord(bundle, false);
+		String datarecord = new SentenceBundleWrapper(bundle).toString();
 
 		saveDataRecord(datarecord);
 	}

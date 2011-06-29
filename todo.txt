@@ -32,7 +32,6 @@ current focus
 		- comment received with gps
 		- + simulate no gps
 		- + similate no start gps
-- bugfix: replace BundleTools with SentenceBundle
 - bug: list of connected device names is not updated after resume
 - remove unique-ish ids from layout xml, they do not need to be so unique
 - configuration reloading issue

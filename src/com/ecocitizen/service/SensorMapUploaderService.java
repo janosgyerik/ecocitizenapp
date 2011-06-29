@@ -48,10 +48,10 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.ecocitizen.app.TreeViewActivity;
-import com.ecocitizen.common.BundleTools;
 import com.ecocitizen.common.DeviceManagerServiceCallback;
 import com.ecocitizen.common.MessageType;
 import com.ecocitizen.common.bundlewrapper.NoteBundleWrapper;
+import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
 
 public class SensorMapUploaderService extends Service {
 	// Debugging
@@ -186,10 +186,9 @@ public class SensorMapUploaderService extends Service {
 	private void receivedSentenceBundle(Bundle bundle) {
 		if (! active) return;
 		
-		String datarecord = BundleTools.convertToDataRecord(bundle, true);
-		if (datarecord != null) {
-			uploadDataRecord(datarecord);
-		}
+		String datarecord = new SentenceBundleWrapper(bundle).toString();
+
+		uploadDataRecord(datarecord);
 	}
 
 	private void receivedNoteBundle(Bundle bundle) {

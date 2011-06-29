@@ -1,17 +1,19 @@
 package com.ecocitizen.common.bundlewrapper;
 
-import com.ecocitizen.common.BundleKeys;
+import java.util.Formatter;
 
 import android.location.Location;
 import android.os.Bundle;
 
+import com.ecocitizen.common.BundleKeys;
+
 public class SentenceBundleWrapper extends AbstractBundleWrapper {
 	
 	private String sensorID;
+	private String dtz;
 	private String sentenceLine;
 	
-	private boolean locationIsNull = false;
-	private Location location;
+	private LocationBundleWrapper locationBundleWrapper;
 
 	/**
 	 * Use this constructor when extracting a Bundle received from somewhere.
@@ -20,36 +22,49 @@ public class SentenceBundleWrapper extends AbstractBundleWrapper {
 	 */
 	public SentenceBundleWrapper(Bundle bundle) {
 		super(bundle);
+		
+		sensorID = bundle.getString(BundleKeys.SENTENCE_SENSOR_ID);
+		dtz = bundle.getString(BundleKeys.SENTENCE_DTZ);
+		
+		String line = bundle.getString(BundleKeys.SENTENCE_LINE);
+		int indexOf_dollar = line.indexOf('$'); 
+		if (indexOf_dollar > -1) {
+			line = line.substring(indexOf_dollar);
+		}
+		sentenceLine = line;
+		
+		locationBundleWrapper = 
+			new LocationBundleWrapper(getBundle().getBundle(BundleKeys.LOCATION_BUNDLE));
 	}
 
 	public String getSensorID() {
-		if (sensorID == null) {
-			sensorID = getBundle().getString(BundleKeys.SENTENCE_SENSOR_ID);
-		}
 		return sensorID;
+	}
+	
+	public String getDtz() {
+		return dtz;
 	}
 
 	public String getSentenceLine() {
-		if (sentenceLine == null) {
-			String line = getBundle().getString(BundleKeys.SENTENCE_LINE);
-			int indexOf_dollar = line.indexOf('$'); 
-			if (indexOf_dollar > -1) {
-				line = line.substring(indexOf_dollar);
-			}
-			sentenceLine = line;
-		}
 		return sentenceLine;
 	}
 
 	public Location getLocation() {
-		if (!locationIsNull && location == null) {
-			Bundle locationBundle = getBundle().getBundle(BundleKeys.LOCATION_BUNDLE);
-			if (locationBundle == null) {
-				locationIsNull = true;
-				return null;
-			}
-			location = (Location)locationBundle.getParcelable(BundleKeys.LOCATION_LOC);
+		return locationBundleWrapper.getLocation();
+	}
+	
+	public String toString() {
+		String datarecord = new Formatter().format(
+				"SENTENCE,%s,%s,%s,_",
+				getSensorID(),
+				getDtz(),
+				getSentenceLine()
+		).toString();
+		
+		if (!locationBundleWrapper.isNull()) {
+			datarecord += "," + locationBundleWrapper;
 		}
-		return location;
+		
+		return datarecord;
 	}
 }
