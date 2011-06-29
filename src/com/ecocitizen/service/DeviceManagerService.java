@@ -214,9 +214,9 @@ public class DeviceManagerService extends Service {
 
 		public void addNote(Bundle startLocationBundle, String note)
 				throws RemoteException {
-			NoteBundleWrapper noteBundle =
-				new NoteBundleWrapper(startLocationBundle, mGpsLocationListener.getLastLocationBundle(), note);
-			mHandler.obtainMessage(MessageType.NOTE, noteBundle.getBundle()).sendToTarget();
+			Bundle bundle =
+				NoteBundleWrapper.makeBundle(startLocationBundle, mGpsLocationListener.getLastLocationBundle(), note);
+			mHandler.obtainMessage(MessageType.NOTE, bundle).sendToTarget();
 		}
 
 		public Bundle getLocationBundle() throws RemoteException {

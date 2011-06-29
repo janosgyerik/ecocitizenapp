@@ -30,23 +30,14 @@ public class NoteBundleWrapper extends AbstractBundleWrapper {
 	}
 
 	/**
-	 * Use this constructor when creating a new Bundle from components.
+	 * Convenience method to build a bundle from components
 	 * 
 	 * @param startLocationBundle
 	 * @param endLocationBundle
 	 * @param note
+	 * @return
 	 */
-	public NoteBundleWrapper(Bundle startLocationBundle, Bundle endLocationBundle,
-			String note) {
-		this(makeBundle(startLocationBundle, endLocationBundle, note));
-		
-		this.startLocationBundle = startLocationBundle;
-		this.endLocationBundle = endLocationBundle;
-		this.dtz = Util.getCurrentDTZ();
-		this.note = note;
-	}
-
-	private static Bundle makeBundle(Bundle startLocationBundle, Bundle endLocationBundle, String note) {
+	public static Bundle makeBundle(Bundle startLocationBundle, Bundle endLocationBundle, String note) {
 		Bundle bundle = new Bundle();
 		bundle.putParcelable(BundleKeys.NOTE_LOC_START, startLocationBundle);
 		bundle.putParcelable(BundleKeys.NOTE_LOC_END, endLocationBundle);
@@ -57,9 +48,6 @@ public class NoteBundleWrapper extends AbstractBundleWrapper {
 	}
 
 	public String getNote() {
-		if (note == null) {
-			note = getBundle().getString(BundleKeys.NOTE_LINE);
-		}
 		return note;
 	}
 	
