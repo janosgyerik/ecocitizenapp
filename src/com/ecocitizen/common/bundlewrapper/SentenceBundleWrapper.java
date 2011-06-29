@@ -5,9 +5,8 @@ import com.ecocitizen.common.BundleKeys;
 import android.location.Location;
 import android.os.Bundle;
 
-public class SentenceBundleWrapper {
+public class SentenceBundleWrapper extends AbstractBundleWrapper {
 	
-	private Bundle bundle;
 	private String sensorID;
 	private String sentenceLine;
 	
@@ -20,19 +19,19 @@ public class SentenceBundleWrapper {
 	 * @param bundle
 	 */
 	public SentenceBundleWrapper(Bundle bundle) {
-		this.bundle = bundle;
+		super(bundle);
 	}
 
 	public String getSensorID() {
 		if (sensorID == null) {
-			sensorID = bundle.getString(BundleKeys.SENTENCE_SENSOR_ID);
+			sensorID = getBundle().getString(BundleKeys.SENTENCE_SENSOR_ID);
 		}
 		return sensorID;
 	}
 
 	public String getSentenceLine() {
 		if (sentenceLine == null) {
-			String line = bundle.getString(BundleKeys.SENTENCE_LINE);
+			String line = getBundle().getString(BundleKeys.SENTENCE_LINE);
 			int indexOf_dollar = line.indexOf('$'); 
 			if (indexOf_dollar > -1) {
 				line = line.substring(indexOf_dollar);
@@ -44,7 +43,7 @@ public class SentenceBundleWrapper {
 
 	public Location getLocation() {
 		if (!locationIsNull && location == null) {
-			Bundle locationBundle = bundle.getBundle(BundleKeys.LOCATION_BUNDLE);
+			Bundle locationBundle = getBundle().getBundle(BundleKeys.LOCATION_BUNDLE);
 			if (locationBundle == null) {
 				locationIsNull = true;
 				return null;
