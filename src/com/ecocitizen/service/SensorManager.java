@@ -19,12 +19,11 @@
 
 package com.ecocitizen.service;
 
-import com.ecocitizen.common.BundleKeys;
-import com.ecocitizen.common.MessageType;
-import com.ecocitizen.common.Util;
-
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.ecocitizen.common.MessageType;
+import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
 
 /**
  * Base class for handling communications with sensor devices.
@@ -79,13 +78,7 @@ abstract public class SensorManager {
 	 * @return
 	 */
 	private Bundle getSensorDataBundle(String sentence) {
-		Bundle bundle = new Bundle();
-		bundle.putBundle(BundleKeys.LOCATION_BUNDLE, mGpsLocationListener.getLastLocationBundle());
-		bundle.putString(BundleKeys.SENTENCE_DTZ, Util.getCurrentDTZ());
-		bundle.putString(BundleKeys.SENTENCE_SENSOR_ID, mSensorId);
-		bundle.putString(BundleKeys.SENTENCE_LINE, sentence);
-		
-		return bundle;
+		return SentenceBundleWrapper.makeBundle(mSensorId, sentence, mGpsLocationListener.getLastLocationBundle());
 	}
 	
 	/**

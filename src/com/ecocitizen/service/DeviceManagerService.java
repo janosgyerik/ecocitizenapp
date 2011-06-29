@@ -38,9 +38,9 @@ import android.util.Log;
 import android.widget.Toast;
 import backport.android.bluetooth.BluetoothDevice;
 
-import com.ecocitizen.common.BundleKeys;
 import com.ecocitizen.common.MessageType;
 import com.ecocitizen.common.bundlewrapper.NoteBundleWrapper;
+import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
 
 public class DeviceManagerService extends Service {
 	// Debugging
@@ -282,8 +282,10 @@ public class DeviceManagerService extends Service {
 				// Broadcast to all clients
 				final int N = mCallbacks.beginBroadcast();
 				final Bundle bundle = (Bundle)msg.obj;
-				final String sentence = (String)bundle.getString(BundleKeys.SENTENCE_LINE);
-				if (LOG_SENTENCES) Log.d(TAG, "SENTENCE = " + sentence);
+				if (LOG_SENTENCES) {
+					final String sentence = new SentenceBundleWrapper(bundle).getSentenceLine();
+					Log.d(TAG, "SENTENCE = " + sentence);
+				}
 				for (int i = 0; i < N; ++i) {
 					try {
 						mCallbacks.getBroadcastItem(i).receivedSentenceBundle(bundle);

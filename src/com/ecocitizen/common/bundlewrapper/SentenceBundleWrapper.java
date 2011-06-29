@@ -5,9 +5,14 @@ import java.util.Formatter;
 import android.location.Location;
 import android.os.Bundle;
 
-import com.ecocitizen.common.BundleKeys;
+import com.ecocitizen.common.Util;
 
 public class SentenceBundleWrapper extends AbstractBundleWrapper {
+	
+	private final static String BB_SENSOR_ID = "1";
+	private final static String BB_DTZ = "2";
+	private final static String BB_SENTENCE = "3";
+	private final static String BB_LOCATION = "4";
 	
 	private String sensorID;
 	private String dtz;
@@ -23,10 +28,10 @@ public class SentenceBundleWrapper extends AbstractBundleWrapper {
 	public SentenceBundleWrapper(Bundle bundle) {
 		super(bundle);
 		
-		sensorID = bundle.getString(BundleKeys.SENTENCE_SENSOR_ID);
-		dtz = bundle.getString(BundleKeys.SENTENCE_DTZ);
+		sensorID = bundle.getString(BB_SENSOR_ID);
+		dtz = bundle.getString(BB_DTZ);
 		
-		String line = bundle.getString(BundleKeys.SENTENCE_LINE);
+		String line = bundle.getString(BB_SENTENCE);
 		int indexOf_dollar = line.indexOf('$'); 
 		if (indexOf_dollar > -1) {
 			line = line.substring(indexOf_dollar);
@@ -34,7 +39,18 @@ public class SentenceBundleWrapper extends AbstractBundleWrapper {
 		sentenceLine = line;
 		
 		locationBundleWrapper = 
-			new LocationBundleWrapper(getBundle().getBundle(BundleKeys.LOCATION_BUNDLE));
+			new LocationBundleWrapper(getBundle().getBundle(BB_LOCATION));
+	}
+
+	public static Bundle makeBundle(String sensorId, String sentence,
+			Bundle locationBundle) {
+		Bundle bundle = new Bundle();
+		bundle.putString(BB_SENSOR_ID, sensorId);
+		bundle.putString(BB_DTZ, Util.getCurrentDTZ());
+		bundle.putString(BB_SENTENCE, sentence);
+		bundle.putParcelable(BB_LOCATION, locationBundle);
+		
+		return bundle;
 	}
 
 	public String getSensorID() {
