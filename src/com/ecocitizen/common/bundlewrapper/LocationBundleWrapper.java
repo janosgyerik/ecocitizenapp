@@ -2,16 +2,20 @@ package com.ecocitizen.common.bundlewrapper;
 
 import java.util.Formatter;
 
-import com.ecocitizen.common.BundleKeys;
+import com.ecocitizen.common.Util;
 
 import android.location.Location;
 import android.os.Bundle;
 
 public class LocationBundleWrapper extends AbstractBundleWrapper {
 	
-	private final Location location;
-	private final int latlonID;
-	private final String dtz;
+	private static final String BB_LOCATION = "1";
+	private static final String BB_LATLON_ID = "2";
+	private static final String BB_DTZ = "3";
+	
+	private Location location;
+	private int latlonID;
+	private String dtz;
 
 	/**
 	 * Use this constructor when extracting a Bundle received from somewhere.
@@ -20,17 +24,18 @@ public class LocationBundleWrapper extends AbstractBundleWrapper {
 	 */
 	public LocationBundleWrapper(Bundle bundle) {
 		super(bundle);
-		
-		if (bundle != null) {
-			location = (Location)bundle.getParcelable(BundleKeys.LOCATION_LOC);
-			latlonID = bundle.getInt(BundleKeys.LOCATION_LATLON_ID);
-			dtz = bundle.getString(BundleKeys.LOCATION_DTZ);
+
+		if (bundle != null && !bundle.isEmpty()) {
+			location = (Location)bundle.getParcelable(BB_LOCATION);
+			latlonID = bundle.getInt(BB_LATLON_ID);
+			dtz = bundle.getString(BB_DTZ);
 		}
-		else {
-			location = null;
-			latlonID = 0;
-			dtz = null;
-		}
+	}
+	
+	public void updateLocation(Location location, int latlonID) {
+		getBundle().putParcelable(BB_LOCATION, location);
+		getBundle().putInt(BB_LATLON_ID, latlonID);
+		getBundle().putString(BB_DTZ, Util.getCurrentDTZ());
 	}
 
 	public Location getLocation() {

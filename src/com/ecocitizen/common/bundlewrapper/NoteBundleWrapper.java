@@ -2,13 +2,17 @@ package com.ecocitizen.common.bundlewrapper;
 
 import java.util.Formatter;
 
-import com.ecocitizen.common.Base64;
-import com.ecocitizen.common.BundleKeys;
-import com.ecocitizen.common.Util;
-
 import android.os.Bundle;
 
+import com.ecocitizen.common.Base64;
+import com.ecocitizen.common.Util;
+
 public class NoteBundleWrapper extends AbstractBundleWrapper {
+	
+	private static final String BB_LOC_START = "1";
+	private static final String BB_LOC_END = "2";
+	private static final String BB_DTZ = "3";
+	private static final String BB_LINE = "4";
 	
 	private Bundle startLocationBundle;
 	private Bundle endLocationBundle;
@@ -23,10 +27,10 @@ public class NoteBundleWrapper extends AbstractBundleWrapper {
 	public NoteBundleWrapper(Bundle bundle) {
 		super(bundle);
 		
-		startLocationBundle = bundle.getParcelable(BundleKeys.NOTE_LOC_START);
-		endLocationBundle = bundle.getParcelable(BundleKeys.NOTE_LOC_END);
-		dtz = bundle.getString(BundleKeys.NOTE_DTZ);
-		note = bundle.getString(BundleKeys.NOTE_LINE);
+		startLocationBundle = bundle.getParcelable(BB_LOC_START);
+		endLocationBundle = bundle.getParcelable(BB_LOC_END);
+		dtz = bundle.getString(BB_DTZ);
+		note = bundle.getString(BB_LINE);
 	}
 
 	/**
@@ -39,10 +43,10 @@ public class NoteBundleWrapper extends AbstractBundleWrapper {
 	 */
 	public static Bundle makeBundle(Bundle startLocationBundle, Bundle endLocationBundle, String note) {
 		Bundle bundle = new Bundle();
-		bundle.putParcelable(BundleKeys.NOTE_LOC_START, startLocationBundle);
-		bundle.putParcelable(BundleKeys.NOTE_LOC_END, endLocationBundle);
-		bundle.putString(BundleKeys.NOTE_DTZ, Util.getCurrentDTZ());
-		bundle.putString(BundleKeys.NOTE_LINE, note);
+		bundle.putParcelable(BB_LOC_START, startLocationBundle);
+		bundle.putParcelable(BB_LOC_END, endLocationBundle);
+		bundle.putString(BB_DTZ, Util.getCurrentDTZ());
+		bundle.putString(BB_LINE, note);
 		
 		return bundle;
 	}

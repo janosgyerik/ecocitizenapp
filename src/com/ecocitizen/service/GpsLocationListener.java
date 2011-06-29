@@ -19,8 +19,7 @@
 
 package com.ecocitizen.service;
 
-import com.ecocitizen.common.BundleKeys;
-import com.ecocitizen.common.Util;
+import com.ecocitizen.common.bundlewrapper.LocationBundleWrapper;
 
 import android.location.Location;
 import android.location.LocationListener;
@@ -42,7 +41,8 @@ public class GpsLocationListener implements LocationListener {
 
 	private LocationManager mLocationManager = null;
 	private Location mLastLocation = null;
-	private Bundle mLastLocationBundle = new Bundle();
+	private LocationBundleWrapper mLocationBundleWrapper = 
+		new LocationBundleWrapper(new Bundle());
 
 	// This is used to identify locations that have identical latlon.
 	// It is incremented when a location update is received with 
@@ -86,15 +86,13 @@ public class GpsLocationListener implements LocationListener {
 	}
 
 	public Bundle getLastLocationBundle() {
-		return mLastLocation == null ? null : mLastLocationBundle;
+		return mLastLocation == null ? null : mLocationBundleWrapper.getBundle();
 	}
 
 	private void updateLastKnownLocation(Location location) {
 		++latlonID;
 		mLastLocation = location;
-		mLastLocationBundle.putString(BundleKeys.LOCATION_DTZ, Util.getCurrentDTZ());
-		mLastLocationBundle.putInt(BundleKeys.LOCATION_LATLON_ID, latlonID);
-		mLastLocationBundle.putParcelable(BundleKeys.LOCATION_LOC, mLastLocation);
+		mLocationBundleWrapper.updateLocation(location, latlonID);
 	}
 
 	public void onLocationChanged(Location location) {
