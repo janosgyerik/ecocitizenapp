@@ -48,7 +48,8 @@ public class TreeViewActivity extends DeviceManagerClient {
 	private static final boolean D = true;
 
 	// Layout Views
-	private TextView mCO2ValView;
+	private TextView mCO2Val_1View;
+	private TextView mCO2Val_2View;
 	private static DecimalFormat co2Format = new DecimalFormat("0");
 	private TextView mCO2NameView;
 	private TextView mCO2MetricView;
@@ -56,6 +57,9 @@ public class TreeViewActivity extends DeviceManagerClient {
 	private TextView mLatValView;
 	private TextView mLonNameView;
 	private TextView mLonValView;
+	
+	private String sensorID_1 = null;
+	private String sensorID_2 = null;
 
 	private static final String TREEBG_PREFIX = "treebg_";
 	private static final String TREEBG_PACKAGE = "com.ecocitizen.app";
@@ -77,7 +81,8 @@ public class TreeViewActivity extends DeviceManagerClient {
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
 
 		// Set up layout components
-		mCO2ValView = (TextView)findViewById(R.id.co2val);
+		mCO2Val_1View = (TextView)findViewById(R.id.co2val_1);
+		mCO2Val_2View = (TextView)findViewById(R.id.co2val_2);
 		mCO2NameView = (TextView)findViewById(R.id.co2name);
 		mCO2MetricView = (TextView)findViewById(R.id.co2metric);
 		mLatNameView = (TextView)findViewById(R.id.latname);
@@ -182,7 +187,7 @@ public class TreeViewActivity extends DeviceManagerClient {
 	void receivedSentenceBundle(SentenceBundleWrapper bundle) {
 		String line = bundle.getSentenceLine();
 		if (parser.match(line)) {
-			mCO2ValView.setText(co2Format.format(parser.getFloatValue()));
+			setCO2Val(bundle.getSensorID(), co2Format.format(parser.getFloatValue()));
 			mCO2NameView.setText(parser.getName());
 			mCO2MetricView.setText(parser.getMetric());
 			mLatNameView.setText("lat.=");
@@ -225,6 +230,22 @@ public class TreeViewActivity extends DeviceManagerClient {
 		else {
 			mBtnConnect.setVisibility(View.GONE);
 			//mBtnDisconnect.setVisibility(View.VISIBLE);
+		}
+	}
+	
+	void setCO2Val(String sensorID, String value) {
+		if (sensorID_1 == null) {
+			sensorID_1 = sensorID;
+		} else if (!sensorID_1.equals(sensorID)) {
+			sensorID_2 = sensorID;
+			mCO2Val_1View.setTextSize(15);
+			mCO2Val_2View.setTextSize(15);
+		}
+
+		if (sensorID_1.equals(sensorID)) {
+			mCO2Val_1View.setText(value);
+		} else if (sensorID_2.equals(sensorID)) {
+			mCO2Val_2View.setText(value);
 		}
 	}
 }

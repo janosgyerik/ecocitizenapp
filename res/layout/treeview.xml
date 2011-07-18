@@ -34,12 +34,26 @@
     		style="@style/co2NameMetric"
     		android:gravity="center"
     		android:layout_weight="1"
+    		android:paddingTop="50px"
 		/>
-    	<TextView android:id="@+id/co2val"
-    		style="@style/co2Val"
-    		android:gravity="center"
-    		android:layout_weight="1"
-		/>
+		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    		android:orientation="vertical"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:id="@+id/co2Val"
+    		android:gravity="top"
+    		>
+    		<TextView android:id="@+id/co2val_1"
+    			style="@style/co2Val"
+    			android:gravity="center"
+			/>
+			<TextView android:id="@+id/co2val_2"
+    			style="@style/co2Val"
+    			android:paddingTop="0px"
+    			android:textSize="0px"
+    			android:gravity="center"
+			/>
+		</LinearLayout>
 		<TextView android:id="@+id/co2metric"
     		style="@style/co2NameMetric"
     		android:gravity="center"
