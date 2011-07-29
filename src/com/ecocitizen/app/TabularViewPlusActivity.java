@@ -72,21 +72,15 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 		// Set up the window layout
 		setContentView(R.layout.tabularviewplus);
 
-		mSentencesTbl = (TableLayout)findViewById(R.id.tblsentencesplus);
-		mLatView = (TextView)findViewById(R.id.latitude);
-		mLonView = (TextView)findViewById(R.id.longitude);
-		mAccuracyView = (TextView)findViewById(R.id.accuracy);
-		mAltitudeView = (TextView)findViewById(R.id.altitude);
-		mSpeedView = (TextView)findViewById(R.id.speed);
-		mBearingView = (TextView)findViewById(R.id.bearing);
-        
+		mSentencesTbl = (TableLayout)findViewById(R.id.tblsentencesplus);     
+/*		
 		Button mBtnComment = (Button) findViewById(R.id.btn_comment);
 		mBtnComment.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				startCommentActivity();
 			}
 		});
-		
+*/		
 		setupCommonButtons();
 	}
 
@@ -98,20 +92,15 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 		Location location = bundle.getLocation();
 		
 		if (location == null) {
-			mLatView.setText(R.string.common_na);
-			mLonView.setText(R.string.common_na);
-			mAccuracyView.setText(R.string.common_na);
-			mAltitudeView.setText(R.string.common_na);
-			mSpeedView.setText(R.string.common_na);
-			mBearingView.setText(R.string.common_na);
 		}
 		else {
-			mLatView.setText(latlonFormat.format(location.getLatitude()));
-			mLonView.setText(latlonFormat.format(location.getLongitude()));
-			mAccuracyView.setText(latlonFormat.format(location.getAccuracy()));
-			mAltitudeView.setText(latlonFormat.format(location.getAltitude()));
-			mSpeedView.setText(latlonFormat.format(location.getSpeed()));
-			mBearingView.setText(latlonFormat.format(location.getBearing()));
+			updateGPSdata("Latitude", latlonFormat.format(location.getLatitude()));
+			updateGPSdata("Longitude", latlonFormat.format(location.getLongitude()));
+			updateGPSdata("Accuracy", latlonFormat.format(location.getAccuracy()));
+			updateGPSdata("Altitude", latlonFormat.format(location.getAltitude()));
+			updateGPSdata("Speed", latlonFormat.format(location.getSpeed()));
+			updateGPSdata("Bearing", latlonFormat.format(location.getBearing()));
+			
 		}
 		
 		String line = bundle.getSentenceLine();
@@ -123,6 +112,43 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 			else {
 				updateRow(parser);
 			}
+		}
+	}
+	
+	void updateGPSdata(String name, String value) {
+		if (!hmDataType.containsKey(name)) {
+			TableRow tr = new TableRow(this);
+
+			TextView nameView = new TextView(this);
+			TextView spaceView = new TextView(this);
+			TextView valueView = new TextView(this);
+			
+			nameView.setText(name);
+			nameView.setTextAppearance(this, R.style.tabularColumn);
+			nameView.setPadding(3, 3, 3, 3);
+			
+			spaceView.setTextAppearance(this, R.style.tabularColumn);
+			spaceView.setPadding(3, 3, 3, 3);
+			
+			valueView.setText(R.string.common_na);
+			valueView.setTextAppearance(this, R.style.tabularValueColumn);
+			valueView.setGravity(Gravity.RIGHT);
+			valueView.setId(mRowID);
+			valueView.setPadding(3, 3, 3, 3);
+			
+			tr.addView(nameView);
+			tr.addView(spaceView);
+			tr.addView(valueView);
+			
+
+			hmDataType.put(name, mRowID);
+			mSentencesTbl.addView(tr, new TableLayout.LayoutParams(TR_HEIGHT, TR_WIDTH));
+
+			++mRowID;
+		}
+		else {
+			TextView updateValue = (TextView) findViewById(hmDataType.get(name));
+			updateValue.setText(value);
 		}
 	}
     

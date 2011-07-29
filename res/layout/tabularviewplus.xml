@@ -20,44 +20,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent" android:background="@drawable/background1">
-	<TableLayout android:id="@+id/tblsentencesplus" style="@style/tabular">
-		<TableRow android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-			<TextView android:text="Latitude" style="@style/tabularColumn" />
-			<TextView style="@style/tabularColumn"/>
-			<TextView android:id="@+id/latitude" style="@style/tabularValueColumn" />
-		</TableRow>
-		<TableRow android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-			<TextView android:text="Longitude" style="@style/tabularColumn" />
-			<TextView style="@style/tabularColumn"/>
-			<TextView android:id="@+id/longitude" style="@style/tabularValueColumn" />
-		</TableRow>
-		<TableRow android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-			<TextView android:text="Accuracy " style="@style/tabularColumn" />
-			<TextView style="@style/tabularColumn" />
-			<TextView android:id="@+id/accuracy " style="@style/tabularValueColumn" />
-		</TableRow>
-		<TableRow android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-			<TextView android:text="Altitude " style="@style/tabularColumn" />
-			<TextView style="@style/tabularColumn" />
-			<TextView android:id="@+id/altitude" style="@style/tabularValueColumn" />
-		</TableRow>
-		<TableRow android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-			<TextView android:text="Speed" style="@style/tabularColumn" />
-			<TextView style="@style/tabularColumn" />
-			<TextView android:id="@+id/speed" style="@style/tabularValueColumn" />
-		</TableRow>
-		<TableRow android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-			<TextView android:text="Bearing" style="@style/tabularColumn" />
-			<TextView style="@style/tabularColumn" />
-			<TextView android:id="@+id/bearing" style="@style/tabularValueColumn" />
-		</TableRow>
-	</TableLayout>
+	<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+		<TableLayout android:id="@+id/tblsentencesplus" style="@style/tabular" />
+	</ScrollView>
 	<RelativeLayout android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:layout_alignParentBottom="true">
 		<Button android:id="@+id/btn_connect_device" android:text="@string/btn_connect_device"
