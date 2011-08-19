@@ -17,19 +17,17 @@
     You should have received a copy of the GNU General Public License
     along with EcoCitizen.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent" android:background="@drawable/background1">
 	<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 		<TableLayout android:id="@+id/tblsentencesplus" style="@style/tabular" />
 	</ScrollView>
-	<RelativeLayout android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:layout_alignParentBottom="true">
-		<Button android:id="@+id/btn_connect_device" android:text="@string/btn_connect_device"
-			android:stackFromBottom="true" style="@style/btn" />
-		<Button android:id="@+id/btn_disconnect_device" android:text="@string/btn_disconnect_device"
-			android:stackFromBottom="true" style="@style/btn" />
-	</RelativeLayout>
-</RelativeLayout>
+	<Button android:id="@+id/btn_connect_device" android:text="@string/btn_connect_device"
+		android:stackFromBottom="true" style="@style/btn" />
+	<Button android:id="@+id/btn_disconnect_device" android:text="@string/btn_disconnect_device"
+		android:stackFromBottom="true" style="@style/btn" />
+</LinearLayout>
