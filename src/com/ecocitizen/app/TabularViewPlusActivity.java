@@ -28,9 +28,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -48,18 +46,12 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 	private TableLayout mSentencesTbl;
 
 	// Constants
-	private final int TR_WIDTH = ViewGroup.LayoutParams.WRAP_CONTENT; 
-	private final int TR_HEIGHT = ViewGroup.LayoutParams.FILL_PARENT;
-	private final int columnColor = Color.WHITE;
-	private final int valueColor = Color.YELLOW;
+	private static final int TR_WIDTH = ViewGroup.LayoutParams.WRAP_CONTENT; 
+	private static final int TR_HEIGHT = ViewGroup.LayoutParams.FILL_PARENT;
+	private static final int NAME_COLOR = Color.WHITE;
+	private static final int VALUE_COLOR = Color.YELLOW;
 	
-	private static DecimalFormat latlonFormat = new DecimalFormat("* ###.00000");
-	private TextView mLatView;
-	private TextView mLonView;
-	private TextView mAccuracyView;
-	private TextView mAltitudeView;
-	private TextView mSpeedView;
-	private TextView mBearingView;
+	private static final DecimalFormat LATLON_FORMAT = new DecimalFormat("* ###.00000");
 	
 	private HashMap<String, Integer> hmDataType = new HashMap<String, Integer>();
 	private int mRowID = 0;
@@ -72,20 +64,13 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 		// Set up the window layout
 		setContentView(R.layout.tabularviewplus);
 
-		mSentencesTbl = (TableLayout)findViewById(R.id.tblsentencesplus);     
-/*		
-		Button mBtnComment = (Button) findViewById(R.id.btn_comment);
-		mBtnComment.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				startCommentActivity();
-			}
-		});
-*/		
+		mSentencesTbl = (TableLayout)findViewById(R.id.tblsentencesplus);
+		
 		setupCommonButtons();
 	}
 
-	PsenSentenceParser parser = new PsenSentenceParser();
-	TemperatureSentenceParser mTemperatureSentenceParser = new TemperatureSentenceParser();
+	private PsenSentenceParser parser = new PsenSentenceParser();
+	private TemperatureSentenceParser mTemperatureSentenceParser = new TemperatureSentenceParser();
 	
 	@Override
 	void receivedSentenceBundle(SentenceBundleWrapper bundle) {
@@ -94,101 +79,72 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 		if (location == null) {
 		}
 		else {
-			updateGPSdata("Latitude", latlonFormat.format(location.getLatitude()));
-			updateGPSdata("Longitude", latlonFormat.format(location.getLongitude()));
-			updateGPSdata("Accuracy", latlonFormat.format(location.getAccuracy()));
-			updateGPSdata("Altitude", latlonFormat.format(location.getAltitude()));
-			updateGPSdata("Speed", latlonFormat.format(location.getSpeed()));
-			updateGPSdata("Bearing", latlonFormat.format(location.getBearing()));
-			
+			updateRowWithGpsData("Latitude", LATLON_FORMAT.format(location.getLatitude()));
+			updateRowWithGpsData("Longitude", LATLON_FORMAT.format(location.getLongitude()));
+			updateRowWithGpsData("Accuracy", LATLON_FORMAT.format(location.getAccuracy()));
+			updateRowWithGpsData("Altitude", LATLON_FORMAT.format(location.getAltitude()));
+			updateRowWithGpsData("Speed", LATLON_FORMAT.format(location.getSpeed()));
+			updateRowWithGpsData("Bearing", LATLON_FORMAT.format(location.getBearing()));
 		}
 		
 		String line = bundle.getSentenceLine();
 		if (parser.match(line)) {
-			updateRow(parser);
+			updateRowWithParser(parser);
 			if (mTemperatureSentenceParser.match(line)) {
-				updateRow(mTemperatureSentenceParser);
-			}
-			else {
-				updateRow(parser);
+				updateRowWithParser(mTemperatureSentenceParser);
 			}
 		}
 	}
 	
-	void updateGPSdata(String name, String value) {
-		if (!hmDataType.containsKey(name)) {
-			TableRow tr = new TableRow(this);
-
-			TextView nameView = new TextView(this);
-			TextView spaceView = new TextView(this);
-			TextView valueView = new TextView(this);
-			
-			nameView.setText(name);
-			nameView.setTextAppearance(this, R.style.tabularColumn);
-			nameView.setPadding(3, 3, 3, 3);
-			
-			spaceView.setTextAppearance(this, R.style.tabularColumn);
-			spaceView.setPadding(3, 3, 3, 3);
-			
-			valueView.setText(R.string.common_na);
-			valueView.setTextAppearance(this, R.style.tabularValueColumn);
-			valueView.setGravity(Gravity.RIGHT);
-			valueView.setId(mRowID);
-			valueView.setPadding(3, 3, 3, 3);
-			
-			tr.addView(nameView);
-			tr.addView(spaceView);
-			tr.addView(valueView);
-			
-
-			hmDataType.put(name, mRowID);
-			mSentencesTbl.addView(tr, new TableLayout.LayoutParams(TR_HEIGHT, TR_WIDTH));
-
-			++mRowID;
+	private void updateRowWithGpsData(String name, String value) {
+		updateRow(name, "", value);
+	}
+	
+	private void updateRowWithParser(PsenSentenceParser parser) {
+		updateRow(parser.getName(), parser.getMetric(), parser.getStrValue());
+	}
+	
+	private void updateRow(String name, String unit, String value) {
+		if (hmDataType.containsKey(name)) {
+			TextView valueView = (TextView) findViewById(hmDataType.get(name));
+			valueView.setText(value);
 		}
 		else {
-			TextView updateValue = (TextView) findViewById(hmDataType.get(name));
-			updateValue.setText(value);
+			addRow(name, unit, value);
 		}
 	}
-    
-	void updateRow(PsenSentenceParser parser) {
-		if (!hmDataType.containsKey(parser.getName())) {
-			TableRow tr = new TableRow(this);
+	
+	private void addRow(String name, String unit, String value) {
+		++mRowID;
+		
+		TableRow tr = new TableRow(this);
 
-			TextView name = new TextView(this);
-			TextView metric = new TextView(this);
-			TextView value = new TextView(this);
+		TextView nameView = new TextView(this);
+		TextView unitView = new TextView(this);
+		TextView valueView = new TextView(this);
 
-			name.setText(parser.getName());
-			name.setTextAppearance(this, style.TextAppearance_Medium);
-			name.setTextColor(columnColor);
-			name.setPadding(3, 3, 3, 3);
+		nameView.setText(name);
+		nameView.setTextAppearance(this, style.TextAppearance_Medium);
+		nameView.setTextColor(NAME_COLOR);
+		nameView.setPadding(3, 3, 3, 3);
 
-			metric.setText(parser.getMetric());
-			metric.setTextAppearance(this, style.TextAppearance_Medium);
-			metric.setTextColor(columnColor);
-			metric.setPadding(3, 3, 3, 3);
+		unitView.setText(unit);
+		unitView.setTextAppearance(this, style.TextAppearance_Medium);
+		unitView.setTextColor(NAME_COLOR);
+		unitView.setPadding(3, 3, 3, 3);
 
-			value.setText(parser.getStrValue());
-			value.setTextAppearance(this, style.TextAppearance_Medium);
-			value.setTextColor(valueColor);
-			value.setGravity(Gravity.RIGHT);
-			value.setId(mRowID);
-			value.setPadding(3, 3, 3, 3);
+		valueView.setText(value);
+		valueView.setTextAppearance(this, style.TextAppearance_Medium);
+		valueView.setTextColor(VALUE_COLOR);
+		valueView.setGravity(Gravity.RIGHT);
+		valueView.setPadding(3, 3, 3, 3);
+		valueView.setId(mRowID);
 
-			tr.addView(name);
-			tr.addView(metric);
-			tr.addView(value);
+		tr.addView(nameView);
+		tr.addView(unitView);
+		tr.addView(valueView);
 
-			hmDataType.put(parser.getName(), mRowID);
-			mSentencesTbl.addView(tr, new TableLayout.LayoutParams(TR_HEIGHT, TR_WIDTH));
-
-			++mRowID;
-		} 
-		else if (hmDataType.containsKey(parser.getName())) {
-			TextView updateValue = (TextView) findViewById(hmDataType.get(parser.getName()));
-			updateValue.setText(parser.getStrValue());
-		}
+		hmDataType.put(name, mRowID);
+		mSentencesTbl.addView(tr, new TableLayout.LayoutParams(TR_HEIGHT, TR_WIDTH));
 	}
 }
