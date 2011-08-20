@@ -199,7 +199,7 @@ public class BluetoothSensorManager extends SensorManager {
 		private boolean stop;
 
 		public ConnectedThread(BluetoothSocket socket) throws Exception {
-			Log.d(TAG, "create ConnectedThread");
+			if (D) Log.d(TAG, "create ConnectedThread");
 			mmSocket = socket;
 			InputStream tmpIn = null;
 			OutputStream tmpOut = null;

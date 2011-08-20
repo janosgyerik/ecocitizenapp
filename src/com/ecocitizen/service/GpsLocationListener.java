@@ -67,7 +67,7 @@ public class GpsLocationListener implements LocationListener {
 		
 		/*
 		for (String provider : mLocationManager.getAllProviders()) {
-			Log.d(TAG, "location provider=" + provider + ", isEnabled=" + mLocationManager.isProviderEnabled(provider));
+			if (D) Log.d(TAG, "location provider=" + provider + ", isEnabled=" + mLocationManager.isProviderEnabled(provider));
 		}
 		*/
 	}

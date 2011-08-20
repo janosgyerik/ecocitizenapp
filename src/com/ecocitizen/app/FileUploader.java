@@ -189,7 +189,7 @@ public class FileUploader {
 					line = line.replace(" ", "");
 					// TODO: clean this up, after android is cleaned up
 					if (line.matches(".*,_[SG].*")) {
-						Log.d(TAG, "Applying workaround for FileSaver bug. To be deprecated soon.");
+						if (D) Log.d(TAG, "Applying workaround for FileSaver bug. To be deprecated soon.");
 						int pos = 0;
 						int start = -1;
 						while ((start = line.indexOf("_S", pos)) > -1 || (start = line.indexOf("_G", pos)) > -1) {

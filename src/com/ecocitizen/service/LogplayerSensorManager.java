@@ -83,7 +83,7 @@ public class LogplayerSensorManager extends SensorManager {
 		private boolean hasReadAnything = false;
 
 		public ConnectedThread() {
-			Log.d(TAG, "create ConnectedThread");
+			if (D) Log.d(TAG, "create ConnectedThread");
 		}
 
 		public void run() {

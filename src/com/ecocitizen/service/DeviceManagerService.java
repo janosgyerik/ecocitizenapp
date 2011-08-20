@@ -285,7 +285,7 @@ public class DeviceManagerService extends Service {
 				final Bundle bundle = (Bundle)msg.obj;
 				if (LOG_SENTENCES) {
 					final String sentence = new SentenceBundleWrapper(bundle).getSentenceLine();
-					Log.d(TAG, "SENTENCE = " + sentence);
+					if (D) Log.d(TAG, "SENTENCE = " + sentence);
 				}
 				for (int i = 0; i < N; ++i) {
 					try {

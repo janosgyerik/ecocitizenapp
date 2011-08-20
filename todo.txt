@@ -14,7 +14,6 @@ release in marketplace
 
 current focus
 =============
-- find debug logs that should have been captured by if (D) { ... }
 - bring back preparegps -> rename to WaitForGPS
 - DeviceListActivity improvement
 	- make logfile device items as tall as bt ones, with two lines
