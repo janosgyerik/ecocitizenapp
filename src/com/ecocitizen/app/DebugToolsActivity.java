@@ -49,6 +49,12 @@ public class DebugToolsActivity extends TabActivity {
 				.setContent(intent);
 		tabHost.addTab(spec);
 
+		intent = new Intent().setClass(this, WaitForGpsActivity.class);
+		spec = tabHost.newTabSpec("waitforgps").setIndicator("Wait GPS",
+				res.getDrawable(R.drawable.tab_waitforgps))
+				.setContent(intent);
+		tabHost.addTab(spec);
+		
 		/*
 		intent = new Intent().setClass(this, ConsoleActivity.class);
 		spec = tabHost.newTabSpec("console").setIndicator("Console",

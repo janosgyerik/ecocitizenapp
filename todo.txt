@@ -14,7 +14,6 @@ release in marketplace
 
 current focus
 =============
-- bring back preparegps -> rename to WaitForGPS
 - DeviceListActivity improvement
 	- make logfile device items as tall as bt ones, with two lines
 	- show logfile devices only in 'Debug mode'

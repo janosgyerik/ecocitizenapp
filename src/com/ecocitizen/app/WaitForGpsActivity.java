@@ -52,6 +52,7 @@ public class WaitForGpsActivity extends Activity implements LocationListener {
 				cancel();
 			}
 		});
+		mBtnCancel.setVisibility(View.GONE);
 
 		mBtnScanAgain = (Button) findViewById(R.id.btn_scan_again);
 		mBtnScanAgain.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +67,7 @@ public class WaitForGpsActivity extends Activity implements LocationListener {
 				finish();
 			}
 		});
+		mBtnClose.setVisibility(View.GONE);
 
 		beginScan();
 	}
@@ -75,9 +77,9 @@ public class WaitForGpsActivity extends Activity implements LocationListener {
 
 		mLocationManager.requestLocationUpdates(PROVIDER, MIN_TIME, MIN_DISTANCE, this);
 
+		//mBtnCancel.setVisibility(View.VISIBLE);
 		mBtnScanAgain.setVisibility(View.GONE);
-		mBtnClose.setVisibility(View.GONE);
-		mBtnCancel.setVisibility(View.VISIBLE);
+		//mBtnClose.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -98,9 +100,9 @@ public class WaitForGpsActivity extends Activity implements LocationListener {
 
 		setProgressBarIndeterminateVisibility(false);		
 
-		mBtnCancel.setVisibility(View.GONE);
+		//mBtnCancel.setVisibility(View.GONE);
 		mBtnScanAgain.setVisibility(View.VISIBLE);
-		mBtnClose.setVisibility(View.VISIBLE);
+		//mBtnClose.setVisibility(View.VISIBLE);
 
 		TableLayout gpsTbl = (TableLayout)findViewById(R.id.tblgps);
 
