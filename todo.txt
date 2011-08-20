@@ -15,7 +15,7 @@ release in marketplace
 
 current focus
 =============
-- bug: pollution sample causes black tree
+- bug: values seem to multiply when switching from tree to multi and back
 - bug: device name is not shown when changing applications
 	- maybe need to get the list of devices from the device manager service
 	? use sensor id instead of name in DeviceManagerService

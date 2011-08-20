@@ -20,13 +20,11 @@
 package com.ecocitizen.parser;
 
 public class NOxSentenceParser extends PsenSentenceParser {
-	static {
-		levelBoundaries = new double[]{ 0.1,0.3,0.7,1.1,1.5,1.9,2.3,2.7,3.5 };
-		//levelBoundaries = new double[]{ 0.1,0.3,0.5,0.7,0.9,1.1,1.3,1.5,1.7,1.9,2.1,2.3,2.5,2.7,2.9,3.1,3.3,3.5 };
-	}
 
 	public NOxSentenceParser() {
 		super("$PSEN,NOx,");
+		levelBoundaries = new double[]{ 0.1,0.3,0.7,1.1,1.5,1.9,2.3,2.7,3.5 };
+		//levelBoundaries = new double[]{ 0.1,0.3,0.5,0.7,0.9,1.1,1.3,1.5,1.7,1.9,2.1,2.3,2.5,2.7,2.9,3.1,3.3,3.5 };
 	}
 	
 	public String getMetric() {

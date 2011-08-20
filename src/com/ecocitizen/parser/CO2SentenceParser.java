@@ -20,12 +20,10 @@
 package com.ecocitizen.parser;
 
 public class CO2SentenceParser extends PsenSentenceParser {
-	static {
-		levelBoundaries = new double[]{ 300, 350, 400, 450, 500, 600, 700, 800, 1000 };
-		//levelBoundaries = new double[]{ 300, 325, 350, 375, 400, 425, 450, 475, 500, 525, 550, 575, 600, 625, 650, 675, 700, 800, 1000 };
-	}
 
 	public CO2SentenceParser() {
 		super("$PSEN,CO2,");
+		levelBoundaries = new double[]{ 300, 350, 400, 450, 500, 600, 700, 800, 1000 };
+		//levelBoundaries = new double[]{ 300, 325, 350, 375, 400, 425, 450, 475, 500, 525, 550, 575, 600, 625, 650, 675, 700, 800, 1000 };
 	}
 }
