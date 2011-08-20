@@ -14,7 +14,6 @@ release in marketplace
 
 current focus
 =============
-- reindent devicelist activity
 - configure DebugFlagManager from .properties file
 - bring back preparegps -> rename to WaitForGPS
 - DeviceListActivity improvement
