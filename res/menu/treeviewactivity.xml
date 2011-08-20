@@ -30,8 +30,6 @@
 		android:visible="false" android:title="@string/menu_graph" />
 	<item android:id="@+id/menu_map" android:icon="@android:drawable/ic_menu_mapmode"
 		android:visible="false" android:title="@string/menu_map" />
-	<item android:id="@+id/menu_preparegps" android:icon="@drawable/connect"
-		android:title="@string/menu_preparegps" android:visible="false"/>
 	<item android:id="@+id/menu_fileuploader" android:icon="@drawable/connect"
 		android:title="@string/menu_fileuploader" />
 	<item android:id="@+id/menu_debugtools" android:title="@string/menu_debugtools"

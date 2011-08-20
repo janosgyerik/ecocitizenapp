@@ -21,10 +21,10 @@ import android.widget.TextView;
  * 2. geo fix -82.411629 28.054553
  *            ^^^ LONG   ^^^ LAT
  */
-public class PrepareGpsActivity extends Activity implements LocationListener {
+public class WaitForGpsActivity extends Activity implements LocationListener {
 	// Debugging
-	private static final String TAG = "PrepareGpsActivity";
-	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(PrepareGpsActivity.class);
+	private static final String TAG = "WaitForGpsActivity";
+	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(WaitForGpsActivity.class);
 
 	private static final String PROVIDER = LocationManager.GPS_PROVIDER;
 	private static final int    MIN_TIME = 1000;
@@ -42,7 +42,7 @@ public class PrepareGpsActivity extends Activity implements LocationListener {
 		if (D) Log.d(TAG, "+++ ON CREATE +++");
 
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-		setContentView(R.layout.preparegps);
+		setContentView(R.layout.waitforgps);
 
 		mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 

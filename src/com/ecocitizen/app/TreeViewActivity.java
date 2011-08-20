@@ -169,9 +169,6 @@ public class TreeViewActivity extends DeviceManagerClient {
 				}
 			}).show();
 			return true;
-		case R.id.menu_preparegps:
-			startActivity(new Intent(this, PrepareGpsActivity.class));
-			return true;
 		case R.id.menu_fileuploader:
 			startActivity(new Intent(this, FileUploaderActivity.class));
 			return true;

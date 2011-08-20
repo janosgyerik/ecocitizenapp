@@ -62,7 +62,7 @@
 			android:label="@string/debugtools_activity">
 		</activity>
         
-		<activity android:name=".PrepareGpsActivity" android:label="@string/preparegps_activity"
+		<activity android:name=".WaitForGpsActivity" android:label="@string/waitforgps_activity"
 		    android:theme="@android:style/Theme.Dialog">
 		</activity>
 		
