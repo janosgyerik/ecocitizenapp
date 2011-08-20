@@ -18,10 +18,8 @@ current focus
 - bug: device name is not shown when changing applications
 	- maybe need to get the list of devices from the device manager service
 	? use sensor id instead of name in DeviceManagerService
-- bug: disconnect sensor and endsession seem to be sent twice to logplayer. After the fix, also clean up endSession implementation in FileSaverService
 - DeviceListActivity improvement
-	- make logfile device items as wide as bt ones, with two lines
-	- give descriptive names to logfile resources
+	- make logfile device items as tall as bt ones, with two lines
 	- show logfile devices only in 'Debug mode'
 - bug: it seems two GpsLocationListeners are created, why?
 - bug: why is this:

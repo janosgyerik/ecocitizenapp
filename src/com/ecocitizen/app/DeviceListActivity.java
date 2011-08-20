@@ -79,9 +79,9 @@ public class DeviceListActivity extends Activity {
 
         // Setup the logfile devices list
         mLogfileDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.device_name);
-        mLogfileDevicesArrayAdapter.add(getString(R.string.logfile1));
-        mLogfileDevicesArrayAdapter.add(getString(R.string.logfile2));
-        mLogfileDevicesArrayAdapter.add(getString(R.string.logfile3));
+        mLogfileDevicesArrayAdapter.add(getString(R.string.logfile_co2sample1));
+        mLogfileDevicesArrayAdapter.add(getString(R.string.logfile_co2sample2));
+        mLogfileDevicesArrayAdapter.add(getString(R.string.logfile_pollutionsample1));
         ListView logfileListView = (ListView) findViewById(R.id.logfile_devices);
         logfileListView.setAdapter(mLogfileDevicesArrayAdapter);
         logfileListView.setOnItemClickListener(mLogfileDeviceClickListener);

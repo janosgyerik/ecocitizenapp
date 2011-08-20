@@ -35,9 +35,9 @@
     <string name="button_scan">Scan for devices</string>
     
     <string name="title_logfile_devices">Logfile Devices</string>
-    <string name="logfile1">CO2Sample1.txt</string>
-    <string name="logfile2">CO2Sample2.txt</string>
-    <string name="logfile3">PollutionSample1.txt</string>
+    <string name="logfile_co2sample1">CO2Sample1.txt</string>
+    <string name="logfile_co2sample2">CO2Sample2.txt</string>
+    <string name="logfile_pollutionsample1">PollutionSample1.txt</string>
 
     <!-- Options Menu -->
     <string name="menu_home">Home</string>
