@@ -3,3 +3,4 @@ bin
 gen
 ./local.properties
 res/values/props.xml
+src/com/ecocitizen/common/DebugFlagManager.properties

@@ -14,7 +14,7 @@ release in marketplace
 
 current focus
 =============
-- configure DebugFlagManager from .properties file
+- find debug logs that should have been captured by if (D) { ... }
 - bring back preparegps -> rename to WaitForGPS
 - DeviceListActivity improvement
 	- make logfile device items as tall as bt ones, with two lines
@@ -32,6 +32,7 @@ current focus
 - clean up variable visibility in .app
 - add class diagram for .app
 - add class diagrams to wiki with additional explanatory text
+- bug: after entering comment, the keyboard lingers too long and the tree in the tree view looks squeezed and ugly
 
 
 support for zephyr
