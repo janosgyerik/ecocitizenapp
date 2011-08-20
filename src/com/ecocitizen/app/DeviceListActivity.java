@@ -19,6 +19,8 @@ package com.ecocitizen.app;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.ecocitizen.common.DebugFlagManager;
+
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -47,7 +49,7 @@ import backport.android.bluetooth.BluetoothDevice;
 public class DeviceListActivity extends Activity {
     // Debugging
     private static final String TAG = "DeviceListActivity";
-    private static final boolean D = true;
+    private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(DeviceListActivity.class);
 
     // Return Intent extra
     public static String EXTRA_BLUETOOTH_MAC = "bt_mac";

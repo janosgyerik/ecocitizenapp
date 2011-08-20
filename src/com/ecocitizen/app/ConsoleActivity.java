@@ -19,6 +19,7 @@
 
 package com.ecocitizen.app;
 
+import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
 
 import android.os.Bundle;
@@ -31,7 +32,7 @@ import android.widget.ListView;
 public class ConsoleActivity extends SimpleDeviceManagerClient {
 	// Debugging
 	private static final String TAG = "ConsoleActivity";
-	private static final boolean D = true;
+	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(ConsoleActivity.class);
 
 	// Layout Views
 	private ListView mSentencesView;

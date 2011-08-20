@@ -48,6 +48,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.ecocitizen.app.TreeViewActivity;
+import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.DeviceManagerServiceCallback;
 import com.ecocitizen.common.MessageType;
 import com.ecocitizen.common.bundlewrapper.NoteBundleWrapper;
@@ -56,7 +57,7 @@ import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
 public class SensorMapUploaderService extends Service {
 	// Debugging
 	private static final String TAG = "SensorMapUploaderService";
-	private static final boolean D = true;
+	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(SensorMapUploaderService.class);
 
 	private boolean shouldStartSession = true;
 

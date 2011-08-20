@@ -33,6 +33,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
 import com.ecocitizen.parser.PsenSentenceParser;
 import com.ecocitizen.parser.TemperatureSentenceParser;
@@ -40,7 +41,7 @@ import com.ecocitizen.parser.TemperatureSentenceParser;
 public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 	// Debugging
 	private static final String TAG = "TabularViewPlusActivity";
-	private static final boolean D = true;
+	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(TabularViewPlusActivity.class);
 
 	// Layout Views
 	private TableLayout mSentencesTbl;

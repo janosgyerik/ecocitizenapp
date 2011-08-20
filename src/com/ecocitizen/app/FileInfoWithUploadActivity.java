@@ -21,6 +21,8 @@ package com.ecocitizen.app;
 
 import java.io.File;
 
+import com.ecocitizen.common.DebugFlagManager;
+
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -37,7 +39,7 @@ import android.widget.Toast;
 public class FileInfoWithUploadActivity extends FileInfoActivity {
 	// Debugging
 	private static final String TAG = "FileInfoWithUploadActivity";
-	private static final boolean D = true;
+	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(FileInfoWithUploadActivity.class);
 	
 	// Members
 	private Button mBtnUpload;

@@ -23,6 +23,8 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.ecocitizen.common.DebugFlagManager;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
@@ -38,7 +40,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class FileRemoverActivity extends FileManagerActivity {
 	// Debugging
 	private static final String TAG = "FileRemoverActivity";
-	private static final boolean D = true;
+	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(FileRemoverActivity.class);
 	
 	@Override
 	protected int getLayoutResID() {

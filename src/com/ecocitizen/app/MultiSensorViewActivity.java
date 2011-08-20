@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
 import com.ecocitizen.parser.CO2SentenceParser;
 import com.ecocitizen.parser.COxSentenceParser;
@@ -38,7 +39,7 @@ import com.ecocitizen.parser.PsenSentenceParser;
 public class MultiSensorViewActivity extends SimpleDeviceManagerClient {
 	// Debugging
 	private static final String TAG = "MultiSensorViewActivity";
-	private static final boolean D = true;
+	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(MultiSensorViewActivity.class);
 
 	private static DecimalFormat valFormat = new DecimalFormat("###.#");
 

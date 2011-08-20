@@ -39,13 +39,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
 import com.ecocitizen.parser.CO2SentenceParser;
 
 public class TreeViewActivity extends DeviceManagerClient {
 	// Debugging
 	private static final String TAG = "TreeViewActivity";
-	private static final boolean D = true;
+	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(TreeViewActivity.class);
 
 	// Layout Views
 	private TextView mCO2Val_1View;

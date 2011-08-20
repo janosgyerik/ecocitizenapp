@@ -34,13 +34,15 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import com.ecocitizen.common.DebugFlagManager;
+
 import android.content.SharedPreferences;
 import android.util.Log;
 
 public class FileUploader {
 	// Debugging
 	private static final String TAG = "FileUploader";
-	private static final boolean D = true;
+	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(FileUploader.class);
 
 	// Constants
 

@@ -8,19 +8,21 @@ when connected
 
 release in marketplace
 ======================
-- add a property to switch debugging on/off - perhaps in props.xml?
 - complete support for zephyr
 - follow through the steps in android docs
 
 
 current focus
 =============
-- bug: device name is not shown when changing applications
-	- maybe need to get the list of devices from the device manager service
-	? use sensor id instead of name in DeviceManagerService
+- reindent devicelist activity
+- configure DebugFlagManager from .properties file
+- bring back preparegps -> rename to WaitForGPS
 - DeviceListActivity improvement
 	- make logfile device items as tall as bt ones, with two lines
 	- show logfile devices only in 'Debug mode'
+- bug: device name is not shown when changing applications
+	- maybe need to get the list of devices from the device manager service
+	? use sensor id instead of name in DeviceManagerService
 - bug: it seems two GpsLocationListeners are created, why?
 - bug: why is this:
     D/DeviceManagerClient( 2764): handleMessage 13 CO2Sample2.txt

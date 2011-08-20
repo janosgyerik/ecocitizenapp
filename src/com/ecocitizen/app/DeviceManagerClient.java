@@ -42,6 +42,7 @@ import android.widget.Toast;
 import backport.android.bluetooth.BluetoothAdapter;
 import backport.android.bluetooth.BluetoothDevice;
 
+import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.DeviceManagerServiceCallback;
 import com.ecocitizen.common.MessageType;
 import com.ecocitizen.common.bundlewrapper.NoteBundleWrapper;
@@ -54,7 +55,7 @@ import com.ecocitizen.service.ISensorMapUploaderService;
 public abstract class DeviceManagerClient extends Activity {
 	// Debugging
 	private static final String TAG = "DeviceManagerClient";
-	private static final boolean D = true;
+	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(DeviceManagerClient.class);
 
 	// Intent request codes
 	private static final int REQUEST_CONNECT_DEVICE = 1;

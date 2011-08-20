@@ -23,6 +23,8 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.ecocitizen.common.DebugFlagManager;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -41,7 +43,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class FileUploaderActivity extends FileManagerActivity {
 	// Debugging
 	private static final String TAG = "FileUploaderActivity";
-	private static final boolean D = true;
+	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(FileUploaderActivity.class);
 	
 	enum StorageType {
 		INTERNAL,

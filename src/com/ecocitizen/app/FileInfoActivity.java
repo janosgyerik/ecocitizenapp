@@ -29,6 +29,8 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.ecocitizen.common.DebugFlagManager;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,7 +41,7 @@ import android.widget.TextView;
 public class FileInfoActivity extends Activity {
 	// Debugging
 	private static final String TAG = "FileInfoActivity";
-	private static final boolean D = true;
+	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(FileInfoActivity.class);
 	
 	// Members
 	protected File mFile;

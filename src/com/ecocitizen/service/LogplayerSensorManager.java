@@ -24,13 +24,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import com.ecocitizen.common.DebugFlagManager;
+
 import android.os.Handler;
 import android.util.Log;
 
 public class LogplayerSensorManager extends SensorManager {
 	// Debugging
 	private static final String TAG = "LogplayerService";
-	private static final boolean D = true;
+	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(LogplayerSensorManager.class);
 
 	// Member fields
 	private InputStream mmInStream = null;
