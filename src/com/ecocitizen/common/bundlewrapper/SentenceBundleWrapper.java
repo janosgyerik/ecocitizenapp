@@ -7,11 +7,13 @@ import android.os.Bundle;
 
 public class SentenceBundleWrapper extends AbstractBundleWrapper {
 	
-	private final static String BB_SENSOR_ID = "1";
-	private final static String BB_DTZ = "2";
-	private final static String BB_SENTENCE = "3";
-	private final static String BB_LOCATION = "4";
+	private final static String BB_SEQUENCE_NUMBER = "1";
+	private final static String BB_SENSOR_ID = "2";
+	private final static String BB_DTZ = "3";
+	private final static String BB_SENTENCE = "4";
+	private final static String BB_LOCATION = "5";
 	
+	private long sequenceNumber;
 	private String sensorID;
 	private String dtz;
 	private String sentenceLine;
@@ -26,6 +28,7 @@ public class SentenceBundleWrapper extends AbstractBundleWrapper {
 	public SentenceBundleWrapper(Bundle bundle) {
 		super(bundle);
 		
+		sequenceNumber = bundle.getLong(BB_SEQUENCE_NUMBER);
 		sensorID = bundle.getString(BB_SENSOR_ID);
 		dtz = bundle.getString(BB_DTZ);
 		
@@ -40,15 +43,20 @@ public class SentenceBundleWrapper extends AbstractBundleWrapper {
 			new LocationBundleWrapper(getBundle().getBundle(BB_LOCATION));
 	}
 
-	public static Bundle makeBundle(String sensorId, String sentence,
+	public static Bundle makeBundle(long sequenceNumber, String sensorId, String sentence,
 			Bundle locationBundle) {
 		Bundle bundle = new Bundle();
+		bundle.putLong(BB_SEQUENCE_NUMBER, sequenceNumber);
 		bundle.putString(BB_SENSOR_ID, sensorId);
 		bundle.putString(BB_DTZ, getCurrentDTZ());
 		bundle.putString(BB_SENTENCE, sentence);
 		bundle.putParcelable(BB_LOCATION, locationBundle);
 		
 		return bundle;
+	}
+
+	public long getSequenceNumber() {
+		return sequenceNumber;
 	}
 
 	public String getSensorID() {

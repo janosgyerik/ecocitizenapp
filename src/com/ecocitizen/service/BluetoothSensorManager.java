@@ -225,11 +225,13 @@ public class BluetoothSensorManager extends SensorManager {
 			
 			stop = false;
 
+			long sequenceNumber = 0;
+			
 			while (! stop) {
 				try {
 					String line = reader.readLine();
 					if (line != null) {
-						sendSentenceLineMsg(line);
+						sendSentenceLineMsg(++sequenceNumber, line);
 					}
 				} catch (IOException e) {
 					Log.e(TAG, "disconnected", e);

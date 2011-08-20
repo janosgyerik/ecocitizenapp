@@ -15,11 +15,9 @@ release in marketplace
 
 current focus
 =============
-- bug: values seem to multiply when switching from tree to multi and back
 - bug: device name is not shown when changing applications
 	- maybe need to get the list of devices from the device manager service
 	? use sensor id instead of name in DeviceManagerService
-- bug: list of connected device names is not updated after resume
 - bug: disconnect sensor and endsession seem to be sent twice to logplayer. After the fix, also clean up endSession implementation in FileSaverService
 - DeviceListActivity improvement
 	- make logfile device items as wide as bt ones, with two lines

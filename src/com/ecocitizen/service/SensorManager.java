@@ -77,8 +77,8 @@ abstract public class SensorManager {
 	 * @param sentence
 	 * @return
 	 */
-	private Bundle getSensorDataBundle(String sentence) {
-		return SentenceBundleWrapper.makeBundle(mSensorId, sentence, mGpsLocationListener.getLastLocationBundle());
+	private Bundle getSensorDataBundle(long sequenceNumber, String sentence) {
+		return SentenceBundleWrapper.makeBundle(sequenceNumber, mSensorId, sentence, mGpsLocationListener.getLastLocationBundle());
 	}
 	
 	/**
@@ -95,8 +95,8 @@ abstract public class SensorManager {
 		}
 	}
 	
-	void sendSentenceLineMsg(String line) {
-		Bundle bundle = getSensorDataBundle(line);
+	void sendSentenceLineMsg(long sequenceNumber, String line) {
+		Bundle bundle = getSensorDataBundle(sequenceNumber, line);
 		mHandler.obtainMessage(MessageType.SENTENCE, bundle).sendToTarget();
 	}
 

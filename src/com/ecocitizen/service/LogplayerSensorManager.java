@@ -88,13 +88,15 @@ public class LogplayerSensorManager extends SensorManager {
 			Log.i(TAG, "BEGIN mConnectedThread");
 
 			BufferedReader reader = new BufferedReader(new InputStreamReader(mmInStream));
+			
+			long sequenceNumber = 0;
 
 			while (! stop) {
 				try {
 					String line = reader.readLine();
 					if (line != null) {
 						hasReadAnything = true;
-						sendSentenceLineMsg(line);
+						sendSentenceLineMsg(++sequenceNumber, line);
 						try {
 							Thread.sleep(mMessageInterval);
 						}
