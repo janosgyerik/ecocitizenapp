@@ -25,7 +25,8 @@
 		</service>
 
 		<activity android:name=".TreeViewActivity"
-			android:screenOrientation="nosensor" android:label="@string/app_name">
+			android:screenOrientation="nosensor" 
+			android:label="@string/app_name">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
@@ -47,14 +48,18 @@
 		<activity android:name=".TabularViewPlusActivity" android:label="@string/tabularviewplus_activity">
 		</activity>
 		
-		<activity android:name=".MultiSensorViewActivity" android:label="@string/multisensorview_activity">
+		<activity android:name=".MultiSensorViewActivity"
+			android:screenOrientation="nosensor"  
+			android:label="@string/multisensorview_activity">
 		</activity>
 		
 		<activity android:name=".FileRemoverActivity" android:label="@string/fileremover_activity">
 		</activity>
 		
-		<activity android:name=".DebugToolsActivity" android:label="@string/debugtools_activity"
-		    android:theme="@android:style/Theme.NoTitleBar">
+		<activity android:name=".DebugToolsActivity" 
+		    android:screenOrientation="nosensor" 
+		    android:theme="@android:style/Theme.NoTitleBar"
+			android:label="@string/debugtools_activity">
 		</activity>
         
 		<activity android:name=".PrepareGpsActivity" android:label="@string/preparegps_activity"

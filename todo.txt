@@ -3,6 +3,7 @@ when connected
 - record some sample data file with zephyr
 - get a copy of the zephyr docs
 	- confirm the protocol details (basically the language of Zephyr)
+- upgrade an android to newer version
 
 
 release in marketplace
@@ -14,48 +15,26 @@ release in marketplace
 
 current focus
 =============
-- bug: disconnect sensor and endsession seem be sent twice to logplayer. After the fix, also clean up endSession implementation in FileSaverService
+- bug: pollution sample causes black tree
+- bug: device name is not shown when changing applications
+	- maybe need to get the list of devices from the device manager service
+	? use sensor id instead of name in DeviceManagerService
+- bug: list of connected device names is not updated after resume
+- bug: disconnect sensor and endsession seem to be sent twice to logplayer. After the fix, also clean up endSession implementation in FileSaverService
 - DeviceListActivity improvement
 	- make logfile device items as wide as bt ones, with two lines
 	- give descriptive names to logfile resources
 	- show logfile devices only in 'Debug mode'
-- ??: it seems two GpsLocationListeners are created, why?
+- bug: it seems two GpsLocationListeners are created, why?
 - bug: why is this:
     D/DeviceManagerClient( 2764): handleMessage 13 CO2Sample2.txt
     D/DeviceManagerClient( 2764): handleMessage 15 null
     D/DeviceManagerClient( 2764): handleMessage 13 CO2Sample2.txt
     D/DeviceManagerClient( 2764): handleMessage 15 null
-- bug: list of connected device names is not updated after resume
 - remove unique-ish ids from layout xml, they do not need to be so unique
 - clean up variable visibility in .app
 - add class diagram for .app
 - add class diagrams to wiki with additional explanatory text
-
-
-clean up the navigation and the menus
-=====================================
-- add small connect and disconnect buttons on data view screens
-	treeview
-	multisensor view
-	debug tools
-- make the menu uniform across data view screens
-	treeview
-	multisensor view
-	debug tools
-- remove connect and disconnect buttons from the menu
-- bug: proper handling for title and custom title in all derived classes of DeviceManagerClient 
-	what are ViewStubs and can they help here?
-- bug: connected device names should be loaded when connecting to device manager
-	- may be good to be tolerant to disconnect of unknown devices
-
-
-support for multiple devices
-============================
-- when clicking disconnect sensor
-	- if there is only one connected sensor, disconnect it
-	- if there are many connected sensors 
-		pop up a dialog and ask which one to disconnect
-		option to disconnect all
 
 
 support for zephyr
@@ -76,10 +55,8 @@ critical for next experiment
 	! an alternative solution is to use an alternative high speed uploader class
 
 
-next
-====
-- bug to redmine: username etc not updated in SettingsActivity after reset
-	probably implementing OnSharedPrefsChanged might do the trick
+optimization
+============
 - make it possible to cancel upload in FileInfoWithUploadActivity
 	tip: the activity is launched from FileUploaderActivity
 	tip: make ProgressDialog cancelable
@@ -96,12 +73,7 @@ next
 - fix hardcoded values in debugtools
 ? bug: android uploader gets killed
 ? bug: java.net.UnknownHostException
-
-
-optimization
-============
 - AddNote activity: override onSaveInstanceState method to prevent losing text when another application (like a phone call) comes to the foreground
-- use sensor id instead of name in DeviceManagerService
 - if and only if performance is crucial, follow the 'Designing for Performance' article in Dev Guide
 - try to rewrite nested linearlayouts with relativelayout
 - consider using ViewStubs
@@ -117,12 +89,6 @@ file uploader "nice" implementation
 - Close button cancels upload
 + show success/failure on completion
 + show/hide buttons on success/failure appropriately
-
-
-minor improvements
-==================
-- fileuploader: nicer progress indicator: full screen, modal + cancel
-- fileuploader: progress indicator while uploading single file
 
 
 nice to have
