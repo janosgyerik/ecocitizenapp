@@ -124,4 +124,12 @@
         <item name="android:typeface">monospace</item>
         <item name="android:padding">3dip</item>
     </style>
+    
+    <style name="list_title" parent="@android:style/TextAppearance.Small">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">#666</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:paddingLeft">5dp</item>
+    </style>
 </resources>

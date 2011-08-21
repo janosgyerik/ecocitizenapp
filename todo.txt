@@ -15,7 +15,6 @@ release in marketplace
 current focus
 =============
 - DeviceListActivity improvement
-	- make logfile device items as tall as bt ones, with two lines
 	- show logfile devices only in 'Debug mode'
 - bug: device name is not shown when changing applications
 	- maybe need to get the list of devices from the device manager service
@@ -26,9 +25,9 @@ current focus
     D/DeviceManagerClient( 2764): handleMessage 15 null
     D/DeviceManagerClient( 2764): handleMessage 13 CO2Sample2.txt
     D/DeviceManagerClient( 2764): handleMessage 15 null
-- remove unique-ish ids from layout xml, they do not need to be so unique
 - clean up variable visibility in .app
 - add class diagram for .app
+- update class diagram for .service
 - add class diagrams to wiki with additional explanatory text
 - bug: after entering comment, the keyboard lingers too long and the tree in the tree view looks squeezed and ugly
 

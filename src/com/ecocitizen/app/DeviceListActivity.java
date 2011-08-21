@@ -80,13 +80,16 @@ public class DeviceListActivity extends Activity {
 		scanButton = (Button) findViewById(R.id.button_scan);
 
 		// Setup the logfile devices list
-		mLogfileDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.device_name);
+		mLogfileDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.logfile_name);
 		mLogfileDevicesArrayAdapter.add(getString(R.string.logfile_co2sample1));
 		mLogfileDevicesArrayAdapter.add(getString(R.string.logfile_co2sample2));
 		mLogfileDevicesArrayAdapter.add(getString(R.string.logfile_pollutionsample1));
 		ListView logfileListView = (ListView) findViewById(R.id.logfile_devices);
 		logfileListView.setAdapter(mLogfileDevicesArrayAdapter);
 		logfileListView.setOnItemClickListener(mLogfileDeviceClickListener);
+
+		findViewById(R.id.title_logfile_devices).setVisibility(View.VISIBLE);
+		findViewById(R.id.logfile_devices).setVisibility(View.VISIBLE);
 
 		// Get the local Bluetooth adapter
 		mBtAdapter = BluetoothAdapter.getDefaultAdapter();
