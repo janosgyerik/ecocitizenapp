@@ -75,9 +75,7 @@ abstract class FileManagerActivity extends Activity {
 			configureArrayAdapter(internalFilesArrayAdapter, internalFilenames);
 			ListView internalFilesListView = (ListView)findViewById(R.id.internal_storage);
 			internalFilesListView.setAdapter(internalFilesArrayAdapter);
-		}
-		else {
-			findViewById(R.id.internal_storage_section).setVisibility(View.GONE);
+			findViewById(R.id.internal_storage_section).setVisibility(View.VISIBLE);
 		}
 
 		if (!externalFilenames.isEmpty()) {
@@ -85,9 +83,7 @@ abstract class FileManagerActivity extends Activity {
 			configureArrayAdapter(externalFilesArrayAdapter, externalFilenames);
 			ListView externalFilesListView = (ListView)findViewById(R.id.external_storage);
 			externalFilesListView.setAdapter(externalFilesArrayAdapter);
-		}
-		else {
-			findViewById(R.id.external_storage_section).setVisibility(View.GONE);
+			findViewById(R.id.external_storage_section).setVisibility(View.VISIBLE);
 		}
 	}
 	
