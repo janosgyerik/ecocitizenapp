@@ -88,8 +88,7 @@ public class DeviceListActivity extends Activity {
 		logfileListView.setAdapter(mLogfileDevicesArrayAdapter);
 		logfileListView.setOnItemClickListener(mLogfileDeviceClickListener);
 
-		findViewById(R.id.title_logfile_devices).setVisibility(View.VISIBLE);
-		findViewById(R.id.logfile_devices).setVisibility(View.VISIBLE);
+		findViewById(R.id.logfile_devices_section).setVisibility(View.VISIBLE);
 
 		// Get the local Bluetooth adapter
 		mBtAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -131,8 +130,7 @@ public class DeviceListActivity extends Activity {
 
 			// If there are paired devices, add each one to the ArrayAdapter
 			if (pairedDevices.size() > 0) {
-				findViewById(R.id.title_paired_devices).setVisibility(View.VISIBLE);
-				findViewById(R.id.paired_devices).setVisibility(View.VISIBLE);
+				findViewById(R.id.paired_devices_section).setVisibility(View.VISIBLE);
 				for (BluetoothDevice device : pairedDevices) {
 					mPairedDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
 				}
@@ -235,9 +233,7 @@ public class DeviceListActivity extends Activity {
 				BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 				// If it's already paired, skip it, because it's been listed already
 				if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
-					// Turn on sub-title for new devices
-					findViewById(R.id.title_new_devices).setVisibility(View.VISIBLE);
-					findViewById(R.id.new_devices).setVisibility(View.VISIBLE);
+					findViewById(R.id.new_devices_section).setVisibility(View.VISIBLE);
 
 					String address = device.getAddress();
 					if (! mNewDevicesSet.contains(address)) {
@@ -245,13 +241,11 @@ public class DeviceListActivity extends Activity {
 						mNewDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
 					}
 				}
-				// When discovery is finished, change the Activity title
 			} else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
 				setProgressBarIndeterminateVisibility(false);
 				setTitle(R.string.select_device);
 				if (mNewDevicesSet.isEmpty()) {
-					// Turn on sub-title for new devices
-					findViewById(R.id.title_new_devices).setVisibility(View.VISIBLE);
+					findViewById(R.id.new_devices_section).setVisibility(View.VISIBLE);
 					String noDevices = getResources().getText(R.string.none_found).toString();
 					mNewDevicesArrayAdapter.add(noDevices);
 				}
