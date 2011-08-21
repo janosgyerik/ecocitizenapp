@@ -132,4 +132,18 @@
         <item name="android:textColor">#fff</item>
         <item name="android:paddingLeft">5dp</item>
     </style>
+    
+    <style name="weighted_list_section">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:visibility">gone</item>
+    </style>
+    
+    <style name="fill_width">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+	</style>
+	
 </resources>

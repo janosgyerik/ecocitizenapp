@@ -18,67 +18,27 @@
     along with EcoCitizen.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-    <LinearLayout
-    	android:id="@+id/logfile_devices_section"
-    	android:layout_width="fill_parent"
-    	android:layout_height="0dp"
-    	android:layout_weight="1"
-    	android:orientation="vertical"
-        android:visibility="gone"
-    	>
-	    <TextView
-	    	style="@style/list_title"
-	        android:text="@string/title_logfile_devices"
-	    />
-	    <ListView android:id="@+id/logfile_devices"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	    />
-   	</LinearLayout>
-   	
-    <LinearLayout
-    	android:id="@+id/paired_devices_section"
-    	android:layout_width="fill_parent"
-    	android:layout_height="0dp"
-    	android:layout_weight="1"
-    	android:orientation="vertical"
-        android:visibility="gone"
-    	>
-	    <TextView
-	    	style="@style/list_title"
-	        android:text="@string/title_paired_devices"
-	    />
-	    <ListView android:id="@+id/paired_devices"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	    />
-   	</LinearLayout>
-   	
-    <LinearLayout
-    	android:id="@+id/new_devices_section"
-    	android:layout_width="fill_parent"
-    	android:layout_height="0dp"
-    	android:layout_weight="1"
-    	android:orientation="vertical"
-        android:visibility="gone"
-    	>
-	    <TextView 
-	    	style="@style/list_title"
-	        android:text="@string/title_other_devices"
-	    />
-	    <ListView android:id="@+id/new_devices"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	    />
-   	</LinearLayout>
-	    
-    <Button android:id="@+id/button_scan"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/button_scan"
-    />
+	android:orientation="vertical" 
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	
+	<LinearLayout android:id="@+id/logfile_devices_section"
+		style="@style/weighted_list_section">
+		<TextView android:text="@string/title_logfile_devices" style="@style/list_title" />
+		<ListView android:id="@+id/logfile_devices" style="@style/fill_width" />
+	</LinearLayout>
+
+	<LinearLayout android:id="@+id/paired_devices_section"
+		style="@style/weighted_list_section">
+		<TextView android:text="@string/title_paired_devices" style="@style/list_title" />
+		<ListView android:id="@+id/paired_devices" style="@style/fill_width" />
+	</LinearLayout>
+
+	<LinearLayout android:id="@+id/new_devices_section" style="@style/weighted_list_section">
+		<TextView android:text="@string/title_other_devices" style="@style/list_title" />
+		<ListView android:id="@+id/new_devices" style="@style/fill_width" />
+	</LinearLayout>
+
+	<Button android:id="@+id/button_scan" style="@style/fill_width"
+		android:text="@string/button_scan" />
 </LinearLayout>
