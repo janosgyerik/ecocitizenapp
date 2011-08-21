@@ -108,18 +108,18 @@
     <Button android:id="@+id/btn_connect_device"
 		android:text="@string/btn_connect_device"
     	android:stackFromBottom="true"
-		style="@style/btn"
+		style="@style/wideButton"
 		android:layout_gravity="center"
     />
     <Button android:id="@+id/btn_disconnect_device"
 		android:text="@string/btn_disconnect_device"
     	android:stackFromBottom="true"
-		style="@style/btn"
+		style="@style/wideButton"
     />
     <Button android:id="@+id/btn_test"
 		android:text="Fire Test"
     	android:stackFromBottom="true"
     	android:visibility="gone"
-		style="@style/btn"
+		style="@style/wideButton"
     />
 </LinearLayout>

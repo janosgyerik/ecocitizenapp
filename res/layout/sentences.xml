@@ -24,11 +24,11 @@
 		android:stackFromBottom="true" android:transcriptMode="alwaysScroll"
 		android:layout_weight="1" android:layout_height="wrap_content" />
 	<Button android:id="@+id/btn_connect_device" android:text="@string/btn_connect_device"
-		android:stackFromBottom="true" style="@style/btn" />
+		android:stackFromBottom="true" style="@style/wideButton" />
 	<Button android:id="@+id/btn_disconnect_device" android:text="@string/btn_disconnect_device"
-		android:stackFromBottom="true" style="@style/btn" />
+		android:stackFromBottom="true" style="@style/wideButton" />
 	<Button android:id="@+id/btn_text_mode" android:text="@string/btn_text_mode"
-		android:stackFromBottom="true" style="@style/btn" />
+		android:stackFromBottom="true" style="@style/wideButton" />
 	<Button android:id="@+id/btn_hexa_mode" android:text="@string/btn_hexa_mode"
-		android:stackFromBottom="true" style="@style/btn" />
+		android:stackFromBottom="true" style="@style/wideButton" />
 </LinearLayout>

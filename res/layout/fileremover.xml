@@ -45,9 +45,7 @@
 	    />
 	    <Button android:id="@+id/btn_delete_all_internal"
 	        android:text="@string/btn_delete_all"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        style="@style/btn"
+	        style="@style/wideButton"
 	        android:visibility="gone"
 	    />
     </LinearLayout>
@@ -75,9 +73,7 @@
 	    />
 	    <Button android:id="@+id/btn_delete_all_external"
 	        android:text="@string/btn_delete_all"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        style="@style/btn"
+	        style="@style/wideButton"
 	        android:visibility="gone"
 	    />
 	</LinearLayout>
@@ -85,6 +81,6 @@
 	<Button 
 		android:id="@+id/btn_close" 
 		android:text="@string/btn_close"
-		style="@style/btn" 
+		style="@style/wideButton" 
 		/>
 </LinearLayout>

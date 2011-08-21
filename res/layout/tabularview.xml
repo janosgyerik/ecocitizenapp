@@ -68,7 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true" >
-       <Button android:id="@+id/btn_connect_device" android:text="@string/btn_connect_device" android:stackFromBottom="true" style="@style/btn"/>
-       <Button android:id="@+id/btn_disconnect_device" android:text="@string/btn_disconnect_device" android:stackFromBottom="true" style="@style/btn"/>
+       <Button android:id="@+id/btn_connect_device" android:text="@string/btn_connect_device" android:stackFromBottom="true" style="@style/wideButton"/>
+       <Button android:id="@+id/btn_disconnect_device" android:text="@string/btn_disconnect_device" android:stackFromBottom="true" style="@style/wideButton"/>
     </RelativeLayout>
 </RelativeLayout>

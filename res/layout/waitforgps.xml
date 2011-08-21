@@ -44,9 +44,9 @@
 	</TableRow>
     </TableLayout>
 	<Button android:id="@+id/btn_cancel" android:text="@string/btn_cancel"
-		style="@style/btn" />
+		style="@style/wideButton" />
 	<Button android:id="@+id/btn_scan_again" android:text="@string/btn_scan_again"
-		android:visibility="gone" style="@style/btn" />
+		android:visibility="gone" style="@style/wideButton" />
 	<Button android:id="@+id/btn_close" android:text="@string/btn_close"
-		android:visibility="gone" style="@style/btn" />
+		android:visibility="gone" style="@style/wideButton" />
 </LinearLayout>

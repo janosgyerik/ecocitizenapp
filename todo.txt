@@ -30,6 +30,7 @@ current focus
 - update class diagram for .service
 - add class diagrams to wiki with additional explanatory text
 - bug: after entering comment, the keyboard lingers too long and the tree in the tree view looks squeezed and ugly
+- clean up style
 
 
 support for zephyr

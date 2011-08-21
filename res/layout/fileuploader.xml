@@ -30,7 +30,7 @@
 		<ListView android:id="@+id/internal_storage" style="@style/fill_width" />
 		<Button android:id="@+id/btn_upload_all_internal" 
 			android:visibility="gone"
-			style="@style/btn"
+			style="@style/wideButton"
 			/>
     </LinearLayout>
 
@@ -41,10 +41,10 @@
 		<ListView android:id="@+id/external_storage" style="@style/fill_width" />
 		<Button android:id="@+id/btn_upload_all_external" 
 			android:visibility="gone"
-			style="@style/btn"
+			style="@style/wideButton"
 			/>
 	</LinearLayout>
 
 	<Button android:id="@+id/btn_close" android:text="@string/btn_close"
-		style="@style/fill_width" />
+		style="@style/wideButton" />
 </LinearLayout>

@@ -24,8 +24,8 @@
 	<LinearLayout android:orientation="horizontal"
 		android:layout_width="fill_parent" android:layout_height="wrap_content">
 		<Button android:id="@+id/btn_cancel" android:text="@string/btn_cancel"
-			style="@style/horizontalButton" />
+			style="@style/inlineWeightedButton" />
 		<Button android:id="@+id/btn_addnote" android:text="@string/btn_addnote"
-			style="@style/horizontalButton" />
+			style="@style/inlineWeightedButton" />
 	</LinearLayout>
 </LinearLayout>

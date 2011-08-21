@@ -33,26 +33,26 @@
     <Button android:id="@+id/btn_connect_device"
 		android:text="@string/btn_connect_device"
     	android:stackFromBottom="true"
-		style="@style/btn"
+		style="@style/wideButton"
     />
     <Button android:id="@+id/btn_disconnect_device"
 		android:text="@string/btn_disconnect_device"
     	android:stackFromBottom="true"
-		style="@style/btn"
+		style="@style/wideButton"
     />
     <Button android:id="@+id/btn_connect_dm"
 		android:text="@string/btn_connect_dm"
     	android:stackFromBottom="true"
-		style="@style/btn"
+		style="@style/wideButton"
     />
     <Button android:id="@+id/btn_disconnect_dm"
 		android:text="@string/btn_disconnect_dm"
     	android:stackFromBottom="true"
-		style="@style/btn"
+		style="@style/wideButton"
     />
     <Button android:id="@+id/btn_kill_dm"
 		android:text="@string/btn_kill_dm"
     	android:stackFromBottom="true"
-		style="@style/btn"
+		style="@style/wideButton"
     />
 </LinearLayout>
