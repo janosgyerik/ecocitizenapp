@@ -1,8 +1,5 @@
 when connected
 ==============
-- record some sample data file with zephyr
-- get a copy of the zephyr docs
-	- confirm the protocol details (basically the language of Zephyr)
 - upgrade an android to newer version
 
 
@@ -35,8 +32,6 @@ current focus
 
 support for zephyr
 ==================
-- record some sample binary data from zephyr
-- analyze the data and the protocol docs, figure out how to formulate sentences
 - create the framework of appropriate drivers to use in bluetooth readers
 
 
