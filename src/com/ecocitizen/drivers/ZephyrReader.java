@@ -11,7 +11,7 @@ import com.ecocitizen.common.DebugFlagManager;
 public class ZephyrReader implements DeviceReader {
 	// Debugging
 	private static final String TAG = "ZephyrReader";
-	private static final boolean D = true; //DebugFlagManager.getInstance().getDebugFlag(ZephyrReader.class);
+	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(ZephyrReader.class);
 
 	private final Reader reader;
 
@@ -26,8 +26,6 @@ public class ZephyrReader implements DeviceReader {
 
 	public String readNextData() throws IOException {
 
-		if (D) Log.d(TAG, "readNextData");
-		
 		char[] buffer = new char[1024];
 		int b = 0;
 		int i = 0;
@@ -68,9 +66,11 @@ public class ZephyrReader implements DeviceReader {
 			}
 
 			buffer[i++] = (char) b;
+			
+			break;
 		}
 		
-		if (D) Log.d(TAG, "readNextData - read " + buffer.length + " bytes");
+		if (D) Log.d(TAG, "readNextData - read " + i + " bytes");
 		
 		return new String(buffer);
 	}
