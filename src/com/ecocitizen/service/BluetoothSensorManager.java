@@ -27,6 +27,7 @@ import java.io.OutputStream;
 import java.util.UUID;
 
 import com.ecocitizen.common.DebugFlagManager;
+import com.ecocitizen.drivers.DeviceReader;
 
 import android.os.Handler;
 import android.util.Log;
@@ -221,7 +222,8 @@ public class BluetoothSensorManager extends SensorManager {
 		public void run() {
 			Log.i(TAG, "BEGIN mConnectedThread");
 
-			BufferedReader reader = new BufferedReader(new InputStreamReader(mmInStream));
+			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(mmInStream));
+			DeviceReader deviceReader = getDeviceReader(bufferedReader); 
 			
 			BluetoothSensorManager.this.sendConnectedMsg();
 			
@@ -231,11 +233,11 @@ public class BluetoothSensorManager extends SensorManager {
 			
 			while (! stop) {
 				try {
-					String line = reader.readLine();
-					if (line != null) {
-						sendSentenceLineMsg(++sequenceNumber, line);
+					String data = deviceReader.readNextData();
+					if (data != null) {
+						sendSentenceLineMsg(++sequenceNumber, data);
 					}
-				} catch (IOException e) {
+				} catch (Exception e) {
 					Log.e(TAG, "disconnected", e);
 					break;
 				}

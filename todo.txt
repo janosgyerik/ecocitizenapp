@@ -11,6 +11,11 @@ release in marketplace
 
 current focus
 =============
+- zephyr
+	- rename sendSentenceLineMsg to sendSensorDataMsg
+	- show heartrate on tabular view
+	- add a logfile to make it possible to test
+	- design new screen for viewing zephyr
 - DeviceListActivity improvement
 	- show logfile devices only in 'Debug mode'
 - bug: device name is not shown when changing applications
@@ -28,11 +33,6 @@ current focus
 - add class diagrams to wiki with additional explanatory text
 - bug: after entering comment, the keyboard lingers too long and the tree in the tree view looks squeezed and ugly
 - clean up style
-
-
-support for zephyr
-==================
-- create the framework of appropriate drivers to use in bluetooth readers
 
 
 critical for next experiment

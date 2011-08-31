@@ -19,11 +19,16 @@
 
 package com.ecocitizen.service;
 
+import java.io.BufferedReader;
+
 import android.os.Bundle;
 import android.os.Handler;
 
 import com.ecocitizen.common.MessageType;
 import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
+import com.ecocitizen.drivers.DeviceReader;
+import com.ecocitizen.drivers.SimpleSentenceReader;
+import com.ecocitizen.drivers.ZephyrReader;
 
 /**
  * Base class for handling communications with sensor devices.
@@ -42,7 +47,7 @@ abstract public class SensorManager {
 	 * Simple short name, used as an alias when identifying the sensor.
 	 */
 	private final String mSensorName;
-
+	
 	/**
 	 * Shared Handler received from the owner object, 
 	 * for sending sentences and lifecycle event notifications.
@@ -126,5 +131,14 @@ abstract public class SensorManager {
 	 */
 	void sendConnectionLostMsg() {
 		sendSensorNameMsg(MessageType.SM_DEVICE_LOST);
+	}
+	
+	DeviceReader getDeviceReader(BufferedReader reader) {
+		if (mSensorName.startsWith("HXM")) {
+			return new ZephyrReader(reader);
+		}
+		else {
+			return new SimpleSentenceReader(reader);
+		}
 	}
 }
