@@ -16,7 +16,6 @@ release in marketplace
 
 current focus
 =============
-- rename *comment* methods to *addNote* everywhere
 - device list should show bt devices on scan, even if already paired
 - rename all 'sentence' related things to 'SensorData', where applicable
 	- rename sendSentenceLineMsg to sendSensorDataMsg

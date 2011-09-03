@@ -504,7 +504,7 @@ public abstract class DeviceManagerClient extends Activity {
 		mDeviceListTextView.setText(newTitle);
 	}
 
-	void startCommentActivity() {
+	void startAddNoteActivity() {
 		startActivity(new Intent(this, AddNoteActivity.class));
 	}
 

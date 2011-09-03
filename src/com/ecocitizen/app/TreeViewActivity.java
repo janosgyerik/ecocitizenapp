@@ -67,7 +67,7 @@ public class TreeViewActivity extends DeviceManagerClient {
 
 	private ImageButton mBtnConnect;
 	private ImageButton mBtnDisconnect;
-	private ImageButton mBtnComment;
+	private ImageButton mBtnAddNote;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -116,13 +116,13 @@ public class TreeViewActivity extends DeviceManagerClient {
 			Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
 		}
 		
-		mBtnComment = (ImageButton) findViewById(R.id.btn_comment);
-		mBtnComment.setOnClickListener(new View.OnClickListener() {
+		mBtnAddNote = (ImageButton) findViewById(R.id.btn_addnote);
+		mBtnAddNote.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				startCommentActivity();
+				startAddNoteActivity();
 			}
 		});
-		mBtnComment.setVisibility(View.GONE);
+		mBtnAddNote.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -219,12 +219,12 @@ public class TreeViewActivity extends DeviceManagerClient {
 		if (mConnectedDevices.isEmpty()) {
 			mBtnConnect.setVisibility(View.VISIBLE);
 			mBtnDisconnect.setVisibility(View.GONE);
-			mBtnComment.setVisibility(View.GONE);
+			mBtnAddNote.setVisibility(View.GONE);
 		}
 		else {
 			//mBtnConnect.setVisibility(View.GONE);
 			mBtnDisconnect.setVisibility(View.VISIBLE);
-			mBtnComment.setVisibility(View.VISIBLE);
+			mBtnAddNote.setVisibility(View.VISIBLE);
 		}
 	}
 	

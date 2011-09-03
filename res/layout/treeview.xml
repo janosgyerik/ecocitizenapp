@@ -105,8 +105,8 @@
     	android:layout_gravity="right"
     	android:id="@+id/btn"
 		>
-		<ImageButton android:id="@+id/btn_comment"
-    		android:src="@drawable/comment"
+		<ImageButton android:id="@+id/btn_addnote"
+    		android:src="@drawable/addnote"
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
 			android:layout_gravity="right"
