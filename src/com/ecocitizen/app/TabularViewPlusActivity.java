@@ -95,6 +95,13 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 				updateRowWithParser(mTemperatureSentenceParser);
 			}
 		}
+		
+		// TODO
+		if (bundle.getSensorID().equals("00_07_80_9B_05_B2")) {
+			int heartrate = (int)bundle.getSentenceLine().charAt(12);
+			Log.d(TAG, "HeartRate = " + heartrate);
+			updateRow("HeartRate", "", "" + heartrate);
+		}
 	}
 	
 	private void updateRowWithGpsData(String name, String value) {

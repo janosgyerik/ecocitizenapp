@@ -11,11 +11,23 @@ release in marketplace
 
 current focus
 =============
-- zephyr
+- device list should show bt devices on scan, even if already paired
+- plan the plugin framework for adding support for new devices
+	- plugin developers should not have to touch existing code, instead simply add new driver classes
+	- to add support for a new device =>
+		- implement DeviceReader
+		- implement SensorDataParser
+- rename all 'sentence' related things to 'SensorData', where applicable
 	- rename sendSentenceLineMsg to sendSensorDataMsg
-	- show heartrate on tabular view
+	- rename getSentenceLine to getSensorData
+	- rename SentenceBundleWrapper to SensorDataBundleWrapper
+	- grep -ri sentence .
+- add SENSOR_TYPE to SensorDataBundle, use it to construct the right parser
+- zephyr
+	- implement plugin, show heartrate on TabularView+
 	- add a logfile to make it possible to test
-	- design new screen for viewing zephyr
+	- design new dedicated screen for zephyr -> Vika
+- adjust font size of CO2 on TreeView
 - DeviceListActivity improvement
 	- show logfile devices only in 'Debug mode'
 - bug: device name is not shown when changing applications
