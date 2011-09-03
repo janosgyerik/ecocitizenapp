@@ -1,3 +1,8 @@
+release notes
+=============
+- easier navigation: connect / disconnect buttons on screen instead of menu
+
+
 when connected
 ==============
 - upgrade an android to newer version
@@ -13,17 +18,17 @@ current focus
 =============
 - rename *comment* methods to *addNote* everywhere
 - device list should show bt devices on scan, even if already paired
-- plan the plugin framework for adding support for new devices
-	- plugin developers should not have to touch existing code, instead simply add new driver classes
-	- to add support for a new device =>
-		- implement DeviceReader
-		- implement SensorDataParser
 - rename all 'sentence' related things to 'SensorData', where applicable
 	- rename sendSentenceLineMsg to sendSensorDataMsg
 	- rename getSentenceLine to getSensorData
 	- rename SentenceBundleWrapper to SensorDataBundleWrapper
 	- grep -ri sentence .
-- add SENSOR_TYPE to SensorDataBundle, use it to construct the right parser
+- plan the plugin framework for adding support for new devices
+	- plugin developers should not have to touch existing code, instead simply add new driver classes
+	- to add support for a new device =>
+		- implement DeviceReader
+		- implement SensorDataParser
+	- maybe add SENSOR_TYPE to SensorDataBundle, use it to construct the right parser
 - zephyr
 	- implement plugin, show heartrate on TabularView+
 	- add a logfile to make it possible to test
@@ -31,6 +36,7 @@ current focus
 - adjust font size of CO2 on TreeView
 - DeviceListActivity improvement
 	- show logfile devices only in 'Debug mode'
+- clean up style
 - bug: it seems two GpsLocationListeners are created, why?
 - bug: why is this:
     D/DeviceManagerClient( 2764): handleMessage 13 CO2Sample2.txt
@@ -42,7 +48,6 @@ current focus
 - update class diagram for .service
 - add class diagrams to wiki with additional explanatory text
 - bug: after entering comment, the keyboard lingers too long and the tree in the tree view looks squeezed and ugly
-- clean up style
 
 
 critical for next experiment

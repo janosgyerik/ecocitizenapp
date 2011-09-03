@@ -24,7 +24,11 @@ usage() {
     echo
     echo Options:
     echo
-    echo "  -h, --help     Print this help"
+    echo "  -h, --help           Print this help"
+    echo
+    echo "  --download, --pull   Download all files"
+    echo "  -l, --list, --ls     List files"
+    echo "  --delete, --del      Delete all files"
     echo
     exit 1
 }
@@ -32,15 +36,15 @@ usage() {
 args=
 #arg=
 #flag=off
-list=off
-delete=off
+mode=download
 #param=
 while [ $# != 0 ]; do
     case $1 in
     -h|--help) usage ;;
 #    -f|--flag) flag=on ;;
-    -l|--list|--ls) list=on ;;
-    --delete|--del) delete=on ;;
+    --download|--pull|--dl) mode=download ;;
+    -l|--list|--ls) mode=list ;;
+    --delete|--del) mode=delete ;;
 #    --no-flag) flag=off ;;
 #    -p|--param) shift; param=$1 ;;
 #    --) shift; while [ $# != 0 ]; do args="$args \"$1\""; shift; done; break ;;
@@ -55,7 +59,7 @@ done
 
 eval "set -- $args"  # save arguments in $@. Use "$@" in for loops, not $@ 
 
-test "$1" && download_dir=$1 || download_dir=.
+test "$1" && download_dir=$1 || download_dir=EcoCitizen-files
 
 basedir=/sdcard/download
 pattern='^(EcoCitizen|session)_'
@@ -74,13 +78,18 @@ pull() {
     echo saved to $download_dir/$1
 }
 
-if test $list = on; then
-    list
-elif test $delete = on; then
-    list | while read file; do delete $file; done
-else
-    mkdir -p "$download_dir"
-    list | while read file; do pull $file; done
-fi
+case $mode in
+    download)
+	mkdir -p "$download_dir"
+	list | while read file; do pull $file; done
+	rmdir "$download_dir" 2>/dev/null
+	;;
+    list)
+	list
+	;;
+    delete)
+	list | while read file; do delete $file; done
+	;;
+esac
 
 # eof
