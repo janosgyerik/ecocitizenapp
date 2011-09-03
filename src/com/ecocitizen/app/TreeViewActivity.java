@@ -33,7 +33,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -66,8 +65,9 @@ public class TreeViewActivity extends DeviceManagerClient {
 	private static final String TREEBG_PACKAGE = "com.ecocitizen.app";
 	private static final String TREEBG_TYPE = "drawable";
 
-	private Button mBtnConnect;
-	private Button mBtnDisconnect;
+	private ImageButton mBtnConnect;
+	private ImageButton mBtnDisconnect;
+	private ImageButton mBtnComment;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -92,13 +92,13 @@ public class TreeViewActivity extends DeviceManagerClient {
 		mLonValView = (TextView)findViewById(R.id.lonval);
 
 		// Set up the button to connect/disconnect sensors
-		mBtnConnect = (Button)findViewById(R.id.btn_connect_device);
+		mBtnConnect = (ImageButton)findViewById(R.id.btn_connect_device);
 		mBtnConnect.setOnClickListener(new View.OnClickListener(){   
 			public void onClick(View v) {   
 				connectSensor();
 			}  
 		});
-		mBtnDisconnect = (Button)findViewById(R.id.btn_disconnect_device);
+		mBtnDisconnect = (ImageButton)findViewById(R.id.btn_disconnect_device);
 		mBtnDisconnect.setOnClickListener(new View.OnClickListener(){   
 			public void onClick(View v) {   
 				disconnectSensor();
@@ -116,12 +116,13 @@ public class TreeViewActivity extends DeviceManagerClient {
 			Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
 		}
 		
-		ImageButton mBtnComment = (ImageButton) findViewById(R.id.btn_comment);
+		mBtnComment = (ImageButton) findViewById(R.id.btn_comment);
 		mBtnComment.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				startCommentActivity();
 			}
 		});
+		mBtnComment.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -141,12 +142,6 @@ public class TreeViewActivity extends DeviceManagerClient {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.menu_connect:
-			connectSensor();
-			return true;
-		case R.id.menu_disconnect:
-			disconnectSensor();
-			return true;
 		case R.id.menu_settings:
 			startActivity(new Intent(this, SettingsActivity.class));
 			return true;    
@@ -224,10 +219,12 @@ public class TreeViewActivity extends DeviceManagerClient {
 		if (mConnectedDeviceNames.isEmpty()) {
 			mBtnConnect.setVisibility(View.VISIBLE);
 			mBtnDisconnect.setVisibility(View.GONE);
+			mBtnComment.setVisibility(View.GONE);
 		}
 		else {
-			mBtnConnect.setVisibility(View.GONE);
-			//mBtnDisconnect.setVisibility(View.VISIBLE);
+			//mBtnConnect.setVisibility(View.GONE);
+			mBtnDisconnect.setVisibility(View.VISIBLE);
+			mBtnComment.setVisibility(View.VISIBLE);
 		}
 	}
 	
