@@ -33,8 +33,6 @@ current focus
 	- add a logfile to make it possible to test
 	- design new dedicated screen for zephyr -> Vika
 - adjust font size of CO2 on TreeView
-- DeviceListActivity improvement
-	- show logfile devices only in 'Debug mode'
 - clean up style
 - bug: it seems two GpsLocationListeners are created, why?
 - bug: why is this:
