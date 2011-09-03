@@ -28,20 +28,20 @@ public class DeviceManagerServiceCallback extends
 		mHandler.obtainMessage(MessageType.NOTE, bundle).sendToTarget();
 	}
 
-	public void receivedConnectionFailed(String deviceName) {
-		mHandler.obtainMessage(MessageType.SM_CONNECTION_FAILED, deviceName).sendToTarget();
+	public void receivedConnectionFailed(String deviceId) {
+		mHandler.obtainMessage(MessageType.SM_CONNECTION_FAILED, deviceId).sendToTarget();
 	}
 
-	public void receivedDeviceAdded(String deviceName) {
-		mHandler.obtainMessage(MessageType.SM_DEVICE_ADDED, deviceName).sendToTarget();
+	public void receivedDeviceAdded(Bundle bundle) {
+		mHandler.obtainMessage(MessageType.SM_DEVICE_ADDED, bundle).sendToTarget();
 	}
 
-	public void receivedDeviceClosed(String deviceName) {
-		mHandler.obtainMessage(MessageType.SM_DEVICE_CLOSED, deviceName).sendToTarget();
+	public void receivedDeviceClosed(String deviceId) {
+		mHandler.obtainMessage(MessageType.SM_DEVICE_CLOSED, deviceId).sendToTarget();
 	}
 
-	public void receivedDeviceLost(String deviceName) {
-		mHandler.obtainMessage(MessageType.SM_DEVICE_LOST, deviceName).sendToTarget();
+	public void receivedDeviceLost(String deviceId) {
+		mHandler.obtainMessage(MessageType.SM_DEVICE_LOST, deviceId).sendToTarget();
 	}
 
 	public void receivedAllDevicesGone() {

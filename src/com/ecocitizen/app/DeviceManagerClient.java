@@ -19,9 +19,9 @@
 
 package com.ecocitizen.app;
 
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.Map;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -46,6 +46,7 @@ import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.DeviceManagerServiceCallback;
 import com.ecocitizen.common.MessageType;
 import com.ecocitizen.common.bundlewrapper.NoteBundleWrapper;
+import com.ecocitizen.common.bundlewrapper.SensorInfoBundleWrapper;
 import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
 import com.ecocitizen.service.IDeviceManagerService;
 import com.ecocitizen.service.IDeviceManagerServiceCallback;
@@ -70,7 +71,8 @@ public abstract class DeviceManagerClient extends Activity {
 	// Local Bluetooth adapter
 	BluetoothAdapter mBluetoothAdapter = null;
 	
-	Set<String> mConnectedDeviceNames = new HashSet<String>();
+	Map<String, SensorInfoBundleWrapper> mConnectedDevices = 
+		new HashMap<String, SensorInfoBundleWrapper>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -406,11 +408,11 @@ public abstract class DeviceManagerClient extends Activity {
 				receivedNoteBundle(new NoteBundleWrapper((Bundle)msg.obj));
 				break;
 			case MessageType.SM_DEVICE_ADDED:
-				addConnectedDeviceName((String)msg.obj);
+				addConnectedDevice(new SensorInfoBundleWrapper((Bundle)msg.obj));
 				break;
 			case MessageType.SM_DEVICE_CLOSED:
 			case MessageType.SM_DEVICE_LOST:
-				removeConnectedDeviceName((String)msg.obj);
+				removeConnectedDevice((String)msg.obj);
 				break;
 			default:
 				// drop all other message types
@@ -461,22 +463,22 @@ public abstract class DeviceManagerClient extends Activity {
 		}
 	}
 
-	void addConnectedDeviceName(String deviceName) {
-		mConnectedDeviceNames.add(deviceName);
-		onConnectedDeviceNamesUpdated();
+	void addConnectedDevice(SensorInfoBundleWrapper sensorInfo) {
+		mConnectedDevices.put(sensorInfo.getSensorId(), sensorInfo);
+		onConnectedDevicesUpdated();
 	}
 	
-	void removeConnectedDeviceName(String deviceName) {
-		mConnectedDeviceNames.remove(deviceName);
-		onConnectedDeviceNamesUpdated();
+	void removeConnectedDevice(String sensorId) {
+		mConnectedDevices.remove(sensorId);
+		onConnectedDevicesUpdated();
 	}
 	
-	void clearConnectedDeviceNames() {
-		mConnectedDeviceNames.clear();
-		onConnectedDeviceNamesUpdated();
+	void clearConnectedDevices() {
+		mConnectedDevices.clear();
+		onConnectedDevicesUpdated();
 	}
 	
-	void onConnectedDeviceNamesUpdated() {
+	void onConnectedDevicesUpdated() {
 		updateDeviceListTextView();
 	}
 	
@@ -485,18 +487,18 @@ public abstract class DeviceManagerClient extends Activity {
 		if (mDeviceListTextView == null) return;
 		
 		String newTitle;
-		if (mConnectedDeviceNames.isEmpty()) {
+		if (mConnectedDevices.isEmpty()) {
 			newTitle = getString(R.string.title_not_connected);
 		}
-		else if (mConnectedDeviceNames.size() == 1) {
-			String deviceName = mConnectedDeviceNames.iterator().next();
+		else if (mConnectedDevices.size() == 1) {
+			String deviceName = mConnectedDevices.values().iterator().next().getSensorName();
 			newTitle = getString(R.string.title_connected_to) + deviceName;
 		}
 		else {
-			Iterator<String> iterator = mConnectedDeviceNames.iterator();
-			newTitle = iterator.next();
+			Iterator<SensorInfoBundleWrapper> iterator = mConnectedDevices.values().iterator();
+			newTitle = iterator.next().getSensorName();
 			while (iterator.hasNext()) {
-				newTitle += ", " + iterator.next();
+				newTitle += ", " + iterator.next().getSensorName();
 			}
 		}
 		mDeviceListTextView.setText(newTitle);
@@ -544,7 +546,7 @@ public abstract class DeviceManagerClient extends Activity {
 			// unexpectedly disconnected -- that is, its process crashed.
 			mService = null;
 
-			clearConnectedDeviceNames();
+			clearConnectedDevices();
 
 			Toast.makeText(DeviceManagerClient.this, "Remote service crashed",
 					Toast.LENGTH_SHORT).show();

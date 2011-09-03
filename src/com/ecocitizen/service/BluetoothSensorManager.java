@@ -67,7 +67,7 @@ public class BluetoothSensorManager extends SensorManager {
 		mDevice = device;
 	}
 	
-	private static String getDeviceId(BluetoothDevice device) {
+	protected static String getDeviceId(BluetoothDevice device) {
 		return device.getAddress().replaceAll(":", "_");
 	}
 	

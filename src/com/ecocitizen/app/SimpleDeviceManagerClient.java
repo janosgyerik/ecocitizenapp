@@ -49,9 +49,9 @@ public abstract class SimpleDeviceManagerClient extends DeviceManagerClient {
 	}
 
 	@Override
-	void onConnectedDeviceNamesUpdated() {
-		super.onConnectedDeviceNamesUpdated();
-		if (mConnectedDeviceNames.isEmpty()) {
+	void onConnectedDevicesUpdated() {
+		super.onConnectedDevicesUpdated();
+		if (mConnectedDevices.isEmpty()) {
 			mBtnConnect.setVisibility(View.VISIBLE);
 			mBtnDisconnect.setVisibility(View.GONE);
 		} 

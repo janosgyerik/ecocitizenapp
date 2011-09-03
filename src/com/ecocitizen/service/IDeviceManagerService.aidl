@@ -30,7 +30,7 @@ interface IDeviceManagerService {
 
     void connectBluetoothDevice(in BluetoothDevice device);
     void connectLogplayer(in String assetName, in int messageInterval);
-    void disconnectDevice(in String deviceName);
+    void disconnectDevice(in String deviceId);
     void addNote(in Bundle startLocationBundle, in String note);
     Bundle getLocationBundle();
 	

@@ -25,9 +25,9 @@ oneway interface IDeviceManagerServiceCallback {
 	void receivedSentenceBundle(in Bundle bundle);
 	void receivedNoteBundle(in Bundle bundle);
 	
-	void receivedConnectionFailed(String deviceName);
-	void receivedDeviceAdded(String deviceName);
-	void receivedDeviceClosed(String deviceName);
-	void receivedDeviceLost(String deviceName);
+	void receivedConnectionFailed(String deviceId);
+	void receivedDeviceAdded(in Bundle bundle);
+	void receivedDeviceClosed(String deviceId);
+	void receivedDeviceLost(String deviceId);
 	void receivedAllDevicesGone();
 }

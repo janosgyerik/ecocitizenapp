@@ -11,6 +11,9 @@ release in marketplace
 
 current focus
 =============
+- add a new service call to get the list of connected devices
+	- to be used by new DisconnectDeviceActivity
+- rename *comment* methods to *addNote* everywhere
 - device list should show bt devices on scan, even if already paired
 - plan the plugin framework for adding support for new devices
 	- plugin developers should not have to touch existing code, instead simply add new driver classes
@@ -30,9 +33,6 @@ current focus
 - adjust font size of CO2 on TreeView
 - DeviceListActivity improvement
 	- show logfile devices only in 'Debug mode'
-- bug: device name is not shown when changing applications
-	- maybe need to get the list of devices from the device manager service
-	? use sensor id instead of name in DeviceManagerService
 - bug: it seems two GpsLocationListeners are created, why?
 - bug: why is this:
     D/DeviceManagerClient( 2764): handleMessage 13 CO2Sample2.txt

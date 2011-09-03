@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.ecocitizen.common.MessageType;
+import com.ecocitizen.common.bundlewrapper.SensorInfoBundleWrapper;
 import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
 import com.ecocitizen.drivers.DeviceReader;
 import com.ecocitizen.drivers.SimpleSentenceReader;
@@ -75,6 +76,15 @@ abstract public class SensorManager {
 	public abstract void shutdown();
 
 	/**
+	 * Create and return a Bundle with basic properties of the sensor.
+	 * 
+	 * @return
+	 */
+	private Bundle getSensorInfoBundle() {
+		return SensorInfoBundleWrapper.makeBundle(mSensorName, mSensorId);
+	}
+	
+	/**
 	 * Create and return a Bundle with a sentence line
 	 * and additional information such as time, location and 
 	 * the ID of the originating sensor.
@@ -89,13 +99,16 @@ abstract public class SensorManager {
 	/**
 	 * Send message to owner's handler.
 	 */
-	private void sendSensorNameMsg(int messageType) {
+	private void sendSensorInfoMsg(int messageType) {
 		switch (messageType) {
-		case MessageType.SM_CONNECTION_FAILED:
 		case MessageType.SM_DEVICE_ADDED:
+			Bundle bundle = getSensorInfoBundle();
+			mHandler.obtainMessage(messageType, bundle).sendToTarget();
+			break;
+		case MessageType.SM_CONNECTION_FAILED:
 		case MessageType.SM_DEVICE_CLOSED:
 		case MessageType.SM_DEVICE_LOST:
-			mHandler.obtainMessage(messageType, mSensorName).sendToTarget();
+			mHandler.obtainMessage(messageType, mSensorId).sendToTarget();
 			break;
 		}
 	}
@@ -109,28 +122,28 @@ abstract public class SensorManager {
 	 * Connection failed, notify owner's handler.
 	 */
 	void sendConnectFailedMsg() {
-		sendSensorNameMsg(MessageType.SM_CONNECTION_FAILED);
+		sendSensorInfoMsg(MessageType.SM_CONNECTION_FAILED);
 	}
 
 	/**
 	 * Connection established, notify owner's handler.
 	 */
 	void sendConnectedMsg() {
-		sendSensorNameMsg(MessageType.SM_DEVICE_ADDED);
+		sendSensorInfoMsg(MessageType.SM_DEVICE_ADDED);
 	}
 
 	/**
 	 * Connection closed (no more data), notify owner's handler.
 	 */
 	void sendConnectionClosedMsg() {
-		sendSensorNameMsg(MessageType.SM_DEVICE_CLOSED);
+		sendSensorInfoMsg(MessageType.SM_DEVICE_CLOSED);
 	}
 
 	/**
 	 * Connection lost, notify owner's handler.
 	 */
 	void sendConnectionLostMsg() {
-		sendSensorNameMsg(MessageType.SM_DEVICE_LOST);
+		sendSensorInfoMsg(MessageType.SM_DEVICE_LOST);
 	}
 	
 	DeviceReader getDeviceReader(BufferedReader reader) {
@@ -140,5 +153,9 @@ abstract public class SensorManager {
 		else {
 			return new SimpleSentenceReader(reader);
 		}
+	}
+
+	public String getDeviceName() {
+		return mSensorName;
 	}
 }

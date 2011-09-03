@@ -41,6 +41,7 @@ import backport.android.bluetooth.BluetoothDevice;
 import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.MessageType;
 import com.ecocitizen.common.bundlewrapper.NoteBundleWrapper;
+import com.ecocitizen.common.bundlewrapper.SensorInfoBundleWrapper;
 import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
 
 public class DeviceManagerService extends Service {
@@ -58,7 +59,7 @@ public class DeviceManagerService extends Service {
 		new RemoteCallbackList<IDeviceManagerServiceCallback>();
 
 	/**
-	 * Mapping of device name -> SensorManager
+	 * Mapping of device id -> SensorManager
 	 * Many sensors can be connected at the same time, this hashmap
 	 * keeps track of connected (alive) sensors.
 	 * 
@@ -132,15 +133,15 @@ public class DeviceManagerService extends Service {
 		 * The device connection is represented by a BluetoothDevice object.
 		 */
 		public void connectBluetoothDevice(BluetoothDevice device) {
-			String name = device.getName();
+			String deviceId = BluetoothSensorManager.getDeviceId(device);
 			synchronized (mSensorManagers) {
-				if (mSensorManagers.containsKey(name)) return;
+				if (mSensorManagers.containsKey(deviceId)) return;
 
 				try {
 					BluetoothSensorManager sm = 
 						new BluetoothSensorManager(mHandler, mGpsLocationListener, device);
 					sm.connect();
-					mSensorManagers.put(name, sm);
+					mSensorManagers.put(deviceId, sm);
 				}
 				catch (Exception e) {
 					// Success or failure will be communicated back 
@@ -157,15 +158,15 @@ public class DeviceManagerService extends Service {
 		 * useful for stress tests.
 		 */
 		public void connectLogplayer(String assetFilename, int messageInterval) {
-			String name = assetFilename;
+			String deviceId = assetFilename;
 			synchronized (mSensorManagers) {
-				if (mSensorManagers.containsKey(name)) return;
+				if (mSensorManagers.containsKey(deviceId)) return;
 
 				try {
 					InputStream instream = getAssets().open(assetFilename);
 					LogplayerSensorManager sm = new LogplayerSensorManager(mHandler, mGpsLocationListener, instream, messageInterval, assetFilename);
 					if (sm.connect()) {
-						mSensorManagers.put(name, sm);
+						mSensorManagers.put(deviceId, sm);
 					}
 				}
 				catch (IOException e) {
@@ -183,21 +184,21 @@ public class DeviceManagerService extends Service {
 		}
 
 		/**
-		 * Disconnect a device specified by name, where name is:
-		 * - Bluetooth device name for bluetooth devices
+		 * Disconnect a device specified by device id:
+		 * - Bluetooth MAC address for bluetooth devices
 		 * - filename for logfile players 
 		 */
-		public void disconnectDevice(String deviceName) throws RemoteException {
-			if (deviceName == null) {
+		public void disconnectDevice(String deviceId) throws RemoteException {
+			if (deviceId == null) {
 				synchronized (mSensorManagers) {
 					if (!mSensorManagers.isEmpty()) {
-						deviceName = mSensorManagers.keySet().iterator().next();
-						shutdownSensorManager(deviceName);
+						deviceId = mSensorManagers.keySet().iterator().next();
+						shutdownSensorManager(deviceId);
 					}
 				}
 			}
 			else {
-				shutdownSensorManager(deviceName);
+				shutdownSensorManager(deviceId);
 			}
 		}
 
@@ -235,37 +236,45 @@ public class DeviceManagerService extends Service {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case MessageType.SM_CONNECTION_FAILED:
 			case MessageType.SM_DEVICE_ADDED:
+			{
+				final SensorInfoBundleWrapper sensorInfo = new SensorInfoBundleWrapper((Bundle)msg.obj);
+				if (D) Log.d(TAG, "what = " + msg.what + ", deviceName = " + sensorInfo.getSensorName());
+				mGpsLocationListener.requestLocationUpdates();
+				final int N = mCallbacks.beginBroadcast();
+				for (int i = 0; i < N; ++i) {
+					try {
+						mCallbacks.getBroadcastItem(i).receivedDeviceAdded((Bundle)msg.obj);
+					}
+					catch (RemoteException e) {
+						// The RemoteCallbackList will take care of removing
+						// the dead object for us.
+					}
+				}
+				mCallbacks.finishBroadcast();
+			} break;
+			case MessageType.SM_CONNECTION_FAILED:
 			case MessageType.SM_DEVICE_CLOSED: 
 			case MessageType.SM_DEVICE_LOST: 
 			{
-				final String deviceName = (String)msg.obj;
-				if (D) Log.d(TAG, "what = " + msg.what + ", deviceName = " + deviceName);
-				if (msg.what == MessageType.SM_DEVICE_ADDED) {
-					mGpsLocationListener.requestLocationUpdates();
-				}
-				else {
-					shutdownSensorManager(deviceName);
-				}
+				final String deviceId = (String)msg.obj;
+				if (D) Log.d(TAG, "what = " + msg.what + ", deviceName = " + getDeviceName(deviceId));
+				shutdownSensorManager(deviceId);
 				final int N = mCallbacks.beginBroadcast();
 				for (int i = 0; i < N; ++i) {
 					try {
 						switch (msg.what) {
 						case MessageType.SM_CONNECTION_FAILED:
-							mCallbacks.getBroadcastItem(i).receivedConnectionFailed(deviceName);
-							break;
-						case MessageType.SM_DEVICE_ADDED:
-							mCallbacks.getBroadcastItem(i).receivedDeviceAdded(deviceName);
+							mCallbacks.getBroadcastItem(i).receivedConnectionFailed(deviceId);
 							break;
 						case MessageType.SM_DEVICE_CLOSED:
-							mCallbacks.getBroadcastItem(i).receivedDeviceClosed(deviceName);
+							mCallbacks.getBroadcastItem(i).receivedDeviceClosed(deviceId);
 							if (mSensorManagers.isEmpty()) {
 								mCallbacks.getBroadcastItem(i).receivedAllDevicesGone();
 							}
 							break;
 						case MessageType.SM_DEVICE_LOST:
-							mCallbacks.getBroadcastItem(i).receivedDeviceLost(deviceName);
+							mCallbacks.getBroadcastItem(i).receivedDeviceLost(deviceId);
 							if (mSensorManagers.isEmpty()) {
 								mCallbacks.getBroadcastItem(i).receivedAllDevicesGone();
 							}
@@ -328,16 +337,25 @@ public class DeviceManagerService extends Service {
 		}
 	}
 
-	private void shutdownSensorManager(String deviceName) {
+	private void shutdownSensorManager(String deviceId) {
 		synchronized (mSensorManagers) {
-			if (mSensorManagers.containsKey(deviceName)) {
-				mSensorManagers.get(deviceName).shutdown();
-				mSensorManagers.remove(deviceName);
+			if (mSensorManagers.containsKey(deviceId)) {
+				mSensorManagers.get(deviceId).shutdown();
+				mSensorManagers.remove(deviceId);
 				
 				if (mSensorManagers.isEmpty()) {
 					mGpsLocationListener.removeLocationUpdates();
 				}
 			}
+		}
+	}
+	
+	private String getDeviceName(String deviceId) {
+		try {
+			return mSensorManagers.get(deviceId).getDeviceName();
+		}
+		catch (Exception e) {
+			return null;
 		}
 	}
 	
