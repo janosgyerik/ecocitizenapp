@@ -158,4 +158,8 @@ abstract public class SensorManager {
 	public String getDeviceName() {
 		return mSensorName;
 	}
+
+	public String getDeviceId() {
+		return mSensorId;
+	}
 }

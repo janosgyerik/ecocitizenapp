@@ -33,6 +33,7 @@ interface IDeviceManagerService {
     void disconnectDevice(in String deviceId);
     void addNote(in Bundle startLocationBundle, in String note);
     Bundle getLocationBundle();
+    Bundle[] getConnectedDevices();
 	
     void registerCallback(in IDeviceManagerServiceCallback cb);
     void unregisterCallback(in IDeviceManagerServiceCallback cb);

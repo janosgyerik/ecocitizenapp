@@ -11,8 +11,6 @@ release in marketplace
 
 current focus
 =============
-- add a new service call to get the list of connected devices
-	- to be used by new DisconnectDeviceActivity
 - rename *comment* methods to *addNote* everywhere
 - device list should show bt devices on scan, even if already paired
 - plan the plugin framework for adding support for new devices

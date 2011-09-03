@@ -22,6 +22,8 @@ package com.ecocitizen.service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import android.app.Service;
 import android.content.Context;
@@ -223,6 +225,16 @@ public class DeviceManagerService extends Service {
 
 		public Bundle getLocationBundle() throws RemoteException {
 			return mGpsLocationListener.getLastLocationBundle();
+		}
+
+		public Bundle[] getConnectedDevices() throws RemoteException {
+			List<Bundle> bundles = new LinkedList<Bundle>();
+			synchronized (mSensorManagers) {
+				for (SensorManager sensorManager : mSensorManagers.values()) {
+					bundles.add(SensorInfoBundleWrapper.makeBundle(sensorManager.getDeviceName(), sensorManager.getDeviceId()));
+				}
+			}
+			return bundles.toArray(new Bundle[]{});
 		}
 	};
 
