@@ -30,7 +30,6 @@ public class MapViewActivity extends AbstractMainActivity {
 		// Set up the window layout
 		setContentView(R.layout.mapview);
 		
-		
 		mLatNameView = (TextView)findViewById(R.id.latname);
 		mLatValView = (TextView)findViewById(R.id.latval);
 		mLonNameView = (TextView)findViewById(R.id.lonname);
