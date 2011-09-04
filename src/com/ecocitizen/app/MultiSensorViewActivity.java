@@ -36,7 +36,7 @@ import com.ecocitizen.parser.NOxSentenceParser;
 import com.ecocitizen.parser.NoiseSentenceParser;
 import com.ecocitizen.parser.PsenSentenceParser;
 
-public class MultiSensorViewActivity extends SimpleDeviceManagerClient {
+public class MultiSensorViewActivity extends AbstractMainActivity {
 	// Debugging
 	private static final String TAG = "MultiSensorViewActivity";
 	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(MultiSensorViewActivity.class);

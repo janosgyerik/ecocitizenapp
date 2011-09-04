@@ -21,19 +21,11 @@ package com.ecocitizen.app;
 
 import java.text.DecimalFormat;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,7 +34,7 @@ import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
 import com.ecocitizen.parser.CO2SentenceParser;
 
-public class TreeViewActivity extends DeviceManagerClient {
+public class TreeViewActivity extends AbstractMainActivity {
 	// Debugging
 	private static final String TAG = "TreeViewActivity";
 	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(TreeViewActivity.class);
@@ -65,9 +57,6 @@ public class TreeViewActivity extends DeviceManagerClient {
 	private static final String TREEBG_PACKAGE = "com.ecocitizen.app";
 	private static final String TREEBG_TYPE = "drawable";
 
-	private ImageButton mBtnConnect;
-	private ImageButton mBtnDisconnect;
-	private ImageButton mBtnComment;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -92,19 +81,7 @@ public class TreeViewActivity extends DeviceManagerClient {
 		mLonValView = (TextView)findViewById(R.id.lonval);
 
 		// Set up the button to connect/disconnect sensors
-		mBtnConnect = (ImageButton)findViewById(R.id.btn_connect_device);
-		mBtnConnect.setOnClickListener(new View.OnClickListener(){   
-			public void onClick(View v) {   
-				connectSensor();
-			}  
-		});
-		mBtnDisconnect = (ImageButton)findViewById(R.id.btn_disconnect_device);
-		mBtnDisconnect.setOnClickListener(new View.OnClickListener(){   
-			public void onClick(View v) {   
-				disconnectSensor();
-			}  
-		});
-		mBtnDisconnect.setVisibility(View.GONE);
+		setupCommonButtons();
 
 		// Set up the custom title
 		TextView title = (TextView) findViewById(R.id.title_left_text);
@@ -115,63 +92,12 @@ public class TreeViewActivity extends DeviceManagerClient {
 		if (mBluetoothAdapter == null) {
 			Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
 		}
-		
-		mBtnComment = (ImageButton) findViewById(R.id.btn_comment);
-		mBtnComment.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				startCommentActivity();
-			}
-		});
-		mBtnComment.setVisibility(View.GONE);
 	}
 
 	@Override
 	public void onStart() {
 		super.onStart();
 		if (D) Log.d(TAG, "++ ON START ++");
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.treeviewactivity, menu);
-
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.menu_settings:
-			startActivity(new Intent(this, SettingsActivity.class));
-			return true;    
-		case R.id.menu_debugtools:
-			startActivity(new Intent(this, DebugToolsActivity.class));
-			return true;
-		case R.id.menu_quit:
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage(R.string.msg_quit)
-			.setCancelable(true)
-			.setPositiveButton(R.string.btn_yes, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					shutdown();
-					finish();
-				}
-			})
-			.setNegativeButton(R.string.btn_no, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					dialog.cancel();
-				}
-			}).show();
-			return true;
-		case R.id.menu_fileuploader:
-			startActivity(new Intent(this, FileUploaderActivity.class));
-			return true;
-		case R.id.menu_multisensorview:
-			startActivity(new Intent(this, MultiSensorViewActivity.class));
-			return true;
-		}
-		return false;
 	}
 
 	CO2SentenceParser parser = new CO2SentenceParser();
@@ -210,21 +136,6 @@ public class TreeViewActivity extends DeviceManagerClient {
 				mLonValView.setText(lon_val[0] + "º" + lon_val[1] + "'" +
 						lon_val[2].substring(0, lon_val[2].indexOf('.')) + "\"");
 			}
-		}
-	}
-
-	@Override
-	void onConnectedDeviceNamesUpdated() {
-		super.onConnectedDeviceNamesUpdated();
-		if (mConnectedDeviceNames.isEmpty()) {
-			mBtnConnect.setVisibility(View.VISIBLE);
-			mBtnDisconnect.setVisibility(View.GONE);
-			mBtnComment.setVisibility(View.GONE);
-		}
-		else {
-			//mBtnConnect.setVisibility(View.GONE);
-			mBtnDisconnect.setVisibility(View.VISIBLE);
-			mBtnComment.setVisibility(View.VISIBLE);
 		}
 	}
 	

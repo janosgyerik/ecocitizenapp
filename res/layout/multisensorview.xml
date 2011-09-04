@@ -89,8 +89,33 @@
 	<ListView android:id="@+id/vspace" android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:layout_weight="1" />
 
-	<Button android:id="@+id/btn_connect_device" android:text="@string/btn_connect_device"
-		android:stackFromBottom="true" style="@style/wideButton" />
-	<Button android:id="@+id/btn_disconnect_device" android:text="@string/btn_disconnect_device"
-		android:stackFromBottom="true" android:visibility="gone" style="@style/wideButton" />
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:orientation="horizontal" 
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content" 
+    	android:layout_gravity="right"
+    	android:id="@+id/btn"
+		>
+		<ImageButton android:id="@+id/btn_comment"
+    		android:src="@drawable/comment"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+			android:layout_gravity="right"
+    		android:stackFromBottom="true"
+    	/>
+    	<ImageButton android:id="@+id/btn_disconnect_device"
+			android:src="@drawable/disconnect"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+			android:layout_gravity="right"
+    		android:stackFromBottom="true"
+    	/>
+    	<ImageButton android:id="@+id/btn_connect_device"
+    		android:src="@drawable/connect"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+			android:layout_gravity="right"
+    		android:stackFromBottom="true"
+    	/>
+	</LinearLayout>
 </LinearLayout>
