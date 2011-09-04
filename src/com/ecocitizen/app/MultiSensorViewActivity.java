@@ -36,7 +36,7 @@ import com.ecocitizen.parser.NOxSentenceParser;
 import com.ecocitizen.parser.NoiseSentenceParser;
 import com.ecocitizen.parser.PsenSentenceParser;
 
-public class MultiSensorViewActivity extends SimpleDeviceManagerClient {
+public class MultiSensorViewActivity extends AbstractMainActivity {
 	// Debugging
 	private static final String TAG = "MultiSensorViewActivity";
 	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(MultiSensorViewActivity.class);
@@ -65,7 +65,7 @@ public class MultiSensorViewActivity extends SimpleDeviceManagerClient {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		 int boxIds[] = {R.id.boxtop_left, R.id.boxtop_right, R.id.boxbottom_left, R.id.boxbottom_right};
+		int boxIds[] = {R.id.boxtop_left, R.id.boxtop_right, R.id.boxbottom_left, R.id.boxbottom_right};
 		
 		super.onCreate(savedInstanceState);
 		if (D) Log.d(TAG, "+++ ON CREATE +++");
