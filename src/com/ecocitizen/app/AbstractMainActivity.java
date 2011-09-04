@@ -118,6 +118,9 @@ public abstract class AbstractMainActivity extends DeviceManagerClient {
 		case R.id.menu_multisensorview:
 			startActivity(new Intent(this, MultiSensorViewActivity.class));
 			return true;
+		case R.id.menu_map:
+			startActivity(new Intent(this, MapViewActivity.class));
+			return true;
 		}
 		return false;
 	}
