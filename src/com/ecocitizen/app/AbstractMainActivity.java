@@ -32,17 +32,15 @@ public abstract class AbstractMainActivity extends DeviceManagerClient {
 	
 	private ImageButton mBtnConnect;
 	private ImageButton mBtnDisconnect;
-	private ImageButton mBtnComment;
+	private ImageButton mBtnAddNote;
 
 	public void setupCommonButtons() {
-		// Set up the button to connect/disconnect sensors
 		mBtnConnect = (ImageButton)findViewById(R.id.btn_connect_device);
 		mBtnConnect.setOnClickListener(new View.OnClickListener(){   
 			public void onClick(View v) {   
 				connectSensor();
 			}  
 		});
-
 		
 		mBtnDisconnect = (ImageButton)findViewById(R.id.btn_disconnect_device);
 		mBtnDisconnect.setOnClickListener(new View.OnClickListener(){   
@@ -51,8 +49,8 @@ public abstract class AbstractMainActivity extends DeviceManagerClient {
 			}  
 		});
 		
-		mBtnComment = (ImageButton) findViewById(R.id.btn_addnote);
-		mBtnComment.setOnClickListener(new View.OnClickListener() {
+		mBtnAddNote = (ImageButton) findViewById(R.id.btn_addnote);
+		mBtnAddNote.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				startAddNoteActivity();
 			}
@@ -60,9 +58,10 @@ public abstract class AbstractMainActivity extends DeviceManagerClient {
 		
 		//change requirement as follows
 		//it is true when there is no connected device. 
+		//TODO
 		if (true) {
 			mBtnDisconnect.setVisibility(View.GONE);
-			mBtnComment.setVisibility(View.GONE);
+			mBtnAddNote.setVisibility(View.GONE);
 		}
 	}
 	
@@ -71,11 +70,11 @@ public abstract class AbstractMainActivity extends DeviceManagerClient {
 		super.onConnectedDevicesUpdated();
 		if (mConnectedDevices.isEmpty()) {
 			mBtnDisconnect.setVisibility(View.GONE);
-			mBtnComment.setVisibility(View.GONE);
+			mBtnAddNote.setVisibility(View.GONE);
 		}
 		else {
 			mBtnDisconnect.setVisibility(View.VISIBLE);
-			mBtnComment.setVisibility(View.VISIBLE);
+			mBtnAddNote.setVisibility(View.VISIBLE);
 		}
 	}
 	

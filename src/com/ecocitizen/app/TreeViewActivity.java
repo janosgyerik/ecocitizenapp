@@ -56,6 +56,7 @@ public class TreeViewActivity extends AbstractMainActivity {
 	private static final String TREEBG_PREFIX = "treebg_";
 	private static final String TREEBG_PACKAGE = "com.ecocitizen.app";
 	private static final String TREEBG_TYPE = "drawable";
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -141,7 +142,8 @@ public class TreeViewActivity extends AbstractMainActivity {
 	void setCO2Val(String sensorID, String value) {
 		if (sensorID_1 == null) {
 			sensorID_1 = sensorID;
-		} else if (!sensorID_1.equals(sensorID)) {
+		} 
+		else if (!sensorID_1.equals(sensorID)) {
 			sensorID_2 = sensorID;
 			mCO2Val_1View.setTextSize(15);
 			mCO2Val_2View.setTextSize(15);
@@ -149,7 +151,8 @@ public class TreeViewActivity extends AbstractMainActivity {
 
 		if (sensorID_1.equals(sensorID)) {
 			mCO2Val_1View.setText(value);
-		} else if (sensorID_2.equals(sensorID)) {
+		} 
+		else if (sensorID_2.equals(sensorID)) {
 			mCO2Val_2View.setText(value);
 		}
 	}

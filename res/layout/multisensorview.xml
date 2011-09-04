@@ -101,21 +101,18 @@
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
 			android:layout_gravity="right"
-    		android:stackFromBottom="true"
     	/>
     	<ImageButton android:id="@+id/btn_disconnect_device"
 			android:src="@drawable/disconnect"
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
 			android:layout_gravity="right"
-    		android:stackFromBottom="true"
     	/>
     	<ImageButton android:id="@+id/btn_connect_device"
     		android:src="@drawable/connect"
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
 			android:layout_gravity="right"
-    		android:stackFromBottom="true"
     	/>
 	</LinearLayout>
 </LinearLayout>

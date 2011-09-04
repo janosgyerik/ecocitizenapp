@@ -65,21 +65,20 @@ public class MultiSensorViewActivity extends AbstractMainActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		int boxIds[] = {R.id.boxtop_left, R.id.boxtop_right, R.id.boxbottom_left, R.id.boxbottom_right};
-		
 		super.onCreate(savedInstanceState);
 		if (D) Log.d(TAG, "+++ ON CREATE +++");
 
 		// Set up the window layout
 		setContentView(R.layout.multisensorview);
 
-
 		mLatView = (TextView)findViewById(R.id.lat_val);
 		mLonView = (TextView)findViewById(R.id.lon_val);
 		mTView = (TextView)findViewById(R.id.T_val);
 		mRHView = (TextView)findViewById(R.id.RH_val);
 		
-		for(int i = 0 ; i < boxIds.length; i++) {  
+		int boxIds[] = {R.id.boxtop_left, R.id.boxtop_right, R.id.boxbottom_left, R.id.boxbottom_right};
+		
+		for (int i = 0; i < boxIds.length; ++i) {  
             LinearLayout box = (LinearLayout) findViewById(boxIds[i]);  
             mBoxName[i] = (TextView)box.findViewById(R.id.box_name);  
             mBoxName[i].setText("--");
