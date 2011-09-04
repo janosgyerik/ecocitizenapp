@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2010 Mobile Environmental Sensing For Sustainable Cities
+    
+    This file is part of EcoCitizen.
+
+    EcoCitizen is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    EcoCitizen is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with EcoCitizen.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/mapview"
+    >
+    
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:orientation="horizontal" 
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content" 
+    	android:id="@+id/latlon"
+    	>
+    	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    		android:orientation="horizontal"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:gravity="center"
+    		android:layout_weight="1"
+    		>
+    		<TextView android:id="@+id/latname" style="@style/latlon" />
+    		<TextView android:id="@+id/latval" style="@style/latlon" />
+    	</LinearLayout>
+    	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    		android:orientation="horizontal"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:gravity="center"
+    		android:layout_weight="1"
+    		>
+    		<TextView android:id = "@+id/lonname"
+    			style="@style/latlon"
+    		/>
+    		<TextView android:id="@+id/lonval"
+    			style="@style/latlon"
+    		/>
+    	</LinearLayout>
+
+    </LinearLayout>
+    <ListView android:id="@+id/vspace"
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:layout_weight="1"
+    />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:orientation="horizontal" 
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content" 
+    	android:layout_gravity="right"
+    	android:id="@+id/btn"
+		>
+		<ImageButton android:id="@+id/btn_addnote"
+    		android:src="@drawable/addnote"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+			android:layout_gravity="right"
+    		android:stackFromBottom="true"
+    	/>
+    	<ImageButton android:id="@+id/btn_disconnect_device"
+			android:src="@drawable/disconnect"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+			android:layout_gravity="right"
+    		android:stackFromBottom="true"
+    	/>
+    	<ImageButton android:id="@+id/btn_connect_device"
+    		android:src="@drawable/connect"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+			android:layout_gravity="right"
+    		android:stackFromBottom="true"
+    	/>
+	</LinearLayout>
+</LinearLayout>

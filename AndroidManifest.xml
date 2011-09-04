@@ -48,6 +48,9 @@
 		<activity android:name=".TabularViewPlusActivity" android:label="@string/tabularviewplus_activity">
 		</activity>
 		
+		<activity android:name=".MapViewActivity" android:label="@string/mapview_activity">
+		</activity>
+		
 		<activity android:name=".MultiSensorViewActivity"
 			android:screenOrientation="nosensor"  
 			android:label="@string/multisensorview_activity">
