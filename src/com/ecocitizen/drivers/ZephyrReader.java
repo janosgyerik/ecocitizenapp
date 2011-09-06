@@ -13,11 +13,7 @@ public class ZephyrReader implements DeviceReader {
 	private static final String TAG = "ZephyrReader";
 	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(ZephyrReader.class);
 
-	private final Reader reader;
-
-	public ZephyrReader(BufferedReader reader) {
-		this.reader = reader;
-	}
+	private Reader reader;
 
 	private final int STX = 0x02;
 	private final int MSGID = 0x26;
@@ -73,5 +69,9 @@ public class ZephyrReader implements DeviceReader {
 		if (D) Log.d(TAG, "readNextData - read " + i + " bytes");
 		
 		return new String(buffer);
+	}
+
+	public void setBufferedReader(BufferedReader reader) {
+		this.reader = reader;
 	}
 }

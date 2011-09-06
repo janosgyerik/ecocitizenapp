@@ -16,21 +16,19 @@ release in marketplace
 
 current focus
 =============
+- create common SensorDataParser interface and implementations
+	- SimpleSentenceParser
+	- ZephyrParser
+		- show heartrate on TabularView+
+- add a zephyr logfile for testing purposes
+- make the zephyr logfile work 
+	- perhaps use a name parameter when opening logfile
+- design new dedicated screen for zephyr -> Vika
 - rename all 'sentence' related things to 'SensorData', where applicable
 	- rename sendSentenceLineMsg to sendSensorDataMsg
 	- rename getSentenceLine to getSensorData
 	- rename SentenceBundleWrapper to SensorDataBundleWrapper
 	- grep -ri sentence .
-- plan the plugin framework for adding support for new devices
-	- plugin developers should not have to touch existing code, instead simply add new driver classes
-	- to add support for a new device =>
-		- implement DeviceReader
-		- implement SensorDataParser
-	- maybe add SENSOR_TYPE to SensorDataBundle, use it to construct the right parser
-- zephyr
-	- implement plugin, show heartrate on TabularView+
-	- add a logfile to make it possible to test
-	- design new dedicated screen for zephyr -> Vika
 - adjust font size of CO2 on TreeView
 - clean up style
 - bug: it seems two GpsLocationListeners are created, why?

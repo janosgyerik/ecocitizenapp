@@ -27,6 +27,7 @@ import java.io.OutputStream;
 import java.util.UUID;
 
 import com.ecocitizen.common.DebugFlagManager;
+import com.ecocitizen.common.DeviceReaderFactory;
 import com.ecocitizen.drivers.DeviceReader;
 
 import android.os.Handler;
@@ -223,7 +224,9 @@ public class BluetoothSensorManager extends SensorManager {
 			Log.i(TAG, "BEGIN mConnectedThread");
 
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(mmInStream));
-			DeviceReader deviceReader = getDeviceReader(bufferedReader); 
+			
+			DeviceReader deviceReader = DeviceReaderFactory.getInstance().createReader(getDeviceName(), getDeviceId());
+			deviceReader.setBufferedReader(bufferedReader); 
 			
 			BluetoothSensorManager.this.sendConnectedMsg();
 			

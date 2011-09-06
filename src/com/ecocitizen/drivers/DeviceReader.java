@@ -1,5 +1,6 @@
 package com.ecocitizen.drivers;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 
 public interface DeviceReader {
@@ -14,5 +15,13 @@ public interface DeviceReader {
 	 * @throws IOException 
 	 */
 	String readNextData() throws IOException;
+
+	/**
+	 * Set the reader to use to read data from 
+	 * underlying the input stream.
+	 * 
+	 * @param bufferedReader
+	 */
+	void setBufferedReader(BufferedReader reader);
 
 }

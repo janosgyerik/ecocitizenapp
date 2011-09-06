@@ -146,15 +146,6 @@ abstract public class SensorManager {
 		sendSensorInfoMsg(MessageType.SM_DEVICE_LOST);
 	}
 	
-	DeviceReader getDeviceReader(BufferedReader reader) {
-		if (mSensorName.startsWith("HXM")) {
-			return new ZephyrReader(reader);
-		}
-		else {
-			return new SimpleSentenceReader(reader);
-		}
-	}
-
 	public String getDeviceName() {
 		return mSensorName;
 	}
