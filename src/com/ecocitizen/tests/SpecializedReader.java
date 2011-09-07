@@ -1,4 +1,4 @@
-package com.ecocitizen.tests.drivers;
+package com.ecocitizen.tests;
 
 import java.io.BufferedReader;
 import java.io.IOException;

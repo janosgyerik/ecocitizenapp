@@ -12,8 +12,6 @@ import com.ecocitizen.common.DeviceHandlerFactory;
 import com.ecocitizen.common.reader.DeviceReader;
 import com.ecocitizen.common.reader.SimpleSentenceReader;
 import com.ecocitizen.common.reader.ZephyrReader;
-import com.ecocitizen.tests.drivers.CommonReader;
-import com.ecocitizen.tests.drivers.SpecializedReader;
 
 public class DeviceHandlerFactoryTest {
 	

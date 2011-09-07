@@ -33,7 +33,7 @@ public class DeviceHandlerFactory {
 		namePatternsForParsers = new LinkedList<PatternSpec>();
 		
 		try {
-			ResourceBundle props = ResourceBundle.getBundle("com.ecocitizen.common.DeviceReaderFactory");
+			ResourceBundle props = ResourceBundle.getBundle("com.ecocitizen.common.DeviceHandlerFactory");
 			Set<String> names = new HashSet<String>();
 			
 			for (Enumeration<String> e = props.getKeys(); e.hasMoreElements(); ) {
