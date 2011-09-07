@@ -30,11 +30,11 @@ import android.widget.TextView;
 
 import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
-import com.ecocitizen.parser.CO2SentenceParser;
-import com.ecocitizen.parser.COxSentenceParser;
-import com.ecocitizen.parser.NOxSentenceParser;
-import com.ecocitizen.parser.NoiseSentenceParser;
-import com.ecocitizen.parser.PsenSentenceParser;
+import com.ecocitizen.common.parser.CO2SentenceParser;
+import com.ecocitizen.common.parser.COxSentenceParser;
+import com.ecocitizen.common.parser.NOxSentenceParser;
+import com.ecocitizen.common.parser.NoiseSentenceParser;
+import com.ecocitizen.common.parser.PsenSentenceParser;
 
 public class MultiSensorViewActivity extends AbstractMainActivity {
 	// Debugging

@@ -35,8 +35,8 @@ import android.widget.TextView;
 
 import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
-import com.ecocitizen.parser.PsenSentenceParser;
-import com.ecocitizen.parser.TemperatureSentenceParser;
+import com.ecocitizen.common.parser.PsenSentenceParser;
+import com.ecocitizen.common.parser.TemperatureSentenceParser;
 
 public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 	// Debugging

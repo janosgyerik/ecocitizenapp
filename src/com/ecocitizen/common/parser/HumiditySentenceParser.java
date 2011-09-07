@@ -17,10 +17,12 @@
  * along with EcoCitizen.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ecocitizen.parser;
+package com.ecocitizen.common.parser;
 
-public class BatterySentenceParser extends PsenSentenceParser {
-	public BatterySentenceParser() {
-		super("$PSEN,Batt,");
+public class HumiditySentenceParser extends PsenSentenceParser {
+
+	public HumiditySentenceParser() {
+		super("$PSEN,Hum,");
+		levelBoundaries = new double[]{ 5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,85,90,95 };
 	}
 }

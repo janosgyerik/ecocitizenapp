@@ -32,7 +32,7 @@ import android.widget.Toast;
 
 import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
-import com.ecocitizen.parser.CO2SentenceParser;
+import com.ecocitizen.common.parser.CO2SentenceParser;
 
 public class TreeViewActivity extends AbstractMainActivity {
 	// Debugging

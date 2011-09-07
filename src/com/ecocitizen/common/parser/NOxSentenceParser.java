@@ -17,7 +17,7 @@
  * along with EcoCitizen.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ecocitizen.parser;
+package com.ecocitizen.common.parser;
 
 public class NOxSentenceParser extends PsenSentenceParser {
 

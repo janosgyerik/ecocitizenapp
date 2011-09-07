@@ -17,37 +17,12 @@
  * along with EcoCitizen.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ecocitizen.parser;
+package com.ecocitizen.common.parser;
 
-public class TemperatureSentenceParser extends PsenSentenceParser {
+public class NoiseSentenceParser extends PsenSentenceParser {
 
-	public TemperatureSentenceParser() {
-		super("$PSEN,Hum,");
+	public NoiseSentenceParser() {
+		super("$PSEN,Noise,");
 		levelBoundaries = new double[]{ 5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,85,90,95 };
 	}
-	
-	@Override
-	public boolean match(String line) {
-		reset();
-		int dataStartIndex = line.indexOf(pattern);
-		if (dataStartIndex > -1) {
-			String[] cols = line.substring(dataStartIndex).split(",");
-			if (cols.length < 4) return false;
-            
-			name = "Temperature"; 
-			metric = cols[4];
-			try {
-				floatValue = Float.parseFloat(cols[5]);
-				strValue = String.valueOf(floatValue);
-			} catch (NumberFormatException e) {
-				strValue = cols[5];
-			}
-			setLevel();
-
-			return true;
-		} 
-		else {
-			return false;
-		}
-	}	
 }

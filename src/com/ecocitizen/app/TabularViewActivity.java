@@ -27,12 +27,12 @@ import android.widget.TextView;
 
 import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
-import com.ecocitizen.parser.BatterySentenceParser;
-import com.ecocitizen.parser.CO2SentenceParser;
-import com.ecocitizen.parser.COxSentenceParser;
-import com.ecocitizen.parser.HumiditySentenceParser;
-import com.ecocitizen.parser.NOxSentenceParser;
-import com.ecocitizen.parser.NoiseSentenceParser;
+import com.ecocitizen.common.parser.BatterySentenceParser;
+import com.ecocitizen.common.parser.CO2SentenceParser;
+import com.ecocitizen.common.parser.COxSentenceParser;
+import com.ecocitizen.common.parser.HumiditySentenceParser;
+import com.ecocitizen.common.parser.NOxSentenceParser;
+import com.ecocitizen.common.parser.NoiseSentenceParser;
 
 public class TabularViewActivity extends SimpleDeviceManagerClient {
 	// Debugging
