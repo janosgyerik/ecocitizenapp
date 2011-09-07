@@ -13,18 +13,12 @@ import com.ecocitizen.drivers.DeviceReader;
 import com.ecocitizen.drivers.SimpleSentenceReader;
 import com.ecocitizen.parser.PsenSentenceParser;
 
-public class DeviceReaderFactory {
+public class DeviceHandlerFactory {
 	// Debugging
-	private static final String TAG = "DeviceReaderFactory";
+	private static final String TAG = "DeviceHandlerFactory";
 
-	class PatternSpec {
-		final String pattern;
-		final String className;
-		PatternSpec(String pattern, String className) {
-			this.pattern = pattern;
-			this.className = className;
-		}
-	}
+	public static final Class defaultReaderClass = SimpleSentenceReader.class;
+	public static final Class defaultParserClass = PsenSentenceParser.class;
 	
 	private List<PatternSpec> idPatternsForReaders;
 	private List<PatternSpec> namePatternsForReaders;
@@ -32,10 +26,7 @@ public class DeviceReaderFactory {
 	private List<PatternSpec> idPatternsForParsers;
 	private List<PatternSpec> namePatternsForParsers;
 
-	public static final Class defaultReaderClass = SimpleSentenceReader.class;
-	public static final Class defaultParserClass = PsenSentenceParser.class;
-	
-	private DeviceReaderFactory() {
+	private DeviceHandlerFactory() {
 		idPatternsForReaders = new LinkedList<PatternSpec>();
 		idPatternsForParsers = new LinkedList<PatternSpec>();
 		namePatternsForReaders = new LinkedList<PatternSpec>();
@@ -133,11 +124,11 @@ public class DeviceReaderFactory {
 		}
 	}
 		
-	private static DeviceReaderFactory instance = null;
+	private static DeviceHandlerFactory instance = null;
 
-	synchronized public static DeviceReaderFactory getInstance() {
+	synchronized public static DeviceHandlerFactory getInstance() {
 		if (instance == null) {
-			instance = new DeviceReaderFactory();
+			instance = new DeviceHandlerFactory();
 		}
 		return instance;
 	}
@@ -192,4 +183,13 @@ public class DeviceReaderFactory {
 		return obj != null ? (PsenSentenceParser)obj : new PsenSentenceParser();
 	}
 
+	class PatternSpec {
+		final String pattern;
+		final String className;
+		PatternSpec(String pattern, String className) {
+			this.pattern = pattern;
+			this.className = className;
+		}
+	}
+	
 }

@@ -8,20 +8,20 @@ import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.ecocitizen.common.DeviceReaderFactory;
+import com.ecocitizen.common.DeviceHandlerFactory;
 import com.ecocitizen.drivers.DeviceReader;
 import com.ecocitizen.drivers.SimpleSentenceReader;
 import com.ecocitizen.drivers.ZephyrReader;
 import com.ecocitizen.tests.drivers.CommonReader;
 import com.ecocitizen.tests.drivers.SpecializedReader;
 
-public class DeviceReaderFactoryTest {
+public class DeviceHandlerFactoryTest {
 	
-	static DeviceReaderFactory factory;
+	static DeviceHandlerFactory factory;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		factory = DeviceReaderFactory.getInstance();
+		factory = DeviceHandlerFactory.getInstance();
 	}
 	
 	@Test
@@ -56,14 +56,14 @@ public class DeviceReaderFactoryTest {
 	@Test
 	public void testBorkedReader() {		
 		DeviceReader reader = factory.createReader("BORKED", "00:00:00:00:00:00");
-		assertEquals(reader.getClass(), DeviceReaderFactory.defaultReaderClass);
+		assertEquals(reader.getClass(), DeviceHandlerFactory.defaultReaderClass);
 		assertNotSame(CommonReader.class, reader.getClass());
 	}
 	
 	@Test
 	public void testOtherSensor() {
 		DeviceReader reader = factory.createReader("blah1", "00:07:80:ff:ff:ff");
-		assertEquals(reader.getClass(), DeviceReaderFactory.defaultReaderClass);
+		assertEquals(reader.getClass(), DeviceHandlerFactory.defaultReaderClass);
 		assertNotSame(CommonReader.class, reader.getClass());
 	}
 	
