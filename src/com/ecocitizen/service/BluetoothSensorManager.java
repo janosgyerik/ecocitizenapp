@@ -28,7 +28,7 @@ import java.util.UUID;
 
 import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.DeviceHandlerFactory;
-import com.ecocitizen.drivers.DeviceReader;
+import com.ecocitizen.common.reader.DeviceReader;
 
 import android.os.Handler;
 import android.util.Log;

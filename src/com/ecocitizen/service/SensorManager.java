@@ -27,9 +27,9 @@ import android.os.Handler;
 import com.ecocitizen.common.MessageType;
 import com.ecocitizen.common.bundlewrapper.SensorInfoBundleWrapper;
 import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
-import com.ecocitizen.drivers.DeviceReader;
-import com.ecocitizen.drivers.SimpleSentenceReader;
-import com.ecocitizen.drivers.ZephyrReader;
+import com.ecocitizen.common.reader.DeviceReader;
+import com.ecocitizen.common.reader.SimpleSentenceReader;
+import com.ecocitizen.common.reader.ZephyrReader;
 
 /**
  * Base class for handling communications with sensor devices.

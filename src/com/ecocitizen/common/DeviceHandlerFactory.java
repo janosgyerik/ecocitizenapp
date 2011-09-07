@@ -9,8 +9,8 @@ import java.util.Set;
 
 import android.util.Log;
 
-import com.ecocitizen.drivers.DeviceReader;
-import com.ecocitizen.drivers.SimpleSentenceReader;
+import com.ecocitizen.common.reader.DeviceReader;
+import com.ecocitizen.common.reader.SimpleSentenceReader;
 import com.ecocitizen.parser.PsenSentenceParser;
 
 public class DeviceHandlerFactory {

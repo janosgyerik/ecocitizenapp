@@ -9,9 +9,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.ecocitizen.common.DeviceHandlerFactory;
-import com.ecocitizen.drivers.DeviceReader;
-import com.ecocitizen.drivers.SimpleSentenceReader;
-import com.ecocitizen.drivers.ZephyrReader;
+import com.ecocitizen.common.reader.DeviceReader;
+import com.ecocitizen.common.reader.SimpleSentenceReader;
+import com.ecocitizen.common.reader.ZephyrReader;
 import com.ecocitizen.tests.drivers.CommonReader;
 import com.ecocitizen.tests.drivers.SpecializedReader;
 

@@ -3,7 +3,7 @@ package com.ecocitizen.tests.drivers;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-import com.ecocitizen.drivers.DeviceReader;
+import com.ecocitizen.common.reader.DeviceReader;
 
 public class SpecializedReader implements DeviceReader {
 
