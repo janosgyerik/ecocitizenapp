@@ -12,14 +12,21 @@ release in marketplace
 ======================
 - complete support for zephyr
 - follow through the steps in android docs
+- install on motorola
 
 
 current focus
 =============
+- add device name to SentenceBundle
 - create common SensorDataParser interface and implementations
-	- SimpleSentenceParser
-	- ZephyrParser
-		- show heartrate on TabularView+
+	- make temperature work, verify on tabular view
+		! tdd
+	- make zephyr work, verify on tabular view
+		! tdd
+	- bug: multisensor view is broken
+	- bug: tabular view+ is broken
+	- document adding drivers for new sensors
+	- new release on project website
 - add a zephyr logfile for testing purposes
 - make the zephyr logfile work 
 	- perhaps use a name parameter when opening logfile

@@ -35,7 +35,7 @@ public class TemperatureSentenceParser extends PsenSentenceParser {
 			if (cols.length < 4) return false;
             
 			name = "Temperature"; 
-			metric = cols[4];
+			unit = cols[4];
 			try {
 				floatValue = Float.parseFloat(cols[5]);
 				strValue = String.valueOf(floatValue);

@@ -10,6 +10,7 @@ import java.util.Set;
 import android.util.Log;
 
 import com.ecocitizen.common.parser.PsenSentenceParser;
+import com.ecocitizen.common.parser.SensorDataParser;
 import com.ecocitizen.common.reader.DeviceReader;
 import com.ecocitizen.common.reader.SimpleSentenceReader;
 
@@ -149,11 +150,6 @@ public class DeviceHandlerFactory {
 		return defaultReaderClass.getCanonicalName();
 	}
 	
-	public DeviceReader createReader(String deviceName, String deviceId) {
-		String className = findReaderClassName(deviceName, deviceId);
-		return createReaderByClassName(className);
-	}
-	
 	private Object createClassByName(String className) {
 		try {
 			Class classToLoad = Class.forName(className);
@@ -168,19 +164,24 @@ public class DeviceHandlerFactory {
 		return null;
 	}
 	
+	public DeviceReader createReader(String deviceName, String deviceId) {
+		String className = findReaderClassName(deviceName, deviceId);
+		return createReaderByClassName(className);
+	}
+	
 	private DeviceReader createReaderByClassName(String className) {
 		Object obj = createClassByName(className);
 		return obj != null ? (DeviceReader)obj : new SimpleSentenceReader();
 	}
 
-	public PsenSentenceParser createParser(String deviceName, String deviceId) {
+	public SensorDataParser createParser(String deviceName, String deviceId) {
 		String className = findReaderClassName(deviceName, deviceId);
 		return createParserByClassName(className);
 	}
 
-	private PsenSentenceParser createParserByClassName(String className) {
+	private SensorDataParser createParserByClassName(String className) {
 		Object obj = createClassByName(className);
-		return obj != null ? (PsenSentenceParser)obj : new PsenSentenceParser();
+		return obj != null ? (SensorDataParser)obj : new PsenSentenceParser();
 	}
 
 	class PatternSpec {

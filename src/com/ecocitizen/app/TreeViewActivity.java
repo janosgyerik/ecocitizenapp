@@ -20,6 +20,8 @@
 package com.ecocitizen.app;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.location.Location;
 import android.os.Bundle;
@@ -31,8 +33,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ecocitizen.common.DebugFlagManager;
+import com.ecocitizen.common.DeviceHandlerFactory;
 import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
-import com.ecocitizen.common.parser.CO2SentenceParser;
+import com.ecocitizen.common.parser.PsenSentenceParser;
+import com.ecocitizen.common.parser.SensorData;
+import com.ecocitizen.common.parser.SensorDataFilter;
+import com.ecocitizen.common.parser.SensorDataParser;
+import com.ecocitizen.common.parser.SensorDataType;
 
 public class TreeViewActivity extends AbstractMainActivity {
 	// Debugging
@@ -100,35 +107,50 @@ public class TreeViewActivity extends AbstractMainActivity {
 		if (D) Log.d(TAG, "++ ON START ++");
 	}
 
-	CO2SentenceParser parser = new CO2SentenceParser();
+	private Map<String, SensorDataParser> parsers =
+		new HashMap<String, SensorDataParser>();
+	
+	private SensorDataParser getParser(String deviceName, String deviceId) {
+		if (parsers.containsKey(deviceId)) {
+			return parsers.get(deviceId);
+		}
+		else {
+			SensorDataParser parser = DeviceHandlerFactory.getInstance().createParser(deviceName, deviceId);
+			parsers.put(deviceId, parser);
+			return parser;
+		}
+	}
 
 	@Override
 	void receivedSentenceBundle(SentenceBundleWrapper bundle) {
-		String line = bundle.getSentenceLine();
-		if (parser.match(line)) {
-			setCO2Val(bundle.getSensorID(), co2Format.format(parser.getFloatValue()));
-			mCO2NameView.setText(parser.getName());
-			mCO2MetricView.setText(parser.getMetric());
-			mLatNameView.setText("lat.=");
-			mLonNameView.setText("long.=");
+		SensorDataParser parser = new PsenSentenceParser(); //getParser("SENSPOD_3002", bundle.getSensorID());
 
-			String imgname = TREEBG_PREFIX + parser.getLevel();
+		for (SensorData data : parser.getSensorData(bundle.getSentenceLine(), new SensorDataFilter(SensorDataType.CO2))) {
+			setCO2Val(bundle.getSensorID(), co2Format.format(data.getFloatValue()));
+			mCO2NameView.setText(data.getName());
+			mCO2MetricView.setText(data.getUnit());
+
+			String imgname = TREEBG_PREFIX + data.getLevel();
 			int resID = getResources().getIdentifier(imgname, TREEBG_TYPE, TREEBG_PACKAGE);
 			if (resID == 0) {
 				resID = R.drawable.treebg_max;
 			}
-			
+
 			LinearLayout treepage = (LinearLayout) findViewById(R.id.treepage);
 			treepage.setBackgroundResource(resID);
-			
+
+			mLatNameView.setText("lat.=");
+			mLonNameView.setText("long.=");
+
 			Location location = bundle.getLocation();
+
 			if (location == null) {
 				mLatValView.setText(getString(R.string.common_na));
 				mLonValView.setText(getString(R.string.common_na));
 			}
 			else {
 				String lat_val[], lon_val[];
-				
+
 				lat_val = Location.convert(location.getLatitude(), Location.FORMAT_SECONDS).split(":", 0);
 				lon_val = Location.convert(location.getLongitude(), Location.FORMAT_SECONDS).split(":", 0);
 				mLatValView.setText(lat_val[0] + "º" + lat_val[1] + "'" +
@@ -138,7 +160,7 @@ public class TreeViewActivity extends AbstractMainActivity {
 			}
 		}
 	}
-	
+
 	void setCO2Val(String sensorID, String value) {
 		if (sensorID_1 == null) {
 			sensorID_1 = sensorID;

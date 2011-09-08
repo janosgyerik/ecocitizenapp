@@ -19,80 +19,169 @@
 
 package com.ecocitizen.common.parser;
 
-public class PsenSentenceParser {
-	String metric;
-	float floatValue;
-	String strValue;
-	String name;
-	int level;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
-	double[] levelBoundaries = new double[]{};
+public class PsenSentenceParser implements SensorDataParser {
 
-	String pattern = "$PSEN,";
-
-	public PsenSentenceParser(String pattern) {
-		this.pattern = pattern;
-	}
-
-	void setLevel() {
-		for (level = 0; level < levelBoundaries.length; ++level) {
-			if (floatValue < levelBoundaries[level]) break;
-		}
-	}
-
-	void reset() {
-		metric = null;
-		floatValue = Float.NaN;
-		strValue = null;
-		level = 0;
-		name = null;
-	}
+	String pattern;
+	double[] levelBoundaries;
+	
+	private SensorDataFilter filter;
 
 	public PsenSentenceParser() {
-		reset();
+		this("$PSEN,", new double[]{});
+	}
+	
+	public PsenSentenceParser(String pattern) {
+		this(pattern, new double[]{});
 	}
 
-	public boolean match(String line) {
-		reset();
-		int dataStartIndex = line.indexOf(pattern);
-		if (dataStartIndex > -1) {
-			String[] cols = line.substring(dataStartIndex).split(",");
-			if (cols.length < 4) return false;
+	public PsenSentenceParser(String pattern, double[] levelBoundaries) {
+		this.pattern = pattern;
+		this.levelBoundaries = levelBoundaries;
+	}
 
-			name = cols[1];
-			metric = cols[2];
-			try {
-				floatValue = Float.parseFloat(cols[3]);
-				strValue = String.valueOf(floatValue);
-			} catch (NumberFormatException e) {
-				strValue = cols[3];
-			}
-			setLevel();
-
-			return true;
-		} 
-		else {
-			return false;
+	private int getLevel(float value) {
+		int level = 0;
+		for (; level < levelBoundaries.length; ++level) {
+			if (value < levelBoundaries[level]) break;
 		}
-	}
-
-	public String getMetric() {
-		return metric;
-	}
-
-	public float getFloatValue() {
-		return floatValue;
-	}
-
-	public String getStrValue() {
-		return strValue;
-	}
-
-	public int getLevel() {
 		return level;
 	}
 
-	public String getName() {
-		return name;
+	public static String join(Collection s, String delimiter) {
+	    StringBuffer buffer = new StringBuffer();
+	    Iterator iter = s.iterator();
+	    while (iter.hasNext()) {
+	        buffer.append(iter.next());
+	        if (iter.hasNext()) {
+	            buffer.append(delimiter);
+	        }
+	    }
+	    return buffer.toString();
 	}
+	
+	public List<SensorData> getSensorData(String bytes, SensorDataFilter filter) {
+		String line = bytes;
+		List<SensorData> sensorDataList = new LinkedList<SensorData>();
+		SensorData data = new SensorData();
+		
+		Set<String> psenTypes = new HashSet<String>(); 
+		for (SensorDataType dataType : filter.dataTypes) {
+			switch (dataType) {
+			case CO2:
+				psenTypes.add("CO2");
+				break;
+			case COx:
+				psenTypes.add("COx");
+				break;
+			case NOx:
+				psenTypes.add("NOx");
+				break;
+			case Noise:
+				psenTypes.add("Noise");
+				break;
+			case Humidity:
+			case Temperature:
+				psenTypes.add("Hum");
+				break;
+			}
+		}
+		if (psenTypes.isEmpty()) {
+			pattern = ".*\\$PSEN,.*";
+		}
+		else {
+			pattern = ".*\\$PSEN,(" + join(psenTypes, "|") + "),.*";
+		}
+		
+		if (! line.matches(pattern)) return sensorDataList;
+		
+		int dataStartIndex = line.indexOf("$PSEN,");
+		if (dataStartIndex > -1) {
+			String[] cols = line.substring(dataStartIndex).split(",");
+			if (cols.length < 4) return sensorDataList;
+
+			data.name = cols[1];
+			data.unit = cols[2];
+			try {
+				data.floatValue = Float.parseFloat(cols[3]);
+				data.strValue = String.valueOf(data.floatValue);
+			} catch (NumberFormatException e) {
+				data.strValue = cols[3];
+			}
+			data.level = getLevel(data.floatValue);
+
+			sensorDataList.add(data);
+		}
+		
+		return sensorDataList;
+	}
+
+	public List<SensorData> getSensorData(String bytes) {
+		return getSensorData(bytes, new SensorDataFilter());
+	}
+	
+	String unit;
+	String name;
+	float floatValue;
+	String strValue;
+	int level;
+	
+	@Deprecated
+	public String getUnit() {
+		return data.unit;
+	}
+
+	@Deprecated
+	public String getMetric() {
+		return data.unit;
+	}
+
+	@Deprecated
+	public String getName() {
+		return data.name;
+	}
+	
+	@Deprecated
+	public float getFloatValue() {
+		return data.floatValue;
+	}
+
+	@Deprecated
+	public String getStrValue() {
+		return data.strValue;
+	}
+
+	@Deprecated
+	public int getLevel() {
+		return data.level;
+	}
+	
+	private SensorData data;
+	
+	void reset() {
+		data.floatValue = Float.NaN;
+		data.strValue = "";
+		data.unit = "";
+		data.level = 0;
+	}
+	
+	void setLevel() {
+		data.level = getLevel(data.floatValue);
+	}
+	
+	@Deprecated
+	public boolean match(String line) {
+		for (SensorData data : getSensorData(line)) {
+			this.data = data;
+			return true;
+		}
+		return false;
+	}
+
 }
