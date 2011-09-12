@@ -22,6 +22,7 @@ current focus
 		! tdd
 	- make zephyr work, verify on tabular view
 		! tdd
+	- bug: tree image does not change on treeview
 	- bug: multisensor view is broken
 	- bug: tabular view+ is broken
 	- document adding drivers for new sensors

@@ -144,20 +144,26 @@ public class DeviceHandlerFactory {
 		return instance;
 	}
 
-	private String findReaderClassName(String deviceName, String deviceId) {
-		for (PatternSpec spec : idPatternsForReaders) {
-			if (deviceId.matches(spec.pattern)) {
-				return spec.className;
-			}
+	public DeviceReader getReader(String deviceName, String deviceId) {
+		if (readers.containsKey(deviceId)) {
+			return readers.get(deviceId);
 		}
-		
-		for (PatternSpec spec : namePatternsForReaders) {
-			if (deviceName.matches(spec.pattern)) {
-				return spec.className;
-			}
+		else {
+			DeviceReader reader = createReader(deviceName, deviceId);
+			readers.put(deviceId, reader);
+			return reader;
 		}
-		
-		return defaultReaderClass.getCanonicalName();
+	}
+	
+	public SensorDataParser getParser(String deviceName, String deviceId) {
+		if (parsers.containsKey(deviceId)) {
+			return parsers.get(deviceId);
+		}
+		else {
+			SensorDataParser parser = createParser(deviceName, deviceId);
+			parsers.put(deviceId, parser);
+			return parser;
+		}
 	}
 	
 	private Object createClassByName(String className) {
@@ -174,15 +180,20 @@ public class DeviceHandlerFactory {
 		return null;
 	}
 	
-	public DeviceReader getReader(String deviceName, String deviceId) {
-		if (readers.containsKey(deviceId)) {
-			return readers.get(deviceId);
+	private String findReaderClassName(String deviceName, String deviceId) {
+		for (PatternSpec spec : idPatternsForReaders) {
+			if (deviceId.matches(spec.pattern)) {
+				return spec.className;
+			}
 		}
-		else {
-			DeviceReader reader = createReader(deviceName, deviceId);
-			readers.put(deviceId, reader);
-			return reader;
+		
+		for (PatternSpec spec : namePatternsForReaders) {
+			if (deviceName.matches(spec.pattern)) {
+				return spec.className;
+			}
 		}
+		
+		return defaultReaderClass.getCanonicalName();
 	}
 	
 	private DeviceReader createReader(String deviceName, String deviceId) {
@@ -195,19 +206,24 @@ public class DeviceHandlerFactory {
 		return obj != null ? (DeviceReader)obj : new SimpleSentenceReader();
 	}
 
-	public SensorDataParser getParser(String deviceName, String deviceId) {
-		if (parsers.containsKey(deviceId)) {
-			return parsers.get(deviceId);
+	private String findParserClassName(String deviceName, String deviceId) {
+		for (PatternSpec spec : idPatternsForParsers) {
+			if (deviceId.matches(spec.pattern)) {
+				return spec.className;
+			}
 		}
-		else {
-			SensorDataParser parser = createParser(deviceName, deviceId);
-			parsers.put(deviceId, parser);
-			return parser;
+		
+		for (PatternSpec spec : namePatternsForParsers) {
+			if (deviceName.matches(spec.pattern)) {
+				return spec.className;
+			}
 		}
+		
+		return defaultParserClass.getCanonicalName();
 	}
 	
 	private SensorDataParser createParser(String deviceName, String deviceId) {
-		String className = findReaderClassName(deviceName, deviceId);
+		String className = findParserClassName(deviceName, deviceId);
 		return createParserByClassName(className);
 	}
 
