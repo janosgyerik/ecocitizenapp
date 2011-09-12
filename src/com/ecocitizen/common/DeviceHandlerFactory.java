@@ -1,9 +1,11 @@
 package com.ecocitizen.common;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -27,6 +29,14 @@ public class DeviceHandlerFactory {
 	private List<PatternSpec> idPatternsForParsers;
 	private List<PatternSpec> namePatternsForParsers;
 
+	// cached parsers per device id
+	private Map<String, SensorDataParser> parsers =
+		new HashMap<String, SensorDataParser>();
+	
+	// cached readers per device id
+	private Map<String, DeviceReader> readers =
+		new HashMap<String, DeviceReader>();
+	
 	private DeviceHandlerFactory() {
 		idPatternsForReaders = new LinkedList<PatternSpec>();
 		idPatternsForParsers = new LinkedList<PatternSpec>();
@@ -164,7 +174,18 @@ public class DeviceHandlerFactory {
 		return null;
 	}
 	
-	public DeviceReader createReader(String deviceName, String deviceId) {
+	public DeviceReader getReader(String deviceName, String deviceId) {
+		if (readers.containsKey(deviceId)) {
+			return readers.get(deviceId);
+		}
+		else {
+			DeviceReader reader = createReader(deviceName, deviceId);
+			readers.put(deviceId, reader);
+			return reader;
+		}
+	}
+	
+	private DeviceReader createReader(String deviceName, String deviceId) {
 		String className = findReaderClassName(deviceName, deviceId);
 		return createReaderByClassName(className);
 	}
@@ -174,7 +195,18 @@ public class DeviceHandlerFactory {
 		return obj != null ? (DeviceReader)obj : new SimpleSentenceReader();
 	}
 
-	public SensorDataParser createParser(String deviceName, String deviceId) {
+	public SensorDataParser getParser(String deviceName, String deviceId) {
+		if (parsers.containsKey(deviceId)) {
+			return parsers.get(deviceId);
+		}
+		else {
+			SensorDataParser parser = createParser(deviceName, deviceId);
+			parsers.put(deviceId, parser);
+			return parser;
+		}
+	}
+	
+	private SensorDataParser createParser(String deviceName, String deviceId) {
 		String className = findReaderClassName(deviceName, deviceId);
 		return createParserByClassName(className);
 	}

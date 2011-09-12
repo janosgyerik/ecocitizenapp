@@ -107,20 +107,6 @@ public class TreeViewActivity extends AbstractMainActivity {
 		if (D) Log.d(TAG, "++ ON START ++");
 	}
 
-	private Map<String, SensorDataParser> parsers =
-		new HashMap<String, SensorDataParser>();
-	
-	private SensorDataParser getParser(String deviceName, String deviceId) {
-		if (parsers.containsKey(deviceId)) {
-			return parsers.get(deviceId);
-		}
-		else {
-			SensorDataParser parser = DeviceHandlerFactory.getInstance().createParser(deviceName, deviceId);
-			parsers.put(deviceId, parser);
-			return parser;
-		}
-	}
-	
 	private static SensorDataFilter filter = 
 		new SensorDataFilter(SensorDataType.CO2);
 

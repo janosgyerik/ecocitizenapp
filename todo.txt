@@ -17,7 +17,6 @@ release in marketplace
 
 current focus
 =============
-- implement SensorDataParser and DeviceReader cache in DeviceHandlerFactory
 - add device name to SentenceBundle
 - create common SensorDataParser interface and implementations
 	- make temperature work, verify on tabular view
