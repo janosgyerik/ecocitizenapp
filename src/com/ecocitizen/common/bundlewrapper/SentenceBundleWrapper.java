@@ -7,14 +7,16 @@ import android.os.Bundle;
 
 public class SentenceBundleWrapper extends AbstractBundleWrapper {
 	
-	private final static String BB_SEQUENCE_NUMBER = "1";
-	private final static String BB_SENSOR_ID = "2";
-	private final static String BB_DTZ = "3";
-	private final static String BB_SENTENCE = "4";
-	private final static String BB_LOCATION = "5";
+	private final static String BB_SEQUENCE_NUMBER = "10";
+	private final static String BB_SENSOR_ID = "20";
+	private final static String BB_SENSOR_NAME = "30";
+	private final static String BB_DTZ = "40";
+	private final static String BB_SENTENCE = "50";
+	private final static String BB_LOCATION = "60";
 	
 	private long sequenceNumber;
-	private String sensorID;
+	private String sensorId;
+	private String sensorName;
 	private String dtz;
 	private String sentenceLine;
 	
@@ -29,7 +31,8 @@ public class SentenceBundleWrapper extends AbstractBundleWrapper {
 		super(bundle);
 		
 		sequenceNumber = bundle.getLong(BB_SEQUENCE_NUMBER);
-		sensorID = bundle.getString(BB_SENSOR_ID);
+		sensorId = bundle.getString(BB_SENSOR_ID);
+		sensorName = bundle.getString(BB_SENSOR_NAME);
 		dtz = bundle.getString(BB_DTZ);
 		
 		String line = bundle.getString(BB_SENTENCE);
@@ -43,11 +46,12 @@ public class SentenceBundleWrapper extends AbstractBundleWrapper {
 			new LocationBundleWrapper(getBundle().getBundle(BB_LOCATION));
 	}
 
-	public static Bundle makeBundle(long sequenceNumber, String sensorId, String sentence,
-			Bundle locationBundle) {
+	public static Bundle makeBundle(long sequenceNumber, String sensorId, String sensorName, 
+			String sentence, Bundle locationBundle) {
 		Bundle bundle = new Bundle();
 		bundle.putLong(BB_SEQUENCE_NUMBER, sequenceNumber);
 		bundle.putString(BB_SENSOR_ID, sensorId);
+		bundle.putString(BB_SENSOR_NAME, sensorName);
 		bundle.putString(BB_DTZ, getCurrentDTZ());
 		bundle.putString(BB_SENTENCE, sentence);
 		bundle.putParcelable(BB_LOCATION, locationBundle);
@@ -59,8 +63,12 @@ public class SentenceBundleWrapper extends AbstractBundleWrapper {
 		return sequenceNumber;
 	}
 
-	public String getSensorID() {
-		return sensorID;
+	public String getSensorId() {
+		return sensorId;
+	}
+	
+	public String getSensorName() {
+		return sensorName;
 	}
 	
 	public String getDtz() {
@@ -78,7 +86,7 @@ public class SentenceBundleWrapper extends AbstractBundleWrapper {
 	public String toString() {
 		String datarecord = new Formatter().format(
 				"SENTENCE,%s,%s,%s,_",
-				getSensorID(),
+				getSensorId(),
 				getDtz(),
 				getSentenceLine()
 		).toString();

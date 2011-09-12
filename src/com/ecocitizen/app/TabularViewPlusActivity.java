@@ -97,7 +97,7 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 		}
 		
 		// TODO
-		if (bundle.getSensorID().equals("00_07_80_9B_05_B2")) {
+		if (bundle.getSensorId().equals("00_07_80_9B_05_B2")) {
 			int heartrate = (int)bundle.getSentenceLine().charAt(12);
 			Log.d(TAG, "HeartRate = " + heartrate);
 			updateRow("HeartRate", "", "" + heartrate);

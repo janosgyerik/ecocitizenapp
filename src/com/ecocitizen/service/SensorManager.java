@@ -19,17 +19,12 @@
 
 package com.ecocitizen.service;
 
-import java.io.BufferedReader;
-
 import android.os.Bundle;
 import android.os.Handler;
 
 import com.ecocitizen.common.MessageType;
 import com.ecocitizen.common.bundlewrapper.SensorInfoBundleWrapper;
 import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
-import com.ecocitizen.common.reader.DeviceReader;
-import com.ecocitizen.common.reader.SimpleSentenceReader;
-import com.ecocitizen.common.reader.ZephyrReader;
 
 /**
  * Base class for handling communications with sensor devices.
@@ -93,7 +88,8 @@ abstract public class SensorManager {
 	 * @return
 	 */
 	private Bundle getSensorDataBundle(long sequenceNumber, String sentence) {
-		return SentenceBundleWrapper.makeBundle(sequenceNumber, mSensorId, sentence, mGpsLocationListener.getLastLocationBundle());
+		return SentenceBundleWrapper.makeBundle(sequenceNumber, mSensorId, mSensorName, 
+				sentence, mGpsLocationListener.getLastLocationBundle());
 	}
 	
 	/**

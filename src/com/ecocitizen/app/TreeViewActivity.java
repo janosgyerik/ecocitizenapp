@@ -115,7 +115,7 @@ public class TreeViewActivity extends AbstractMainActivity {
 		SensorDataParser parser = new PsenSentenceParser(); //getParser("SENSPOD_3002", bundle.getSensorID());
 
 		for (SensorData data : parser.getSensorData(bundle.getSentenceLine(), filter)) {
-			setCO2Val(bundle.getSensorID(), co2Format.format(data.getFloatValue()));
+			setCO2Val(bundle.getSensorId(), co2Format.format(data.getFloatValue()));
 			mCO2NameView.setText(data.getName());
 			mCO2MetricView.setText(data.getUnit());
 
