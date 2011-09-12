@@ -120,12 +120,15 @@ public class TreeViewActivity extends AbstractMainActivity {
 			return parser;
 		}
 	}
+	
+	private static SensorDataFilter filter = 
+		new SensorDataFilter(SensorDataType.CO2);
 
 	@Override
 	void receivedSentenceBundle(SentenceBundleWrapper bundle) {
 		SensorDataParser parser = new PsenSentenceParser(); //getParser("SENSPOD_3002", bundle.getSensorID());
 
-		for (SensorData data : parser.getSensorData(bundle.getSentenceLine(), new SensorDataFilter(SensorDataType.CO2))) {
+		for (SensorData data : parser.getSensorData(bundle.getSentenceLine(), filter)) {
 			setCO2Val(bundle.getSensorID(), co2Format.format(data.getFloatValue()));
 			mCO2NameView.setText(data.getName());
 			mCO2MetricView.setText(data.getUnit());
