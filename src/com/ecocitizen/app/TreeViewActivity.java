@@ -20,8 +20,6 @@
 package com.ecocitizen.app;
 
 import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.Map;
 
 import android.location.Location;
 import android.os.Bundle;
@@ -112,7 +110,8 @@ public class TreeViewActivity extends AbstractMainActivity {
 
 	@Override
 	void receivedSentenceBundle(SentenceBundleWrapper bundle) {
-		SensorDataParser parser = new PsenSentenceParser(); //getParser("SENSPOD_3002", bundle.getSensorID());
+		SensorDataParser parser = 
+			DeviceHandlerFactory.getInstance().getParser(bundle.getSensorName(), bundle.getSensorId());
 
 		for (SensorData data : parser.getSensorData(bundle.getSentenceLine(), filter)) {
 			setCO2Val(bundle.getSensorId(), co2Format.format(data.getFloatValue()));
