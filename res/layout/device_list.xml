@@ -39,6 +39,6 @@
 		<ListView android:id="@+id/new_devices" style="@style/fill_width" />
 	</LinearLayout>
 
-	<Button android:id="@+id/button_scan" style="@style/fill_width"
+	<Button android:id="@+id/button_scan" style="@style/wideButton"
 		android:text="@string/button_scan" />
 </LinearLayout>
