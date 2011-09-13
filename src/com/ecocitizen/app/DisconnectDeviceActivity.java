@@ -19,9 +19,6 @@
 
 package com.ecocitizen.app;
 
-import com.ecocitizen.app.util.FinishActivityClickListener;
-import com.ecocitizen.common.DebugFlagManager;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,8 +30,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+
+import com.ecocitizen.app.util.FinishActivityClickListener;
+import com.ecocitizen.common.DebugFlagManager;
 
 /**
  * This Activity appears as a dialog. It lists any paired devices and
@@ -53,6 +52,7 @@ public class DisconnectDeviceActivity extends Activity {
 
 	// Member fields
 	private ArrayAdapter<String> mDevicesArrayAdapter;
+	private String[] mDeviceIds;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,15 +71,14 @@ public class DisconnectDeviceActivity extends Activity {
 		btnClose.setOnClickListener(new FinishActivityClickListener(this));
 		
 		Bundle extras = getIntent().getExtras();
-		
 		if (extras != null) {
 			String[] deviceNames = extras.getStringArray("device_names");
-			String[] deviceIds = extras.getStringArray("device_ids");
+			mDeviceIds = extras.getStringArray("device_ids");
 
 			mDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.device_name);
 
 			for (int i = 0; i < deviceNames.length; ++i) {
-				mDevicesArrayAdapter.add(deviceNames[i] + "\n" + deviceIds[i]);
+				mDevicesArrayAdapter.add(deviceNames[i] + "\n" + mDeviceIds[i].replace('_', ':'));
 			}
 			
 			ListView devicesListView = (ListView) findViewById(R.id.devices);
@@ -101,13 +100,10 @@ public class DisconnectDeviceActivity extends Activity {
 	}
 
 	private OnItemClickListener mDeviceClickListener = new OnItemClickListener() {
-		public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
-			String item = ((TextView) v).getText().toString();
-			String name_id[] = item.split("\n");
-
+		public void onItemClick(AdapterView<?> av, View v, int pos, long arg3) {
 			// Create the result Intent and include the device id
 			Intent intent = new Intent();
-			intent.putExtra(DEVICE_ID, name_id[1]);
+			intent.putExtra(DEVICE_ID, mDeviceIds[pos]);
 
 			// Set result and finish this Activity
 			setResult(Activity.RESULT_OK, intent);
