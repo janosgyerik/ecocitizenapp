@@ -34,6 +34,8 @@ on the deployment type, for example development / production.
 
     <!-- For developers only -->
 
+    <bool name="debugMode">true</bool>
+
     <integer name="logplayer_msg_interval">1000</integer>
 
     <integer name="min_dummy_files">0</integer>
