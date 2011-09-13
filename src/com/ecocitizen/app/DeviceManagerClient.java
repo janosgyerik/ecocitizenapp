@@ -61,6 +61,7 @@ public abstract class DeviceManagerClient extends Activity {
 	// Intent request codes
 	private static final int REQUEST_CONNECT_DEVICE = 1;
 	private static final int REQUEST_ENABLE_BT = 2;
+	private static final int REQUEST_DISCONNECT_DEVICE = 3;
 
 	private final static String PREFS_RTUPLOAD = "rtupload";
 	private final static String PREFS_FILESAVER = "filesaver";
@@ -327,7 +328,32 @@ public abstract class DeviceManagerClient extends Activity {
 	}
 
 	void disconnectSensor() {
-		disconnectSensor(null);
+		if (mService != null) {
+			try {
+				Bundle[] devices = mService.getConnectedDevices();
+				
+				if (devices.length > 1) {
+					String device_name[] = new String[devices.length];
+					String device_id[] = new String[devices.length];
+					for (int i = 0; i < devices.length; ++i) {
+						SensorInfoBundleWrapper sensorInfo = new SensorInfoBundleWrapper(devices[i]);
+						device_name[i] = sensorInfo.getSensorName();
+						device_id[i] = sensorInfo.getSensorId();
+					}
+					
+					Intent serverIntent = new Intent(this, DisconnectDeviceActivity.class);
+					serverIntent.putExtra("device_name", device_name);
+					serverIntent.putExtra("device_id", device_id);
+					startActivityForResult(serverIntent, REQUEST_DISCONNECT_DEVICE);
+				}
+				else {
+					disconnectSensor(null);
+				}
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	void disconnectSensor(String deviceName) {
@@ -448,6 +474,27 @@ public abstract class DeviceManagerClient extends Activity {
 
 				if (dummyDeviceName != null) {
 					connectLogplayer(dummyDeviceName);
+				}
+			}
+			break;
+		case REQUEST_DISCONNECT_DEVICE:
+			if (resultCode == Activity.RESULT_OK) {
+				// Get the sensor name
+				String deviceName = 
+					data.getExtras().getString(DeviceListActivity.EXTRA_LOGFILE_DEVICE);
+				
+				if (deviceName.equals(DisconnectDeviceActivity.DISCONNECT_ALL)) {
+					try {
+						Bundle[] devices = mService.getConnectedDevices();
+						
+						for (int i = 0; i < devices.length; i++) {
+							disconnectSensor(null);
+						}
+					} catch (RemoteException e) {
+						e.printStackTrace();
+					}
+				} else if (deviceName != null) {
+					disconnectSensor(deviceName);
 				}
 			}
 			break;
