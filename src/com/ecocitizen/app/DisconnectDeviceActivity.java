@@ -48,12 +48,11 @@ public class DisconnectDeviceActivity extends Activity {
 	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(DisconnectDeviceActivity.class);
 
 	// Return Intent extra
-	public static String EXTRA_LOGFILE_DEVICE = "logfile";
+	public static String DEVICE_ID = "device_id";
 	public static String DISCONNECT_ALL = "all";
 
 	// Member fields
-
-	private ArrayAdapter<String> mLogfileDevicesArrayAdapter;
+	private ArrayAdapter<String> mDevicesArrayAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,40 +63,35 @@ public class DisconnectDeviceActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.disconnect_device);
 
-		// Set result CANCELED incase the user backs out
+		// Set result CANCELED in case the user backs out
 		setResult(Activity.RESULT_CANCELED);
 
-		// Initialize the button to perform device discovery
 		Button disconnectAllButton = (Button) findViewById(R.id.button_disconnect_all);
-
 		Button btnClose = (Button) findViewById(R.id.button_close);
 		btnClose.setOnClickListener(new FinishActivityClickListener(this));
 		
-		//try {
 		Bundle extras = getIntent().getExtras();
 		
-		
 		if (extras != null) {
-			String[] device_name = extras.getStringArray("device_name");
-			String[] device_id = extras.getStringArray("device_id");
+			String[] deviceNames = extras.getStringArray("device_names");
+			String[] deviceIds = extras.getStringArray("device_ids");
 
-			mLogfileDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.logfile_name);
+			mDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.device_name);
 
-			for (int i = 0; i < device_name.length; i++) {
-				mLogfileDevicesArrayAdapter.add(device_name[i] + "\n" + device_id[i]);
+			for (int i = 0; i < deviceNames.length; ++i) {
+				mDevicesArrayAdapter.add(deviceNames[i] + "\n" + deviceIds[i]);
 			}
 			
-			ListView logfileListView = (ListView) findViewById(R.id.devices);
-			logfileListView.setAdapter(mLogfileDevicesArrayAdapter);
-			logfileListView.setOnItemClickListener(mLogfileDeviceClickListener);
-			findViewById(R.id.devices_section).setVisibility(View.VISIBLE);
+			ListView devicesListView = (ListView) findViewById(R.id.devices);
+			devicesListView.setAdapter(mDevicesArrayAdapter);
+			devicesListView.setOnItemClickListener(mDeviceClickListener);
 		}
 		
 		disconnectAllButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				// Create the result Intent and include the device name
 				Intent intent = new Intent();
-				intent.putExtra(EXTRA_LOGFILE_DEVICE, DISCONNECT_ALL);
+				intent.putExtra(DISCONNECT_ALL, "DISCONNECT_ALL");
 
 				// Set result and finish this Activity
 				setResult(Activity.RESULT_OK, intent);
@@ -106,17 +100,15 @@ public class DisconnectDeviceActivity extends Activity {
 		});
 	}
 
-	// The on-click listener for logfile devices
-	private OnItemClickListener mLogfileDeviceClickListener = new OnItemClickListener() {
+	private OnItemClickListener mDeviceClickListener = new OnItemClickListener() {
 		public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
-			String device = ((TextView) v).getText().toString();
-			String name_id[] = device.split("\n");
+			String item = ((TextView) v).getText().toString();
+			String name_id[] = item.split("\n");
 
-			// Create the result Intent and include the device name
+			// Create the result Intent and include the device id
 			Intent intent = new Intent();
-			intent.putExtra(EXTRA_LOGFILE_DEVICE, name_id[0]);
+			intent.putExtra(DEVICE_ID, name_id[1]);
 
-			Log.d("aaaaaaaaaaa", name_id[0]);
 			// Set result and finish this Activity
 			setResult(Activity.RESULT_OK, intent);
 			finish();

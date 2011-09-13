@@ -17,6 +17,9 @@ release in marketplace
 
 current focus
 =============
+- disconnect device
+	- add disconnect all server method
+	- confirm with real bt
 - create common SensorDataParser interface and implementations
 	- make temperature work, verify on tabular view
 		! tdd

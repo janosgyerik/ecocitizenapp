@@ -22,12 +22,9 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 	
-	<LinearLayout android:id="@+id/devices_section"
-		style="@style/weighted_list_section">
-		<ListView android:id="@+id/devices" style="@style/fill_width" />
-	</LinearLayout>
-	<Button android:id="@+id/button_disconnect_all" style="@style/fill_width"
+	<ListView android:id="@+id/devices" style="@style/fill_width" />
+	<Button android:id="@+id/button_disconnect_all" style="@style/wideButton"
 		android:text="@string/disconnect_all" />
-	<Button android:id="@+id/button_close" style="@style/fill_width"
+	<Button android:id="@+id/button_close" style="@style/wideButton"
 		android:text="@string/btn_close" />
 </LinearLayout>

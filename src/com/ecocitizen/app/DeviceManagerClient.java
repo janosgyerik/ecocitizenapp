@@ -333,24 +333,24 @@ public abstract class DeviceManagerClient extends Activity {
 				Bundle[] devices = mService.getConnectedDevices();
 				
 				if (devices.length > 1) {
-					String device_name[] = new String[devices.length];
-					String device_id[] = new String[devices.length];
+					String deviceNames[] = new String[devices.length];
+					String deviceIds[] = new String[devices.length];
+					
 					for (int i = 0; i < devices.length; ++i) {
 						SensorInfoBundleWrapper sensorInfo = new SensorInfoBundleWrapper(devices[i]);
-						device_name[i] = sensorInfo.getSensorName();
-						device_id[i] = sensorInfo.getSensorId();
+						deviceNames[i] = sensorInfo.getSensorName();
+						deviceIds[i] = sensorInfo.getSensorId();
 					}
 					
 					Intent serverIntent = new Intent(this, DisconnectDeviceActivity.class);
-					serverIntent.putExtra("device_name", device_name);
-					serverIntent.putExtra("device_id", device_id);
+					serverIntent.putExtra("device_names", deviceNames);
+					serverIntent.putExtra("device_ids", deviceIds);
 					startActivityForResult(serverIntent, REQUEST_DISCONNECT_DEVICE);
 				}
 				else {
 					disconnectSensor(null);
 				}
 			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -479,22 +479,20 @@ public abstract class DeviceManagerClient extends Activity {
 			break;
 		case REQUEST_DISCONNECT_DEVICE:
 			if (resultCode == Activity.RESULT_OK) {
-				// Get the sensor name
-				String deviceName = 
-					data.getExtras().getString(DeviceListActivity.EXTRA_LOGFILE_DEVICE);
+				Bundle extras = data.getExtras();
 				
-				if (deviceName.equals(DisconnectDeviceActivity.DISCONNECT_ALL)) {
+				if (extras.getString(DisconnectDeviceActivity.DISCONNECT_ALL) != null) {
 					try {
 						Bundle[] devices = mService.getConnectedDevices();
-						
-						for (int i = 0; i < devices.length; i++) {
+						for (int i = 0; i < devices.length; ++i) {
 							disconnectSensor(null);
 						}
 					} catch (RemoteException e) {
 						e.printStackTrace();
 					}
-				} else if (deviceName != null) {
-					disconnectSensor(deviceName);
+				}
+				else {
+					disconnectSensor(extras.getString(DisconnectDeviceActivity.DEVICE_ID));
 				}
 			}
 			break;
