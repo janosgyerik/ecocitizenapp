@@ -17,9 +17,7 @@ release in marketplace
 
 current focus
 =============
-- disconnect device
-	- add disconnect all server method
-	- confirm with real bt
+- add disconnect all server method
 - create common SensorDataParser interface and implementations
 	- make temperature work, verify on tabular view
 		! tdd
@@ -33,15 +31,12 @@ current focus
 - add a zephyr logfile for testing purposes
 - clean up PsenSentenceParser subclasses
 - clean up MultiSensorView
-- make the zephyr logfile work 
-	- perhaps use a name parameter when opening logfile
 - design new dedicated screen for zephyr -> Vika
 - rename all 'sentence' related things to 'SensorData', where applicable
 	- rename sendSentenceLineMsg to sendSensorDataMsg
 	- rename getSentenceLine to getSensorData
 	- rename SentenceBundleWrapper to SensorDataBundleWrapper
 	- grep -ri sentence .
-- adjust font size of CO2 on TreeView
 - clean up style
 - bug: it seems two GpsLocationListeners are created, why?
 - bug: why is this:

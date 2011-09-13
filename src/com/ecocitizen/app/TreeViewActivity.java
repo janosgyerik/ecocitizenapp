@@ -25,6 +25,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -48,7 +49,7 @@ public class TreeViewActivity extends AbstractMainActivity {
 	private TextView mCO2Val_2View;
 	private static DecimalFormat co2Format = new DecimalFormat("0");
 	private TextView mCO2NameView;
-	private TextView mCO2MetricView;
+	private TextView mCO2UnitView;
 	private TextView mLatNameView;
 	private TextView mLatValView;
 	private TextView mLonNameView;
@@ -78,7 +79,7 @@ public class TreeViewActivity extends AbstractMainActivity {
 		mCO2Val_1View = (TextView)findViewById(R.id.co2val_1);
 		mCO2Val_2View = (TextView)findViewById(R.id.co2val_2);
 		mCO2NameView = (TextView)findViewById(R.id.co2name);
-		mCO2MetricView = (TextView)findViewById(R.id.co2metric);
+		mCO2UnitView = (TextView)findViewById(R.id.co2unit);
 		mLatNameView = (TextView)findViewById(R.id.latname);
 		mLatValView = (TextView)findViewById(R.id.latval);
 		mLonNameView = (TextView)findViewById(R.id.lonname);
@@ -115,7 +116,7 @@ public class TreeViewActivity extends AbstractMainActivity {
 		for (SensorData data : parser.getSensorData(bundle.getSentenceLine(), filter)) {
 			setCO2Val(bundle.getSensorId(), co2Format.format(data.getFloatValue()));
 			mCO2NameView.setText(data.getName());
-			mCO2MetricView.setText(data.getUnit());
+			mCO2UnitView.setText(data.getUnit());
 
 			String imgname = TREEBG_PREFIX + data.getLevel();
 			int resID = getResources().getIdentifier(imgname, TREEBG_TYPE, TREEBG_PACKAGE);
@@ -154,8 +155,7 @@ public class TreeViewActivity extends AbstractMainActivity {
 		} 
 		else if (!sensorID_1.equals(sensorID)) {
 			sensorID_2 = sensorID;
-			mCO2Val_1View.setTextSize(15);
-			mCO2Val_2View.setTextSize(15);
+			mCO2Val_2View.setVisibility(View.VISIBLE);
 		}
 
 		if (sensorID_1.equals(sensorID)) {

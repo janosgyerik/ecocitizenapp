@@ -21,12 +21,11 @@
     <style name="co2Val" parent="@android:style/TextAppearance.Medium">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
-    	<item name="android:paddingTop">30px</item>
     	<item name="android:textSize">48px</item>
         <item name="android:typeface">monospace</item>
     </style>
 
-    <style name="co2NameMetric" parent="@android:style/TextAppearance.Medium">
+    <style name="co2Label" parent="@android:style/TextAppearance.Medium">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:typeface">monospace</item>
