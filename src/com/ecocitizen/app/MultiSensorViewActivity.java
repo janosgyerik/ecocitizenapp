@@ -29,12 +29,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ecocitizen.common.DebugFlagManager;
+import com.ecocitizen.common.DeviceHandlerFactory;
 import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
-import com.ecocitizen.common.parser.CO2SentenceParser;
-import com.ecocitizen.common.parser.COxSentenceParser;
-import com.ecocitizen.common.parser.NOxSentenceParser;
-import com.ecocitizen.common.parser.NoiseSentenceParser;
-import com.ecocitizen.common.parser.PsenSentenceParser;
+import com.ecocitizen.common.parser.SensorData;
+import com.ecocitizen.common.parser.SensorDataFilter;
+import com.ecocitizen.common.parser.SensorDataParser;
+import com.ecocitizen.common.parser.SensorDataType;
 
 public class MultiSensorViewActivity extends AbstractMainActivity {
 	// Debugging
@@ -44,24 +44,25 @@ public class MultiSensorViewActivity extends AbstractMainActivity {
 	private static DecimalFormat valFormat = new DecimalFormat("###.#");
 
 	// Constants
-	private final int box_num = 4;
+	private final int BOXES_NUM = 4;
 	
 	private TextView mLatView;
 	private TextView mLonView;
 	private TextView mTView;
 	private TextView mRHView;
 	
-	private TextView[] mBoxName = new TextView[box_num];
-	private TextView[] mBoxVal = new TextView[box_num];
-	private TextView[] mBoxMetric = new TextView[box_num];
-	private ImageView[] mBoxImage = new ImageView[box_num];
-	
-	private PsenSentenceParser[] parser_box = new PsenSentenceParser[box_num];
+	private TextView[] mBoxName = new TextView[BOXES_NUM];
+	private TextView[] mBoxVal = new TextView[BOXES_NUM];
+	private TextView[] mBoxUnit = new TextView[BOXES_NUM];
+	private ImageView[] mBoxImage = new ImageView[BOXES_NUM];
 	
 	private static final String TREE_PREFIX = "tree_";
 	private static final String TREE_PACKAGE = "com.ecocitizen.app";
 	private static final String TREE_TYPE = "drawable";
 
+	private static SensorDataFilter filter = 
+		new SensorDataFilter(SensorDataType.CO2, SensorDataType.NOx, 
+				SensorDataType.COx, SensorDataType.Noise);
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -86,8 +87,8 @@ public class MultiSensorViewActivity extends AbstractMainActivity {
             mBoxVal[i] = (TextView)box.findViewById(R.id.box_val);  
             mBoxVal[i].setText("--");
             
-            mBoxMetric[i] = (TextView)box.findViewById(R.id.box_metric); 
-            mBoxMetric[i].setText("--");
+            mBoxUnit[i] = (TextView)box.findViewById(R.id.box_metric); 
+            mBoxUnit[i].setText("--");
             
             mBoxImage[i] = (ImageView)box.findViewById(R.id.box_image); 
             mBoxImage[i].setImageResource(R.drawable.tree_min);
@@ -100,10 +101,6 @@ public class MultiSensorViewActivity extends AbstractMainActivity {
 	void receivedSentenceBundle(SentenceBundleWrapper bundle) {
 		
 		Location location = bundle.getLocation();
-		parser_box[0] = new CO2SentenceParser();
-		parser_box[1] = new NOxSentenceParser();
-		parser_box[2] = new COxSentenceParser();
-		parser_box[3] = new NoiseSentenceParser();
 		
 		if (location == null) {
 			mLatView.setText(R.string.common_na);
@@ -124,21 +121,31 @@ public class MultiSensorViewActivity extends AbstractMainActivity {
 			mRHView.setText("35");
 		}
 	
+		SensorDataParser parser = 
+			DeviceHandlerFactory.getInstance().getParser(bundle.getSensorName(), bundle.getSensorId());
 		
-		String line = bundle.getSentenceLine();
-		for (int i = 0 ; i < box_num; i++) {
-			if (parser_box[i].match(line)) {
-				updateBox(parser_box[i], i);
+		for (SensorData data : parser.getSensorData(bundle.getSentenceLine(), filter)) {
+			if (data.getName().equals("CO2")) {
+				updateBox(data, 0);
+			}
+			else if (data.getName().equals("NOx")) {
+				updateBox(data, 1);
+			}
+			else if (data.getName().equals("COx")) {
+				updateBox(data, 2);
+			}
+			else if (data.getName().equals("Noise")) {
+				updateBox(data, 3);
 			}
 		}
 	}
 	
-	void updateBox(PsenSentenceParser parser, int i) {
-		mBoxName[i].setText(parser.getName());
-		mBoxVal[i].setText(valFormat.format(parser.getFloatValue()));
-		mBoxMetric[i].setText(parser.getMetric());
+	void updateBox(SensorData data, int i) {
+		mBoxName[i].setText(data.getName());
+		mBoxVal[i].setText(valFormat.format(data.getFloatValue()));
+		mBoxUnit[i].setText(data.getUnit());
 		
-		String imgname = TREE_PREFIX + parser.getLevel();
+		String imgname = TREE_PREFIX + data.getLevel();
 		int resID = getResources().getIdentifier(imgname, TREE_TYPE, TREE_PACKAGE);
 		if (resID == 0) {
 			resID = R.drawable.tree_max;

@@ -23,11 +23,13 @@ current focus
 	- make zephyr work, verify on tabular view
 		! tdd
 	- bug: tree image does not change on treeview
-	- bug: multisensor view is broken
+		- the bug is prob. in getLevel
 	- bug: tabular view+ is broken
 	- document adding drivers for new sensors
 	- new release on project website
 - add a zephyr logfile for testing purposes
+- clean up PsenSentenceParser subclasses
+- clean up MultiSensorView
 - make the zephyr logfile work 
 	- perhaps use a name parameter when opening logfile
 - design new dedicated screen for zephyr -> Vika

@@ -33,7 +33,6 @@ import android.widget.Toast;
 import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.DeviceHandlerFactory;
 import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
-import com.ecocitizen.common.parser.PsenSentenceParser;
 import com.ecocitizen.common.parser.SensorData;
 import com.ecocitizen.common.parser.SensorDataFilter;
 import com.ecocitizen.common.parser.SensorDataParser;
