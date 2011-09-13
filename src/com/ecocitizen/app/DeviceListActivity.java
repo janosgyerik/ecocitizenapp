@@ -79,7 +79,8 @@ public class DeviceListActivity extends Activity {
 		// Initialize the button to perform device discovery
 		scanButton = (Button) findViewById(R.id.button_scan);
 
-		if (getResources().getBoolean(R.bool.debugMode)) {
+		//if (getResources().getBoolean(R.bool.debugMode)) {
+		if (true) {
 			// Setup the logfile devices list
 			mLogfileDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.logfile_name);
 			mLogfileDevicesArrayAdapter.add(getString(R.string.logfile_co2sample1));

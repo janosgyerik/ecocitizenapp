@@ -88,6 +88,9 @@
 		<activity android:name=".DeviceListActivity" android:label="@string/devicelist_activity"
 			android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden" />
 
+		<activity android:name=".DisconnectDeviceActivity" android:label="@string/disconnect_device_activity"
+			android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden" />
+
 		<activity android:name="backport.android.bluetooth.RequestEnableActivity"
 			android:label="Bluetooth Permission Request" android:noHistory="true"
 			android:theme="@android:style/Theme.Translucent.NoTitleBar"

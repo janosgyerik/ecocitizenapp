@@ -18,7 +18,8 @@
     <string name="mapview_activity">Map View</string>
     <string name="msg_are_you_sure">Are you sure?</string> 
     <string name="msg_no_files">There are no files.</string>
-    <string name="fileinfo_activity">File Info</string> 
+    <string name="fileinfo_activity">File Info</string>
+    <string name="disconnect_device_activity">disconnect device</string> 
     
     <string name="not_connected">You are not connected to a device</string>
     <string name="title_connecting">connecting...</string>
@@ -35,6 +36,8 @@
     <string name="title_other_devices">Other Available Devices</string>
     <string name="button_scan">Scan for devices</string>
     
+    <!-- DisconnectDevice -->
+    <string name="disconnect_all">Disconnect All</string>
     <string name="title_logfile_devices">Logfile Devices</string>
     <string name="logfile_co2sample1">CO2Sample1.txt</string>
     <string name="logfile_co2sample2">CO2Sample2.txt</string>
