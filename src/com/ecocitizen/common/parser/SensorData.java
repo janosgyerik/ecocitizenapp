@@ -20,7 +20,7 @@ public class SensorData {
 		return floatValue;
 	}
 
-	public String strValue() {
+	public String getStrValue() {
 		return strValue;
 	}
 
