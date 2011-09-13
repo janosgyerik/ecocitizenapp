@@ -11,15 +11,11 @@ public class SensorDataFilter {
 		dataTypes = new HashSet<SensorDataType>();
 	}
 	
-	public SensorDataFilter(SensorDataType dataType) {
+	public SensorDataFilter(SensorDataType... dataTypes) {
 		this();
-		dataTypes.add(dataType);
-	}
-
-	public SensorDataFilter(SensorDataType dataType1, SensorDataType dataType2) {
-		this();
-		dataTypes.add(dataType1);
-		dataTypes.add(dataType2);
+		for (SensorDataType dataType : dataTypes) {
+			this.dataTypes.add(dataType);
+		}
 	}
 
 }
