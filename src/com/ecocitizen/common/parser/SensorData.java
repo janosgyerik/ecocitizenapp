@@ -28,8 +28,12 @@ public class SensorData {
 	String strValue;
 	int level;
 	
-	public SensorData(SensorDataType dataType,
-			String name, String unit, String strValue) {
+	public SensorData(SensorDataType dataType, String unit, String strValue) {
+		this(dataType.name(), dataType, unit, strValue);
+	}
+	
+	public SensorData(String name, SensorDataType dataType,
+			String unit, String strValue) {
 		this.dataType = dataType;
 		this.name = name;
 		this.unit = unit;

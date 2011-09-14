@@ -81,41 +81,40 @@ public class SensarisParser implements SensorDataParser {
 			String[] cols = line.substring(dataStartIndex).split(",");
 			if (cols.length < 4) return sensorDataList;
 			
-			String name = cols[1];
-			String unit;
 			SensorDataType dataType;
-
+			String name = cols[1];
+			String unit = cols[2];
+			String strValue = cols[3];
+			
 			if (name.equals("CO2")) {
 				dataType = SensorDataType.CO2;
 				unit = "ppm";
+				sensorDataList.add(new SensorData(dataType, unit, strValue));
 			}
 			else if (name.equals("COx")) {
 				dataType = SensorDataType.COx;
 				unit = "ppm";
+				sensorDataList.add(new SensorData(dataType, unit, strValue));
 			}
 			else if (name.equals("NOx")) {
 				dataType = SensorDataType.NOx;
 				unit = "ppm";
+				sensorDataList.add(new SensorData(dataType, unit, strValue));
 			}
 			else if (name.equals("Noise")) {
 				dataType = SensorDataType.Noise;
 				unit = "dB";
+				sensorDataList.add(new SensorData(dataType, unit, strValue));
 			}
 			else if (name.equals("Hum")) {
 				dataType = SensorDataType.Humidity;
 				unit = "%";
+				sensorDataList.add(new SensorData(dataType, unit, strValue));
+				sensorDataList.add(new SensorData(SensorDataType.Temperature, "ºC", cols[5]));
 			}
 			else {
 				dataType = SensorDataType.UNKNOWN;
-				unit = "";
-			}
-			
-			String strValue = cols[3];
-			
-			sensorDataList.add(new SensorData(dataType, name, unit, strValue));
-			
-			if (dataType == SensorDataType.Humidity) {
-				sensorDataList.add(new SensorData(SensorDataType.Temperature, "Temperature", "ºC", cols[5]));
+				sensorDataList.add(new SensorData(name, dataType, unit, strValue));
 			}
 		}
 		
