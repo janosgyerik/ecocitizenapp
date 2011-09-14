@@ -31,8 +31,6 @@ public class SensarisParser implements SensorDataParser {
 	String pattern;
 	double[] levelBoundaries;
 	
-	private SensorDataFilter filter;
-
 	public SensarisParser() {
 		this("$PSEN,", new double[]{});
 	}
@@ -106,28 +104,34 @@ public class SensarisParser implements SensorDataParser {
 			if (cols.length < 4) return sensorDataList;
 			
 			String name = cols[1];
+			String unit;
 			SensorDataType dataType;
 
 			if (name.equals("CO2")) {
 				dataType = SensorDataType.CO2;
+				unit = "ppm";
 			}
 			else if (name.equals("COx")) {
 				dataType = SensorDataType.COx;
+				unit = "ppm";
 			}
 			else if (name.equals("NOx")) {
 				dataType = SensorDataType.NOx;
+				unit = "ppm";
 			}
 			else if (name.equals("Noise")) {
 				dataType = SensorDataType.Noise;
+				unit = "dB";
 			}
 			else if (name.equals("Hum")) {
 				dataType = SensorDataType.Humidity;
+				unit = "%";
 			}
 			else {
 				dataType = SensorDataType.UNKNOWN;
+				unit = "";
 			}
 			
-			String unit = cols[2];
 			String strValue = cols[3];
 			
 			sensorDataList.add(new SensorData(dataType, name, unit, strValue));
