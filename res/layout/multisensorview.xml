@@ -43,22 +43,16 @@
 		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:orientation="horizontal">
-			<TextView android:id="@+id/T_name" android:text="T"
-				style="@style/recordTRH" />
-			<TextView android:text="=" style="@style/recordTRH" />
-			<TextView android:id="@+id/T_val" style="@style/recordTRH" />
-			<TextView android:id="@+id/T_metric" android:text=" grad C"
-				style="@style/recordTRH" />
+			<TextView android:text="T=" style="@style/recordTRH" />
+			<TextView android:id="@+id/Temperature_val" style="@style/recordTRH" />
+			<TextView android:id="@+id/Temperature_unit" style="@style/recordTRH" />
 		</LinearLayout>
 		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:orientation="horizontal" android:layout_marginLeft="20px">
-			<TextView android:id="@+id/RH_name" android:text="RH"
-				style="@style/recordTRH" />
-			<TextView android:text="=" style="@style/recordTRH" />
-			<TextView android:id="@+id/RH_val" style="@style/recordTRH" />
-			<TextView android:id="@+id/RH_metric" android:text="%"
-				style="@style/recordTRH" />
+			<TextView android:text="RH=" style="@style/recordTRH" />
+			<TextView android:id="@+id/Humidity_val" style="@style/recordTRH" />
+			<TextView android:id="@+id/Humidity_unit" style="@style/recordTRH" />
 		</LinearLayout>
 	</LinearLayout>
 

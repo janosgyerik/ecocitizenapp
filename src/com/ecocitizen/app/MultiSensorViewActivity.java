@@ -48,8 +48,10 @@ public class MultiSensorViewActivity extends AbstractMainActivity {
 	
 	private TextView mLatView;
 	private TextView mLonView;
-	private TextView mTView;
-	private TextView mRHView;
+	private TextView mTemperatureView;
+	private TextView mTemperatureUnitView;
+	private TextView mHumidityView;
+	private TextView mHumidityUnitView;
 	
 	private TextView[] mBoxName = new TextView[BOXES_NUM];
 	private TextView[] mBoxVal = new TextView[BOXES_NUM];
@@ -75,8 +77,10 @@ public class MultiSensorViewActivity extends AbstractMainActivity {
 
 		mLatView = (TextView)findViewById(R.id.lat_val);
 		mLonView = (TextView)findViewById(R.id.lon_val);
-		mTView = (TextView)findViewById(R.id.T_val);
-		mRHView = (TextView)findViewById(R.id.RH_val);
+		mTemperatureView = (TextView)findViewById(R.id.Temperature_val);
+		mTemperatureUnitView = (TextView)findViewById(R.id.Temperature_unit);
+		mHumidityView = (TextView)findViewById(R.id.Humidity_val);
+		mHumidityUnitView = (TextView)findViewById(R.id.Humidity_unit);
 		
 		int boxIds[] = {R.id.boxtop_left, R.id.boxtop_right, R.id.boxbottom_left, R.id.boxbottom_right};
 		
@@ -136,10 +140,12 @@ public class MultiSensorViewActivity extends AbstractMainActivity {
 				updateBox(data, 3);
 				break;
 			case Humidity:
-				mRHView.setText(data.getStrValue());
+				mHumidityView.setText(data.getStrValue());
+				mHumidityUnitView.setText(data.getUnit());
 				break;
 			case Temperature:
-				mTView.setText(data.getStrValue());
+				mTemperatureView.setText(data.getStrValue());
+				mTemperatureUnitView.setText(data.getUnit());
 				break;
 			}
 		}

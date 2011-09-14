@@ -26,7 +26,6 @@ current focus
 	- document adding drivers for new sensors
 	- new release on project website
 - add a zephyr logfile for testing purposes
-- fix temperature and humidity units on MultiSensorView
 - clean up MultiSensorView
 - design new dedicated screen for zephyr -> Vika
 - rename all 'sentence' related things to 'SensorData', where applicable
