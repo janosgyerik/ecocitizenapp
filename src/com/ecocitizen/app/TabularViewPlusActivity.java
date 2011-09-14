@@ -34,9 +34,10 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.ecocitizen.common.DebugFlagManager;
+import com.ecocitizen.common.DeviceHandlerFactory;
 import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
-import com.ecocitizen.common.parser.SensarisParser;
-import com.ecocitizen.common.parser.TemperatureSentenceParser;
+import com.ecocitizen.common.parser.SensorData;
+import com.ecocitizen.common.parser.SensorDataParser;
 
 public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 	// Debugging
@@ -70,9 +71,6 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 		setupCommonButtons();
 	}
 
-	private SensarisParser parser = new SensarisParser();
-	private TemperatureSentenceParser mTemperatureSentenceParser = new TemperatureSentenceParser();
-	
 	@Override
 	void receivedSentenceBundle(SentenceBundleWrapper bundle) {
 		Location location = bundle.getLocation();
@@ -88,19 +86,11 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 			updateRowWithGpsData("Bearing", LATLON_FORMAT.format(location.getBearing()));
 		}
 		
-		String line = bundle.getSentenceLine();
-		if (parser.match(line)) {
-			updateRowWithParser(parser);
-			if (mTemperatureSentenceParser.match(line)) {
-				updateRowWithParser(mTemperatureSentenceParser);
-			}
-		}
-		
-		// TODO
-		if (bundle.getSensorId().equals("00_07_80_9B_05_B2")) {
-			int heartrate = (int)bundle.getSentenceLine().charAt(12);
-			Log.d(TAG, "HeartRate = " + heartrate);
-			updateRow("HeartRate", "", "" + heartrate);
+		SensorDataParser parser = 
+			DeviceHandlerFactory.getInstance().getParser(bundle.getSensorName(), bundle.getSensorId());
+
+		for (SensorData data : parser.getSensorData(bundle.getSentenceLine())) {
+			updateRowWithSensorData(data);
 		}
 	}
 	
@@ -108,8 +98,8 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 		updateRow(name, "", value);
 	}
 	
-	private void updateRowWithParser(SensarisParser parser) {
-		updateRow(parser.getName(), parser.getMetric(), parser.getStrValue());
+	private void updateRowWithSensorData(SensorData data) {
+		updateRow(data.getName(), data.getUnit(), data.getStrValue());
 	}
 	
 	private void updateRow(String name, String unit, String value) {

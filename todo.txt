@@ -20,9 +20,9 @@ current focus
 - create common SensorDataParser interface and implementations
 	- make zephyr work, verify on tabular view
 		! tdd
+		- int heartrate = (int)bundle.getSentenceLine().charAt(12);
 	- bug: tree image does not change on treeview
 		- the bug is prob. in getLevel
-	- bug: tabular view+ is broken
 	- document adding drivers for new sensors
 	- new release on project website
 - override data units in SensarisParser
