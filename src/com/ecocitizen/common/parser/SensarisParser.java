@@ -28,30 +28,6 @@ import java.util.Set;
 
 public class SensarisParser implements SensorDataParser {
 
-	String pattern;
-	double[] levelBoundaries;
-	
-	public SensarisParser() {
-		this("$PSEN,", new double[]{});
-	}
-	
-	public SensarisParser(String pattern) {
-		this(pattern, new double[]{});
-	}
-
-	public SensarisParser(String pattern, double[] levelBoundaries) {
-		this.pattern = pattern;
-		this.levelBoundaries = levelBoundaries;
-	}
-
-	private int getLevel(float value) {
-		int level = 0;
-		for (; level < levelBoundaries.length; ++level) {
-			if (value < levelBoundaries[level]) break;
-		}
-		return level;
-	}
-
 	public static String join(Collection<?> s, String delimiter) {
 	    StringBuffer buffer = new StringBuffer();
 	    Iterator<?> iter = s.iterator();
@@ -89,6 +65,8 @@ public class SensarisParser implements SensorDataParser {
 				break;
 			}
 		}
+		
+		String pattern;
 		if (psenTypes.isEmpty()) {
 			pattern = ".*\\$PSEN,.*";
 		}
@@ -147,63 +125,5 @@ public class SensarisParser implements SensorDataParser {
 	public List<SensorData> getSensorData(String bytes) {
 		return getSensorData(bytes, new SensorDataFilter());
 	}
-	
-	String unit;
-	String name;
-	float floatValue;
-	String strValue;
-	int level;
-	
-	@Deprecated
-	public String getUnit() {
-		return data.unit;
-	}
-
-	@Deprecated
-	public String getMetric() {
-		return data.unit;
-	}
-
-	@Deprecated
-	public String getName() {
-		return data.name;
-	}
-	
-	@Deprecated
-	public float getFloatValue() {
-		return data.floatValue;
-	}
-
-	@Deprecated
-	public String getStrValue() {
-		return data.strValue;
-	}
-
-	@Deprecated
-	public int getLevel() {
-		return data.level;
-	}
-	
-	private SensorData data;
-	
-	void reset() {
-		data.floatValue = Float.NaN;
-		data.strValue = "";
-		data.unit = "";
-		data.level = 0;
-	}
-	
-	void setLevel() {
-		data.level = getLevel(data.floatValue);
-	}
-	
-	@Deprecated
-	public boolean match(String line) {
-		for (SensorData data : getSensorData(line)) {
-			this.data = data;
-			return true;
-		}
-		return false;
-	}
-
+		
 }

@@ -71,4 +71,14 @@ public class SensorData {
 		return dataType;
 	}
 
+	/*
+	private int getLevel(float value) {
+		int level = 0;
+		for (; level < levelBoundaries.length; ++level) {
+			if (value < levelBoundaries[level]) break;
+		}
+		return level;
+	}
+	*/
+
 }

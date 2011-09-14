@@ -22,17 +22,10 @@ package com.ecocitizen.app;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
-import com.ecocitizen.common.parser.BatterySentenceParser;
-import com.ecocitizen.common.parser.CO2SentenceParser;
-import com.ecocitizen.common.parser.COxSentenceParser;
-import com.ecocitizen.common.parser.HumiditySentenceParser;
-import com.ecocitizen.common.parser.NOxSentenceParser;
-import com.ecocitizen.common.parser.NoiseSentenceParser;
 
 public class TabularViewActivity extends SimpleDeviceManagerClient {
 	// Debugging
@@ -40,7 +33,7 @@ public class TabularViewActivity extends SimpleDeviceManagerClient {
 	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(TabularViewActivity.class);
 
 	// Layout Views
-	private TableLayout mSentencesTbl;
+	//private TableLayout mSentencesTbl;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -59,21 +52,23 @@ public class TabularViewActivity extends SimpleDeviceManagerClient {
 		mDeviceListTextView.setText(R.string.tabularview_activity);
 		mDeviceListTextView = (TextView) findViewById(R.id.title_right_text);
 
-		mSentencesTbl = (TableLayout)findViewById(R.id.tblsentences);
+		//mSentencesTbl = (TableLayout)findViewById(R.id.tblsentences);
 	}
 
 
+	/*
 	COxSentenceParser coxParser = new COxSentenceParser();
 	BatterySentenceParser battParser = new BatterySentenceParser();
 	HumiditySentenceParser humParser = new HumiditySentenceParser();
 	NoiseSentenceParser noiseParser = new NoiseSentenceParser();
 	NOxSentenceParser noxParser = new NOxSentenceParser();
 	CO2SentenceParser co2Parser = new CO2SentenceParser();
+	*/
 
 	@Override
 	void receivedSentenceBundle(SentenceBundleWrapper bundle) {
-		String line = bundle.getSentenceLine();
 		
+		/*
 		if (battParser.match(line)) {
 			TextView batt_metric = (TextView) mSentencesTbl.findViewById(R.id.batt_metric);
 			TextView batt_value = (TextView) mSentencesTbl.findViewById(R.id.batt_value);
@@ -122,6 +117,7 @@ public class TabularViewActivity extends SimpleDeviceManagerClient {
 			co2_metric.setText(co2Parser.getMetric());
 			co2_value.setText(co2Parser.getStrValue());
 		}
+		*/
 
 	}
 }
