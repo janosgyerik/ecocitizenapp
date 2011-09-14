@@ -50,7 +50,7 @@ public class SensorData {
 		this.floatValue = floatValue;
 		this.strValue = strValue;
 		
-		this.level = 0; // TODO
+		this.level = LevelBoundaries.getLevel(dataType, floatValue);
 	}
 	
 	public String getUnit() {
@@ -76,15 +76,5 @@ public class SensorData {
 	public SensorDataType getDataType() {
 		return dataType;
 	}
-
-	/*
-	private int getLevel(float value) {
-		int level = 0;
-		for (; level < levelBoundaries.length; ++level) {
-			if (value < levelBoundaries[level]) break;
-		}
-		return level;
-	}
-	*/
 
 }

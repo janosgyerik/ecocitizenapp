@@ -23,7 +23,6 @@ current focus
 	- make zephyr work, verify on tabular view
 		! tdd
 		- int heartrate = (int)bundle.getSentenceLine().charAt(12);
-	- fix SensorData.getLevel, verify on treeview and MultiSensorView
 	- document adding drivers for new sensors
 	- new release on project website
 - add a zephyr logfile for testing purposes
