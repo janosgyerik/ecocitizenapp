@@ -37,16 +37,18 @@ public class SensorData {
 		this.dataType = dataType;
 		this.name = name;
 		this.unit = unit;
-		this.strValue = strValue;
 		
 		float floatValue;
 		try {
 			floatValue = Float.parseFloat(strValue);
+			strValue = Float.toString(floatValue); 
+			// ^^^^^ this fixes values like 032 -> 32
 		} 
 		catch (NumberFormatException e) {
 			floatValue = Float.NaN;
 		}
 		this.floatValue = floatValue;
+		this.strValue = strValue;
 		
 		this.level = 0; // TODO
 	}
