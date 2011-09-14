@@ -21,11 +21,31 @@ package com.ecocitizen.common.parser;
 
 public class SensorData {
 
-	String unit;
+	SensorDataType dataType;
 	String name;
+	String unit;
 	float floatValue;
 	String strValue;
 	int level;
+	
+	public SensorData(SensorDataType dataType,
+			String name, String unit, String strValue) {
+		this.dataType = dataType;
+		this.name = name;
+		this.unit = unit;
+		this.strValue = strValue;
+		
+		float floatValue;
+		try {
+			floatValue = Float.parseFloat(strValue);
+		} 
+		catch (NumberFormatException e) {
+			floatValue = Float.NaN;
+		}
+		this.floatValue = floatValue;
+		
+		this.level = 0; // TODO
+	}
 	
 	public String getUnit() {
 		return unit;
@@ -45,6 +65,10 @@ public class SensorData {
 
 	public int getLevel() {
 		return level;
+	}
+
+	public SensorDataType getDataType() {
+		return dataType;
 	}
 
 }

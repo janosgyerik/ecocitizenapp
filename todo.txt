@@ -17,10 +17,8 @@ release in marketplace
 
 current focus
 =============
-- add disconnect all server method
 - create common SensorDataParser interface and implementations
-	- make temperature work, verify on tabular view
-		! tdd
+	- verify temperature on tabular view
 	- make zephyr work, verify on tabular view
 		! tdd
 	- bug: tree image does not change on treeview
@@ -49,6 +47,7 @@ current focus
 - update class diagram for .service
 - add class diagrams to wiki with additional explanatory text
 - bug: after entering comment, the keyboard lingers too long and the tree in the tree view looks squeezed and ugly
+- add disconnect all server method
 
 
 critical for next experiment

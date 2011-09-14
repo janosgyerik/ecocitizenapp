@@ -20,6 +20,8 @@
 package com.ecocitizen.common.parser;
 
 public enum SensorDataType {
+	UNKNOWN,
+	
 	// Sensaris
 	CO2, 
 	COx,
@@ -29,5 +31,5 @@ public enum SensorDataType {
 	Temperature,
 	
 	// Zephyr
-	HeartRate,
+	HeartRate, 
 }

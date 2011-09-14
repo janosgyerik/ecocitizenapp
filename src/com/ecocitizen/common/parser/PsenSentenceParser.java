@@ -54,9 +54,9 @@ public class PsenSentenceParser implements SensorDataParser {
 		return level;
 	}
 
-	public static String join(Collection s, String delimiter) {
+	public static String join(Collection<?> s, String delimiter) {
 	    StringBuffer buffer = new StringBuffer();
-	    Iterator iter = s.iterator();
+	    Iterator<?> iter = s.iterator();
 	    while (iter.hasNext()) {
 	        buffer.append(iter.next());
 	        if (iter.hasNext()) {
@@ -69,7 +69,6 @@ public class PsenSentenceParser implements SensorDataParser {
 	public List<SensorData> getSensorData(String bytes, SensorDataFilter filter) {
 		String line = bytes;
 		List<SensorData> sensorDataList = new LinkedList<SensorData>();
-		SensorData data = new SensorData();
 		
 		Set<String> psenTypes = new HashSet<String>(); 
 		for (SensorDataType dataType : filter.dataTypes) {
@@ -105,23 +104,42 @@ public class PsenSentenceParser implements SensorDataParser {
 		if (dataStartIndex > -1) {
 			String[] cols = line.substring(dataStartIndex).split(",");
 			if (cols.length < 4) return sensorDataList;
+			
+			String name = cols[1];
+			SensorDataType dataType;
 
-			data.name = cols[1];
-			data.unit = cols[2];
-			try {
-				data.floatValue = Float.parseFloat(cols[3]);
-				data.strValue = String.valueOf(data.floatValue);
-			} catch (NumberFormatException e) {
-				data.strValue = cols[3];
+			if (name.equals("CO2")) {
+				dataType = SensorDataType.CO2;
 			}
-			data.level = getLevel(data.floatValue);
-
-			sensorDataList.add(data);
+			else if (name.equals("COx")) {
+				dataType = SensorDataType.COx;
+			}
+			else if (name.equals("NOx")) {
+				dataType = SensorDataType.NOx;
+			}
+			else if (name.equals("Noise")) {
+				dataType = SensorDataType.Noise;
+			}
+			else if (name.equals("Hum")) {
+				dataType = SensorDataType.Humidity;
+			}
+			else {
+				dataType = SensorDataType.UNKNOWN;
+			}
+			
+			String unit = cols[2];
+			String strValue = cols[3];
+			
+			sensorDataList.add(new SensorData(dataType, name, unit, strValue));
+			
+			if (dataType == SensorDataType.Humidity) {
+				sensorDataList.add(new SensorData(SensorDataType.Temperature, "Temperature", "ºC", cols[5]));
+			}
 		}
 		
 		return sensorDataList;
 	}
-
+	
 	public List<SensorData> getSensorData(String bytes) {
 		return getSensorData(bytes, new SensorDataFilter());
 	}
