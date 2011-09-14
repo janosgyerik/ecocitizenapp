@@ -62,7 +62,8 @@ public class MultiSensorViewActivity extends AbstractMainActivity {
 
 	private static SensorDataFilter filter = 
 		new SensorDataFilter(SensorDataType.CO2, SensorDataType.NOx, 
-				SensorDataType.COx, SensorDataType.Noise);
+				SensorDataType.COx, SensorDataType.Noise, 
+				SensorDataType.Humidity, SensorDataType.Temperature);
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -105,8 +106,6 @@ public class MultiSensorViewActivity extends AbstractMainActivity {
 		if (location == null) {
 			mLatView.setText(R.string.common_na);
 			mLonView.setText(R.string.common_na);
-			mTView.setText(R.string.common_na);
-			mRHView.setText(R.string.common_na);
 		}
 		else {
 			String lat_val[], lon_val[];
@@ -117,25 +116,31 @@ public class MultiSensorViewActivity extends AbstractMainActivity {
 					lat_val[2].substring(0, lat_val[2].indexOf('.')) + "\"");
 			mLonView.setText(lon_val[0] + "º" + lon_val[1] + "'" +
 					lon_val[2].substring(0, lon_val[2].indexOf('.')) + "\"");
-			mTView.setText("24.5");
-			mRHView.setText("35");
 		}
 	
 		SensorDataParser parser = 
 			DeviceHandlerFactory.getInstance().getParser(bundle.getSensorName(), bundle.getSensorId());
 		
 		for (SensorData data : parser.getSensorData(bundle.getSentenceLine(), filter)) {
-			if (data.getName().equals("CO2")) {
+			switch (data.getDataType()) {
+			case CO2:
 				updateBox(data, 0);
-			}
-			else if (data.getName().equals("NOx")) {
+				break;
+			case NOx:
 				updateBox(data, 1);
-			}
-			else if (data.getName().equals("COx")) {
+				break;
+			case COx:
 				updateBox(data, 2);
-			}
-			else if (data.getName().equals("Noise")) {
+				break;
+			case Noise:
 				updateBox(data, 3);
+				break;
+			case Humidity:
+				mRHView.setText(data.getStrValue());
+				break;
+			case Temperature:
+				mTView.setText(data.getStrValue());
+				break;
 			}
 		}
 	}

@@ -18,7 +18,6 @@ release in marketplace
 current focus
 =============
 - create common SensorDataParser interface and implementations
-	- verify temperature on tabular view
 	- make zephyr work, verify on tabular view
 		! tdd
 	- bug: tree image does not change on treeview
@@ -26,6 +25,9 @@ current focus
 	- bug: tabular view+ is broken
 	- document adding drivers for new sensors
 	- new release on project website
+- rename PsenSentenceParser to SensarisParser
+	- override data units
+	- verify data units on multisensor view
 - add a zephyr logfile for testing purposes
 - clean up PsenSentenceParser subclasses
 - clean up MultiSensorView
