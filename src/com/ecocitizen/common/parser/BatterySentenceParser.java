@@ -19,7 +19,7 @@
 
 package com.ecocitizen.common.parser;
 
-public class BatterySentenceParser extends PsenSentenceParser {
+public class BatterySentenceParser extends SensarisParser {
 	public BatterySentenceParser() {
 		super("$PSEN,Batt,");
 	}

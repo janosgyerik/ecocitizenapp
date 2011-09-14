@@ -19,7 +19,7 @@
 
 package com.ecocitizen.common.parser;
 
-public class NoiseSentenceParser extends PsenSentenceParser {
+public class NoiseSentenceParser extends SensarisParser {
 
 	public NoiseSentenceParser() {
 		super("$PSEN,Noise,");

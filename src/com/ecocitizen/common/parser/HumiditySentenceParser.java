@@ -19,7 +19,7 @@
 
 package com.ecocitizen.common.parser;
 
-public class HumiditySentenceParser extends PsenSentenceParser {
+public class HumiditySentenceParser extends SensarisParser {
 
 	public HumiditySentenceParser() {
 		super("$PSEN,Hum,");

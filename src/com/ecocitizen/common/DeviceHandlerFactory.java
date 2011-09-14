@@ -30,7 +30,7 @@ import java.util.Set;
 
 import android.util.Log;
 
-import com.ecocitizen.common.parser.PsenSentenceParser;
+import com.ecocitizen.common.parser.SensarisParser;
 import com.ecocitizen.common.parser.SensorDataParser;
 import com.ecocitizen.common.reader.DeviceReader;
 import com.ecocitizen.common.reader.SimpleSentenceReader;
@@ -40,7 +40,7 @@ public class DeviceHandlerFactory {
 	private static final String TAG = "DeviceHandlerFactory";
 
 	public static final Class defaultReaderClass = SimpleSentenceReader.class;
-	public static final Class defaultParserClass = PsenSentenceParser.class;
+	public static final Class defaultParserClass = SensarisParser.class;
 	
 	private List<PatternSpec> idPatternsForReaders;
 	private List<PatternSpec> namePatternsForReaders;
@@ -248,7 +248,7 @@ public class DeviceHandlerFactory {
 
 	private SensorDataParser createParserByClassName(String className) {
 		Object obj = createClassByName(className);
-		return obj != null ? (SensorDataParser)obj : new PsenSentenceParser();
+		return obj != null ? (SensorDataParser)obj : new SensarisParser();
 	}
 
 	class PatternSpec {

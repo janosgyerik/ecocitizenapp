@@ -19,7 +19,7 @@
 
 package com.ecocitizen.common.parser;
 
-public class CO2SentenceParser extends PsenSentenceParser {
+public class CO2SentenceParser extends SensarisParser {
 
 	public CO2SentenceParser() {
 		super("$PSEN,CO2,", new double[]{ 300, 350, 400, 450, 500, 600, 700, 800, 1000 });

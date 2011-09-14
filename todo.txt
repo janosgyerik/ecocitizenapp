@@ -25,9 +25,8 @@ current focus
 	- bug: tabular view+ is broken
 	- document adding drivers for new sensors
 	- new release on project website
-- rename PsenSentenceParser to SensarisParser
-	- override data units
-	- verify data units on multisensor view
+- override data units in SensarisParser
+	- verify on multisensor view
 - add a zephyr logfile for testing purposes
 - clean up PsenSentenceParser subclasses
 - clean up MultiSensorView

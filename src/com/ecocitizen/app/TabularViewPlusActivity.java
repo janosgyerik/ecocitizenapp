@@ -35,7 +35,7 @@ import android.widget.TextView;
 
 import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
-import com.ecocitizen.common.parser.PsenSentenceParser;
+import com.ecocitizen.common.parser.SensarisParser;
 import com.ecocitizen.common.parser.TemperatureSentenceParser;
 
 public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
@@ -70,7 +70,7 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 		setupCommonButtons();
 	}
 
-	private PsenSentenceParser parser = new PsenSentenceParser();
+	private SensarisParser parser = new SensarisParser();
 	private TemperatureSentenceParser mTemperatureSentenceParser = new TemperatureSentenceParser();
 	
 	@Override
@@ -108,7 +108,7 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 		updateRow(name, "", value);
 	}
 	
-	private void updateRowWithParser(PsenSentenceParser parser) {
+	private void updateRowWithParser(SensarisParser parser) {
 		updateRow(parser.getName(), parser.getMetric(), parser.getStrValue());
 	}
 	

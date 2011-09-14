@@ -19,7 +19,7 @@
 
 package com.ecocitizen.common.parser;
 
-public class COxSentenceParser extends PsenSentenceParser {
+public class COxSentenceParser extends SensarisParser {
 
 	public COxSentenceParser() {
 		super("$PSEN,COx,");

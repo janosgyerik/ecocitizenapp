@@ -8,13 +8,13 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.ecocitizen.common.parser.PsenSentenceParser;
+import com.ecocitizen.common.parser.SensarisParser;
 import com.ecocitizen.common.parser.SensorData;
 import com.ecocitizen.common.parser.SensorDataFilter;
 import com.ecocitizen.common.parser.SensorDataParser;
 import com.ecocitizen.common.parser.SensorDataType;
 
-public class PsenSentenceParserTest {
+public class SensarisParserTest {
 	
 	static final String CO2_LINE = "$PSEN,CO2,ppm, 0479";
 	static final String COx_LINE = "$PSEN,COx,V,1.625";
@@ -29,7 +29,7 @@ public class PsenSentenceParserTest {
 	
 	@Before
 	public void setUp() {
-		parser = new PsenSentenceParser();
+		parser = new SensarisParser();
 	}
 	
 	@Test

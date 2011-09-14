@@ -26,22 +26,22 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-public class PsenSentenceParser implements SensorDataParser {
+public class SensarisParser implements SensorDataParser {
 
 	String pattern;
 	double[] levelBoundaries;
 	
 	private SensorDataFilter filter;
 
-	public PsenSentenceParser() {
+	public SensarisParser() {
 		this("$PSEN,", new double[]{});
 	}
 	
-	public PsenSentenceParser(String pattern) {
+	public SensarisParser(String pattern) {
 		this(pattern, new double[]{});
 	}
 
-	public PsenSentenceParser(String pattern, double[] levelBoundaries) {
+	public SensarisParser(String pattern, double[] levelBoundaries) {
 		this.pattern = pattern;
 		this.levelBoundaries = levelBoundaries;
 	}
