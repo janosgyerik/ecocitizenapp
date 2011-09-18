@@ -32,4 +32,7 @@ public enum SensorDataType {
 	
 	// Zephyr
 	HeartRate, 
+	Distance,
+	InstSpeed,
+	Strides,
 }

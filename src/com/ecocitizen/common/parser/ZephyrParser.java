@@ -23,19 +23,49 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ZephyrParser implements SensorDataParser {
+	
+	static final SensorDataFilter filter = new SensorDataFilter(
+			SensorDataType.HeartRate,
+			SensorDataType.Distance,
+			SensorDataType.InstSpeed,
+			SensorDataType.Strides
+			);
+	
+	static final int HEARTRATE_POS = 12;
+	static final int DISTANCE_POS = 50;
+	static final int INST_SPEED_POS = 52;
+	static final int STRIDES_POS = 54;
 
 	public List<SensorData> getSensorData(String bytes, SensorDataFilter filter) {
 		List<SensorData> sensorDataList = new LinkedList<SensorData>();
 		
 		for (SensorDataType dataType : filter.dataTypes) {
+			SensorData data = null;
+			
 			switch (dataType) {
 			case HeartRate:
-				int heartRate = bytes.charAt(12);
+				int heartRate = bytes.charAt(HEARTRATE_POS);
 				if (heartRate >= 240) {
 					heartRate = 0;
 				}
-				SensorData heartRateData = new SensorData(SensorDataType.HeartRate, "", Integer.toString(heartRate));
-				sensorDataList.add(heartRateData);
+				data = new SensorData(SensorDataType.HeartRate, "", Integer.toString(heartRate));
+				break;
+			case Distance:
+				int distance = bytes.charAt(DISTANCE_POS) + 256 * bytes.charAt(DISTANCE_POS + 1);
+				data = new SensorData(SensorDataType.Distance, "", Integer.toString(distance));
+				break;
+			case InstSpeed:
+				int instSpeed = bytes.charAt(INST_SPEED_POS) + 256 * bytes.charAt(INST_SPEED_POS + 1);
+				data = new SensorData(SensorDataType.InstSpeed, "", Integer.toString(instSpeed));
+				break;
+			case Strides:
+				int strides = bytes.charAt(STRIDES_POS);
+				data = new SensorData(SensorDataType.Strides, "", Integer.toString(strides));
+				break;
+			}
+			
+			if (data != null) {
+				sensorDataList.add(data);
 			}
 		}
 		
@@ -43,7 +73,7 @@ public class ZephyrParser implements SensorDataParser {
 	}
 	
 	public List<SensorData> getSensorData(String bytes) {
-		return getSensorData(bytes, new SensorDataFilter(SensorDataType.HeartRate));
+		return getSensorData(bytes, filter);
 	}
 		
 }
