@@ -20,9 +20,6 @@ release in marketplace
 current focus
 =============
 - create common SensorDataParser interface and implementations
-	- make zephyr work, verify on tabular view
-		! tdd
-		- int heartrate = (int)bundle.getSentenceLine().charAt(12);
 	- document adding drivers for new sensors
 	- new release on project website
 - add a zephyr logfile for testing purposes
