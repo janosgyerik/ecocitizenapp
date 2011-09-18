@@ -58,7 +58,7 @@ public abstract class AbstractMainActivity extends DeviceManagerClient {
 		
 		//change requirement as follows
 		//it is true when there is no connected device. 
-		//TODO
+		//TODO get list of connected devices when initializing view
 		if (true) {
 			mBtnDisconnect.setVisibility(View.GONE);
 			mBtnAddNote.setVisibility(View.GONE);

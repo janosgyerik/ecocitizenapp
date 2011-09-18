@@ -52,7 +52,7 @@ public class GpsLocationListener implements LocationListener {
 	// when there is no GPS data, and the location should be flagged invalid.
 	private int latlonID = 0; 
 
-	// TODO: Perhaps these should be in SharedPreferences
+	// TODO Perhaps these should be in SharedPreferences or props.xml
 	private static final String PROVIDER = LocationManager.GPS_PROVIDER;
 	private static final int    MIN_TIME = 1000;
 	private static final float  MIN_DISTANCE = .1f;

@@ -60,7 +60,6 @@ public class MapViewActivity extends AbstractMainActivity {
 	
 	@Override
 	void receivedSentenceBundle(SentenceBundleWrapper bundle) {
-		// TODO Auto-generated method stub
 		Location location = bundle.getLocation();
 		
 		mLatNameView.setText("lat.=");

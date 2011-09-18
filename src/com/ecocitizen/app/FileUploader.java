@@ -129,7 +129,7 @@ public class FileUploader {
 	}
 	
 	boolean waitForStringResponse(String storeBaseURL, String line) {
-		/* TODO
+		/* TODO skip $GPRMC sentences
 		 * Do not upload GPS sentences.
 		 * This is not a very good thing to do (not clean).
 		 * But, the thing is, GPS sentences are kind of useless,
@@ -187,28 +187,8 @@ public class FileUploader {
 				}
 				do {
 					line = line.replace(" ", "");
-					// TODO: clean this up, after android is cleaned up
-					if (line.matches(".*,_[SG].*")) {
-						if (D) Log.d(TAG, "Applying workaround for FileSaver bug. To be deprecated soon.");
-						int pos = 0;
-						int start = -1;
-						while ((start = line.indexOf("_S", pos)) > -1 || (start = line.indexOf("_G", pos)) > -1) {
-							if (start + 1 < line.length() && line.charAt(start + 1) == ',') {
-								continue;
-							}
-							String newline = line.substring(pos, start + 1);
-							
-							if (!waitForStringResponse(storeBaseURL, newline)) {
-								return Status.UPLOAD_INTERRUPTED;
-							}
-							pos = start + 1;
-						}
-						break;
-					}
-					else {
-						if (!waitForStringResponse(storeBaseURL, line)) {
-							return Status.UPLOAD_INTERRUPTED;
-						}
+					if (!waitForStringResponse(storeBaseURL, line)) {
+						return Status.UPLOAD_INTERRUPTED;
 					}
 				}
 				while ((line = reader.readLine()) != null);
