@@ -67,8 +67,6 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 		setContentView(R.layout.tabularviewplus);
 
 		mSentencesTbl = (TableLayout)findViewById(R.id.tblsentencesplus);
-		
-		setupCommonButtons();
 	}
 
 	@Override

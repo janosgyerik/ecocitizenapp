@@ -51,7 +51,6 @@ public class SentencesActivity extends SimpleDeviceManagerClient {
 		// Set up the window layout
 		setContentView(R.layout.sentences);
 
-		setupCommonButtons();
 		setupPrivateButtons();
 
 		mSentencesArrayAdapter = new ArrayAdapter<String>(this, R.layout.message);

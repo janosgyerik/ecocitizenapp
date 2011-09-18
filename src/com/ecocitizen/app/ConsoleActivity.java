@@ -46,8 +46,6 @@ public class ConsoleActivity extends SimpleDeviceManagerClient {
 		// Set up the window layout
 		setContentView(R.layout.console);
 
-		setupCommonButtons();
-
 		Button mBtnConnectDM = (Button)findViewById(R.id.btn_connect_dm);
 		mBtnConnectDM.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {

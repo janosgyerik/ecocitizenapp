@@ -26,8 +26,4 @@
             android:layout_weight="1">
 		<TableLayout android:id="@+id/tblsentencesplus" style="@style/tabular" />
 	</ScrollView>
-	<Button android:id="@+id/btn_connect_device" android:text="@string/btn_connect_device"
-		android:stackFromBottom="true" style="@style/wideButton" />
-	<Button android:id="@+id/btn_disconnect_device" android:text="@string/btn_disconnect_device"
-		android:stackFromBottom="true" style="@style/wideButton" />
 </LinearLayout>

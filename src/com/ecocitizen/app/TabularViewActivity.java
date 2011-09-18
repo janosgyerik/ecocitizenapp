@@ -45,8 +45,6 @@ public class TabularViewActivity extends SimpleDeviceManagerClient {
 		setContentView(R.layout.tabularview);
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
 
-		setupCommonButtons();
-
 		// Set up the custom title
 		mDeviceListTextView = (TextView) findViewById(R.id.title_left_text);
 		mDeviceListTextView.setText(R.string.tabularview_activity);
