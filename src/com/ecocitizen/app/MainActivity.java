@@ -28,7 +28,7 @@ import android.widget.TabHost;
 public class MainActivity extends TabActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.debugtools);		
+		setContentView(R.layout.main);		
 		
 		Resources res = getResources();
 		TabHost tabHost = getTabHost();
