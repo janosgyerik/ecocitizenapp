@@ -91,9 +91,6 @@
     <!-- Tree view -->
     <string name="btn_connect_device">Connect to sensor</string>
     <string name="btn_disconnect_device">Disconnect sensor</string>
-    <string name="btn_connect_dm">Connect DM</string>
-    <string name="btn_disconnect_dm">Disconnect DM</string>
-    <string name="btn_kill_dm">Kill DM</string>
     <string name="msg_quit">Are you sure you want to quit?</string>
     <string name="btn_yes">Yes</string>
     <string name="btn_no">No</string>
@@ -101,7 +98,6 @@
     <string name="btn_close">Close</string>
     <string name="btn_scan_again">Scan again</string>
     <string name="btn_upload_all">Upload All</string>
-    <string name="btn_delete_all">Delete All</string>
     <string name="btn_upload_single">Upload</string>
     <string name="btn_delete_single">Delete</string>
     <string name="btn_text_mode">Switch to text</string>
