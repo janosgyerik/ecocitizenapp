@@ -19,6 +19,12 @@ release in marketplace
 
 current focus
 =============
+- bug: wrong pin is quietly ignored when pairing. NOT good!
+- bug: filemanager.sh is not friendly
+	- should show help when no args were entered
+	- should show error if permission is denied (no sdcard)
+	- what happens when usb debugging not enabled?
+- redmine: make it possible to cancel file upload
 - create common SensorDataParser interface and implementations
 	- document adding drivers for new sensors
 	- new release on project website
