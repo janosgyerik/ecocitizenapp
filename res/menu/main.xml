@@ -18,12 +18,6 @@
     along with EcoCitizen.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:id="@+id/menu_co2view" android:icon="@drawable/co2"
-		android:title="@+string/menu_co2view"/>
-	<item android:id="@+id/menu_multisensorview" android:icon="@drawable/menu_multisensorview"
-		android:title="@+string/menu_multisensorview"/>
-	<item android:id="@+id/menu_map" android:icon="@android:drawable/ic_menu_mapmode"
-		android:title="@string/menu_map" />
 	<item android:id="@+id/menu_graph" android:icon="@drawable/chart"
 		android:visible="false" android:title="@string/menu_graph" />
 	<item android:id="@+id/menu_fileuploader" android:icon="@drawable/connect"

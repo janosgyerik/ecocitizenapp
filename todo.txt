@@ -19,6 +19,11 @@ release in marketplace
 
 current focus
 =============
+- simple but very important touch ups to MainApplication
+	- remove title bar 
+	- change tab icons to tree and multisensorview
+	- make the tree not squeezed
+	- reduce tab height if possible
 - bug: wrong pin is quietly ignored when pairing. NOT good!
 - bug: filemanager.sh is not friendly
 	- should show help when no args were entered

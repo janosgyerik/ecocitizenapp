@@ -89,15 +89,6 @@ public abstract class AbstractMainActivity extends DeviceManagerClient {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.menu_co2view:
-			startActivity(new Intent(this, TreeViewActivity.class));
-			return true;
-		case R.id.menu_multisensorview:
-			startActivity(new Intent(this, MultiSensorViewActivity.class));
-			return true;
-		case R.id.menu_map:
-			startActivity(new Intent(this, MapViewActivity.class));
-			return true;
 		case R.id.menu_fileuploader:
 			startActivity(new Intent(this, FileUploaderActivity.class));
 			return true;

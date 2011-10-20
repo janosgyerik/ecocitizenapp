@@ -71,7 +71,6 @@ public class TreeViewActivity extends AbstractMainActivity {
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
 		// Set up the window layout
-		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.treeview);
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
 
@@ -87,11 +86,6 @@ public class TreeViewActivity extends AbstractMainActivity {
 
 		// Set up the button to connect/disconnect sensors
 		setupCommonButtons();
-
-		// Set up the custom title
-		TextView title = (TextView) findViewById(R.id.title_left_text);
-		title.setText(R.string.app_name);
-		mDeviceListTextView = (TextView) findViewById(R.id.title_right_text);
 
 		// If the adapter is null, then Bluetooth is not supported
 		if (mBluetoothAdapter == null) {
