@@ -73,7 +73,7 @@ public abstract class AbstractMainActivity extends DeviceManagerClient {
 			mBtnAddNote.setVisibility(View.GONE);
 		}
 		else {
-			mBtnDisconnect.setVisibility(View.VISIBLE);
+			//mBtnDisconnect.setVisibility(View.VISIBLE);
 			mBtnAddNote.setVisibility(View.VISIBLE);
 		}
 	}
@@ -113,6 +113,9 @@ public abstract class AbstractMainActivity extends DeviceManagerClient {
 					dialog.cancel();
 				}
 			}).show();
+			return true;
+		case R.id.menu_disconnect:
+			disconnectSensor();
 			return true;
 		}
 		return false;
