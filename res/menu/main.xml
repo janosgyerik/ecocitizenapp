@@ -30,4 +30,6 @@
 		android:icon="@drawable/settings" />
 	<item android:id="@+id/menu_quit" android:icon="@android:drawable/ic_lock_power_off"
 		android:title="@string/menu_quit" />
+	<item android:id="@+id/menu_disconnect" android:icon="@drawable/disconnect"
+		android:title="@string/menu_disconnect" />
 </menu>
