@@ -22,41 +22,16 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:id="@+id/mapview"
-    >
-    
+    >    
+    <com.google.android.maps.MapView
+        android:id="@+id/androidmap"
+        android:layout_width="fill_parent" 
+        android:layout_height="fill_parent"
+        android:enabled="true"
+        android:clickable="true"
+        android:apiKey="0y5UgOkjw4C7el_olmX0w74ZBIoxnHH_VcAnW9Q"
+    />
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    	android:orientation="horizontal" 
-    	android:layout_width="fill_parent"
-    	android:layout_height="wrap_content" 
-    	android:id="@+id/latlon"
-    	>
-    	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    		android:orientation="horizontal"
-    		android:layout_width="wrap_content"
-    		android:layout_height="wrap_content"
-    		android:gravity="center"
-    		android:layout_weight="1"
-    		>
-    		<TextView android:id="@+id/latname" style="@style/latlon" />
-    		<TextView android:id="@+id/latval" style="@style/latlon" />
-    	</LinearLayout>
-    	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    		android:orientation="horizontal"
-    		android:layout_width="wrap_content"
-    		android:layout_height="wrap_content"
-    		android:gravity="center"
-    		android:layout_weight="1"
-    		>
-    		<TextView android:id = "@+id/lonname"
-    			style="@style/latlon"
-    		/>
-    		<TextView android:id="@+id/lonval"
-    			style="@style/latlon"
-    		/>
-    	</LinearLayout>
-
-    </LinearLayout>
     <ListView android:id="@+id/vspace"
     	android:layout_width="fill_parent"
     	android:layout_height="fill_parent"
@@ -88,4 +63,5 @@
 			android:layout_gravity="right"
     	/>
 	</LinearLayout>
+
 </LinearLayout>

@@ -18,6 +18,8 @@
     along with EcoCitizen.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/menu_map" android:icon="@drawable/chart"
+		android:title="@string/menu_map" />
 	<item android:id="@+id/menu_graph" android:icon="@drawable/chart"
 		android:visible="false" android:title="@string/menu_graph" />
 	<item android:id="@+id/menu_fileuploader" android:icon="@drawable/connect"

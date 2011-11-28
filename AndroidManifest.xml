@@ -125,7 +125,8 @@
 				<action android:name="android.bluetooth.intent.action.REMOTE_NAME_UPDATED" />
 			</intent-filter>
 		</receiver>
-
+		
+		<uses-library android:name="com.google.android.maps" />
 	</application>
 
 	<uses-permission android:name="android.permission.BLUETOOTH"></uses-permission>
