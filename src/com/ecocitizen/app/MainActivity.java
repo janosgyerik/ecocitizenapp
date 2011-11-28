@@ -21,19 +21,15 @@ package com.ecocitizen.app;
 
 import android.app.TabActivity;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.TabHost;
-import android.widget.TextView;
 
 public class MainActivity extends TabActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);		
 		
-		Resources res = getResources();
 		TabHost tabHost = getTabHost();
 		tabHost.setup();
 		TabHost.TabSpec spec;
