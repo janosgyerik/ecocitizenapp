@@ -22,8 +22,11 @@ package com.ecocitizen.app;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 public class MainActivity extends TabActivity {
 	public void onCreate(Bundle savedInstanceState) {
@@ -35,24 +38,27 @@ public class MainActivity extends TabActivity {
 		tabHost.setup();
 		TabHost.TabSpec spec;
 		Intent intent; 
+		ImageButton btn;
 
 		intent = new Intent().setClass(this, TreeViewActivity.class);
-
-		spec = tabHost.newTabSpec("Tree").setIndicator("Tree",
-				res.getDrawable(R.drawable.tab_console))
-				.setContent(intent);
+		btn = new ImageButton(this);
+		btn.setImageResource(R.drawable.tab_tree);
+		btn.setPadding(0, 0, 0, 0);
+		spec = tabHost.newTabSpec("Tree").setContent(intent).setIndicator(btn);
 		tabHost.addTab(spec);
-
+		
 		intent = new Intent().setClass(this, MultiSensorViewActivity.class);
-		spec = tabHost.newTabSpec("MultiSensor").setIndicator("MultiSensor",
-				res.getDrawable(R.drawable.tab_sentences))
-				.setContent(intent);
+		btn = new ImageButton(this);
+		btn.setImageResource(R.drawable.tab_multisensor);
+		btn.setPadding(0, 0, 0, 0);
+		spec = tabHost.newTabSpec("MultiSensor").setContent(intent).setIndicator(btn);
 		tabHost.addTab(spec);
 
 		intent = new Intent().setClass(this, MapViewActivity.class);
-		spec = tabHost.newTabSpec("Map").setIndicator("Map",
-				res.getDrawable(R.drawable.tab_waitforgps))
-				.setContent(intent);
+		btn = new ImageButton(this);
+		btn.setImageResource(R.drawable.tab_map);
+		btn.setPadding(0, 0, 0, 0);
+		spec = tabHost.newTabSpec("Map").setContent(intent).setIndicator(btn);
 		tabHost.addTab(spec);
 
 		tabHost.setCurrentTabByTag("Tree");
