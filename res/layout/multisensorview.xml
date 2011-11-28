@@ -91,19 +91,13 @@
     	android:id="@+id/btn"
 		>
 		<ImageButton android:id="@+id/btn_addnote"
-    		android:src="@drawable/addnote"
-    		android:layout_width="wrap_content"
-    		android:layout_height="wrap_content"
-			android:layout_gravity="right"
-    	/>
-    	<ImageButton android:id="@+id/btn_disconnect_device"
-			android:src="@drawable/disconnect"
+    		android:src="@drawable/btn_addnote"
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
 			android:layout_gravity="right"
     	/>
     	<ImageButton android:id="@+id/btn_connect_device"
-    		android:src="@drawable/connect"
+    		android:src="@drawable/btn_connect"
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
 			android:layout_gravity="right"
