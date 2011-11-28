@@ -31,7 +31,6 @@ import android.widget.ImageButton;
 public abstract class AbstractMainActivity extends DeviceManagerClient {
 	
 	private ImageButton mBtnConnect;
-	private ImageButton mBtnDisconnect;
 	private ImageButton mBtnAddNote;
 
 	public void setupCommonButtons() {
@@ -39,13 +38,6 @@ public abstract class AbstractMainActivity extends DeviceManagerClient {
 		mBtnConnect.setOnClickListener(new View.OnClickListener(){   
 			public void onClick(View v) {   
 				connectSensor();
-			}  
-		});
-		
-		mBtnDisconnect = (ImageButton)findViewById(R.id.btn_disconnect_device);
-		mBtnDisconnect.setOnClickListener(new View.OnClickListener(){   
-			public void onClick(View v) {   
-				disconnectSensor();
 			}  
 		});
 		
@@ -60,7 +52,6 @@ public abstract class AbstractMainActivity extends DeviceManagerClient {
 		//it is true when there is no connected device. 
 		//TODO get list of connected devices when initializing view
 		if (true) {
-			mBtnDisconnect.setVisibility(View.GONE);
 			mBtnAddNote.setVisibility(View.GONE);
 		}
 	}
@@ -69,11 +60,9 @@ public abstract class AbstractMainActivity extends DeviceManagerClient {
 	void onConnectedDevicesUpdated() {
 		super.onConnectedDevicesUpdated();
 		if (mConnectedDevices.isEmpty()) {
-			mBtnDisconnect.setVisibility(View.GONE);
 			mBtnAddNote.setVisibility(View.GONE);
 		}
 		else {
-			//mBtnDisconnect.setVisibility(View.VISIBLE);
 			mBtnAddNote.setVisibility(View.VISIBLE);
 		}
 	}

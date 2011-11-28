@@ -127,14 +127,9 @@
     		android:layout_height="wrap_content"
 			android:layout_gravity="right"
     	/>
-    	<ImageButton android:id="@+id/btn_disconnect_device"
-			android:src="@drawable/disconnect"
-    		android:layout_width="wrap_content"
-    		android:layout_height="wrap_content"
-			android:layout_gravity="right"
-    	/>
     	<ImageButton android:id="@+id/btn_connect_device"
-    		android:src="@drawable/connect"
+    		android:src="@drawable/btn_connect"
+    		android:padding="0dp"
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
 			android:layout_gravity="right"
