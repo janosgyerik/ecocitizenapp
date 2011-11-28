@@ -122,14 +122,13 @@
     	android:id="@+id/btn"
 		>
 		<ImageButton android:id="@+id/btn_addnote"
-    		android:src="@drawable/addnote"
+    		android:src="@drawable/btn_addnote"
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
 			android:layout_gravity="right"
     	/>
     	<ImageButton android:id="@+id/btn_connect_device"
     		android:src="@drawable/btn_connect"
-    		android:padding="0dp"
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
 			android:layout_gravity="right"
