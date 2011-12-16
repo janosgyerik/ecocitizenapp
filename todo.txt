@@ -1,29 +1,42 @@
 release notes
 =============
-- Easier navigation: connect / disconnect buttons on screen instead of menu
-- Data units are fixed on MultiSensorView
++ Easier navigation
+	- Connect button on screen instead of menu
+	- Tabs to switch easier between views
++ Data units are fixed on MultiSensorView
 ? improved icons and buttons
-
-
-when connected
-==============
-- upgrade an android to newer version
 
 
 release in marketplace
 ======================
-- complete support for zephyr
-- follow through the steps in android docs
+- remove debug tools from menu
+- create branch for new API version
 - install on motorola
+- create Abdroid marketplace page
+- release on marketplace
+- announce the release
+	- project blog
+	- twitter
+	- launchpad
 
 
 current focus
 =============
-- simple but very important touch ups to MainApplication
-	- remove title bar 
-	- change tab icons to tree and multisensorview
-	- make the tree not squeezed
-	- reduce tab height if possible
+- add application icon
+- add support for the other Zephyr device
+- about page in the app with user registration info
+- install improved icons
+	- tab: tree
+	- tab: graph
+	- menu: disconnect
+	- menu: upload
+	? menu: settings
+	? menu: quit
+- login to website or use default (anon) API key
+R make the tree not squeezed
+- AddNote activity: override onSaveInstanceState method to prevent losing text when another application (like a phone call) comes to the foreground
+- performance issues? consider the Dev Guide: 'Designing for Performance'
+- review comments in entire code, especially service code
 - bug: wrong pin is quietly ignored when pairing. NOT good!
 - bug: filemanager.sh is not friendly
 	- should show help when no args were entered
@@ -41,7 +54,6 @@ current focus
 	- rename getSentenceLine to getSensorData
 	- rename SentenceBundleWrapper to SensorDataBundleWrapper
 	- grep -ri sentence .
-- clean up style
 - bug: it seems two GpsLocationListeners are created, why?
 - bug: why is this:
     D/DeviceManagerClient( 2764): handleMessage 13 CO2Sample2.txt
@@ -54,6 +66,16 @@ current focus
 - add class diagrams to wiki with additional explanatory text
 - bug: after entering comment, the keyboard lingers too long and the tree in the tree view looks squeezed and ugly
 - add disconnect all server method
+- fix hardcoded values in debugtools
+- file uploader: Cancel btn can interrupt the upload
+	tip: the activity is launched from FileUploaderActivity
+	tip: make ProgressDialog cancelable
+- file uploader: progress bar is updated regularly
+	tip: AsyncTask.onProgressUpdate
+	since we know number of lines, this should be possible
+- file uploader: Close button cancels upload
+- file uploader: know the number of data records pending for upload
+- FileSaverService with proper synchronization
 
 
 critical for next experiment
@@ -67,48 +89,16 @@ critical for next experiment
 	! an alternative solution is to use an alternative high speed uploader class
 
 
-optimization
+obscure bugs
 ============
-- make it possible to cancel upload in FileInfoWithUploadActivity
-	tip: the activity is launched from FileUploaderActivity
-	tip: make ProgressDialog cancelable
-- add progress bar while uploading a file in FileInfoWithUploadActivity
-	tip: AsyncTask.onProgressUpdate
-	since we know number of lines, this should be possible
-- create the foundation for detecting sensor types and using different drivers based on sensor type
-	use ascii reader with senspods
-	use binary reader (zephyr reader) with zephyr
-	apply unit type overrides (ppm instead of V for COx from senspods)
-- clean up files on android
-	check on sessions that crash the app
-	remove workaround code
-- fix hardcoded values in debugtools
 ? bug: android uploader gets killed
 ? bug: java.net.UnknownHostException
-- AddNote activity: override onSaveInstanceState method to prevent losing text when another application (like a phone call) comes to the foreground
-- if and only if performance is crucial, follow the 'Designing for Performance' article in Dev Guide
-- try to rewrite nested linearlayouts with relativelayout
-- consider using ViewStubs
-- review comments in entire code, especially service code
-
-
-file uploader "nice" implementation
-===================================
-+ show file info card with buttons
-+ Upload btn begins upload in async mode
-- Cancel btn can interrupt the upload
-- progress bar is updated regularly
-- Close button cancels upload
-+ show success/failure on completion
-+ show/hide buttons on success/failure appropriately
 
 
 nice to have
 ============
-- tweet current location and measurements
-- know the number of data records pending for upload
-- user profiles: anon, dev, janos, ...
-- FileSaverService with proper synchronization
+- consider using ViewStubs
+- try to rewrite nested linearlayouts with relativelayout
 
 
 possibly bluetooth backport bugs
