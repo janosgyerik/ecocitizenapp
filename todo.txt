@@ -22,7 +22,6 @@ release in marketplace
 
 current focus
 =============
-- add application icon
 - add support for the other Zephyr device
 - about page in the app with user registration info
 - install improved icons
