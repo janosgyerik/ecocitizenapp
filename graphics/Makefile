@@ -15,42 +15,80 @@
 # You should have received a copy of the GNU General Public License
 # along with EcoCitizen.  If not, see <http://www.gnu.org/licenses/>.
 #
-treebg_dir:=treebg
-tree_dir:=tree
-screenshots_dir:=screenshots
-target:=../res/drawable
-tmp:=/tmp/EcoCitizen
+src_dir:=src
+hdpi_dir:=../res/drawable-hdpi
+ldpi_dir:=../res/drawable-ldpi
+mdpi_dir:=../res/drawable-mdpi
 
-treebg0:=$(patsubst $(treebg_dir)/%,%,$(wildcard $(treebg_dir)/treebg_*.jpg))
-treebg_target:=$(patsubst %,$(target)/%,$(treebg0))
+names:=$(patsubst $(src_dir)/%,%,$(wildcard $(src_dir)/*.png))
+hdpi_target:=$(patsubst %,$(hdpi_dir)/%,$(names))
+ldpi_target:=$(patsubst %,$(ldpi_dir)/%,$(names))
+mdpi_target:=$(patsubst %,$(mdpi_dir)/%,$(names))
+launchpad_target:=launchpad/icon.png launchpad/logo.png launchpad/brand.png
+market_target:=market/android.png
 
-tree0:=$(patsubst $(tree_dir)/%,%,$(wildcard $(tree_dir)/tree_*.png))
-tree_target:=$(patsubst %,$(target)/%,$(tree0))
+default: help
 
-screenshots0:=$(patsubst $(screenshots_dir)/%,%,$(wildcard $(screenshots_dir)/*.png))
-screenshots_target:=$(patsubst %,$(tmp)/%,$(screenshots0))
-
-
-default:
+help:
 	@cat Makefile.readme
 
-treebg: $(treebg_target)
+hdpi: $(hdpi_target)
 
-tree: $(tree_target)
+ldpi: $(ldpi_target)
 
-all: $(treebg_target) $(tree_target)
+mdpi: $(mdpi_target)
 
-screenshots: $(screenshots_target)
+lp launchpad: $(launchpad_target)
 
+market: $(market_target)
 
-$(target)/%.jpg: $(treebg_dir)/%.jpg
-	convert -geometry 480x -crop 240x+120+0 $< $@
+all: hdpi ldpi mdpi launchpad market
+
+clean: 
+	rm $(hdpi_target) $(ldpi_target) $(mdpi_target) $(launchpad_target) $(market_target)
+
+$(hdpi_dir)/toolbar_%.png: $(src_dir)/toolbar_%.png
+	convert -geometry 72x $< $@
 	identify $@
 
-$(target)/%.png: $(tree_dir)/%.png
-	convert -crop 370x370+300+265 -geometry 55x $< $@
+$(ldpi_dir)/toolbar_%.png: $(src_dir)/toolbar_%.png
+	convert -geometry 36x $< $@
 	identify $@
 
-$(tmp)/%.png: $(screenshots_dir)/%.png
-	@mkdir -p $(tmp)
-	convert -crop 328x488+64+70 -scale '70%' $< $@
+$(mdpi_dir)/toolbar_%.png: $(src_dir)/toolbar_%.png
+	convert -geometry 48x $< $@
+	identify $@
+
+$(hdpi_dir)/launcher_%.png: $(src_dir)/launcher_%.png
+	convert -geometry 72x $< $@
+	identify $@
+
+$(ldpi_dir)/launcher_%.png: $(src_dir)/launcher_%.png
+	convert -geometry 36x $< $@
+	identify $@
+
+$(mdpi_dir)/launcher_%.png: $(src_dir)/launcher_%.png
+	convert -geometry 48x $< $@
+	identify $@
+
+launchpad/icon.png: $(src_dir)/launcher_main.png
+	@mkdir -p $(@D)
+	convert -geometry 14x $< $@
+	identify $@
+
+launchpad/logo.png: $(src_dir)/launcher_main.png
+	@mkdir -p $(@D)
+	convert -geometry 64x $< $@
+	identify $@
+
+launchpad/brand.png: $(src_dir)/launcher_main.png
+	@mkdir -p $(@D)
+	convert -geometry 192x $< $@
+	identify $@
+
+market/android.png: $(src_dir)/launcher_main.png
+	@mkdir -p $(@D)
+	convert -geometry 512x $< $@
+	identify $@
+
+# eof
