@@ -20,7 +20,7 @@ hdpi_dir:=../res/drawable-hdpi
 ldpi_dir:=../res/drawable-ldpi
 mdpi_dir:=../res/drawable-mdpi
 
-names:=$(patsubst $(src_dir)/%,%,$(wildcard $(src_dir)/*.png))
+names:=$(patsubst $(src_dir)/%,%,$(wildcard $(src_dir)/*.png $(src_dir)/*.jpg))
 hdpi_target:=$(patsubst %,$(hdpi_dir)/%,$(names))
 ldpi_target:=$(patsubst %,$(ldpi_dir)/%,$(names))
 mdpi_target:=$(patsubst %,$(mdpi_dir)/%,$(names))
@@ -47,16 +47,28 @@ all: hdpi ldpi mdpi launchpad market
 clean: 
 	rm $(hdpi_target) $(ldpi_target) $(mdpi_target) $(launchpad_target) $(market_target)
 
-$(hdpi_dir)/toolbar_%.png: $(src_dir)/toolbar_%.png
-	convert -geometry 72x $< $@
+$(hdpi_dir)/treebg_%.jpg: $(src_dir)/treebg_%.jpg
+	convert -geometry 480x -crop 240x+120+0 $< $@
 	identify $@
 
-$(ldpi_dir)/toolbar_%.png: $(src_dir)/toolbar_%.png
-	convert -geometry 36x $< $@
+$(ldpi_dir)/treebg_%.jpg: $(src_dir)/treebg_%.jpg
+	convert -geometry 480x -crop 240x+120+0 $< $@
 	identify $@
 
-$(mdpi_dir)/toolbar_%.png: $(src_dir)/toolbar_%.png
-	convert -geometry 48x $< $@
+$(mdpi_dir)/treebg_%.jpg: $(src_dir)/treebg_%.jpg
+	convert -geometry 480x -crop 240x+120+0 $< $@
+	identify $@
+
+$(hdpi_dir)/tree_%.png: $(src_dir)/tree_%.png
+	convert -crop 370x370+300+265 -geometry 55x $< $@
+	identify $@
+
+$(ldpi_dir)/tree_%.png: $(src_dir)/tree_%.png
+	convert -crop 370x370+300+265 -geometry 55x $< $@
+	identify $@
+
+$(mdpi_dir)/tree_%.png: $(src_dir)/tree_%.png
+	convert -crop 370x370+300+265 -geometry 55x $< $@
 	identify $@
 
 $(hdpi_dir)/launcher_%.png: $(src_dir)/launcher_%.png
