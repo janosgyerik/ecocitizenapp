@@ -71,6 +71,15 @@ $(mdpi_dir)/tree_%.png: $(src_dir)/tree_%.png
 	convert -crop 370x370+300+265 -geometry 55x $< $@
 	identify $@
 
+$(hdpi_dir)/ppm_%.png: $(src_dir)/ppm_%.png
+	cp $< $@
+
+$(ldpi_dir)/ppm_%.png: $(src_dir)/ppm_%.png
+	cp $< $@
+
+$(mdpi_dir)/ppm_%.png: $(src_dir)/ppm_%.png
+	cp $< $@
+
 $(hdpi_dir)/launcher_%.png: $(src_dir)/launcher_%.png
 	convert -geometry 72x $< $@
 	identify $@
