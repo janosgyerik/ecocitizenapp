@@ -24,7 +24,7 @@ import android.os.Handler;
 
 import com.ecocitizen.common.MessageType;
 import com.ecocitizen.common.bundlewrapper.SensorInfoBundleWrapper;
-import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
+import com.ecocitizen.common.bundlewrapper.SensorDataBundleWrapper;
 
 /**
  * Base class for handling communications with sensor devices.
@@ -88,7 +88,7 @@ abstract public class SensorManager {
 	 * @return
 	 */
 	private Bundle getSensorDataBundle(long sequenceNumber, String sentence) {
-		return SentenceBundleWrapper.makeBundle(sequenceNumber, mSensorId, mSensorName, 
+		return SensorDataBundleWrapper.makeBundle(sequenceNumber, mSensorId, mSensorName, 
 				sentence, mGpsLocationListener.getLastLocationBundle());
 	}
 	

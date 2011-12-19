@@ -44,7 +44,7 @@ import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.MessageType;
 import com.ecocitizen.common.bundlewrapper.NoteBundleWrapper;
 import com.ecocitizen.common.bundlewrapper.SensorInfoBundleWrapper;
-import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
+import com.ecocitizen.common.bundlewrapper.SensorDataBundleWrapper;
 
 public class DeviceManagerService extends Service {
 	// Debugging
@@ -305,7 +305,7 @@ public class DeviceManagerService extends Service {
 				final int N = mCallbacks.beginBroadcast();
 				final Bundle bundle = (Bundle)msg.obj;
 				if (LOG_SENTENCES) {
-					final String sentence = new SentenceBundleWrapper(bundle).getSensorData();
+					final String sentence = new SensorDataBundleWrapper(bundle).getSensorData();
 					if (D) Log.d(TAG, "SENTENCE = " + sentence);
 				}
 				for (int i = 0; i < N; ++i) {

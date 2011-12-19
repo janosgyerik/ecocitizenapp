@@ -24,7 +24,7 @@ import java.util.Formatter;
 import android.location.Location;
 import android.os.Bundle;
 
-public class SentenceBundleWrapper extends AbstractBundleWrapper {
+public class SensorDataBundleWrapper extends AbstractBundleWrapper {
 	
 	private final static String BB_SEQUENCE_NUMBER = "10";
 	private final static String BB_SENSOR_ID = "20";
@@ -46,7 +46,7 @@ public class SentenceBundleWrapper extends AbstractBundleWrapper {
 	 * 
 	 * @param bundle
 	 */
-	public SentenceBundleWrapper(Bundle bundle) {
+	public SensorDataBundleWrapper(Bundle bundle) {
 		super(bundle);
 		
 		sequenceNumber = bundle.getLong(BB_SEQUENCE_NUMBER);

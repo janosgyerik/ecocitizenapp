@@ -48,7 +48,7 @@ import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.DeviceManagerServiceCallback;
 import com.ecocitizen.common.MessageType;
 import com.ecocitizen.common.bundlewrapper.NoteBundleWrapper;
-import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
+import com.ecocitizen.common.bundlewrapper.SensorDataBundleWrapper;
 
 public class FileSaverService extends Service {
 	// Debugging
@@ -157,7 +157,7 @@ public class FileSaverService extends Service {
 	private void receivedSentenceBundle(Bundle bundle) {
 		if (! active) return;
 		
-		String datarecord = new SentenceBundleWrapper(bundle).toString();
+		String datarecord = new SensorDataBundleWrapper(bundle).toString();
 
 		saveDataRecord(datarecord);
 	}

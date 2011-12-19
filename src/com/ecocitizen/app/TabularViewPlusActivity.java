@@ -35,7 +35,7 @@ import android.widget.TextView;
 
 import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.DeviceHandlerFactory;
-import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
+import com.ecocitizen.common.bundlewrapper.SensorDataBundleWrapper;
 import com.ecocitizen.common.parser.SensorData;
 import com.ecocitizen.common.parser.SensorDataParser;
 
@@ -70,7 +70,7 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 	}
 
 	@Override
-	void receivedSentenceBundle(SentenceBundleWrapper bundle) {
+	void receivedSentenceBundle(SensorDataBundleWrapper bundle) {
 		Location location = bundle.getLocation();
 		
 		if (location == null) {

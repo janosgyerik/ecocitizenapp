@@ -20,7 +20,7 @@
 package com.ecocitizen.app;
 
 import com.ecocitizen.common.DebugFlagManager;
-import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
+import com.ecocitizen.common.bundlewrapper.SensorDataBundleWrapper;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -83,7 +83,7 @@ public class SentencesActivity extends SimpleDeviceManagerClient {
 	}
 	
 	@Override
-	void receivedSentenceBundle(SentenceBundleWrapper bundle) {
+	void receivedSentenceBundle(SensorDataBundleWrapper bundle) {
 		String line = bundle.getSensorData();
 		
 		if (mMode.equals(HEXA)) {

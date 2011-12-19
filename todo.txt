@@ -77,9 +77,7 @@ documentation
 optimization
 ============
 - clean up variable visibility in .app
-- rename all 'sentence' related things to 'SensorData', where applicable
-	- rename SentenceBundleWrapper to SensorDataBundleWrapper
-	- grep -ri sentence .
+- grep -ri sentence .
 
 
 obscure bugs

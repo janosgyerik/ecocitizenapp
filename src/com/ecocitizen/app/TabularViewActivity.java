@@ -25,7 +25,7 @@ import android.view.Window;
 import android.widget.TextView;
 
 import com.ecocitizen.common.DebugFlagManager;
-import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
+import com.ecocitizen.common.bundlewrapper.SensorDataBundleWrapper;
 
 public class TabularViewActivity extends SimpleDeviceManagerClient {
 	// Debugging
@@ -64,7 +64,7 @@ public class TabularViewActivity extends SimpleDeviceManagerClient {
 	*/
 
 	@Override
-	void receivedSentenceBundle(SentenceBundleWrapper bundle) {
+	void receivedSentenceBundle(SensorDataBundleWrapper bundle) {
 		
 		/*
 		if (battParser.match(line)) {

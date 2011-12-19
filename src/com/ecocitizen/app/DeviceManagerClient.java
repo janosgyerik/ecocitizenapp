@@ -47,7 +47,7 @@ import com.ecocitizen.common.DeviceManagerServiceCallback;
 import com.ecocitizen.common.MessageType;
 import com.ecocitizen.common.bundlewrapper.NoteBundleWrapper;
 import com.ecocitizen.common.bundlewrapper.SensorInfoBundleWrapper;
-import com.ecocitizen.common.bundlewrapper.SentenceBundleWrapper;
+import com.ecocitizen.common.bundlewrapper.SensorDataBundleWrapper;
 import com.ecocitizen.service.IDeviceManagerService;
 import com.ecocitizen.service.IDeviceManagerServiceCallback;
 import com.ecocitizen.service.IFileSaverService;
@@ -413,7 +413,7 @@ public abstract class DeviceManagerClient extends Activity {
 		if (D) Log.d(TAG, "--- ON DESTROY ---");
 	}
 
-	abstract void receivedSentenceBundle(SentenceBundleWrapper bundle);
+	abstract void receivedSentenceBundle(SensorDataBundleWrapper bundle);
 	
 	void receivedNoteBundle(NoteBundleWrapper bundle) {
 		Log.i(TAG, "receivedNoteBundle = " + bundle);
@@ -428,7 +428,7 @@ public abstract class DeviceManagerClient extends Activity {
 			}
 			switch (msg.what) {
 			case MessageType.SENTENCE:
-				receivedSentenceBundle(new SentenceBundleWrapper((Bundle)msg.obj));
+				receivedSentenceBundle(new SensorDataBundleWrapper((Bundle)msg.obj));
 				break;
 			case MessageType.NOTE:
 				receivedNoteBundle(new NoteBundleWrapper((Bundle)msg.obj));
