@@ -45,7 +45,6 @@ public class FileUploader {
 	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(FileUploader.class);
 
 	// Constants
-
 	public static final int HTTP_STATUS_OK = 200;
 	public static final int WAITFOR_SENSORMAP_MILLIS = 1000;
 	public static final int WAITFOR_SENSORMAP_RETRYCNT = 300;
@@ -84,7 +83,7 @@ public class FileUploader {
 	 * @param url
 	 * @return
 	 */
-	String getStringResponse(String url) {
+	private String getStringResponse(String url) {
 		if (D) Log.d(TAG, url);
 		HttpClient client = new DefaultHttpClient();
 		HttpGet request = new HttpGet(url);
@@ -152,7 +151,8 @@ public class FileUploader {
 		EXCEPTION,
 		STARTSESSION_FAILED,
 		EMPTY_FILE,
-		UPLOAD_INTERRUPTED
+		UPLOAD_INTERRUPTED,
+		UPLOAD_CANCELLED
 	}
 	
 	public boolean isServerReachable() {
@@ -206,5 +206,9 @@ public class FileUploader {
 		}
 
 		return Status.SUCCESS;
+	}
+
+	public void cancel() {
+		// TODO Auto-generated method stub
 	}
 }

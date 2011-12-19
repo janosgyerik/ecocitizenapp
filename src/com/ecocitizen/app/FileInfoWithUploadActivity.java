@@ -90,7 +90,12 @@ public class FileInfoWithUploadActivity extends FileInfoActivity {
 		
 		protected void onPreExecute() {
 			mProgressDialog = ProgressDialog.show(FileInfoWithUploadActivity.this, 
-					"", FileInfoWithUploadActivity.this.getString(R.string.msg_uploading), false, false);
+					"", FileInfoWithUploadActivity.this.getString(R.string.msg_uploading), false, true, 
+					new DialogInterface.OnCancelListener() {
+						public void onCancel(DialogInterface dialog) {
+							mFileUploader.cancel();
+						}
+			});
 		}
 		
 		protected FileUploader.Status doInBackground(Void... params) {
@@ -127,6 +132,9 @@ public class FileInfoWithUploadActivity extends FileInfoActivity {
 				break;
 			case UPLOAD_INTERRUPTED:
 				msgID = R.string.fileuploader_msg_upload_interrupted;
+				break;
+			case UPLOAD_CANCELLED:
+				msgID = R.string.fileuploader_msg_upload_cancelled;
 				break;
 			default:
 				msgID = R.string.fileuploader_msg_unknown_error;
