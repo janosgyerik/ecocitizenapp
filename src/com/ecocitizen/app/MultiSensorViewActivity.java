@@ -125,7 +125,7 @@ public class MultiSensorViewActivity extends AbstractMainActivity {
 		SensorDataParser parser = 
 			DeviceHandlerFactory.getInstance().getParser(bundle.getSensorName(), bundle.getSensorId());
 		
-		for (SensorData data : parser.getSensorData(bundle.getSentenceLine(), filter)) {
+		for (SensorData data : parser.getSensorData(bundle.getSensorData(), filter)) {
 			switch (data.getDataType()) {
 			case CO2:
 				updateBox(data, 0);

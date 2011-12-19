@@ -109,7 +109,7 @@ abstract public class SensorManager {
 		}
 	}
 	
-	void sendSentenceLineMsg(long sequenceNumber, String line) {
+	void sendSensorDataMsg(long sequenceNumber, String line) {
 		Bundle bundle = getSensorDataBundle(sequenceNumber, line);
 		mHandler.obtainMessage(MessageType.SENTENCE, bundle).sendToTarget();
 	}

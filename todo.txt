@@ -22,8 +22,7 @@ release in marketplace
 
 current focus
 =============
-- add support for the other Zephyr device
-- about page in the app with user registration info
+R make the tree not squeezed
 V install improved icons
 	- tab: tree
 	- tab: graph
@@ -31,61 +30,56 @@ V install improved icons
 	- menu: upload
 	? menu: settings
 	? menu: quit
+V design new dedicated screen for zephyr health sensors
+! add support for the other Zephyr device
+- add a zephyr logfile for testing/debugging purposes
+- about page in the app with user registration info
 - login to website or use default (anon) API key
-R make the tree not squeezed
-- AddNote activity: override onSaveInstanceState method to prevent losing text when another application (like a phone call) comes to the foreground
 - performance issues? consider the Dev Guide: 'Designing for Performance'
 - review comments in entire code, especially service code
-- bug: wrong pin is quietly ignored when pairing. NOT good!
-- bug: filemanager.sh is not friendly
-	- should show help when no args were entered
-	- should show error if permission is denied (no sdcard)
-	- what happens when usb debugging not enabled?
-- redmine: make it possible to cancel file upload
-- create common SensorDataParser interface and implementations
-	- document adding drivers for new sensors
-	- new release on project website
-- add a zephyr logfile for testing purposes
-- clean up MultiSensorView
-- design new dedicated screen for zephyr -> Vika
-- rename all 'sentence' related things to 'SensorData', where applicable
-	- rename sendSentenceLineMsg to sendSensorDataMsg
-	- rename getSentenceLine to getSensorData
-	- rename SentenceBundleWrapper to SensorDataBundleWrapper
-	- grep -ri sentence .
-- bug: it seems two GpsLocationListeners are created, why?
-- bug: why is this:
-    D/DeviceManagerClient( 2764): handleMessage 13 CO2Sample2.txt
-    D/DeviceManagerClient( 2764): handleMessage 15 null
-    D/DeviceManagerClient( 2764): handleMessage 13 CO2Sample2.txt
-    D/DeviceManagerClient( 2764): handleMessage 15 null
-- clean up variable visibility in .app
-- add class diagram for .app
-- update class diagram for .service
-- add class diagrams to wiki with additional explanatory text
-- bug: after entering comment, the keyboard lingers too long and the tree in the tree view looks squeezed and ugly
-- add disconnect all server method
-- fix hardcoded values in debugtools
+- improve data uploading throughput
+	test slowness, confirm and quantify
+	pack multiple messages in one transmission
+	repeat test, confirm improvement
 - file uploader: Cancel btn can interrupt the upload
 	tip: the activity is launched from FileUploaderActivity
 	tip: make ProgressDialog cancelable
 - file uploader: progress bar is updated regularly
 	tip: AsyncTask.onProgressUpdate
 	since we know number of lines, this should be possible
-- file uploader: Close button cancels upload
-- file uploader: know the number of data records pending for upload
-- FileSaverService with proper synchronization
 
 
-critical for next experiment
-============================
-- bug: app gets into strange state after connection lost, sending session id 'null'
-- improve data uploading throughput
-	test slowness, confirm and quantify
-	pack multiple messages in one transmission
-	repeat test, confirm improvement
-	automatically adjust sending buffer size
-	! an alternative solution is to use an alternative high speed uploader class
+bugs
+====
+! bug: app gets into strange state after connection lost, sending session id 'null'
+- bug: wrong pin is quietly ignored when pairing. NOT good!
+- bug: filemanager.sh is not friendly
+	- should show help when no args were entered
+	- should show error if permission is denied (no sdcard)
+	- what happens when usb debugging not enabled?
+- bug: it seems two GpsLocationListeners are created, why?
+- bug: why is this:
+    D/DeviceManagerClient( 2764): handleMessage 13 CO2Sample2.txt
+    D/DeviceManagerClient( 2764): handleMessage 15 null
+    D/DeviceManagerClient( 2764): handleMessage 13 CO2Sample2.txt
+    D/DeviceManagerClient( 2764): handleMessage 15 null
+- bug: after entering comment, the keyboard lingers too long and the tree in the tree view looks squeezed and ugly
+
+
+documentation
+=============
+- document adding drivers for new sensors: SensorDataParser
+- update class diagram for .service
+- add class diagram for .app
+- add class diagrams to wiki with additional explanatory text
+
+
+optimization
+============
+- clean up variable visibility in .app
+- rename all 'sentence' related things to 'SensorData', where applicable
+	- rename SentenceBundleWrapper to SensorDataBundleWrapper
+	- grep -ri sentence .
 
 
 obscure bugs

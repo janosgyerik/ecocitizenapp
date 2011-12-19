@@ -238,7 +238,7 @@ public class BluetoothSensorManager extends SensorManager {
 				try {
 					String data = deviceReader.readNextData();
 					if (data != null) {
-						sendSentenceLineMsg(++sequenceNumber, data);
+						sendSensorDataMsg(++sequenceNumber, data);
 					}
 				} catch (Exception e) {
 					Log.e(TAG, "disconnected", e);

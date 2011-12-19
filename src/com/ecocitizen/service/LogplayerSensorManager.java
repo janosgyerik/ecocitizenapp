@@ -98,7 +98,7 @@ public class LogplayerSensorManager extends SensorManager {
 					String line = reader.readLine();
 					if (line != null) {
 						hasReadAnything = true;
-						sendSentenceLineMsg(++sequenceNumber, line);
+						sendSensorDataMsg(++sequenceNumber, line);
 						try {
 							Thread.sleep(mMessageInterval);
 						}

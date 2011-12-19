@@ -84,7 +84,7 @@ public class SentencesActivity extends SimpleDeviceManagerClient {
 	
 	@Override
 	void receivedSentenceBundle(SentenceBundleWrapper bundle) {
-		String line = bundle.getSentenceLine();
+		String line = bundle.getSensorData();
 		
 		if (mMode.equals(HEXA)) {
 			StringBuilder builder = new StringBuilder();

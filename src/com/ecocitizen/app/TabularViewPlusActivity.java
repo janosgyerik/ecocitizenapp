@@ -87,7 +87,7 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 		SensorDataParser parser = 
 			DeviceHandlerFactory.getInstance().getParser(bundle.getSensorName(), bundle.getSensorId());
 
-		for (SensorData data : parser.getSensorData(bundle.getSentenceLine())) {
+		for (SensorData data : parser.getSensorData(bundle.getSensorData())) {
 			updateRowWithSensorData(data);
 		}
 	}

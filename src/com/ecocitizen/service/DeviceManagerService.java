@@ -305,7 +305,7 @@ public class DeviceManagerService extends Service {
 				final int N = mCallbacks.beginBroadcast();
 				final Bundle bundle = (Bundle)msg.obj;
 				if (LOG_SENTENCES) {
-					final String sentence = new SentenceBundleWrapper(bundle).getSentenceLine();
+					final String sentence = new SentenceBundleWrapper(bundle).getSensorData();
 					if (D) Log.d(TAG, "SENTENCE = " + sentence);
 				}
 				for (int i = 0; i < N; ++i) {
