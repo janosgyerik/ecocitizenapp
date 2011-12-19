@@ -51,7 +51,7 @@
 			android:layout_gravity="right"
     	/>
     	<ImageButton android:id="@+id/btn_disconnect_device"
-			android:src="@drawable/disconnect"
+			android:src="@drawable/menu_disconnect"
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
 			android:layout_gravity="right"
