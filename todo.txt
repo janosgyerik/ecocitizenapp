@@ -24,10 +24,10 @@ current focus
 =============
 - add support for the other Zephyr device
 - about page in the app with user registration info
-- install improved icons
+V install improved icons
 	- tab: tree
 	- tab: graph
-	- menu: disconnect
+	? menu: disconnect
 	- menu: upload
 	? menu: settings
 	? menu: quit

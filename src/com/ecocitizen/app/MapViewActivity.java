@@ -63,7 +63,7 @@ public class MapViewActivity extends MapActivity {
 		mOList = map.getOverlays();
 
 		// draw test
-		int resID = getResources().getIdentifier("temp20", PPM_TYPE, PPM_PACKAGE);
+		int resID = getResources().getIdentifier("ppm_min", PPM_TYPE, PPM_PACKAGE);
 		Bitmap bmp = BitmapFactory.decodeResource(getResources(), resID);
 		PpmOverlay overlay = new PpmOverlay(bmp, new GeoPoint(DEFAULT_LAT, DEFAULT_LON));
 		mOList.add(overlay);
