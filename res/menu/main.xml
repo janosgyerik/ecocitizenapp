@@ -15,19 +15,39 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with EcoCitizen.  If not, see <http://www.gnu.org/licenses/>.
+    along with EcoCitizen.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:id="@+id/menu_graph" android:icon="@drawable/chart"
-		android:visible="false" android:title="@string/menu_graph" />
-	<item android:id="@+id/menu_fileuploader" android:icon="@drawable/menu_fileuploader"
-		android:title="@string/menu_fileuploader" />
-	<item android:id="@+id/menu_settings" android:icon="@drawable/settings"
-		android:title="@string/menu_settings" />
-	<item android:id="@+id/menu_debugtools" android:title="@string/menu_debugtools"
-		android:icon="@drawable/settings" />
-	<item android:id="@+id/menu_disconnect" android:icon="@drawable/menu_disconnect"
-		android:title="@string/menu_disconnect" />
-	<item android:id="@+id/menu_quit" android:icon="@android:drawable/ic_lock_power_off"
-		android:title="@string/menu_quit" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_graph"
+        android:icon="@drawable/menu_graph"
+        android:title="@string/menu_graph"
+        android:visible="false"/>
+
+    <item
+        android:id="@+id/menu_fileuploader"
+        android:icon="@drawable/menu_fileuploader"
+        android:title="@string/menu_fileuploader"/>
+
+    <item
+        android:id="@+id/menu_settings"
+        android:icon="@drawable/menu_settings"
+        android:title="@string/menu_settings"/>
+
+    <item
+        android:id="@+id/menu_debugtools"
+        android:icon="@drawable/menu_settings"
+        android:title="@string/menu_debugtools"/>
+
+    <item
+        android:id="@+id/menu_disconnect"
+        android:icon="@drawable/menu_disconnect"
+        android:title="@string/menu_disconnect"/>
+
+    <item
+        android:id="@+id/menu_quit"
+        android:icon="@android:drawable/ic_lock_power_off"
+        android:title="@string/menu_quit"/>
+
 </menu>
