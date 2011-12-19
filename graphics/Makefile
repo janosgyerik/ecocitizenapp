@@ -47,6 +47,18 @@ all: hdpi ldpi mdpi launchpad market
 clean: 
 	rm $(hdpi_target) $(ldpi_target) $(mdpi_target) $(launchpad_target) $(market_target)
 
+$(hdpi_dir)/btn_%.png: $(src_dir)/btn_%.png
+	convert -geometry 72x $< $@
+	identify $@
+
+$(ldpi_dir)/btn_%.png: $(src_dir)/btn_%.png
+	convert -geometry 36x $< $@
+	identify $@
+
+$(mdpi_dir)/btn_%.png: $(src_dir)/btn_%.png
+	convert -geometry 48x $< $@
+	identify $@
+
 $(hdpi_dir)/treebg_%.jpg: $(src_dir)/treebg_%.jpg
 	convert -geometry 480x -crop 240x+120+0 $< $@
 	identify $@
