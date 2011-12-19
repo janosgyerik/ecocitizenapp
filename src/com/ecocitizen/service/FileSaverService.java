@@ -154,7 +154,7 @@ public class FileSaverService extends Service {
 
 	private boolean active = false;
 
-	private void receivedSentenceBundle(Bundle bundle) {
+	private void receivedSensorDataBundle(Bundle bundle) {
 		if (! active) return;
 		
 		String datarecord = new SensorDataBundleWrapper(bundle).toString();
@@ -172,12 +172,12 @@ public class FileSaverService extends Service {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case MessageType.SENTENCE:
+			case MessageType.SENSOR_DATA:
 				if (shouldStartSession) {
 					startSession();
 					shouldStartSession = false;
 				}
-				receivedSentenceBundle((Bundle)msg.obj);
+				receivedSensorDataBundle((Bundle)msg.obj);
 				break;
 			case MessageType.NOTE:
 				if (shouldStartSession) {

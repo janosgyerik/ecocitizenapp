@@ -50,12 +50,12 @@ public class DeviceManagerService extends Service {
 	// Debugging
 	private static final String TAG = "DeviceManagerService";
 	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(DeviceManagerService.class);
-	private static final boolean LOG_SENTENCES = false;
+	private static final boolean LOG_SENSOR_DATA = false;
 
 	/**
 	 * List of callbacks that will receive notification on events:
 	 * - sensor connected, disconnected, lost, ...
-	 * - sentence received from sensor
+	 * - data received from sensor
 	 */
 	private final RemoteCallbackList<IDeviceManagerServiceCallback> mCallbacks =
 		new RemoteCallbackList<IDeviceManagerServiceCallback>();
@@ -300,17 +300,17 @@ public class DeviceManagerService extends Service {
 				}
 				mCallbacks.finishBroadcast();
 			} break;
-			case MessageType.SENTENCE: {
+			case MessageType.SENSOR_DATA: {
 				// Broadcast to all clients
 				final int N = mCallbacks.beginBroadcast();
 				final Bundle bundle = (Bundle)msg.obj;
-				if (LOG_SENTENCES) {
-					final String sentence = new SensorDataBundleWrapper(bundle).getSensorData();
-					if (D) Log.d(TAG, "SENTENCE = " + sentence);
+				if (LOG_SENSOR_DATA) {
+					final String sensorData = new SensorDataBundleWrapper(bundle).getSensorData();
+					if (D) Log.d(TAG, "SENSOR_DATA = " + sensorData);
 				}
 				for (int i = 0; i < N; ++i) {
 					try {
-						mCallbacks.getBroadcastItem(i).receivedSentenceBundle(bundle);
+						mCallbacks.getBroadcastItem(i).receivedSensorDataBundle(bundle);
 					}
 					catch (RemoteException e) {
 						// The RemoteCallbackList will take care of removing

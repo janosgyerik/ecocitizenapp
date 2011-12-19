@@ -413,7 +413,7 @@ public abstract class DeviceManagerClient extends Activity {
 		if (D) Log.d(TAG, "--- ON DESTROY ---");
 	}
 
-	abstract void receivedSentenceBundle(SensorDataBundleWrapper bundle);
+	abstract void receivedSensorDataBundle(SensorDataBundleWrapper bundle);
 	
 	void receivedNoteBundle(NoteBundleWrapper bundle) {
 		Log.i(TAG, "receivedNoteBundle = " + bundle);
@@ -423,12 +423,12 @@ public abstract class DeviceManagerClient extends Activity {
 	final Handler mHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
-			if (msg.what != MessageType.SENTENCE) {
+			if (msg.what != MessageType.SENSOR_DATA) {
 				if (D) Log.d(TAG, "handleMessage " + msg.what + " " + msg.obj);
 			}
 			switch (msg.what) {
-			case MessageType.SENTENCE:
-				receivedSentenceBundle(new SensorDataBundleWrapper((Bundle)msg.obj));
+			case MessageType.SENSOR_DATA:
+				receivedSensorDataBundle(new SensorDataBundleWrapper((Bundle)msg.obj));
 				break;
 			case MessageType.NOTE:
 				receivedNoteBundle(new NoteBundleWrapper((Bundle)msg.obj));

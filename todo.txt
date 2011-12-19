@@ -77,7 +77,6 @@ documentation
 optimization
 ============
 - clean up variable visibility in .app
-- grep -ri sentence .
 
 
 obscure bugs

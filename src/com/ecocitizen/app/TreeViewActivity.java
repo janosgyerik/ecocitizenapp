@@ -103,7 +103,7 @@ public class TreeViewActivity extends AbstractMainActivity {
 		new SensorDataFilter(SensorDataType.CO2);
 
 	@Override
-	void receivedSentenceBundle(SensorDataBundleWrapper bundle) {
+	void receivedSensorDataBundle(SensorDataBundleWrapper bundle) {
 		SensorDataParser parser = 
 			DeviceHandlerFactory.getInstance().getParser(bundle.getSensorName(), bundle.getSensorId());
 

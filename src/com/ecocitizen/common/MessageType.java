@@ -26,7 +26,7 @@ public abstract class MessageType {
 	public final static int SM_DEVICE_LOST = 14;
 	public final static int SM_ALL_DEVICES_GONE = 15;
 
-	public final static int SENTENCE = 21;
+	public final static int SENSOR_DATA = 21;
 	
 	public final static int NOTE = 31;
 

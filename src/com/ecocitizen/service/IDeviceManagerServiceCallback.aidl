@@ -22,7 +22,7 @@ package com.ecocitizen.service;
 import android.os.Bundle;
 
 oneway interface IDeviceManagerServiceCallback {
-	void receivedSentenceBundle(in Bundle bundle);
+	void receivedSensorDataBundle(in Bundle bundle);
 	void receivedNoteBundle(in Bundle bundle);
 	
 	void receivedConnectionFailed(String deviceId);

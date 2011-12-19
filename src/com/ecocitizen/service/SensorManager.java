@@ -46,13 +46,13 @@ abstract public class SensorManager {
 	
 	/**
 	 * Shared Handler received from the owner object, 
-	 * for sending sentences and lifecycle event notifications.
+	 * for sending sensor data and lifecycle event notifications.
 	 */
 	private final Handler mHandler;
 
 	/** 
 	 * Shared location listener received from the owner object,
-	 * for attaching GPS info to sentence data.
+	 * for attaching GPS info to sensor data.
 	 */
 	private final GpsLocationListener mGpsLocationListener;
 	
@@ -80,16 +80,16 @@ abstract public class SensorManager {
 	}
 	
 	/**
-	 * Create and return a Bundle with a sentence line
+	 * Create and return a Bundle with a sensor data
 	 * and additional information such as time, location and 
 	 * the ID of the originating sensor.
 	 * 
-	 * @param sentence
+	 * @param sensorData
 	 * @return
 	 */
-	private Bundle getSensorDataBundle(long sequenceNumber, String sentence) {
+	private Bundle getSensorDataBundle(long sequenceNumber, String sensorData) {
 		return SensorDataBundleWrapper.makeBundle(sequenceNumber, mSensorId, mSensorName, 
-				sentence, mGpsLocationListener.getLastLocationBundle());
+				sensorData, mGpsLocationListener.getLastLocationBundle());
 	}
 	
 	/**
@@ -111,7 +111,7 @@ abstract public class SensorManager {
 	
 	void sendSensorDataMsg(long sequenceNumber, String line) {
 		Bundle bundle = getSensorDataBundle(sequenceNumber, line);
-		mHandler.obtainMessage(MessageType.SENTENCE, bundle).sendToTarget();
+		mHandler.obtainMessage(MessageType.SENSOR_DATA, bundle).sendToTarget();
 	}
 
 	/**

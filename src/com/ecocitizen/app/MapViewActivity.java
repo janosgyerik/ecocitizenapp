@@ -95,7 +95,7 @@ public class MapViewActivity extends MapActivity {
 		setupCommonButtons();		
 	}
 	@Override
-	void receivedSentenceBundle(SentenceBundleWrapper bundle) {
+	void receivedSensorDataBundle(SensorDataBundleWrapper bundle) {
 		Location location = bundle.getLocation();
 
 		mLatNameView.setText("lat.=");

@@ -103,7 +103,7 @@ public class MultiSensorViewActivity extends AbstractMainActivity {
 	}
 
 	@Override
-	void receivedSentenceBundle(SensorDataBundleWrapper bundle) {
+	void receivedSensorDataBundle(SensorDataBundleWrapper bundle) {
 		
 		Location location = bundle.getLocation();
 		

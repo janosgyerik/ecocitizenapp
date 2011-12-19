@@ -39,8 +39,8 @@ public class DeviceManagerServiceCallback extends
 	 * NOT be running in our main thread like most other things -- so,
 	 * to update the UI, we need to use a Handler to hop over there.
 	 */
-	public void receivedSentenceBundle(Bundle bundle) {
-		mHandler.obtainMessage(MessageType.SENTENCE, bundle).sendToTarget();
+	public void receivedSensorDataBundle(Bundle bundle) {
+		mHandler.obtainMessage(MessageType.SENSOR_DATA, bundle).sendToTarget();
 	}
 
 	public void receivedNoteBundle(Bundle bundle) {

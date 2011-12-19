@@ -70,7 +70,7 @@ public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
 	}
 
 	@Override
-	void receivedSentenceBundle(SensorDataBundleWrapper bundle) {
+	void receivedSensorDataBundle(SensorDataBundleWrapper bundle) {
 		Location location = bundle.getLocation();
 		
 		if (location == null) {

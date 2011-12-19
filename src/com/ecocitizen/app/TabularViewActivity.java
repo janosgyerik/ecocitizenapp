@@ -64,7 +64,7 @@ public class TabularViewActivity extends SimpleDeviceManagerClient {
 	*/
 
 	@Override
-	void receivedSentenceBundle(SensorDataBundleWrapper bundle) {
+	void receivedSensorDataBundle(SensorDataBundleWrapper bundle) {
 		
 		/*
 		if (battParser.match(line)) {

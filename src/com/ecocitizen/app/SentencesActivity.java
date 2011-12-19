@@ -83,7 +83,7 @@ public class SentencesActivity extends SimpleDeviceManagerClient {
 	}
 	
 	@Override
-	void receivedSentenceBundle(SensorDataBundleWrapper bundle) {
+	void receivedSensorDataBundle(SensorDataBundleWrapper bundle) {
 		String line = bundle.getSensorData();
 		
 		if (mMode.equals(HEXA)) {
