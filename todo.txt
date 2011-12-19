@@ -23,7 +23,6 @@ release in marketplace
 current focus
 =============
 R make the tree not squeezed
-R implement FileUploader.cancel
 V install improved icons
 	- tab: tree
 	- tab: graph

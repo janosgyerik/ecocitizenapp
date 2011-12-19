@@ -83,17 +83,20 @@ public class FileInfoWithUploadActivity extends FileInfoActivity {
 	class UploadFileAsyncTask extends AsyncTask<Void, Integer, FileUploader.Status> {
 		FileUploader mFileUploader;
 		ProgressDialog mProgressDialog;
+		ProgressDialog mCancelProgressDialog = null;
 		
 		public UploadFileAsyncTask(SharedPreferences prefs, File file) {
 			mFileUploader = new FileUploader(prefs, file);
 		}
 		
 		protected void onPreExecute() {
-			mProgressDialog = ProgressDialog.show(FileInfoWithUploadActivity.this, 
-					"", FileInfoWithUploadActivity.this.getString(R.string.msg_uploading), false, true, 
+			mProgressDialog = ProgressDialog.show(FileInfoWithUploadActivity.this, "",
+					FileInfoWithUploadActivity.this.getString(R.string.msg_uploading), false, true, 
 					new DialogInterface.OnCancelListener() {
 						public void onCancel(DialogInterface dialog) {
 							mFileUploader.cancel();
+							mCancelProgressDialog = ProgressDialog.show(FileInfoWithUploadActivity.this, "", 
+									FileInfoWithUploadActivity.this.getString(R.string.fileuploader_msg_upload_canceling), false, false);
 						}
 			});
 		}
@@ -103,7 +106,8 @@ public class FileInfoWithUploadActivity extends FileInfoActivity {
 		}
 
 		protected void onPostExecute(FileUploader.Status status) {
-			mProgressDialog.cancel();
+			if (mProgressDialog.isShowing()) mProgressDialog.cancel();
+			if (mCancelProgressDialog != null) mCancelProgressDialog.cancel();
 			
 			if (status == FileUploader.Status.SUCCESS) {
 				mBtnUpload.setVisibility(View.GONE);

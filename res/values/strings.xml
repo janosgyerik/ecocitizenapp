@@ -132,7 +132,8 @@
 	<string name="fileuploader_msg_unknown_error">Unknown error.</string>
 	<string name="fileuploader_msg_upload_interrupted">Upload was interrupted.</string>
    	<string name="fileuploader_msg_upload_cancelled">Upload was cancelled.</string>
-	    	
+   	<string name="fileuploader_msg_upload_canceling">Canceling upload ...</string>
+   	    	    	
 	<!--  FileInfoActivity -->
 	<string name="fileinfo_filename">Filename</string>
 	<string name="fileinfo_date">Date</string>

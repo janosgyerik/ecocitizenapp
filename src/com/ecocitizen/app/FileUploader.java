@@ -61,6 +61,8 @@ public class FileUploader {
 	private String username;
 	private String api_key;
 	private String map_server_url;
+	
+	private boolean cancelRequested = false;
 
 	public FileUploader(SharedPreferences settings, File file) {
 		mFile = file;
@@ -116,7 +118,7 @@ public class FileUploader {
 	
 	public boolean waitForStringResponse(String url) {
 		int trycnt = 0;
-		while (getStringResponse(url) == null) {
+		while (getStringResponse(url) == null && ! cancelRequested) {
 			try {
 				Thread.sleep(WAITFOR_SENSORMAP_MILLIS);
 			} 
@@ -124,7 +126,7 @@ public class FileUploader {
 			}
 			if (++trycnt > WAITFOR_SENSORMAP_RETRYCNT) return false;
 		}
-		return true;
+		return ! cancelRequested;
 	}
 	
 	boolean waitForStringResponse(String storeBaseURL, String line) {
@@ -191,7 +193,11 @@ public class FileUploader {
 						return Status.UPLOAD_INTERRUPTED;
 					}
 				}
-				while ((line = reader.readLine()) != null);
+				while ((line = reader.readLine()) != null && ! cancelRequested);
+				
+				if (cancelRequested) {
+					return Status.UPLOAD_CANCELLED;
+				}
 				
 				waitForStringResponse(SENSORMAP_ENDSESSION_URL + sessionId + "/");
 			} 
@@ -209,6 +215,6 @@ public class FileUploader {
 	}
 
 	public void cancel() {
-		// TODO Auto-generated method stub
+		cancelRequested = true;
 	}
 }
