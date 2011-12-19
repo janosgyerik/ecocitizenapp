@@ -47,6 +47,18 @@ all: hdpi ldpi mdpi launchpad market
 clean: 
 	rm $(hdpi_target) $(ldpi_target) $(mdpi_target) $(launchpad_target) $(market_target)
 
+$(hdpi_dir)/tab_%.png: $(src_dir)/tab_%.png
+	convert -geometry 32x $< $@
+	identify $@
+
+$(ldpi_dir)/tab_%.png: $(src_dir)/tab_%.png
+	convert -geometry 32x $< $@
+	identify $@
+
+$(mdpi_dir)/tab_%.png: $(src_dir)/tab_%.png
+	convert -geometry 32x $< $@
+	identify $@
+
 $(hdpi_dir)/menu_%.png: $(src_dir)/menu_%.png
 	convert -geometry 72x $< $@
 	identify $@
