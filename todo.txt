@@ -35,6 +35,8 @@ V install improved icons
 	? menu: quit
 V design new dedicated screen for zephyr health sensors
 ! add support for the other Zephyr device
+- use anon credentials in anon mode
+- upload session as private in private mode
 - add a zephyr logfile for testing/debugging purposes
 - login to website or use default (anon) API key
 - performance issues? consider the Dev Guide: 'Designing for Performance'

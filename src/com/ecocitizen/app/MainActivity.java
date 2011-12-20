@@ -50,13 +50,6 @@ public class MainActivity extends TabActivity {
 		spec = tabHost.newTabSpec("MultiSensor").setContent(intent).setIndicator(btn);
 		tabHost.addTab(spec);
 
-		intent = new Intent().setClass(this, MapViewActivity.class);
-		btn = new ImageButton(this);
-		btn.setImageResource(R.drawable.tab_map);
-		btn.setPadding(0, 0, 0, 0);
-		spec = tabHost.newTabSpec("Map").setContent(intent).setIndicator(btn);
-		tabHost.addTab(spec);
-
 		tabHost.setCurrentTabByTag("Tree");
 	}
 }
