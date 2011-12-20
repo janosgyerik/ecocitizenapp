@@ -61,7 +61,33 @@
     <string name="menu_tabularview">Tabular View</string>
     <string name="menu_tabularviewplus">Tabular View+</string>
     
-    <!--  Preferences -->
+	<!-- Settings, preferences -->
+	<string name="category_mapserver">EcoCitizen map settings</string>
+	<string name="category_storage">Data storage related settings</string>
+	<string name="category_reset">Reset settings to defaults</string>
+	
+    <string name="title_about_preference">About</string>
+    <string name="summary_about_preference">About EcoCitizen</string>
+    <string name="dialog_title_about_preference">About EcoCitizen</string>
+    <string name="text_about_ecocitizen">The goal of the EcoCitizen
+        project is to build a public map of pollution data,
+        where the more people contribute the better.
+        By default, data uploading is anonymous,
+        and that\'s perfect for all scientific purposes. 
+        On the other hand, if you would like to keep track of your
+        uploaded data on the map server, you can create an account and
+        associate it with this application. To do that please visit
+        this link: http://ecomobilecitizen.com/m/login/
+        Note: this will not affect your privacy settings, so you
+        can still keep your data uploads private if you want.
+        </string>
+
+    <string name="title_anonmode_preference">Anonymous mode</string>
+    <string name="summary_anonmode_preference">If enabled, all data you upload will be anonymous and public</string>
+    
+    <string name="title_privatemode_preference">Private mode</string>
+    <string name="summary_privatemode_preference">If enabled, all data you upload will be private and visible only by your account</string>
+    
     <string name="title_username_preference">Username</string>
     <string name="summary_username_preference">Username on EcoCitizen map server</string>
     <string name="dialog_title_username_preference">Enter your EcoCitizen username</string>
@@ -86,22 +112,10 @@
     <string name="summary_filesaver_preference">If enabled, sensor data will be saved to Android\'s storage</string>
     <string name="dialog_title_filesaver_preference">Save to local storage</string>
     
-    <string name="title_about_preference">About</string>
-    <string name="summary_about_preference">About EcoCitizen</string>
-    <string name="dialog_title_about_preference">About EcoCitizen</string>
-    <string name="text_about_ecocitizen">The goal of the EcoCitizen
-        project is to build a public map of pollution data,
-        where the more people contribute the better.
-        By default, data uploading is anonymous,
-        and that's perfect for all scientific purposes. 
-        On the other hand, if you would like to keep track of your
-        uploaded data on the map server, you can create an account and
-        associate it with this application. To do that please visit
-        this link: http://ecomobilecitizen.com/m/login/
-        Note: this will not affect your privacy settings, so you
-        can still keep your data uploads private if you want.
-        </string>
-
+	<string name="title_resetsettings">Reset to defaults</string>
+	<string name="summary_resetsettings">Reset all settings to defaults</string>
+	
+	
     <!-- Tree view -->
     <string name="btn_connect_device">Connect to sensor</string>
     <string name="btn_disconnect_device">Disconnect sensor</string>
@@ -158,14 +172,6 @@
 	<string name="msg_delete_success">File was successfully deleted.</string>
 	<string name="msg_delete_failure">File delete failed.</string>
 	<string name="msg_uploading">Uploading file. Please wait...</string>
-	
-	<!-- Settings, preferences -->
-	<string name="category_mapserver">EcoCitizen map settings</string>
-	<string name="category_storage">Data storage related settings</string>
-	<string name="category_reset">Reset settings to defaults</string>
-	
-	<string name="title_resetsettings">Reset to defaults</string>
-	<string name="summary_resetsettings">Reset all settings to defaults</string>
 	
 	<!-- common strings -->
 	<string name="common_na">N.A.</string>
