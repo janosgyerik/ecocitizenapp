@@ -23,6 +23,7 @@ release in marketplace
 current focus
 =============
 R make the tree not squeezed
+R file uploader: progress indicator with percentage
 V install improved icons
 	- tab: tree
 	- tab: graph
@@ -41,9 +42,6 @@ V design new dedicated screen for zephyr health sensors
 	test slowness, confirm and quantify
 	pack multiple messages in one transmission
 	repeat test, confirm improvement
-- file uploader: progress bar is updated regularly
-	tip: AsyncTask.onProgressUpdate
-	since we know number of lines, this should be possible
 
 
 bugs
