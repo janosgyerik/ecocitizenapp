@@ -29,7 +29,7 @@
 	            
 	    <EditTextPreference
 	            android:key="map_server_url"
-	            android:defaultValue="http://dev.sensormap.titan2x.com/api"
+	            android:defaultValue="http://dev.ecomobilecitizen.com/api"
 	            android:title="@string/title_map_server_url_preference"
 	            android:summary="@string/summary_map_server_url_preference"
 	            android:dialogTitle="@string/dialog_title_map_server_url_preference" />

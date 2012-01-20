@@ -26,6 +26,7 @@ R make the tree not squeezed
 R file uploader: progress indicator with percentage
 R about page in the app with user registration info
 R private mode and anon mode in settings
+R create "red" style for buttons
 V install improved icons
 	- tab: tree
 	- tab: graph
