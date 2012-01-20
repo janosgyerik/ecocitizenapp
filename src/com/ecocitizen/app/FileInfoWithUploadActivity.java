@@ -84,6 +84,7 @@ public class FileInfoWithUploadActivity extends FileInfoActivity {
 		FileUploader mFileUploader;
 		ProgressDialog mProgressDialog;
 		ProgressDialog mCancelProgressDialog = null;
+		boolean mCompleted = false;
 		
 		public UploadFileAsyncTask(SharedPreferences prefs, File file) {
 			mFileUploader = new FileUploader(prefs, file);
@@ -94,9 +95,11 @@ public class FileInfoWithUploadActivity extends FileInfoActivity {
 					FileInfoWithUploadActivity.this.getString(R.string.msg_uploading), false, true, 
 					new DialogInterface.OnCancelListener() {
 						public void onCancel(DialogInterface dialog) {
-							mFileUploader.cancel();
-							mCancelProgressDialog = ProgressDialog.show(FileInfoWithUploadActivity.this, "", 
-									FileInfoWithUploadActivity.this.getString(R.string.fileuploader_msg_upload_canceling), false, false);
+							if (! mCompleted) {
+								mFileUploader.cancel();
+								mCancelProgressDialog = ProgressDialog.show(FileInfoWithUploadActivity.this, "", 
+										FileInfoWithUploadActivity.this.getString(R.string.fileuploader_msg_upload_canceling), false, false);
+							}
 						}
 			});
 		}
@@ -106,6 +109,7 @@ public class FileInfoWithUploadActivity extends FileInfoActivity {
 		}
 
 		protected void onPostExecute(FileUploader.Status status) {
+			mCompleted = true;
 			if (mProgressDialog.isShowing()) mProgressDialog.cancel();
 			if (mCancelProgressDialog != null) mCancelProgressDialog.cancel();
 			

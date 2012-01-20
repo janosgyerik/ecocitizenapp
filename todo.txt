@@ -22,6 +22,14 @@ release in marketplace
 
 current focus
 =============
+- bulk upload: an entire file as attachment
+- AndroidGPS as a virtual device available when no real sensors are connected
+- use HEAD requests in simple upload commands instead of GET
+- show 'loading...' on sidebar while loading data
+- exclude Batt
+- show notes
+- session ordering is not so good, latest sessions are at the bottom
+- session display is not so good, latest session pk is shown, strange
 R make the tree not squeezed
 R file uploader: progress indicator with percentage
 R about page in the app with user registration info
