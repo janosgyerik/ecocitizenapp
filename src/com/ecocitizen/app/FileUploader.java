@@ -30,8 +30,10 @@ import java.io.InputStreamReader;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpHead;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.content.SharedPreferences;
@@ -121,9 +123,30 @@ public class FileUploader {
 		}
 	}
 	
-	public boolean waitForStringResponse(String url) {
+	private boolean sendHttpHead(String url) {
+		if (D) Log.d(TAG, url);
+		HttpClient client = new DefaultHttpClient();
+		HttpHead request = new HttpHead(url);
+		request.setHeader("User-Agent", HTTP_USER_AGENT);
+
+		try {
+			HttpResponse response = client.execute(request);
+			StatusLine status = response.getStatusLine();
+			if (status.getStatusCode() == HTTP_STATUS_OK) return true;
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+			Log.e(TAG, "Exception in sendHttpHead");
+		} catch (IOException e) {
+			e.printStackTrace();
+			Log.e(TAG, "Exception in sendHttpHead");
+		}
+		
+		return false;
+	}
+	
+	private boolean waitForSendHttpHead(String url) {
 		int trycnt = 0;
-		while (getStringResponse(url) == null && ! cancelRequested) {
+		while (! sendHttpHead(url) && ! cancelRequested) {
 			try {
 				Thread.sleep(WAITFOR_SENSORMAP_MILLIS);
 			} 
@@ -134,7 +157,7 @@ public class FileUploader {
 		return ! cancelRequested;
 	}
 	
-	boolean waitForStringResponse(String storeBaseURL, String line) {
+	boolean waitForSendHttpHead(String storeBaseURL, String line) {
 		/* TODO skip $GPRMC sentences
 		 * Do not upload GPS sentences.
 		 * This is not a very good thing to do (not clean).
@@ -148,7 +171,7 @@ public class FileUploader {
 		 */
 		if (line.indexOf(",$GP") > -1) return true;
 		
-		return waitForStringResponse(storeBaseURL + line);
+		return waitForSendHttpHead(storeBaseURL + line);
 	}
 
 	public enum Status {
@@ -194,7 +217,7 @@ public class FileUploader {
 				}
 				do {
 					line = line.replace(" ", "");
-					if (!waitForStringResponse(storeBaseURL, line)) {
+					if (!waitForSendHttpHead(storeBaseURL, line)) {
 						return Status.UPLOAD_INTERRUPTED;
 					}
 				}
@@ -204,7 +227,7 @@ public class FileUploader {
 					return Status.UPLOAD_CANCELLED;
 				}
 				
-				waitForStringResponse(SENSORMAP_ENDSESSION_URL + sessionId + "/");
+				waitForSendHttpHead(SENSORMAP_ENDSESSION_URL + sessionId + "/");
 			} 
 			catch (IOException e) {
 				e.printStackTrace();
