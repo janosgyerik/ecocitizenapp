@@ -40,6 +40,8 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.ecocitizen.common.DebugFlagManager;
+import com.ecocitizen.common.bundlewrapper.SummaryBundleWrapper;
+import com.ecocitizen.service.FileSaverService;
 
 public class FileUploader {
 	// Debugging
@@ -211,6 +213,11 @@ public class FileUploader {
 
 					storeBaseURL = SENSORMAP_STORE_URL + sessionId + "/" 
 						+ SENSORMAP_API_VERSION + "/";
+					
+					String summary = mFile.getName()
+						.replace(FileSaverService.FILENAME_PREFIX, "")
+						.replace("." + FileSaverService.FILENAME_EXTENSION, "");
+					waitForSendHttpHead(storeBaseURL, SummaryBundleWrapper.formatMessage(summary));
 				}
 				else {
 					return Status.EMPTY_FILE;

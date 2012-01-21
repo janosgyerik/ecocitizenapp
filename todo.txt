@@ -49,7 +49,6 @@ V design new dedicated screen for zephyr health sensors
 	pack multiple messages in one transmission
 	repeat test, confirm improvement
 - bulk upload: an entire file as attachment
-- use the file name on android as the session name
 - progress dialog while opening file info in fileuploader
 
 
