@@ -26,6 +26,8 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -39,6 +41,7 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.ecocitizen.common.DebugFlagManager;
+import com.ecocitizen.common.Util;
 
 public class FileUploaderActivity extends FileManagerActivity {
 	// Debugging
@@ -53,7 +56,9 @@ public class FileUploaderActivity extends FileManagerActivity {
 	// Members
 	private StorageType mCurrentStorageType;
 	private File mCurrentFile;
-
+	
+	private String mUserAgentString = null;
+	
 	@Override
 	protected int getLayoutResID() {
 		return R.layout.fileuploader;
@@ -63,6 +68,13 @@ public class FileUploaderActivity extends FileManagerActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (D) Log.d(TAG, "+++ ON CREATE +++");
+		
+		PackageInfo packageInfo = null;
+		try {
+			packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+		} catch (NameNotFoundException e) {
+		}
+		mUserAgentString = Util.getUserAgentString(packageInfo);
 		
 		ListView internalFilesListView = (ListView)findViewById(R.id.internal_storage);
 		internalFilesListView.setOnItemClickListener(new ItemClickListener(StorageType.INTERNAL, internalFilesArrayAdapter, getFilesDir()));
@@ -178,7 +190,7 @@ public class FileUploaderActivity extends FileManagerActivity {
 	
 	
 	private boolean testUpload() {
-		FileUploader uploader = new FileUploader(PreferenceManager.getDefaultSharedPreferences(this), null);
+		FileUploader uploader = new FileUploader(PreferenceManager.getDefaultSharedPreferences(this), null, mUserAgentString);
 
 		if (!uploader.isServerReachable()) {
 			Toast.makeText(this, R.string.fileuploader_msg_server_unreachable, Toast.LENGTH_SHORT).show();
@@ -194,7 +206,7 @@ public class FileUploaderActivity extends FileManagerActivity {
 	}
 	
 	private boolean upload(File file) {
-		FileUploader uploader = new FileUploader(PreferenceManager.getDefaultSharedPreferences(this), file);
+		FileUploader uploader = new FileUploader(PreferenceManager.getDefaultSharedPreferences(this), file, mUserAgentString);
 		FileUploader.Status status = uploader.upload();
 		
 		if (status == FileUploader.Status.SUCCESS) return true;

@@ -34,10 +34,10 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import com.ecocitizen.common.DebugFlagManager;
-
 import android.content.SharedPreferences;
 import android.util.Log;
+
+import com.ecocitizen.common.DebugFlagManager;
 
 public class FileUploader {
 	// Debugging
@@ -45,6 +45,8 @@ public class FileUploader {
 	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(FileUploader.class);
 
 	// Constants
+	public final String HTTP_USER_AGENT;
+ 
 	public static final int HTTP_STATUS_OK = 200;
 	public static final int WAITFOR_SENSORMAP_MILLIS = 1000;
 	public static final int WAITFOR_SENSORMAP_RETRYCNT = 300;
@@ -63,8 +65,8 @@ public class FileUploader {
 	private String map_server_url;
 	
 	private boolean cancelRequested = false;
-
-	public FileUploader(SharedPreferences settings, File file) {
+	
+	public FileUploader(SharedPreferences settings, File file, String userAgentString) {
 		mFile = file;
 		
 		username = settings.getString("username", "");
@@ -76,6 +78,8 @@ public class FileUploader {
 		SENSORMAP_STARTSESSION_URL = String.format("%sstartsession/%s/%s/1/", map_server_url, username, api_key);
 		SENSORMAP_STORE_URL = String.format("%sstore/%s/", map_server_url, username);
 		SENSORMAP_ENDSESSION_URL = String.format("%sendsession/%s/", map_server_url, username);
+		
+		HTTP_USER_AGENT = userAgentString;
 	}
 
 	/**
@@ -89,6 +93,7 @@ public class FileUploader {
 		if (D) Log.d(TAG, url);
 		HttpClient client = new DefaultHttpClient();
 		HttpGet request = new HttpGet(url);
+		request.setHeader("User-Agent", HTTP_USER_AGENT);
 
 		try {
 			HttpResponse response = client.execute(request);

@@ -21,12 +21,12 @@ package com.ecocitizen.app;
 
 import java.io.File;
 
-import com.ecocitizen.common.DebugFlagManager;
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -35,6 +35,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.ecocitizen.common.DebugFlagManager;
+import com.ecocitizen.common.Util;
 
 public class FileInfoWithUploadActivity extends FileInfoActivity {
 	// Debugging
@@ -45,10 +48,19 @@ public class FileInfoWithUploadActivity extends FileInfoActivity {
 	private Button mBtnUpload;
 	private Button mBtnDelete;
 	
+	private String mUserAgentString = null;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (D) Log.d(TAG, "+++ ON CREATE +++");
+		
+		PackageInfo packageInfo = null;
+		try {
+			packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+		} catch (NameNotFoundException e) {
+		}
+		mUserAgentString = Util.getUserAgentString(packageInfo);
 		
 		mBtnUpload = (Button) findViewById(R.id.btn_upload);
 		mBtnUpload.setVisibility(View.VISIBLE);
@@ -87,7 +99,7 @@ public class FileInfoWithUploadActivity extends FileInfoActivity {
 		boolean mCompleted = false;
 		
 		public UploadFileAsyncTask(SharedPreferences prefs, File file) {
-			mFileUploader = new FileUploader(prefs, file);
+			mFileUploader = new FileUploader(prefs, file, mUserAgentString);
 		}
 		
 		protected void onPreExecute() {

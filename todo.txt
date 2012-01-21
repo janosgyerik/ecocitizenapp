@@ -22,14 +22,6 @@ release in marketplace
 
 current focus
 =============
-- bulk upload: an entire file as attachment
-- AndroidGPS as a virtual device available when no real sensors are connected
-- use HEAD requests in simple upload commands instead of GET
-- show 'loading...' on sidebar while loading data
-- exclude Batt
-- show notes
-- session ordering is not so good, latest sessions are at the bottom
-- session display is not so good, latest session pk is shown, strange
 R make the tree not squeezed
 R file uploader: progress indicator with percentage
 R about page in the app with user registration info
@@ -44,16 +36,22 @@ V install improved icons
 	? menu: quit
 V design new dedicated screen for zephyr health sensors
 ! add support for the other Zephyr device
-- use anon credentials in anon mode
-- upload session as private in private mode
+- AndroidGPS as a virtual device available when no real sensors are connected
+- user account settings
+	- msg: login to website or use default (anon) API key
+	- anon mode: use anon credentials in anon mode
+	- private mode: upload session as private in private mode
 - add a zephyr logfile for testing/debugging purposes
-- login to website or use default (anon) API key
 - performance issues? consider the Dev Guide: 'Designing for Performance'
 - review comments in entire code, especially service code
 - improve data uploading throughput
 	test slowness, confirm and quantify
 	pack multiple messages in one transmission
 	repeat test, confirm improvement
+- bulk upload: an entire file as attachment
+- use HEAD requests in simple upload commands instead of GET
+- use the file name on android as the session name
+- progress dialog while opening file info in fileuploader
 
 
 bugs
@@ -84,6 +82,11 @@ documentation
 optimization
 ============
 - clean up variable visibility in .app
+
+
+later
+=====
+- show data on local map
 
 
 obscure bugs

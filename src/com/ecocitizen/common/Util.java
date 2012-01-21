@@ -19,6 +19,8 @@
 
 package com.ecocitizen.common;
 
+import android.content.pm.PackageInfo;
+
 
 /**
  * Collection of utility methods
@@ -26,5 +28,17 @@ package com.ecocitizen.common;
 public abstract class Util {
 	public static float convertNmeaToGps(float nmea) {
 		return (int)(nmea / 100) + (nmea % 100) / 60;
+	}
+	
+	public static String getUserAgentString(PackageInfo packageInfo) {
+		if (packageInfo != null) {
+			return String.format(
+					"EcoCitizen-Android/%d/%s", 
+					packageInfo.versionCode,
+					packageInfo.versionName);
+		}
+		else {
+			return "EcoCitizen-Android/unknown";
+		}
 	}
 }
