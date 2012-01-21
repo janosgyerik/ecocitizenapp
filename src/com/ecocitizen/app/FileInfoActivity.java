@@ -29,14 +29,17 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.ecocitizen.common.DebugFlagManager;
-
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+
+import com.ecocitizen.common.DebugFlagManager;
 
 public class FileInfoActivity extends Activity {
 	// Debugging
@@ -73,15 +76,16 @@ public class FileInfoActivity extends Activity {
 		if (D) Log.d(TAG, "+++ ON CREATE +++");
 		
 		setContentView(R.layout.fileinfo);
+		findViewById(R.id.content).setVisibility(View.INVISIBLE);
 		
 		String filename = getIntent().getExtras().getString(BUNDLEKEY_FILENAME);
 		mFile = new File(filename);
 		((TextView)findViewById(R.id.fileinfo_filename)).setText(mFile.getName());
 		((TextView)findViewById(R.id.fileinfo_size)).setText(bytesToString(mFile.length()));
 		((TextView)findViewById(R.id.fileinfo_date)).setText(timeToString(mFile.lastModified()));
-		int recordnum = getRecordNum(mFile);
-		((TextView)findViewById(R.id.fileinfo_recordnum)).setText(String.valueOf(recordnum));
-		((TextView)findViewById(R.id.fileinfo_content)).setText(getContentPreview(mFile, recordnum));
+
+		// more details are loaded in an async task
+		new LoadFileInfoAsyncTask().execute();
 
 		findViewById(R.id.btn_close).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -128,4 +132,32 @@ public class FileInfoActivity extends Activity {
 		}
 		return "";
 	}
+	
+	class LoadFileInfoAsyncTask extends AsyncTask<Void, Void, Integer> {
+		ProgressDialog mProgressDialog;
+		
+		protected void onPreExecute() {
+			mProgressDialog = ProgressDialog.show(FileInfoActivity.this, "",
+					FileInfoActivity.this.getString(R.string.msg_loading_fileinfo), 
+					false, true, 
+					new DialogInterface.OnCancelListener() {
+						public void onCancel(DialogInterface dialog) {
+							finish();
+						}
+			});
+		}
+		
+		protected Integer doInBackground(Void... params) {
+			return getRecordNum(mFile);
+		}
+
+		protected void onPostExecute(Integer recordnum) {
+			((TextView)findViewById(R.id.fileinfo_recordnum)).setText(String.valueOf(recordnum));
+			((TextView)findViewById(R.id.fileinfo_content)).setText(getContentPreview(mFile, recordnum));
+			
+			mProgressDialog.dismiss();
+			findViewById(R.id.content).setVisibility(View.VISIBLE);
+		}
+	}
+	
 }
