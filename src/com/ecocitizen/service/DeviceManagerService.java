@@ -43,8 +43,8 @@ import backport.android.bluetooth.BluetoothDevice;
 import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.MessageType;
 import com.ecocitizen.common.bundlewrapper.NoteBundleWrapper;
-import com.ecocitizen.common.bundlewrapper.SensorInfoBundleWrapper;
 import com.ecocitizen.common.bundlewrapper.SensorDataBundleWrapper;
+import com.ecocitizen.common.bundlewrapper.SensorInfoBundleWrapper;
 
 public class DeviceManagerService extends Service {
 	// Debugging
@@ -155,7 +155,7 @@ public class DeviceManagerService extends Service {
 
 		/**
 		 * Connect to a logfile player, useful for debugging.
-		 * The device connection is represented by filename.
+		 * The logfile name is used as the device id.
 		 * The message interval parameter controls the data transmission speed,
 		 * useful for stress tests.
 		 */
@@ -176,6 +176,23 @@ public class DeviceManagerService extends Service {
 					// to the caller by messages on the Handler.
 					e.printStackTrace();
 					return;
+				}
+			}
+		}
+
+		/**
+		 * Dummy device, useful for simple GPS tracking, and when
+		 * there is no real sensor to connect to the application.
+		 * The message interval parameter is the waiting period between dummy messages.
+		 */
+		public void connectDummyDevice(int messageInterval) {
+			String deviceId = DummySensorManager.SENSOR_ID;
+			synchronized (mSensorManagers) {
+				if (mSensorManagers.containsKey(deviceId)) return;
+
+				DummySensorManager sm = new DummySensorManager(mHandler, mGpsLocationListener, messageInterval);
+				if (sm.connect()) {
+					mSensorManagers.put(deviceId, sm);
 				}
 			}
 		}

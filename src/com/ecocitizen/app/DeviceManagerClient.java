@@ -394,6 +394,19 @@ public abstract class DeviceManagerClient extends Activity {
 		}
 	}
 
+	void connectDummyDevice() {
+		if (mService != null) {
+			try {
+				int messageInterval = getResources().getInteger(R.integer.dummydevice_msg_interval);
+				mService.connectDummyDevice(messageInterval);
+			}
+			catch (RemoteException e) {
+				// Bummer eh. Not much we can do here.
+				Log.e(TAG, "Exception during connectLogplayer.");
+			}
+		}
+	}
+
 	@Override
 	public synchronized void onResume() {
 		super.onResume();
@@ -468,6 +481,10 @@ public abstract class DeviceManagerClient extends Activity {
 				else if ((extra = data.getExtras().getString(DeviceListActivity.EXTRA_LOGFILENAME)) != null) {
 					// We have a logfile name
 					connectLogplayer(extra);
+				}
+				else if ((extra = data.getExtras().getString(DeviceListActivity.EXTRA_DUMMY)) != null) {
+					// We have a dummy device
+					connectDummyDevice();
 				}
 			}
 			break;
