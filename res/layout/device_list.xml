@@ -22,10 +22,10 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 	
-	<LinearLayout android:id="@+id/logfile_devices_section"
+	<LinearLayout android:id="@+id/special_devices_section"
 		style="@style/weighted_list_section">
-		<TextView android:text="@string/title_logfile_devices" style="@style/list_title" />
-		<ListView android:id="@+id/logfile_devices" style="@style/fill_width" />
+		<TextView android:text="@string/title_special_devices" style="@style/list_title" />
+		<ListView android:id="@+id/special_devices" style="@style/fill_width" />
 	</LinearLayout>
 
 	<LinearLayout android:id="@+id/paired_devices_section"

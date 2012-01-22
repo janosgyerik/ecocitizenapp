@@ -64,7 +64,21 @@ public class DeviceListActivity extends Activity {
 
 	private Button scanButton;
 
-	private ArrayAdapter<String> mLogfileDevicesArrayAdapter;
+	private ArrayAdapter<SpecialDeviceSpec> mSpecialDevicesArrayAdapter;
+	
+	class SpecialDeviceSpec {
+		String intentExtra;
+		String value;
+		
+		public SpecialDeviceSpec(String intentExtra, String value) {
+			this.intentExtra = intentExtra;
+			this.value = value;
+		}
+
+		public String toString() {
+			return value;
+		}
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,19 +94,25 @@ public class DeviceListActivity extends Activity {
 		// Initialize the button to perform device discovery
 		scanButton = (Button) findViewById(R.id.button_scan);
 
+		// Setup special devices section
+		findViewById(R.id.special_devices_section).setVisibility(View.VISIBLE);
+		
+		mSpecialDevicesArrayAdapter = new ArrayAdapter<SpecialDeviceSpec>(this, R.layout.logfile_name);
+		//mSpecialDevicesArrayAdapter.add(new SpecialDeviceSpec(EXTRA_DUMMY, getString(R.string.dummy_device)));
+		
+		ListView logfileListView = (ListView) findViewById(R.id.special_devices);
+		logfileListView.setAdapter(mSpecialDevicesArrayAdapter);
+		logfileListView.setOnItemClickListener(mSpecialDeviceClickListener);
+
 		if (getResources().getBoolean(R.bool.debugMode)) {
-			// Setup the logfile devices list
-			mLogfileDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.logfile_name);
-			mLogfileDevicesArrayAdapter.add(getString(R.string.logfile_co2sample1));
-			mLogfileDevicesArrayAdapter.add(getString(R.string.logfile_co2sample2));
-			mLogfileDevicesArrayAdapter.add(getString(R.string.logfile_pollutionsample1));
-			ListView logfileListView = (ListView) findViewById(R.id.logfile_devices);
-			logfileListView.setAdapter(mLogfileDevicesArrayAdapter);
-			logfileListView.setOnItemClickListener(mLogfileDeviceClickListener);
-
-			findViewById(R.id.logfile_devices_section).setVisibility(View.VISIBLE);
+			mSpecialDevicesArrayAdapter.add(new SpecialDeviceSpec(
+					EXTRA_LOGFILENAME, getString(R.string.logfile_co2sample1)));
+			mSpecialDevicesArrayAdapter.add(new SpecialDeviceSpec(
+					EXTRA_LOGFILENAME, getString(R.string.logfile_co2sample2)));
+			mSpecialDevicesArrayAdapter.add(new SpecialDeviceSpec(
+					EXTRA_LOGFILENAME, getString(R.string.logfile_pollutionsample1)));
 		}
-
+		
 		// Get the local Bluetooth adapter
 		mBtAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -203,19 +223,19 @@ public class DeviceListActivity extends Activity {
 		}
 	};
 
-	// The on-click listener for logfile devices
-	private OnItemClickListener mLogfileDeviceClickListener = new OnItemClickListener() {
-		public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
+	// The on-click listener for special devices
+	private OnItemClickListener mSpecialDeviceClickListener = new OnItemClickListener() {
+		public void onItemClick(AdapterView<?> av, View v, int position, long arg3) {
 			if (mBtAdapter != null) {
 				// Cancel discovery because it's costly
 				mBtAdapter.cancelDiscovery();
 			}
 
-			String logfileDeviceName = ((TextView) v).getText().toString();
+			SpecialDeviceSpec spec = (SpecialDeviceSpec)av.getItemAtPosition(position);
 
 			// Create the result Intent and include the device name
 			Intent intent = new Intent();
-			intent.putExtra(EXTRA_LOGFILENAME, logfileDeviceName);
+			intent.putExtra(spec.intentExtra, spec.value);
 
 			// Set result and finish this Activity
 			setResult(Activity.RESULT_OK, intent);

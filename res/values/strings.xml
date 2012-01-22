@@ -35,10 +35,11 @@
     <string name="title_paired_devices">Paired Devices</string>
     <string name="title_other_devices">Other Available Devices</string>
     <string name="button_scan">Scan for devices</string>
-    <string name="title_logfile_devices">Logfile Devices</string>
+    <string name="title_special_devices">Special Devices</string>
+    <string name="dummy_device">GPS only (no sensor/dummy)</string>
     <string name="logfile_co2sample1">CO2Sample1.txt</string>
     <string name="logfile_co2sample2">CO2Sample2.txt</string>
-    <string name="logfile_pollutionsample1">PollutionSample1.txt</string>
+	<string name="logfile_pollutionsample1">PollutionSample1.txt</string>
 
     <!-- DisconnectDevice -->
     <string name="disconnect_all">Disconnect All</string>
