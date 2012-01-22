@@ -4,6 +4,7 @@ release notes
 	- Connect button on screen instead of menu
 	- Tabs to switch easier between views
 + Data units are fixed on MultiSensorView
++ Usability improvements and bugfixes in file uploader
 ? improved icons and buttons
 
 
@@ -37,18 +38,18 @@ V install improved icons
 V design new dedicated screen for zephyr health sensors
 ! add support for the other Zephyr device
 - AndroidGPS as a virtual device available when no real sensors are connected
+- bulk upload: an entire file as attachment
 - user account settings
 	- msg: login to website or use default (anon) API key
 	- anon mode: use anon credentials in anon mode
 	- private mode: upload session as private in private mode
 - add a zephyr logfile for testing/debugging purposes
-- performance issues? consider the Dev Guide: 'Designing for Performance'
 - review comments in entire code, especially service code
 - improve data uploading throughput
 	test slowness, confirm and quantify
 	pack multiple messages in one transmission
 	repeat test, confirm improvement
-- bulk upload: an entire file as attachment
+- performance issues? consider the Dev Guide: 'Designing for Performance'
 
 
 bugs

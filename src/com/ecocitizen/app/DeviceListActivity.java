@@ -53,7 +53,8 @@ public class DeviceListActivity extends Activity {
 
 	// Return Intent extra
 	public static String EXTRA_BLUETOOTH_MAC = "bt_mac";
-	public static String EXTRA_LOGFILE_DEVICE = "logfile";
+	public static String EXTRA_LOGFILENAME = "logfile";
+	public static String EXTRA_DUMMY = "dummy";
 
 	// Member fields
 	private BluetoothAdapter mBtAdapter;
@@ -214,7 +215,7 @@ public class DeviceListActivity extends Activity {
 
 			// Create the result Intent and include the device name
 			Intent intent = new Intent();
-			intent.putExtra(EXTRA_LOGFILE_DEVICE, logfileDeviceName);
+			intent.putExtra(EXTRA_LOGFILENAME, logfileDeviceName);
 
 			// Set result and finish this Activity
 			setResult(Activity.RESULT_OK, intent);
