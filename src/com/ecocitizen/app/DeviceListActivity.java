@@ -97,8 +97,8 @@ public class DeviceListActivity extends Activity {
 		// Setup special devices section
 		findViewById(R.id.special_devices_section).setVisibility(View.VISIBLE);
 		
-		mSpecialDevicesArrayAdapter = new ArrayAdapter<SpecialDeviceSpec>(this, R.layout.logfile_name);
-		//mSpecialDevicesArrayAdapter.add(new SpecialDeviceSpec(EXTRA_DUMMY, getString(R.string.dummy_device)));
+		mSpecialDevicesArrayAdapter = new ArrayAdapter<SpecialDeviceSpec>(this, R.layout.device_name_singleline);
+		mSpecialDevicesArrayAdapter.add(new SpecialDeviceSpec(EXTRA_DUMMY, getString(R.string.dummy_device)));
 		
 		ListView logfileListView = (ListView) findViewById(R.id.special_devices);
 		logfileListView.setAdapter(mSpecialDevicesArrayAdapter);
