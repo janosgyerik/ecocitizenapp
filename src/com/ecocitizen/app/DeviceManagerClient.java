@@ -591,10 +591,16 @@ public abstract class DeviceManagerClient extends Activity {
 				Log.e(TAG, "Exception during register callback.");
 			}
 
-			/*
-			Toast.makeText(DeviceManagerClient.this, "Remote service connected",
-					Toast.LENGTH_SHORT).show();
-					*/
+			if (mService != null) {
+				try {
+					Bundle[] devices = mService.getConnectedDevices();
+					for (int i = 0; i < devices.length; ++i) {
+						addConnectedDevice(new SensorInfoBundleWrapper(devices[i]));
+					}
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 		public void onServiceDisconnected(ComponentName className) {
