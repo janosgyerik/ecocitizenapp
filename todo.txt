@@ -24,9 +24,9 @@ release in marketplace
 current focus
 =============
 R make the tree not squeezed
-R file uploader: progress indicator with percentage
-R about page in the app with user registration info
-R private mode and anon mode in settings
+x file uploader: progress indicator with percentage
+R? about page in the app
+R? private mode and anon mode in settings
 R create "red" style for buttons
 V install improved icons
 	- tab: tree
@@ -37,12 +37,18 @@ V install improved icons
 	? menu: quit
 V design new dedicated screen for zephyr health sensors
 ! add support for the other Zephyr device
-- AndroidGPS as a virtual device available when no real sensors are connected
+- combine FileUploader, SensorMapUploaderService, Util in a single HttpUtil
+R+ user registration activity
+	- requires HttpUtil
+	- username
+	- password
+	- get api key - HttpUtil
+	- started from settings activity
+		- also anon mode option
+	- upload app reminds
+		- if not logged in
+		- if in anon mode
 - bulk upload: an entire file as attachment
-- user account settings
-	- msg: login to website or use default (anon) API key
-	- anon mode: use anon credentials in anon mode
-	- private mode: upload session as private in private mode
 - add a zephyr logfile for testing/debugging purposes
 - review comments in entire code, especially service code
 - improve data uploading throughput
