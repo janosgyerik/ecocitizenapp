@@ -33,7 +33,7 @@ public class MainActivity extends TabActivity {
 		TabHost tabHost = getTabHost();
 		tabHost.setup();
 		TabHost.TabSpec spec;
-		Intent intent; 
+		Intent intent;
 		ImageButton btn;
 
 		intent = new Intent().setClass(this, TreeViewActivity.class);
