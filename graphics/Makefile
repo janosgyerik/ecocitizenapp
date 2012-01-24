@@ -27,7 +27,7 @@ mdpi_target:=$(patsubst %,$(mdpi_dir)/%,$(names))
 launchpad_target:=launchpad/icon.png launchpad/logo.png launchpad/brand.png
 market_target:=market/android.png
 
-default: help
+default: all
 
 help:
 	@cat Makefile.readme
