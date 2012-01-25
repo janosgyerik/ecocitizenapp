@@ -26,4 +26,24 @@
             android:layout_weight="1">
 		<TableLayout android:id="@+id/tblsentencesplus" style="@style/tabular" />
 	</ScrollView>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:orientation="horizontal" 
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content" 
+    	android:layout_gravity="right"
+    	android:id="@+id/btn"
+		>
+		<ImageButton android:id="@+id/btn_addnote"
+    		android:src="@drawable/btn_addnote"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+			android:layout_gravity="right"
+    	/>
+    	<ImageButton android:id="@+id/btn_connect_device"
+    		android:src="@drawable/btn_connect"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+			android:layout_gravity="right"
+    	/>
+	</LinearLayout>
 </LinearLayout>
