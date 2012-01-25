@@ -29,9 +29,8 @@ R? about page in the app
 R? private mode and anon mode in settings
 R create "red" style for buttons
 - ui and navigation improvements
-	- remove tree from the bg of tabular
 	- make all main activities share the buttons
-	- fix the icons in the debug tools
+	- fix the icons in the debug tools menu
 	- rename debug tools menu to just Tools
 V design new dedicated screen for zephyr health sensors
 ! add support for the other Zephyr device
