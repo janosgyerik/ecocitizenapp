@@ -57,6 +57,7 @@ public class MainActivity extends TabActivity {
 		spec = tabHost.newTabSpec("TabularView").setContent(intent).setIndicator(btn);
 		tabHost.addTab(spec);
 
+		/*
 		intent = new Intent().setClass(this, SentencesActivity.class);
 		btn = new ImageButton(this);
 		btn.setImageResource(R.drawable.tab_map);
@@ -70,6 +71,7 @@ public class MainActivity extends TabActivity {
 		btn.setPadding(0, 0, 0, 0);
 		spec = tabHost.newTabSpec("Graph").setContent(intent).setIndicator(btn);
 		tabHost.addTab(spec);
+		 */
 
 		tabHost.setCurrentTabByTag("Tree");
 	}
