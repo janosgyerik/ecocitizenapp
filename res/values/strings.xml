@@ -9,7 +9,7 @@
     <string name="tabularviewplus_activity">Tabular View+</string>
     <string name="treeview_activity">Tree View</string>
     <string name="waitforgps_activity">Wait for GPS</string>
-    <string name="debugtools_activity">Debug Tools</string>
+    <string name="debugtools_activity">Tools</string>
     <string name="devicelist_activity">Device List</string>
     <string name="fileuploader_activity">File Uploader</string>
     <string name="fileremover_activity">File Remover</string>
@@ -52,7 +52,7 @@
     <string name="menu_map">Map View</string>
     <string name="menu_fileuploader">Upload data</string>
     <string name="menu_settings">Settings</string>
-    <string name="menu_debugtools">Debug Tools</string>
+    <string name="menu_debugtools">Tools</string>
     <string name="menu_quit">Quit</string>
     <string name="menu_connect">Connect a device</string>
     <string name="menu_disconnect">Disconnect device</string>

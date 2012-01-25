@@ -29,8 +29,7 @@ R? about page in the app
 R? private mode and anon mode in settings
 R create "red" style for buttons
 - ui and navigation improvements
-	- make all main activities share the buttons
-	- rename debug tools menu to just Tools
+	- make the tabular data aligned to top
 	- do not duplicate the button definitions in the main activities but make them share code somehow
 - make the title show the last connected sensor
 	- if possible to manipulate the title in a tabbed app....
