@@ -39,7 +39,7 @@ import com.ecocitizen.common.bundlewrapper.SensorDataBundleWrapper;
 import com.ecocitizen.common.parser.SensorData;
 import com.ecocitizen.common.parser.SensorDataParser;
 
-public class TabularViewPlusActivity extends SimpleDeviceManagerClient {
+public class TabularViewPlusActivity extends AbstractMainActivity {
 	// Debugging
 	private static final String TAG = "TabularViewPlusActivity";
 	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(TabularViewPlusActivity.class);

@@ -31,7 +31,6 @@ R create "red" style for buttons
 - ui and navigation improvements
 	- remove tree from the bg of tabular
 	- make all main activities share the buttons
-	- make all main activities share the menu
 	- fix the icons in the debug tools
 	- rename debug tools menu to just Tools
 V design new dedicated screen for zephyr health sensors
