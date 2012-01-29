@@ -78,6 +78,7 @@ public class TouchHandler implements ITouchHandler {
    * @param event the touch event
    */
   public boolean handleTouch(MotionEvent event) {
+	  /* TODO many functions below require API 5 or above
     int action = event.getAction();
     if (mRenderer != null && action == MotionEvent.ACTION_MOVE) {
       if (oldX >= 0 || oldY >= 0) {
@@ -135,6 +136,7 @@ public class TouchHandler implements ITouchHandler {
         oldY = -1;
       }
     }
+     */
     return !mRenderer.isClickEnabled();
   }
 

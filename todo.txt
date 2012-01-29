@@ -28,13 +28,6 @@ x file uploader: progress indicator with percentage
 R? about page in the app
 R? private mode and anon mode in settings
 R create "red" style for buttons
-- ui and navigation improvements
-	- do not duplicate the button definitions in the main activities but make them share code somehow
-- make the title show the last connected sensor
-	- if possible to manipulate the title in a tabbed app....
-V design new dedicated screen for zephyr health sensors
-! add support for the other Zephyr device
-- combine FileUploader, SensorMapUploaderService, Util in a single HttpUtil
 R+ user registration activity
 	- requires HttpUtil
 	- username
@@ -45,6 +38,12 @@ R+ user registration activity
 	- upload app reminds
 		- if not logged in
 		- if in anon mode
+V design new dedicated screen for zephyr health sensors
+- do not duplicate the button definitions in the main activities but make them share code somehow
+- make the title show the last connected sensor
+	- if possible to manipulate the title in a tabbed app....
+! add support for the other Zephyr device
+- combine FileUploader, SensorMapUploaderService, Util in a single HttpUtil
 - bulk upload: an entire file as attachment
 - add a zephyr logfile for testing/debugging purposes
 - review comments in entire code, especially service code
