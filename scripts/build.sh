@@ -8,7 +8,7 @@
 #
 # PLATFORM: Not platform dependent
 #
-# PURPOSE: Build the project in debug or release mode
+# PURPOSE: Build the project in debug or release mode and install on a device
 #
 # set -n   # Uncomment to check your syntax, without execution.
 #          # NOTE: Do not forget to put the comment back in or
@@ -20,7 +20,7 @@ usage() {
     test $# = 0 || echo $@
     echo "Usage: $0 [OPTION]... [ARG]..."
     echo
-    echo Build the project in debug or release mode and install
+    echo Build the project in debug or release mode and install on a device
     echo
     echo Options:
     echo "  -b, --build          to build or not, default = $build"

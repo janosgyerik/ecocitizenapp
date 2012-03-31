@@ -28,14 +28,14 @@ import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 
 public class ResetSettingsPreference extends Preference {
-    public ResetSettingsPreference(Context context, AttributeSet attrs) {
+	public ResetSettingsPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
 	@Override
-    protected void onClick() {
+	protected void onClick() {
 		final Context context = this.getContext();
-		
+
 		new AlertDialog.Builder(context)
 		.setMessage(R.string.msg_are_you_sure)
 		.setCancelable(true)
@@ -57,17 +57,17 @@ public class ResetSettingsPreference extends Preference {
 				editor = settings.edit();
 				editor.putString("api_key", api_key);
 				editor.commit();
-				
+
 				boolean rtupload = context.getResources().getBoolean(R.bool.rtupload);
 				editor = settings.edit();
 				editor.putBoolean("rtupload", rtupload);
 				editor.commit();
-				
+
 				boolean filesaver = context.getResources().getBoolean(R.bool.filesaver);
 				editor = settings.edit();
 				editor.putBoolean("filesaver", filesaver);
 				editor.commit();
-				
+
 				boolean use_external_storage = context.getResources().getBoolean(R.bool.use_external_storage);
 				editor = settings.edit();
 				editor.putBoolean("use_external_storage", use_external_storage);
@@ -80,5 +80,5 @@ public class ResetSettingsPreference extends Preference {
 			}
 		})
 		.show();
-    }
+	}
 }

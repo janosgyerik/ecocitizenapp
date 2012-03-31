@@ -15,6 +15,8 @@ on the map
 
 release in marketplace
 ======================
+! embed build version in app settings
+! app should not require 'Phone calls' permission 'read phone state and identity'
 ! bug: app crashes during start if bt is not enabled
 ! show version in title, will be important for emergency fixes
 ! login option in preferences menu
