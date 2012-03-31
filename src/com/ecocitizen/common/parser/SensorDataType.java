@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Mobile Environmental Sensing For Sustainable Cities
+ * Copyright (C) 2010-2012 Eco Mobile Citizen
  *
  * This file is part of EcoCitizen.
  *
