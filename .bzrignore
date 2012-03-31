@@ -6,3 +6,6 @@ res/values/props.xml
 src/com/ecocitizen/common/DebugFlagManager.properties
 .euml2
 .umlproject
+ext
+push.sh
+tmp
