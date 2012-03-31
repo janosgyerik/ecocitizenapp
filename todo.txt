@@ -1,15 +1,29 @@
 release notes
 =============
-+ Easier navigation
-	- Connect button on screen instead of menu
-	- Tabs to switch easier between views
-+ Data units are fixed on MultiSensorView
-+ Usability improvements and bugfixes in file uploader
-? improved icons and buttons
+-
+
+
+on the map
+==========
+- simple android login
+    - with mac address and other device info
+    - register sensor info
+    - create new user account
+    - return username + api key
+    - test!
 
 
 release in marketplace
 ======================
+! bug: app crashes during start if bt is not enabled
+! show version in title, will be important for emergency fixes
+! login option in preferences menu
+    - readonly username
+    - readonly api key
+    - url can be changed (not recommended)
+- autoconnect
+    - new activity to configure some paired devices for autoconnect
+    - new button to connect to autoconnect devices
 - remove debug tools from menu
 - create branch for new API version
 - install on motorola

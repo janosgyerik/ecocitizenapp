@@ -2,7 +2,7 @@
 #
 # SCRIPT: build.sh
 # AUTHOR: Janos Gyerik <info@titan2x.com>
-# DATE:   2011-02-10
+# DATE:   2012-03-18
 # REV:    1.0.D (Valid are A, B, D, T and P)
 #               (For Alpha, Beta, Dev, Test and Production)
 #
@@ -20,19 +20,20 @@ usage() {
     test $# = 0 || echo $@
     echo "Usage: $0 [OPTION]... [ARG]..."
     echo
-    echo Build the project in debug or release mode
+    echo Build the project in debug or release mode and install
     echo
     echo Options:
     echo "  -b, --build          to build or not, default = $build"
     echo "  -i, --install        to install or not, default = $install"
+    echo "      --uninstall      to uninstall or not, default = $uninstall"
     echo
     echo "  -d, --debug          build for debug, default = $debug"
     echo "  -r, --release        build for release, default = $release"
     echo
-    echo "  -u, --usb            install on USB device, default = $prop"
-    echo "  -e, --emulator       install on emulator, default = $prop"
+    echo "  -u, --usb            install on USB device, default = $usb"
+    echo "  -e, --emulator       install on emulator, default = $emulator"
     echo
-    echo "  -p, --prop PROPFILE  default = $prop"
+    echo "      --setup-keys     Setup key store, default = $setup_keys"
     echo
     echo "  -h, --help           Print this help"
     echo
@@ -45,21 +46,23 @@ args=
 #param=
 build=off
 install=off
+uninstall=off
 debug=off
 release=off
 usb=off
 emulator=off
-prop=
+setup_keys=off
 while [ $# != 0 ]; do
     case $1 in
     -h|--help) usage ;;
     -b|--build) build=on ;;
     -i|--install) install=on ;;
+    --uninstall) uninstall=on ;;
     -d|--debug) debug=on ;;
     -r|--release) release=on ;;
     -u|--usb) usb=on ;;
     -e|--emulator) emulator=on ;;
-    -p|--prop) shift; prop=$1 ;;
+    --setup-keys) setup_keys=on ;;
 #    --) shift; while [ $# != 0 ]; do args="$args \"$1\""; shift; done; break ;;
     -) usage "Unknown option: $1" ;;
     -?*) usage "Unknown option: $1" ;;
@@ -79,41 +82,76 @@ msg() {
     echo '* '$* ...
 }
 
+randstring() {
+    md5sum=$(which md5sum 2>/dev/null || which md5)
+    POS=2
+    LEN=8
+    str=$(echo $1 $$ $(date +%S) | $md5sum | $md5sum)
+    echo ${str:$POS:$LEN}
+}
+
 cd $(dirname "$0")/..
 
 projectname=$(basename "$PWD")
 
-test -f local.properties || cp samples/local.properties .
+test -f local.properties -a -f build.xml || {
+    msg local.properties or build.xml missing, runnig android update command
+    android update project --path .
+}
 
-test "$prop" && cp "$prop" res/values/props.xml
+if test $setup_keys = on; then
+    test -f keys/config.sh || {
+        mkdir -p keys
+        cat<<EOF >keys/config.sh
+#!/bin/sh
+
+keystore=keys/$projectname.keystore
+alias=mykey
+
+storepass=$(randstring store)
+keypass=$(randstring key)
+
+# eof
+EOF
+    }
+    test -f keys/$projectname.keystore || {
+        . keys/config.sh
+        keytool -genkey -v -keystore keys/$projectname.keystore -storepass $storepass -keypass $keypass -validity 10000 -keyalg RSA
+    }
+fi
 
 if test $build = on; then
     if test $debug = on; then
-	ant debug
+        ant debug
     fi
     if test $release = on; then
-	msg ant build
-	ant release
-	msg jarsigner
-	. keys/config.sh
-	jarsigner -verbose -keystore $keystore -storepass $storepass -keypass $keypass bin/$projectname-unsigned.apk $alias
-	msg zipalign
-	rm -f bin/$projectname-release.apk
-	zipalign -v 4 bin/$projectname-unsigned.apk bin/$projectname-release.apk
+        msg ant build
+        ant release
+        msg jarsigner
+        . keys/config.sh
+        jarsigner -verbose -keystore $keystore -storepass $storepass -keypass $keypass bin/$projectname-release-unsigned.apk $alias
+        msg zipalign
+        rm -f bin/$projectname-release.apk
+        zipalign -v 4 bin/$projectname-release-unsigned.apk bin/$projectname-release.apk
     fi
 fi
 
 if test $install = on; then
     if test $debug = on; then
-	target=bin/$projectname-debug.apk
-	test $usb = on && adb -d install -r $target
-	test $emulator = on && adb -e install -r $target
+        target=bin/$projectname-debug.apk
+        test $usb = on && adb -d install -r $target
+        test $emulator = on && adb -e install -r $target
     fi
     if test $release = on; then
-	target=bin/$projectname-release.apk
-	test $usb = on && adb -d install -r $target
-	test $emulator = on && adb -e install -r $target
+        target=bin/$projectname-release.apk
+        test $usb = on && adb -d install -r $target
+        test $emulator = on && adb -e install -r $target
     fi
+fi
+
+if test $uninstall = on; then
+    package=$(grep package= AndroidManifest.xml | sed -e s/.*package=// | cut -f2 -d\")
+    adb uninstall $package
 fi
 
 # eof
