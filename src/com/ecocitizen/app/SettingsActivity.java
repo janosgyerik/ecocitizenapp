@@ -19,13 +19,74 @@
 
 package com.ecocitizen.app;
 
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
+import android.preference.EditTextPreference;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceGroup;
+import android.preference.PreferenceManager;
 
-public class SettingsActivity extends PreferenceActivity {
+public class SettingsActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
+		
+		customInitPreferenceGroup(this.getPreferenceScreen());
+	}
+	
+	private void customInitPreferenceGroup(PreferenceGroup preferenceGroup) {
+		for (int i = 0; i < preferenceGroup.getPreferenceCount(); ++i) {
+			Preference pref = preferenceGroup.getPreference(i);
+			if (pref instanceof PreferenceGroup) {
+				customInitPreferenceGroup((PreferenceGroup) pref);
+			}
+			else {
+				updatePreferenceEditor(pref);
+			}	
+		}
+	}
+
+	private void updatePreferenceEditor(Preference pref) {
+		updatePreferenceEditor(pref, pref.getKey());
+	}
+
+	private void updatePreferenceEditor(Preference pref, String key) {
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+		
+	    if (pref instanceof EditTextPreference) {
+	    	String value = settings.getString(key, "");
+	        EditTextPreference editTextPref = (EditTextPreference) pref;
+	        editTextPref.setSummary(value);
+	        editTextPref.setText(value);
+	    }
+	    else if (pref instanceof CheckBoxPreference) {
+	    	CheckBoxPreference checkBoxPref = (CheckBoxPreference) pref;
+	    	checkBoxPref.setChecked(settings.getBoolean(key, false));
+	    }
+	}
+
+	@Override
+    protected void onResume() {
+        super.onResume();
+
+        // Set up a listener whenever a key changes            
+        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+    }
+
+	@Override
+    protected void onPause() {
+        super.onPause();
+
+        // Unregister the listener whenever a key changes            
+        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);    
+    }
+	
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+		updatePreferenceEditor(findPreference(key), key);
 	}
 }
