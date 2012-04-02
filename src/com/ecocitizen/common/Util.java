@@ -30,6 +30,13 @@ public abstract class Util {
 		return (int)(nmea / 100) + (nmea % 100) / 60;
 	}
 	
+	/*
+		PackageInfo packageInfo = null;
+		try {
+			packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+		} catch (NameNotFoundException e) {
+		}
+	 */
 	public static String getUserAgentString(PackageInfo packageInfo) {
 		if (packageInfo != null) {
 			return String.format(

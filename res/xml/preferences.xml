@@ -25,6 +25,10 @@
         android:summary=""
         android:title="Build ID" />
 
+    <com.ecocitizen.app.RegisterClientPreference
+        android:summary="@string/summary_registerclient"
+        android:title="@string/title_registerclient" />
+
     <PreferenceCategory android:title="@string/category_mapserver" >
         <EditTextPreference
             android:defaultValue=""

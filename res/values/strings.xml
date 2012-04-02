@@ -63,6 +63,9 @@
     <string name="menu_tabularviewplus">Tabular View+</string>
     
 	<!-- Settings, preferences -->
+    <string name="title_registerclient">Register Client</string>
+    <string name="summary_registerclient">Obtain username and API key</string>
+    
 	<string name="category_mapserver">EcoCitizen map settings</string>
 	<string name="category_storage">Data storage related settings</string>
 	<string name="category_reset">Reset settings to defaults</string>

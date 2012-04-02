@@ -48,14 +48,14 @@ public class ResetSettingsPreference extends Preference {
 				editor.putString("username", username);
 				editor.commit();
 
-				String map_server_url = context.getString(R.string.map_server_url);
-				editor = settings.edit();
-				editor.putString("map_server_url", map_server_url);
-				editor.commit();
-
 				String api_key = context.getString(R.string.api_key);
 				editor = settings.edit();
 				editor.putString("api_key", api_key);
+				editor.commit();
+
+				String map_server_url = context.getString(R.string.map_server_url);
+				editor = settings.edit();
+				editor.putString("map_server_url", map_server_url);
 				editor.commit();
 
 				boolean rtupload = context.getResources().getBoolean(R.bool.rtupload);

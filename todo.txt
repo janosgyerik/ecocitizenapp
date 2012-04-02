@@ -13,22 +13,21 @@ on the map
     - test!
 
 
-release in marketplace
-======================
+experiment
+==========
+! progress dialog during 'register client'
 ! app should not require 'Phone calls' permission 'read phone state and identity'
 ! bug: app crashes during start if bt is not enabled
-! show version in title, will be important for emergency fixes
-! login option in preferences menu
-    - readonly username
-    - readonly api key
-    - url can be changed (not recommended)
 - autoconnect
     - new activity to configure some paired devices for autoconnect
     - new button to connect to autoconnect devices
-- remove debug tools from menu
+
+
+release in marketplace
+======================
 - create branch for new API version
 - install on motorola
-- create Abdroid marketplace page
+- create Android marketplace page
 - release on marketplace
 - announce the release
 	- project blog
@@ -41,7 +40,6 @@ current focus
 R make the tree not squeezed
 x file uploader: progress indicator with percentage
 R? about page in the app
-R? private mode and anon mode in settings
 R create "red" style for buttons
 R+ user registration activity
 	- requires HttpUtil
