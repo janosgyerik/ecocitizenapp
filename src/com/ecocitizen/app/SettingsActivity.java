@@ -36,6 +36,10 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		addPreferencesFromResource(R.xml.preferences);
 		
 		customInitPreferenceGroup(this.getPreferenceScreen());
+		
+		String buildId = getApplicationContext().getString(R.string.build_id);
+		Preference buildIdPreference = findPreference("build_id");
+		buildIdPreference.setSummary(buildId);
 	}
 	
 	private void customInitPreferenceGroup(PreferenceGroup preferenceGroup) {

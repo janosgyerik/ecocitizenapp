@@ -17,61 +17,57 @@
     You should have received a copy of the GNU General Public License
     along with EcoCitizen.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-	<PreferenceCategory android:title="@string/category_mapserver">
-	    <EditTextPreference
-	            android:key="username"
-	            android:defaultValue=""
-	            android:title="@string/title_username_preference"
-	            android:summary="@string/summary_username_preference"
-	            android:dialogTitle="@string/dialog_title_username_preference" />
-	            
-	    <EditTextPreference
-	            android:key="api_key"
-	            android:defaultValue=""
-	            android:title="@string/title_api_key_preference"
-	            android:summary="@string/summary_api_key_preference"
-	            android:dialogTitle="@string/dialog_title_api_key_preference" />
+    <Preference
+        android:enabled="false"
+        android:key="build_id"
+        android:summary=""
+        android:title="Build ID" />
 
-	    <EditTextPreference
-	            android:key="map_server_url"
-	            android:defaultValue="http://dev.ecomobilecitizen.com/api"
-	            android:title="@string/title_map_server_url_preference"
-	            android:summary="@string/summary_map_server_url_preference"
-	            android:dialogTitle="@string/dialog_title_map_server_url_preference" />
-	            
-	</PreferenceCategory>
+    <PreferenceCategory android:title="@string/category_mapserver" >
+        <EditTextPreference
+            android:defaultValue=""
+            android:dialogTitle="@string/dialog_title_username_preference"
+            android:key="username"
+            android:summary="@string/summary_username_preference"
+            android:title="@string/title_username_preference" />
+        <EditTextPreference
+            android:defaultValue=""
+            android:dialogTitle="@string/dialog_title_api_key_preference"
+            android:key="api_key"
+            android:summary="@string/summary_api_key_preference"
+            android:title="@string/title_api_key_preference" />
+        <EditTextPreference
+            android:defaultValue="http://dev.ecomobilecitizen.com/api"
+            android:dialogTitle="@string/dialog_title_map_server_url_preference"
+            android:key="map_server_url"
+            android:summary="@string/summary_map_server_url_preference"
+            android:title="@string/title_map_server_url_preference" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/category_storage" >
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="rtupload"
+            android:summary="@string/summary_rtupload_preference"
+            android:title="@string/title_rtupload_preference" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="filesaver"
+            android:summary="@string/summary_filesaver_preference"
+            android:title="@string/title_filesaver_preference" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="use_external_storage"
+            android:summary="@string/summary_externalstorage_preference"
+            android:title="@string/title_externalstorage_preference" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/category_reset" >
+        <com.ecocitizen.app.ResetSettingsPreference
+            android:defaultValue=""
+            android:key="resetsettings_preference"
+            android:summary="@string/summary_resetsettings"
+            android:title="@string/title_resetsettings" />
+    </PreferenceCategory>
 
-	 
-	<PreferenceCategory android:title="@string/category_storage">
-	    <CheckBoxPreference
-				android:key="rtupload"
-				android:defaultValue="false"
-				android:title="@string/title_rtupload_preference"
-				android:summary="@string/summary_rtupload_preference" />
-				
-	    <CheckBoxPreference
-				android:key="filesaver"
-				android:defaultValue="true"
-				android:title="@string/title_filesaver_preference"
-				android:summary="@string/summary_filesaver_preference" />
-	
-	    <CheckBoxPreference
-	            android:key="use_external_storage"
-	            android:defaultValue="true"
-	            android:title="@string/title_externalstorage_preference"
-	            android:summary="@string/summary_externalstorage_preference" />
-	</PreferenceCategory>           
-            
-            
-	<PreferenceCategory android:title="@string/category_reset">
-	    <com.ecocitizen.app.ResetSettingsPreference
-	            android:key="resetsettings_preference"
-	            android:title="@string/title_resetsettings"
-	            android:summary="@string/summary_resetsettings"
-	            android:defaultValue="" />
-	</PreferenceCategory>           
-            
-	
 </PreferenceScreen>

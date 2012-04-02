@@ -24,6 +24,8 @@ on the deployment type, for example development / production.
 <resources>
     <!-- Application default properties -->
 
+    <string name="build_id">GENERATED</string>
+    
     <string name="username">anon</string>
     <string name="map_server_url">http://dev.ecomobilecitizen.com/api/</string>
     <string name="api_key">JRECsQLiWYisEsLS</string>
