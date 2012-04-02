@@ -16,15 +16,15 @@
 # set -x   # Uncomment to debug this shell script (Korn shell only)
 #
 
-cd $(dirname "$0")
+cd $(dirname "$0")/..
 
-build_id=TODO
+build_id=$(grep build_id res/values/props.xml | head -n 1 | sed -e 's/[^>]*>//' -e 's/<.*//')
 apk=bin/EcoCitizen-release.apk
 apk_release=EcoCitizen-$build_id.apk
 
 remote_host=titan2x
 remote_dir=webapps/blog.ecomobilecitizen.com/download
 
-scp $apk $remote_host:$remote_dir/$apk_release
+scp -v $apk $remote_host:$remote_dir/$apk_release
 
 # eof
