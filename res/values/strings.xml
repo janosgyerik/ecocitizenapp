@@ -178,4 +178,7 @@
 	<!-- common strings -->
 	<string name="common_na">N.A.</string>
 	
+	<string name="title_register_client">Register Client</string>
+	<string name="msg_register_client">Registering client&#8230;</string>
+	
 </resources>

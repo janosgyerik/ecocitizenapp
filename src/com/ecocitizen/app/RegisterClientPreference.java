@@ -19,10 +19,12 @@
 
 package com.ecocitizen.app;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.AsyncTask;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
@@ -35,29 +37,53 @@ public class RegisterClientPreference extends Preference {
 		super(context, attrs);
 	}
 
+	private Context mContext;
+	private SharedPreferences mSettings;
+	private HttpHelper mHttpHelper;
+
 	@Override
 	protected void onClick() {
-		final Context context = this.getContext();
+		mContext = this.getContext();
 
-		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-		
 		PackageInfo packageInfo = null;
 		try {
-			packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+			packageInfo = mContext.getPackageManager().getPackageInfo(mContext.getPackageName(), 0);
 		} catch (NameNotFoundException e) {
 		}
+
+		mSettings = PreferenceManager.getDefaultSharedPreferences(mContext);
+		mHttpHelper = new HttpHelper(mSettings, Util.getUserAgentString(packageInfo));
 		
-		HttpHelper httpHelper = new HttpHelper(settings, Util.getUserAgentString(packageInfo));
-		String[] usernameAndApiKey = httpHelper.registerClient();
+		new RegisterClientAsyncTask().execute((Void)null);
+	}
 
-		String username = usernameAndApiKey[0];
-		SharedPreferences.Editor editor = settings.edit();
-		editor.putString("username", username);
-		editor.commit();
+	class RegisterClientAsyncTask extends AsyncTask<Void, Void, String[]> {
+		ProgressDialog mmProgressDialog;
 
-		String api_key = usernameAndApiKey[1];
-		editor = settings.edit();
-		editor.putString("api_key", api_key);
-		editor.commit();
+		protected void onPreExecute() {
+			mmProgressDialog = ProgressDialog.show(mContext, 
+					mContext.getString(R.string.title_register_client), 
+					mContext.getString(R.string.msg_register_client));
+		}
+
+		protected String[] doInBackground(Void... params) {
+			String[] usernameAndApiKey = mHttpHelper.registerClient();
+			return usernameAndApiKey;
+		}
+
+		@Override
+		protected void onPostExecute(String[] usernameAndApiKey) {
+			if (mmProgressDialog.isShowing()) mmProgressDialog.cancel();
+			
+			String username = usernameAndApiKey[0];
+			SharedPreferences.Editor editor = mSettings.edit();
+			editor.putString("username", username);
+			editor.commit();
+
+			String api_key = usernameAndApiKey[1];
+			editor = mSettings.edit();
+			editor.putString("api_key", api_key);
+			editor.commit();
+		}
 	}
 }

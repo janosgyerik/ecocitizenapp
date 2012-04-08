@@ -3,21 +3,23 @@ release notes
 -
 
 
-on the map
-==========
-- simple android login
-    - with mac address and other device info
-    - register sensor info
-    - create new user account
-    - return username + api key
-    - test!
-
-
 experiment
 ==========
+! bug in sensor registration
+    colons should be changed to underscore
+    name should default to device id
+    slash should not be part of id
+! cleanup map
+    initial fixtures
+    clarify fixtures
+! prepare build folder for experiment
+    debugMode=false
+    anon user by default
+    test well
+! bug: app crashes during start if bt is not enabled
+! bug: app seems to crash when pairing
 ! progress dialog during 'register client'
 ! app should not require 'Phone calls' permission 'read phone state and identity'
-! bug: app crashes during start if bt is not enabled
 - autoconnect
     - new activity to configure some paired devices for autoconnect
     - new button to connect to autoconnect devices
