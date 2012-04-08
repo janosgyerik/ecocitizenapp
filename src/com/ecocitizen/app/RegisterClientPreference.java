@@ -22,15 +22,12 @@ package com.ecocitizen.app;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 
 import com.ecocitizen.common.HttpHelper;
-import com.ecocitizen.common.Util;
 
 public class RegisterClientPreference extends Preference {
 	public RegisterClientPreference(Context context, AttributeSet attrs) {
@@ -44,15 +41,8 @@ public class RegisterClientPreference extends Preference {
 	@Override
 	protected void onClick() {
 		mContext = this.getContext();
-
-		PackageInfo packageInfo = null;
-		try {
-			packageInfo = mContext.getPackageManager().getPackageInfo(mContext.getPackageName(), 0);
-		} catch (NameNotFoundException e) {
-		}
-
+		mHttpHelper = new HttpHelper(mContext);
 		mSettings = PreferenceManager.getDefaultSharedPreferences(mContext);
-		mHttpHelper = new HttpHelper(mSettings, Util.getUserAgentString(packageInfo));
 		
 		new RegisterClientAsyncTask().execute((Void)null);
 	}

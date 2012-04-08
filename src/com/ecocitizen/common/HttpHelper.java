@@ -19,16 +19,23 @@
 
 package com.ecocitizen.common;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpHead;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import backport.android.bluetooth.BluetoothAdapter;
 
@@ -47,13 +54,49 @@ public class HttpHelper {
 	private final String SENSORMAP_REGISTER_CLIENT_URL;
 	private final String SENSORMAP_LOGIN_URL;
 	private final String SENSORMAP_STATUS_URL;
+	private final String SENSORMAP_STARTSESSION_URL;
+	private final String SENSORMAP_STORE_URL;
+	private final String SENSORMAP_ENDSESSION_URL;
+	private final String SENSORMAP_API_VERSION = "4";
+	
+	public enum Status {
+		SUCCESS,
+		SERVER_UNREACHABLE,
+		LOGIN_FAILED,
+		STARTSESSION_FAILED,
+		EXCEPTION,
+		INTERRUPTED,
+		CANCELLED,
+	}
+	
+	private Status mLastStatus = Status.SUCCESS;
+	
+	public Status getLastStatus() {
+		return mLastStatus;
+	}
+	
+	public HttpHelper(Context context) {
+		String userAgentString = null;
+		try {
+			PackageInfo packageInfo = 
+					context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+			userAgentString = String.format(
+					"EcoCitizen-Android/%d/%s", 
+					packageInfo.versionCode,
+					packageInfo.versionName);
+		} catch (NameNotFoundException e) {
+			userAgentString = "EcoCitizen-Android/unknown";
+		}
+		HTTP_USER_AGENT = userAgentString;
 
-	public HttpHelper(SharedPreferences settings, String userAgentString) {
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+
 		String username = settings.getString("username", "");
-		String map_server_url = settings.getString("map_server_url", "");
 		String api_key = settings.getString("api_key", "");
-		String bt_address = "";
+		String map_server_url = settings.getString("map_server_url", "");
+		map_server_url = map_server_url.replaceFirst("/*$", "");
 		
+		String bt_address = "";
 		try {
 			/*
 			Log.d(TAG, "ANDROID_ID = " + Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID));
@@ -65,11 +108,80 @@ public class HttpHelper {
 		catch (Exception e) {
 		}
 
-		SENSORMAP_REGISTER_CLIENT_URL = String.format("%sregister/%s/", map_server_url, bt_address);
-		SENSORMAP_LOGIN_URL = String.format("%slogin/%s/%s/", map_server_url, username, api_key);
-		SENSORMAP_STATUS_URL = String.format("%sstatus/", map_server_url);
-		
-		HTTP_USER_AGENT = userAgentString;
+		SENSORMAP_REGISTER_CLIENT_URL = 
+				String.format("%s/register/%s/", map_server_url, bt_address);
+		SENSORMAP_LOGIN_URL = 
+				String.format("%s/login/%s/%s/", map_server_url, username, api_key);
+		SENSORMAP_STATUS_URL = 
+				String.format("%s/status/", map_server_url);
+		SENSORMAP_STARTSESSION_URL = 
+				String.format("%s/startsession/%s/%s/1/", map_server_url, username, api_key);
+		SENSORMAP_STORE_URL = 
+				String.format("%s/store/%s/", map_server_url, username);
+		SENSORMAP_ENDSESSION_URL = 
+				String.format("%s/endsession/%s/", map_server_url, username);
+
+	}
+	
+	public boolean isServerReachable() {
+		if (getStringResponse(SENSORMAP_STATUS_URL) != null) {
+			mLastStatus = Status.SUCCESS;
+			return true;
+		}
+		else {
+			mLastStatus = Status.SERVER_UNREACHABLE;
+			return false;
+		}
+	}
+	
+	public boolean isLoginOK() {
+		if (getStringResponse(SENSORMAP_LOGIN_URL).equals("True")) {
+			mLastStatus = Status.SUCCESS;
+			return true;
+		}
+		else {
+			mLastStatus = Status.LOGIN_FAILED;
+			return false;
+		}
+	}
+	
+	private String mStoreURL;
+	private String mEndSessionURL;
+	
+	public boolean isStartSessionOK() {
+		String sessionId = getStringResponse(SENSORMAP_STARTSESSION_URL);
+		if (sessionId.equals("")) {
+			mLastStatus = Status.STARTSESSION_FAILED;
+			return false;
+		}
+		else {
+			mLastStatus = Status.SUCCESS;
+			mStoreURL = SENSORMAP_STORE_URL + sessionId + "/" 
+					+ SENSORMAP_API_VERSION + "/";
+			mEndSessionURL = SENSORMAP_ENDSESSION_URL + sessionId + "/";
+			return true;
+		}
+	}
+	
+	public boolean sendStore(String datastr) {
+		return waitForSendHttpHead(mStoreURL + datastr);
+	}
+	
+	public void sendEndSession() {
+		waitForSendHttpHead(mEndSessionURL);
+	}
+	
+	/**
+	 * Returns username and API key
+	 * @return
+	 */
+	public String[] registerClient() {
+		try {
+			return getStringResponse(SENSORMAP_REGISTER_CLIENT_URL).split(",");
+		}
+		catch (Exception e) {
+			return new String[] { "error", "error" };
+		}
 	}
 
 	/**
@@ -111,35 +223,59 @@ public class HttpHelper {
 		}
 	}
 	
-	public enum Status {
-		SUCCESS,
-		SERVER_UNREACHABLE,
-		LOGIN_FAILED,
-		EXCEPTION,
-		STARTSESSION_FAILED,
-		EMPTY_FILE,
-		UPLOAD_INTERRUPTED,
-		UPLOAD_CANCELLED
-	}
-	
-	public boolean isServerReachable() {
-		return getStringResponse(SENSORMAP_STATUS_URL) != null;
-	}
-	
-	public boolean isLoginOK() {
-		return getStringResponse(SENSORMAP_LOGIN_URL).equals("True");
-	}
-	
-	/**
-	 * Returns username and API key
-	 * @return
-	 */
-	public String[] registerClient() {
+	private boolean sendHttpHead(String url) {
+		if (D) Log.d(TAG, url);
+		HttpClient client = new DefaultHttpClient();
+		HttpHead request = new HttpHead(url);
+		request.setHeader("User-Agent", HTTP_USER_AGENT);
+
 		try {
-			return getStringResponse(SENSORMAP_REGISTER_CLIENT_URL).split(",");
+			HttpResponse response = client.execute(request);
+			StatusLine status = response.getStatusLine();
+			if (status.getStatusCode() == HTTP_STATUS_OK) {
+				mLastStatus = Status.SUCCESS;
+				return true;
+			}
+		} catch (ClientProtocolException e) {
+			mLastStatus = Status.EXCEPTION;
+			e.printStackTrace();
+			Log.e(TAG, "Exception in sendHttpHead");
+		} catch (IOException e) {
+			mLastStatus = Status.EXCEPTION;
+			e.printStackTrace();
+			Log.e(TAG, "Exception in sendHttpHead");
 		}
-		catch (Exception e) {
-			return new String[] { "error", "error" };
+		
+		return false;
+	}
+	
+	boolean mCancelRequested = false;
+	
+	public void cancel() {
+		mCancelRequested = true;
+	}
+	
+	public boolean waitForSendHttpHead(String url) {
+		int trycnt = 0;
+		while (! sendHttpHead(url) && ! mCancelRequested) {
+			try {
+				Thread.sleep(WAITFOR_SENSORMAP_MILLIS);
+			} 
+			catch (InterruptedException e) {
+			}
+			if (++trycnt > WAITFOR_SENSORMAP_RETRYCNT) {
+				mLastStatus = Status.INTERRUPTED;
+				return false;
+			}
+		}
+		if (mCancelRequested) {
+			mLastStatus = Status.CANCELLED;
+			return false;
+		}
+		else {
+			mLastStatus = Status.SUCCESS;
+			return true;
 		}
 	}
+	
 }

@@ -20,28 +20,18 @@
 package com.ecocitizen.app;
 
 import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.ecocitizen.common.DebugFlagManager;
-import com.ecocitizen.common.Util;
 
 public class FileUploaderActivity extends FileManagerActivity {
 	// Debugging
@@ -57,8 +47,6 @@ public class FileUploaderActivity extends FileManagerActivity {
 	private StorageType mCurrentStorageType;
 	private File mCurrentFile;
 	
-	private String mUserAgentString = null;
-	
 	@Override
 	protected int getLayoutResID() {
 		return R.layout.fileuploader;
@@ -69,148 +57,17 @@ public class FileUploaderActivity extends FileManagerActivity {
 		super.onCreate(savedInstanceState);
 		if (D) Log.d(TAG, "+++ ON CREATE +++");
 		
-		PackageInfo packageInfo = null;
-		try {
-			packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-		} catch (NameNotFoundException e) {
-		}
-		mUserAgentString = Util.getUserAgentString(packageInfo);
-		
 		ListView internalFilesListView = (ListView)findViewById(R.id.internal_storage);
 		internalFilesListView.setOnItemClickListener(new ItemClickListener(StorageType.INTERNAL, internalFilesArrayAdapter, getFilesDir()));
 
 		ListView externalFilesListView = (ListView)findViewById(R.id.external_storage);
 		externalFilesListView.setOnItemClickListener(new ItemClickListener(StorageType.EXTERNAL, externalFilesArrayAdapter, externalDir));
 		
-		findViewById(R.id.btn_upload_all_internal).setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				new AlertDialog.Builder(FileUploaderActivity.this)
-				.setMessage(R.string.msg_are_you_sure)
-				.setCancelable(true)
-				.setPositiveButton(R.string.btn_yes, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						if (testUpload()) {
-							new UploadAllAsyncTask(
-									internalFilesArrayAdapter, 
-									getFilesDir(), 
-									internalFilenames, 
-									R.id.btn_upload_all_internal
-							).execute();
-						}
-					}
-				})
-				.setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-					}
-				})
-				.show();
-			}
-		});
-
-		findViewById(R.id.btn_upload_all_external).setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				new AlertDialog.Builder(FileUploaderActivity.this)
-				.setMessage(R.string.msg_are_you_sure)
-				.setCancelable(true)
-				.setPositiveButton(R.string.btn_yes, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						if (testUpload()) {
-							new UploadAllAsyncTask(
-									externalFilesArrayAdapter, 
-									externalDir,
-									externalFilenames, 
-									R.id.btn_upload_all_external
-							).execute();
-						}
-					}
-				})
-				.setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-					}
-				})
-				.show();
-			}
-		});
-		
 		findViewById(R.id.btn_close).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				finish();
 			}
 		});
-	}
-	
-	class UploadAllAsyncTask extends AsyncTask<Void, String, Void> {
-		ArrayAdapter<String> mFilesArrayAdapter;
-		File mBasedir;
-		int mUploadBtnId;
-		
-		public UploadAllAsyncTask(
-				ArrayAdapter<String> filesArrayAdapter, 
-				File basedir, 
-				List<String> filenames,
-				int uploadBtnId) {
-			mFilesArrayAdapter = filesArrayAdapter;
-			mBasedir = basedir;
-			mUploadBtnId = uploadBtnId;			
-		}
-		
-		protected void onPreExecute() {
-			setProgressBarIndeterminateVisibility(true);
-			findViewById(mUploadBtnId).setEnabled(false);
-		}
-		
-		protected Void doInBackground(Void... params) {
-			LinkedList<String> filenames = new LinkedList<String>();
-			for (int i = 0; i < mFilesArrayAdapter.getCount(); ++i) {
-				filenames.add(mFilesArrayAdapter.getItem(i));
-			}
-			for (String filename : filenames) {
-				File file = new File(mBasedir + "/" + filename);
-				if (file.isFile() && upload(file)) { 
-					publishProgress(filename);
-				}
-			}
-			return null;
-		}
-
-		protected void onProgressUpdate(String...progress) {
-			mFilesArrayAdapter.remove(progress[0]);
-		}
-
-		protected void onPostExecute(Void result) {
-			if (mFilesArrayAdapter.isEmpty()) {
-				mFilesArrayAdapter.add(getString(R.string.label_none));
-			}
-			setProgressBarIndeterminateVisibility(false);
-			findViewById(mUploadBtnId).setEnabled(true);
-		}
-	}
-	
-	
-	private boolean testUpload() {
-		FileUploader uploader = new FileUploader(PreferenceManager.getDefaultSharedPreferences(this), null, mUserAgentString);
-
-		if (!uploader.isServerReachable()) {
-			Toast.makeText(this, R.string.fileuploader_msg_server_unreachable, Toast.LENGTH_SHORT).show();
-			return false;
-		}
-		
-		if (!uploader.isLoginOK()) {
-			Toast.makeText(this, R.string.fileuploader_msg_login_failed, Toast.LENGTH_SHORT).show();
-			return false;
-		}
-		
-		return true;
-	}
-	
-	private boolean upload(File file) {
-		FileUploader uploader = new FileUploader(PreferenceManager.getDefaultSharedPreferences(this), file, mUserAgentString);
-		FileUploader.Status status = uploader.upload();
-		
-		if (status == FileUploader.Status.SUCCESS) return true;
-		return false;
 	}
 	
 	class ItemClickListener implements OnItemClickListener {
