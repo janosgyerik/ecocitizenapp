@@ -43,7 +43,7 @@
             android:summary="@string/summary_api_key_preference"
             android:title="@string/title_api_key_preference" />
         <EditTextPreference
-            android:defaultValue="http://dev.ecomobilecitizen.com/api"
+            android:defaultValue="http://dev.ecomobilecitizen.com/api/"
             android:dialogTitle="@string/dialog_title_map_server_url_preference"
             android:key="map_server_url"
             android:summary="@string/summary_map_server_url_preference"
