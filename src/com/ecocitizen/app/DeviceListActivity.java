@@ -94,17 +94,17 @@ public class DeviceListActivity extends Activity {
 		// Initialize the button to perform device discovery
 		scanButton = (Button) findViewById(R.id.button_scan);
 
-		// Setup special devices section
-		findViewById(R.id.special_devices_section).setVisibility(View.VISIBLE);
-		
-		mSpecialDevicesArrayAdapter = new ArrayAdapter<SpecialDeviceSpec>(this, R.layout.device_name_singleline);
-		mSpecialDevicesArrayAdapter.add(new SpecialDeviceSpec(EXTRA_DUMMY, getString(R.string.dummy_device)));
-		
-		ListView logfileListView = (ListView) findViewById(R.id.special_devices);
-		logfileListView.setAdapter(mSpecialDevicesArrayAdapter);
-		logfileListView.setOnItemClickListener(mSpecialDeviceClickListener);
-
 		if (getResources().getBoolean(R.bool.debugMode)) {
+			// Setup special devices section
+			findViewById(R.id.special_devices_section).setVisibility(View.VISIBLE);
+
+			mSpecialDevicesArrayAdapter = new ArrayAdapter<SpecialDeviceSpec>(this, R.layout.device_name_singleline);
+			mSpecialDevicesArrayAdapter.add(new SpecialDeviceSpec(EXTRA_DUMMY, getString(R.string.dummy_device)));
+
+			ListView logfileListView = (ListView) findViewById(R.id.special_devices);
+			logfileListView.setAdapter(mSpecialDevicesArrayAdapter);
+			logfileListView.setOnItemClickListener(mSpecialDeviceClickListener);
+
 			mSpecialDevicesArrayAdapter.add(new SpecialDeviceSpec(
 					EXTRA_LOGFILENAME, getString(R.string.logfile_co2sample1)));
 			mSpecialDevicesArrayAdapter.add(new SpecialDeviceSpec(

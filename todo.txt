@@ -3,14 +3,15 @@ release notes
 -
 
 
-experiment
-==========
-! cleanup map
-    initial fixtures
-    clarify fixtures
-! bug: app seems to crash when pairing
+experiment essential
+====================
 ! bug: build does not work in a clean dir
 ! app should not require 'Phone calls' permission 'read phone state and identity'
+
+
+experiment good to have
+=======================
+- release in marketpace
 - autoconnect
     - new activity to configure some paired devices for autoconnect
     - new button to connect to autoconnect devices
