@@ -8,12 +8,8 @@ experiment
 ! cleanup map
     initial fixtures
     clarify fixtures
-! prepare build folder for experiment
-    debugMode=false
-    anon user by default
-    test well
 ! bug: app seems to crash when pairing
-! progress dialog during 'register client'
+! bug: build does not work in a clean dir
 ! app should not require 'Phone calls' permission 'read phone state and identity'
 - autoconnect
     - new activity to configure some paired devices for autoconnect

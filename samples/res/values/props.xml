@@ -24,7 +24,7 @@ on the deployment type, for example development / production.
 <resources>
     <!-- Application default properties -->
 
-    <string name="build_id">GENERATED</string>
+    <string name="build_id">DEBUG</string>
     
     <string name="username">anon</string>
     <string name="map_server_url">http://dev.ecomobilecitizen.com/api/</string>
@@ -36,7 +36,7 @@ on the deployment type, for example development / production.
 
     <!-- For developers only -->
 
-    <bool name="debugMode">true</bool>
+    <bool name="debugMode">false</bool>
 
     <integer name="logplayer_msg_interval">1000</integer>
     <integer name="dummydevice_msg_interval">1000</integer>
