@@ -6,11 +6,11 @@ release notes
 experiment essential
 ====================
 ! bug: build does not work in a clean dir
-! app should not require 'Phone calls' permission 'read phone state and identity'
 
 
 experiment good to have
 =======================
+- show connected sensors, somewhere...
 - release in marketpace
 - autoconnect
     - new activity to configure some paired devices for autoconnect
