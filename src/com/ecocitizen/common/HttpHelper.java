@@ -109,7 +109,7 @@ public class HttpHelper {
 		}
 
 		SENSORMAP_REGISTER_CLIENT_URL = 
-				String.format("%s/register/%s/", map_server_url, bt_address);
+				String.format("%s/register/%s/", map_server_url, bt_address.replaceAll(":", "_"));
 		SENSORMAP_LOGIN_URL = 
 				String.format("%s/login/%s/%s/", map_server_url, username, api_key);
 		SENSORMAP_STATUS_URL = 
