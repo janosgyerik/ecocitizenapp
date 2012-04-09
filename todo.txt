@@ -5,10 +5,6 @@ release notes
 
 experiment
 ==========
-! bug in sensor registration
-    colons should be changed to underscore
-    name should default to device id
-    slash should not be part of id
 ! cleanup map
     initial fixtures
     clarify fixtures
@@ -16,7 +12,6 @@ experiment
     debugMode=false
     anon user by default
     test well
-! bug: app crashes during start if bt is not enabled
 ! bug: app seems to crash when pairing
 ! progress dialog during 'register client'
 ! app should not require 'Phone calls' permission 'read phone state and identity'
