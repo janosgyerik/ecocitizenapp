@@ -36,20 +36,6 @@ public class MainActivity extends TabActivity {
 		Intent intent;
 		ImageButton btn;
 
-		intent = new Intent().setClass(this, TreeViewActivity.class);
-		btn = new ImageButton(this);
-		btn.setImageResource(R.drawable.tab_tree);
-		btn.setPadding(0, 0, 0, 0);
-		spec = tabHost.newTabSpec("Tree").setContent(intent).setIndicator(btn);
-		tabHost.addTab(spec);
-		
-		intent = new Intent().setClass(this, MultiSensorViewActivity.class);
-		btn = new ImageButton(this);
-		btn.setImageResource(R.drawable.tab_multisensor);
-		btn.setPadding(0, 0, 0, 0);
-		spec = tabHost.newTabSpec("MultiSensor").setContent(intent).setIndicator(btn);
-		tabHost.addTab(spec);
-
 		intent = new Intent().setClass(this, TabularViewPlusActivity.class);
 		btn = new ImageButton(this);
 		btn.setImageResource(R.drawable.tab_tabularview);
@@ -57,6 +43,20 @@ public class MainActivity extends TabActivity {
 		spec = tabHost.newTabSpec("TabularView").setContent(intent).setIndicator(btn);
 		tabHost.addTab(spec);
 
+		intent = new Intent().setClass(this, MultiSensorViewActivity.class);
+		btn = new ImageButton(this);
+		btn.setImageResource(R.drawable.tab_multisensor);
+		btn.setPadding(0, 0, 0, 0);
+		spec = tabHost.newTabSpec("MultiSensor").setContent(intent).setIndicator(btn);
+		tabHost.addTab(spec);
+
+		intent = new Intent().setClass(this, TreeViewActivity.class);
+		btn = new ImageButton(this);
+		btn.setImageResource(R.drawable.tab_tree);
+		btn.setPadding(0, 0, 0, 0);
+		spec = tabHost.newTabSpec("Tree").setContent(intent).setIndicator(btn);
+		tabHost.addTab(spec);
+		
 		/*
 		intent = new Intent().setClass(this, SentencesActivity.class);
 		btn = new ImageButton(this);
@@ -73,6 +73,6 @@ public class MainActivity extends TabActivity {
 		tabHost.addTab(spec);
 		 */
 
-		tabHost.setCurrentTabByTag("Tree");
+		tabHost.setCurrentTabByTag("TabularView");
 	}
 }
