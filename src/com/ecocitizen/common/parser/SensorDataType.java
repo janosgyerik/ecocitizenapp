@@ -35,4 +35,10 @@ public enum SensorDataType {
 	Distance,
 	InstSpeed,
 	Strides,
+	
+	// Zephyr BioHarness
+	RespirationRate,
+	SkinTemperature,
+	BloodPressure,
+
 }
