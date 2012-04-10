@@ -1,139 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.ecocitizen.app" android:versionCode="1"
-	android:versionName="1.0">
-	<application android:icon="@drawable/launcher_main" android:label="@string/app_name">
-		<service android:name="com.ecocitizen.service.DeviceManagerService"
-			android:process=":remote_dm">
-			<intent-filter>
-				<action android:name="com.ecocitizen.service.IDeviceManagerService" />
-			</intent-filter>
-		</service>
+    package="com.ecocitizen.app"
+    android:versionCode="1"
+    android:versionName="1.0" >
 
-		<service android:name="com.ecocitizen.service.SensorMapUploaderService"
-			android:process=":remote_uploader">
-			<intent-filter>
-				<action android:name="com.ecocitizen.service.ISensorMapUploaderService" />
-			</intent-filter>
-		</service>
+    <uses-sdk
+        android:minSdkVersion="4"
+        android:targetSdkVersion="4" >
+    </uses-sdk>
 
-		<service android:name="com.ecocitizen.service.FileSaverService"
-			android:process=":remote_filesaver">
-			<intent-filter>
-				<action android:name="com.ecocitizen.service.IFileSaverService" />
-			</intent-filter>
-		</service>
+    <uses-permission android:name="android.permission.BLUETOOTH" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
+    </uses-permission>
 
-		<activity android:name=".TreeViewActivity"
-			android:screenOrientation="nosensor" 
-			android:label="@string/app_name">
-		</activity>
+    <application
+        android:icon="@drawable/launcher_main"
+        android:label="@string/app_name" >
+        <service
+            android:name="com.ecocitizen.service.DeviceManagerService"
+            android:process=":remote_dm" >
+            <intent-filter>
+                <action android:name="com.ecocitizen.service.IDeviceManagerService" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.ecocitizen.service.SensorMapUploaderService"
+            android:process=":remote_uploader" >
+            <intent-filter>
+                <action android:name="com.ecocitizen.service.ISensorMapUploaderService" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.ecocitizen.service.FileSaverService"
+            android:process=":remote_filesaver" >
+            <intent-filter>
+                <action android:name="com.ecocitizen.service.IFileSaverService" />
+            </intent-filter>
+        </service>
 
-		<activity android:name=".SentencesActivity" android:label="@string/sentences_activity">
-		</activity>
+        <activity
+            android:name=".TreeViewActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="nosensor" >
+        </activity>
+        <activity
+            android:name=".SentencesActivity"
+            android:label="@string/sentences_activity" >
+        </activity>
+        <activity
+            android:name=".ConsoleActivity"
+            android:label="@string/console_activity" >
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/settings_activity" >
+        </activity>
+        <activity
+            android:name=".TabularViewActivity"
+            android:label="@string/tabularview_activity" >
+        </activity>
+        <activity
+            android:name=".TabularViewPlusActivity"
+            android:label="@string/tabularviewplus_activity" >
+        </activity>
+        <activity
+            android:name=".MapViewActivity"
+            android:label="@string/mapview_activity" >
+        </activity>
+        <activity
+            android:name=".MultiSensorViewActivity"
+            android:label="@string/multisensorview_activity"
+            android:screenOrientation="nosensor" >
+        </activity>
+        <activity
+            android:name=".FileRemoverActivity"
+            android:label="@string/fileremover_activity" >
+        </activity>
+        <activity
+            android:name=".DebugToolsActivity"
+            android:label="@string/debugtools_activity"
+            android:screenOrientation="nosensor"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".WaitForGpsActivity"
+            android:label="@string/waitforgps_activity"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name=".FileUploaderActivity"
+            android:label="@string/fileuploader_activity"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name=".FileInfoActivity"
+            android:label="@string/fileinfo_activity"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name=".FileInfoWithUploadActivity"
+            android:label="@string/fileinfo_activity"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name=".AddNoteActivity"
+            android:label="@string/addnote_activity"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name=".DeviceListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/devicelist_activity"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".DisconnectDeviceActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/disconnect_device_activity"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name="backport.android.bluetooth.RequestEnableActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="Bluetooth Permission Request"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+            <intent-filter>
+                <action android:name="com.ecocitizen.app.action.REQUEST_ENABLE" />
 
-		<activity android:name=".ConsoleActivity" android:label="@string/console_activity">
-		</activity>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="nosensor" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-		<activity android:name=".SettingsActivity" android:label="@string/settings_activity">
-		</activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
-		<activity android:name=".TabularViewActivity" android:label="@string/tabularview_activity">
-		</activity>
-		
-		<activity android:name=".TabularViewPlusActivity" android:label="@string/tabularviewplus_activity">
-		</activity>
-		
-		<activity android:name=".MapViewActivity" android:label="@string/mapview_activity">
-		</activity>
-		
-		<activity android:name=".MultiSensorViewActivity"
-			android:screenOrientation="nosensor"  
-			android:label="@string/multisensorview_activity">
-		</activity>
-		
-		<activity android:name=".FileRemoverActivity" android:label="@string/fileremover_activity">
-		</activity>
-		
-		<activity android:name=".DebugToolsActivity" 
-		    android:screenOrientation="nosensor" 
-		    android:theme="@android:style/Theme.NoTitleBar"
-			android:label="@string/debugtools_activity">
-		</activity>
-        
-		<activity android:name=".WaitForGpsActivity" android:label="@string/waitforgps_activity"
-		    android:theme="@android:style/Theme.Dialog">
-		</activity>
-		
-		<activity android:name=".FileUploaderActivity" android:label="@string/fileuploader_activity"
-			android:theme="@android:style/Theme.Dialog" >
-		</activity>
-		
-		<activity android:name=".FileInfoActivity" android:label="@string/fileinfo_activity"
-			android:theme="@android:style/Theme.Dialog" >
-		</activity>
-		
-		<activity android:name=".FileInfoWithUploadActivity" android:label="@string/fileinfo_activity"
-			android:theme="@android:style/Theme.Dialog" >
-		</activity>
-		
-		<activity android:name=".AddNoteActivity" android:label="@string/addnote_activity"
-			android:theme="@android:style/Theme.Dialog" >
-		</activity>
+        <receiver android:name="backport.android.bluetooth.BluetoothIntentRedirector" >
+            <intent-filter>
+                <action android:name="android.bluetooth.intent.action.DISCOVERY_COMPLETED" />
+                <action android:name="android.bluetooth.intent.action.DISCOVERY_STARTED" />
+                <action android:name="android.bluetooth.intent.action.NAME_CHANGED" />
+                <action android:name="android.bluetooth.intent.action.SCAN_MODE_CHANGED" />
+                <action android:name="android.bluetooth.intent.action.BLUETOOTH_STATE_CHANGED" />
+                <action android:name="android.bluetooth.intent.action.REMOTE_DEVICE_CONNECTED" />
+                <action android:name="android.bluetooth.intent.action.REMOTE_DEVICE_DISCONNECTED" />
+                <action android:name="android.bluetooth.intent.action.REMOTE_DEVICE_DISCONNECT_REQUESTED" />
+                <action android:name="android.bluetooth.intent.action.BOND_STATE_CHANGED" />
+                <action android:name="android.bluetooth.intent.action.PAIRING_REQUEST" />
+                <action android:name="android.bluetooth.intent.action.PAIRING_CANCEL" />
+                <action android:name="android.bluetooth.intent.action.REMOTE_DEVICE_CLASS_UPDATED" />
+                <action android:name="android.bluetooth.intent.action.REMOTE_DEVICE_FOUND" />
+                <action android:name="android.bluetooth.intent.action.REMOTE_NAME_UPDATED" />
+            </intent-filter>
+        </receiver>
 
-		<activity android:name=".DeviceListActivity" android:label="@string/devicelist_activity"
-			android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden" />
+        <uses-library android:name="com.google.android.maps" />
+    </application>
 
-		<activity android:name=".DisconnectDeviceActivity" android:label="@string/disconnect_device_activity"
-			android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden" />
-
-		<activity android:name="backport.android.bluetooth.RequestEnableActivity"
-			android:label="Bluetooth Permission Request" android:noHistory="true"
-			android:theme="@android:style/Theme.Translucent.NoTitleBar"
-			android:configChanges="orientation|keyboardHidden">
-			<intent-filter>
-				<action android:name="com.ecocitizen.app.action.REQUEST_ENABLE" />
-				<category android:name="android.intent.category.DEFAULT" />
-			</intent-filter>
-		</activity>
-		
-		<activity android:name=".MainActivity" android:label="@string/app_name"
-		    android:screenOrientation="nosensor" >
-		    <intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-		</activity>
-
-		<receiver android:name="backport.android.bluetooth.BluetoothIntentRedirector">
-			<intent-filter>
-				<action android:name="android.bluetooth.intent.action.DISCOVERY_COMPLETED" />
-				<action android:name="android.bluetooth.intent.action.DISCOVERY_STARTED" />
-				<action android:name="android.bluetooth.intent.action.NAME_CHANGED" />
-				<action android:name="android.bluetooth.intent.action.SCAN_MODE_CHANGED" />
-				<action android:name="android.bluetooth.intent.action.BLUETOOTH_STATE_CHANGED" />
-				<action android:name="android.bluetooth.intent.action.REMOTE_DEVICE_CONNECTED" />
-				<action android:name="android.bluetooth.intent.action.REMOTE_DEVICE_DISCONNECTED" />
-				<action
-					android:name="android.bluetooth.intent.action.REMOTE_DEVICE_DISCONNECT_REQUESTED" />
-				<action android:name="android.bluetooth.intent.action.BOND_STATE_CHANGED" />
-				<action android:name="android.bluetooth.intent.action.PAIRING_REQUEST" />
-				<action android:name="android.bluetooth.intent.action.PAIRING_CANCEL" />
-				<action
-					android:name="android.bluetooth.intent.action.REMOTE_DEVICE_CLASS_UPDATED" />
-				<action android:name="android.bluetooth.intent.action.REMOTE_DEVICE_FOUND" />
-				<action android:name="android.bluetooth.intent.action.REMOTE_NAME_UPDATED" />
-			</intent-filter>
-		</receiver>
-		
-		<uses-library android:name="com.google.android.maps" />
-	</application>
-
-	<uses-permission android:name="android.permission.BLUETOOTH"></uses-permission>
-	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>
-	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-
-	<uses-sdk android:minSdkVersion="4" android:targetSdkVersion="4"></uses-sdk> 
-</manifest> 
+</manifest>
