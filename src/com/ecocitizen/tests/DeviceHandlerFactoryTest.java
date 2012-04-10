@@ -11,6 +11,7 @@ import org.junit.Test;
 import com.ecocitizen.common.DeviceHandlerFactory;
 import com.ecocitizen.common.reader.DeviceReader;
 import com.ecocitizen.common.reader.SimpleSentenceReader;
+import com.ecocitizen.common.reader.ZephyrGeneralDataReader;
 import com.ecocitizen.common.reader.ZephyrHxmReader;
 
 public class DeviceHandlerFactoryTest {
@@ -35,6 +36,12 @@ public class DeviceHandlerFactoryTest {
 	public void testZephyrSensor() {
 		DeviceReader reader = factory.getReader("HXM004323", "00:07:80:9b:05:b2");
 		assertEquals(reader.getClass(), ZephyrHxmReader.class);
+	}
+	
+	@Test
+	public void testZephyrBioHarness() {
+		DeviceReader reader = factory.getReader("BH ZBH001234", "00:07:80:9b:ff:ff");
+		assertEquals(reader.getClass(), ZephyrGeneralDataReader.class);
 	}
 	
 	@Test
