@@ -190,7 +190,13 @@ public class DeviceHandlerFactory {
 			Class classToLoad = Class.forName(className);
 			return classToLoad.newInstance();
 		} catch (ClassNotFoundException e) {
-			Log.w(TAG, "ClassNotFoundException when creating class: " + className);
+			try { 
+				Log.w(TAG, "ClassNotFoundException when creating class: " + className);
+			}
+			catch (java.lang.NoClassDefFoundError e2) {
+				// this can happen when running in unit test,
+				// because android.util.Log cannot be found. 
+			}
 		} catch (IllegalAccessException e) {
 			Log.w(TAG, "IllegalAccessException when creating class: " + className);
 		} catch (InstantiationException e) {
