@@ -27,48 +27,48 @@ public class DeviceHandlerFactoryTest {
 	public void testSensarisSensor() {
 		DeviceReader reader;
 		reader = factory.getReader("SENSPOD_0054", "00:07:80:95:58:19");
-		assertEquals(reader.getClass(), SimpleSentenceReader.class);
+		assertEquals(SimpleSentenceReader.class, reader.getClass());
 		reader = factory.getReader("SENSPOD_3002", "00:07:80:93:54:5b");
-		assertEquals(reader.getClass(), SimpleSentenceReader.class);
+		assertEquals(SimpleSentenceReader.class, reader.getClass());
 	}
 	
 	@Test
 	public void testZephyrSensor() {
 		DeviceReader reader = factory.getReader("HXM004323", "00:07:80:9b:05:b2");
-		assertEquals(reader.getClass(), ZephyrHxmReader.class);
+		assertEquals(ZephyrHxmReader.class, reader.getClass());
 	}
 	
 	@Test
 	public void testZephyrBioHarness() {
 		DeviceReader reader = factory.getReader("BH ZBH001234", "00:07:80:9b:ff:ff");
-		assertEquals(reader.getClass(), ZephyrGeneralDataReader.class);
+		assertEquals(ZephyrGeneralDataReader.class, reader.getClass());
 	}
 	
 	@Test
 	public void testCommonReader() {
 		DeviceReader reader = factory.getReader("TEST3", "00:00:00:00:00:03");
-		assertEquals(reader.getClass(), CommonReader.class);
+		assertEquals(CommonReader.class, reader.getClass());
 		assertNotSame(SpecializedReader.class, reader.getClass());
 	}
 	
 	@Test
 	public void testSpecializedReader() {
 		DeviceReader reader = factory.getReader("TEST5", "00:00:00:00:00:05");
-		assertEquals(reader.getClass(), SpecializedReader.class);
+		assertEquals(SpecializedReader.class, reader.getClass());
 		assertNotSame(CommonReader.class, reader.getClass());
 	}
 	
 	@Test
 	public void testBorkedReader() {		
 		DeviceReader reader = factory.getReader("BORKED", "00:00:00:00:00:ff");
-		assertEquals(reader.getClass(), DeviceHandlerFactory.defaultReaderClass);
+		assertEquals(DeviceHandlerFactory.defaultReaderClass, reader.getClass());
 		assertNotSame(CommonReader.class, reader.getClass());
 	}
 	
 	@Test
 	public void testOtherSensor() {
 		DeviceReader reader = factory.getReader("blah1", "00:07:80:ff:ff:ff");
-		assertEquals(reader.getClass(), DeviceHandlerFactory.defaultReaderClass);
+		assertEquals(DeviceHandlerFactory.defaultReaderClass, reader.getClass());
 		assertNotSame(CommonReader.class, reader.getClass());
 	}
 	
