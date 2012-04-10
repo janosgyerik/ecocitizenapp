@@ -22,7 +22,7 @@ package com.ecocitizen.common.parser;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ZephyrParser implements SensorDataParser {
+public class ZephyrHxmParser implements SensorDataParser {
 	
 	static final SensorDataFilter filter = new SensorDataFilter(
 			SensorDataType.HeartRate,

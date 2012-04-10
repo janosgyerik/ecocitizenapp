@@ -27,10 +27,10 @@ import android.util.Log;
 
 import com.ecocitizen.common.DebugFlagManager;
 
-public class ZephyrReader implements DeviceReader {
+public class ZephyrHxmReader implements DeviceReader {
 	// Debugging
 	private static final String TAG = "ZephyrReader";
-	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(ZephyrReader.class);
+	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(ZephyrHxmReader.class);
 
 	private Reader reader;
 
