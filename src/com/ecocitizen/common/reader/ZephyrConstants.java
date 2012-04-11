@@ -21,15 +21,17 @@ package com.ecocitizen.common.reader;
 
 
 public abstract class ZephyrConstants {
-	
-	public final int STX = 0x02;
-	public final int ETX = 0x03;
-	
-	public static int getCRC(String buffer) {
+
+	public static final byte STX = 0x02;
+	public static final byte ETX = 0x03;
+
+	public static final byte MSG_SET_GENERAL_PACKET_TRANSMIT_STATE = 0x14;
+
+	public static byte getCRC(byte[] buffer) {
 		int crc = 0;
-		
-		for (int i = 0; i < buffer.length(); ++i) {
-			int ch = buffer.charAt(i);
+
+		for (int i = 0; i < buffer.length; ++i) {
+			int ch = buffer[i];
 			crc = (crc ^ ch);
 			for (int j = 0; j < 8; ++j) {
 				if ((crc & 1) > 0) {
@@ -40,8 +42,27 @@ public abstract class ZephyrConstants {
 				}
 			}
 		}
-		
-		return crc;
+
+		return (byte)crc;
 	}
-	
+
+	public static byte getCRC(String buffer) {
+		return getCRC(buffer.getBytes());
+	}
+
+	public static byte[] createMessage(byte msgID, byte[] payload) {
+		// STX + MSGID + DLC + ... + CRC + ETX
+		byte[] message = new byte[payload.length + 5];
+		message[0] = STX;
+		message[1] = msgID;
+		message[2] = (byte)payload.length;
+		int j = 3;
+		for (int i = 0; i < payload.length; ++i, ++j) {
+			message[j] = payload[i];
+		}
+		message[j] = getCRC(payload);
+		message[j+1] = ETX;
+		return message;
+	}
+
 }
