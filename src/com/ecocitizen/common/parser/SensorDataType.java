@@ -39,6 +39,8 @@ public enum SensorDataType {
 	// Zephyr BioHarness
 	RespirationRate,
 	SkinTemperature,
-	BloodPressure,
+	BloodPressure, 
+	Posture,
+	Activity,
 
 }

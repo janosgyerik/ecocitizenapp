@@ -28,12 +28,16 @@ public class ZephyrGeneralDataParser implements SensorDataParser {
 			SensorDataType.HeartRate,
 			SensorDataType.RespirationRate,
 			SensorDataType.SkinTemperature,
-			SensorDataType.BloodPressure
+			SensorDataType.BloodPressure,
+			SensorDataType.Posture,
+			SensorDataType.Activity
 			);
 	
 	static final int HEART_RATE_POS = 12;
 	static final int RESPIRATION_RATE_POS = 14;
 	static final int SKIN_TEMPERATURE_POS = 16;
+	static final int POSTURE_POS = 18;
+	static final int ACTIVITY_POS = 20;
 	static final int BLOOD_PRESSURE_POS = 50;
 
 	public List<SensorData> getSensorData(String bytes, SensorDataFilter filter) {
@@ -54,6 +58,14 @@ public class ZephyrGeneralDataParser implements SensorDataParser {
 			case SkinTemperature:
 				int skinTemperature = getTwoByteData(bytes, SKIN_TEMPERATURE_POS);
 				data = new SensorData(SensorDataType.SkinTemperature, "ºC", Integer.toString(skinTemperature));
+				break;
+			case Posture:
+				int posture = getTwoByteData(bytes, POSTURE_POS);
+				data = new SensorData(SensorDataType.Posture, "deg", Integer.toString(posture));
+				break;
+			case Activity:
+				int activity = getTwoByteData(bytes, ACTIVITY_POS);
+				data = new SensorData(SensorDataType.Activity, "VMU/s", Integer.toString(activity));
 				break;
 			case BloodPressure:
 				int bloodPressure = getTwoByteData(bytes, BLOOD_PRESSURE_POS);
