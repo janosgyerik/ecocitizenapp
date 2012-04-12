@@ -40,36 +40,62 @@ public class ZephyrGeneralDataParser implements SensorDataParser {
 	static final int ACTIVITY_POS = 20;
 	static final int BLOOD_PRESSURE_POS = 50;
 
-	public List<SensorData> getSensorData(String bytes, SensorDataFilter filter) {
+	public List<SensorData> getSensorData(String buffer, SensorDataFilter filter) {
+		byte[] bytes = buffer.getBytes();
 		List<SensorData> sensorDataList = new LinkedList<SensorData>();
 		
 		for (SensorDataType dataType : filter.dataTypes) {
 			SensorData data = null;
+			int pos = 0;
 			
 			switch (dataType) {
 			case HeartRate:
+				pos = HEART_RATE_POS;
+				data = new SensorData(SensorDataType.HeartRate, "BPM", Integer.toString(bytes[pos]) + " " + Integer.toString(bytes[pos+1]));
+				/*
 				int heartRate = getTwoByteData(bytes, HEART_RATE_POS);
 				data = new SensorData(SensorDataType.HeartRate, "BPM", Integer.toString(heartRate));
+				*/
 				break;
 			case RespirationRate:
+				pos = RESPIRATION_RATE_POS;
+				data = new SensorData(SensorDataType.RespirationRate, "BPM", Integer.toString(bytes[pos]) + " " + Integer.toString(bytes[pos+1]));
+				/*
 				int respirationRate = getTwoByteData(bytes, RESPIRATION_RATE_POS);
 				data = new SensorData(SensorDataType.RespirationRate, "BPM", Integer.toString(respirationRate));
+				*/
 				break;
 			case SkinTemperature:
+				pos = SKIN_TEMPERATURE_POS;
+				data = new SensorData(SensorDataType.SkinTemperature, "ºC", Integer.toString(bytes[pos]) + " " + Integer.toString(bytes[pos+1]));
+				/*
 				int skinTemperature = getTwoByteData(bytes, SKIN_TEMPERATURE_POS);
 				data = new SensorData(SensorDataType.SkinTemperature, "ºC", Integer.toString(skinTemperature));
+				*/
 				break;
 			case Posture:
+				pos = POSTURE_POS;
+				data = new SensorData(SensorDataType.Posture, "deg", Integer.toString(bytes[pos]) + " " + Integer.toString(bytes[pos+1]));
+				/*
 				int posture = getTwoByteData(bytes, POSTURE_POS);
 				data = new SensorData(SensorDataType.Posture, "deg", Integer.toString(posture));
+				*/
 				break;
 			case Activity:
+				pos = ACTIVITY_POS;
+				data = new SensorData(SensorDataType.Activity, "VMU/s", Integer.toString(bytes[pos]) + " " + Integer.toString(bytes[pos+1]));
+				/*
 				int activity = getTwoByteData(bytes, ACTIVITY_POS);
 				data = new SensorData(SensorDataType.Activity, "VMU/s", Integer.toString(activity));
+				*/
 				break;
 			case BloodPressure:
+				pos = BLOOD_PRESSURE_POS;
+				data = new SensorData(SensorDataType.BloodPressure, "Hg", Integer.toString(bytes[pos]) + " " + Integer.toString(bytes[pos+1]));
+				/*
 				int bloodPressure = getTwoByteData(bytes, BLOOD_PRESSURE_POS);
 				data = new SensorData(SensorDataType.BloodPressure, "Hg", Integer.toString(bloodPressure));
+				*/
 				break;
 			}
 			
@@ -85,8 +111,8 @@ public class ZephyrGeneralDataParser implements SensorDataParser {
 		return getSensorData(bytes, filter);
 	}
 	
-	private int getTwoByteData(String bytes, int pos) {
-		return bytes.charAt(pos) + 256 * bytes.charAt(pos);
+	private int getTwoByteData(byte[] bytes, int pos) {
+		return bytes[pos] + 256 * bytes[pos];
 	}
 		
 }

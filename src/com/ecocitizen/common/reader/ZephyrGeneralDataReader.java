@@ -28,10 +28,12 @@ import android.util.Log;
 public class ZephyrGeneralDataReader implements DeviceReader {
 	// Debugging
 	private static final String TAG = "ZephyrGeneralDataReader";
-	private static final boolean D = false;
+	private static final boolean D = true;
 
 	private InputStream inStream;
 	private OutputStream outStream;
+	
+	private int lifeSignalCounter = 99;
 
 	@Override
 	public String readNextData() throws IOException {
@@ -42,9 +44,15 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 		byte[] buffer = new byte[255];
 		byte b = 0;
 		int i = 0;
-
+		
 		while (true) {
-			sendLifeSignal();
+			if (lifeSignalCounter > 3) {
+				lifeSignalCounter = 0;
+				sendEnableGeneralDataPacket();
+			}
+			else {
+				sendLifeSignal();
+			}
 			
 			// skip until the message start marker
 			while ((b = (byte)inStream.read()) != ZephyrConstants.STX) ;
@@ -58,6 +66,7 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 			switch (b) {
 			case ZephyrConstants.MSG_LIFE_SIGNAL:
 				if (D) Log.d(TAG, "Received MSG_LIFE_SIGNAL");
+				++lifeSignalCounter;
 				continue;
 			case ZephyrConstants.MSG_SET_GENERAL_DATA_PACKET_TRANSMIT_STATE:
 				if (D) Log.d(TAG, "Received MSG_SET_GENERAL_DATA_PACKET_TRANSMIT_STATE");
@@ -69,6 +78,7 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 				if (D) Log.d(TAG, "Received unknown message: " + b);
 				continue;
 			}
+			lifeSignalCounter = 0;
 
 			buffer[i++] = b; // MSGID
 
@@ -132,12 +142,6 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 
 	@Override
 	public void initialize() {
-		sendEnableGeneralDataPacket();
-		try {
-			readNextMessage();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		lifeSignalCounter = 99;
 	}
 }
