@@ -19,10 +19,8 @@
 
 package com.ecocitizen.service;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.UUID;
 
@@ -34,7 +32,6 @@ import backport.android.bluetooth.BluetoothSocket;
 import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.DeviceHandlerFactory;
 import com.ecocitizen.common.reader.DeviceReader;
-import com.ecocitizen.common.reader.ZephyrGeneralDataReader;
 
 /**
  * This class does all the work for setting up and managing Bluetooth
@@ -224,10 +221,8 @@ public class BluetoothSensorManager extends SensorManager {
 		public void run() {
 			Log.i(TAG, "BEGIN mConnectedThread");
 
-			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(mmInStream));
-			
 			DeviceReader deviceReader = DeviceHandlerFactory.getInstance().getReader(getDeviceName(), getDeviceId());
-			deviceReader.setBufferedReader(bufferedReader);
+			deviceReader.setInputStream(mmInStream);
 			deviceReader.setOutputStream(mmOutStream);
 			
 			BluetoothSensorManager.this.sendConnectedMsg();

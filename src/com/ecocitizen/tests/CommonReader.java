@@ -1,7 +1,7 @@
 package com.ecocitizen.tests;
 
-import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 
 import com.ecocitizen.common.reader.DeviceReader;
@@ -14,7 +14,7 @@ public class CommonReader implements DeviceReader {
 	}
 
 	@Override
-	public void setBufferedReader(BufferedReader bufferedReader) {
+	public void setInputStream(InputStream inStream) {
 	}
 
 	@Override

@@ -19,12 +19,9 @@
 
 package com.ecocitizen.common.reader;
 
-import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.Reader;
-
-import android.util.Log;
 
 import com.ecocitizen.common.DebugFlagManager;
 
@@ -33,7 +30,7 @@ public class ZephyrHxmReader implements DeviceReader {
 	private static final String TAG = "ZephyrReader";
 	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(ZephyrHxmReader.class);
 
-	private Reader reader;
+	private InputStream reader;
 
 	private final int STX = 0x02;
 	private final int MSGID = 0x26;
@@ -43,6 +40,8 @@ public class ZephyrHxmReader implements DeviceReader {
 	@Override
 	public String readNextData() throws IOException {
 
+		/* TODO ZephyrGeneralDataParser should be generalized
+		 * and share this logic.
 		char[] buffer = new char[1024];
 		int b = 0;
 		int i = 0;
@@ -90,11 +89,13 @@ public class ZephyrHxmReader implements DeviceReader {
 		if (D) Log.d(TAG, "readNextData - read " + i + " bytes");
 		
 		return new String(buffer);
+		*/
+		return null;
 	}
 
 	@Override
-	public void setBufferedReader(BufferedReader reader) {
-		this.reader = reader;
+	public void setInputStream(InputStream inStream) {
+		this.reader = inStream;
 	}
 
 	@Override

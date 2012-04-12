@@ -19,8 +19,8 @@
 
 package com.ecocitizen.common.reader;
 
-import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
@@ -36,7 +36,7 @@ public class NullReader implements DeviceReader {
 	}
 
 	@Override
-	public void setBufferedReader(BufferedReader reader) {
+	public void setInputStream(InputStream inStream) {
 	}
 
 	@Override

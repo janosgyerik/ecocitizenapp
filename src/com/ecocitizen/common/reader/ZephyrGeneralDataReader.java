@@ -19,7 +19,6 @@
 
 package com.ecocitizen.common.reader;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -33,7 +32,7 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 	private static final String TAG = "ZephyrGeneralDataReader";
 	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(ZephyrGeneralDataReader.class);
 
-	private InputStream reader;
+	private InputStream inStream;
 	private OutputStream outStream;
 
 	private final int STX = 0x02;
@@ -56,7 +55,7 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 			sendEnableGeneralDataPacket();
 
 			// skip until the message start marker
-			while ((b = (byte)reader.read()) != STX) {
+			while ((b = (byte)inStream.read()) != STX) {
 				Log.d(TAG, "got: " + b);
 			}
 
@@ -65,7 +64,7 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 			buffer[i++] = b; // STX
 
 			// the next byte must be the message ID 
-			if ((b = (byte)reader.read()) != MSGID) {
+			if ((b = (byte)inStream.read()) != MSGID) {
 				Log.d(TAG, "hm, next byte is not MSGID: " + b + " != " + MSGID);
 				continue;
 			}
@@ -74,7 +73,7 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 
 			// the next byte must be the data length, 
 			// but for our current sensor it's always the same
-			if ((b = (byte)reader.read()) != DLC) {
+			if ((b = (byte)inStream.read()) != DLC) {
 				continue;
 			}
 
@@ -82,13 +81,13 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 
 			// read payload in bulk
 			int cnt;
-			if ((cnt = reader.read(buffer, i, DLC)) < 0) {
+			if ((cnt = inStream.read(buffer, i, DLC)) < 0) {
 				break;
 			}
 			i += cnt;
 
 			// read until the end of text marker
-			while ((b = (byte)reader.read()) != ETX) {
+			while ((b = (byte)inStream.read()) != ETX) {
 				buffer[i++] = b;                                                         
 			}
 
@@ -103,12 +102,8 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 	}
 
 	@Override
-	public void setBufferedReader(BufferedReader reader) {
-		//this.reader = reader;
-	}
-	
 	public void setInputStream(InputStream inStream) {
-		this.reader = inStream;
+		this.inStream = inStream;
 	}
 
 	@Override

@@ -19,8 +19,8 @@
 
 package com.ecocitizen.common.reader;
 
-import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 
 public interface DeviceReader {
@@ -37,16 +37,15 @@ public interface DeviceReader {
 	String readNextData() throws IOException;
 
 	/**
-	 * Set the reader to use to read data from 
-	 * underlying the input stream.
+	 * Set the input stream to read data from. 
 	 * 
-	 * @param bufferedReader
+	 * @param inStream
 	 */
-	void setBufferedReader(BufferedReader reader);
+	void setInputStream(InputStream inStream);
 
 	/**
-	 * Set the output stream to use to write data.
-	 * For many sensor types this is optional and can be blank.
+	 * Set the output stream to write data to.
+	 * For many sensor types this is optional and ok to do nothing.
 	 * 
 	 * @param outStream
 	 */

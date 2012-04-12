@@ -21,20 +21,25 @@ package com.ecocitizen.common.reader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 public class SimpleSentenceReader implements DeviceReader {
 	
 	private BufferedReader reader;
 
+	@Override
 	public String readNextData() throws IOException {
 		return reader.readLine();
 	}
 
-	public void setBufferedReader(BufferedReader reader) {
-		this.reader = reader;
+	@Override
+	public void setInputStream(InputStream inStream) {
+		this.reader = new BufferedReader(new InputStreamReader(inStream));
 	}
 
+	@Override
 	public void setOutputStream(OutputStream outStream) {
 	}
 
