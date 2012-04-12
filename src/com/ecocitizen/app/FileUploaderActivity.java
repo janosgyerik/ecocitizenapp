@@ -31,12 +31,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.ecocitizen.common.DebugFlagManager;
-
 public class FileUploaderActivity extends FileManagerActivity {
 	// Debugging
 	private static final String TAG = "FileUploaderActivity";
-	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(FileUploaderActivity.class);
+	private static final boolean D = false;
 	
 	enum StorageType {
 		INTERNAL,

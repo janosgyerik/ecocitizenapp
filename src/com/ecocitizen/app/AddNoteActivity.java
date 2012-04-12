@@ -36,13 +36,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ecocitizen.app.util.FinishActivityClickListener;
-import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.service.IDeviceManagerService;
 
 public class AddNoteActivity extends Activity {
 	// Debugging
 	private static final String TAG = "AddNoteActivity";
-	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(AddNoteActivity.class);
+	private static final boolean D = false;
 	
 	private Bundle mStartLocationBundle;
 

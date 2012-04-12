@@ -19,8 +19,6 @@
 
 package com.ecocitizen.app;
 
-import com.ecocitizen.common.DebugFlagManager;
-
 import android.app.Activity;
 import android.location.Location;
 import android.location.LocationListener;
@@ -43,7 +41,7 @@ import android.widget.TextView;
 public class WaitForGpsActivity extends Activity implements LocationListener {
 	// Debugging
 	private static final String TAG = "WaitForGpsActivity";
-	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(WaitForGpsActivity.class);
+	private static final boolean D = false;
 
 	private static final String PROVIDER = LocationManager.GPS_PROVIDER;
 	private static final int    MIN_TIME = 1000;

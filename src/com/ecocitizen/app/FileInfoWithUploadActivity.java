@@ -30,13 +30,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.HttpHelper;
 
 public class FileInfoWithUploadActivity extends FileInfoActivity {
 	// Debugging
 	private static final String TAG = "FileInfoWithUploadActivity";
-	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(FileInfoWithUploadActivity.class);
+	private static final boolean D = false;
 	
 	// Members
 	private Button mBtnUpload;

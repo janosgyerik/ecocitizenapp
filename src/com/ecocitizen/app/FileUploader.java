@@ -26,7 +26,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.HttpHelper;
 import com.ecocitizen.common.HttpHelper.Status;
 import com.ecocitizen.common.bundlewrapper.SummaryBundleWrapper;
@@ -35,7 +34,7 @@ import com.ecocitizen.service.FileSaverService;
 public class FileUploader {
 	// Debugging
 	private static final String TAG = "FileUploader";
-	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(FileUploader.class);
+	private static final boolean D = false;
 
 	private final HttpHelper mHttpHelper; 
 	private final File mFile;

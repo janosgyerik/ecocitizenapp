@@ -24,13 +24,12 @@ import android.util.Log;
 import android.view.Window;
 import android.widget.TextView;
 
-import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.bundlewrapper.SensorDataBundleWrapper;
 
 public class TabularViewActivity extends SimpleDeviceManagerClient {
 	// Debugging
 	private static final String TAG = "TabularViewActivity";
-	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(TabularViewActivity.class);
+	private static final boolean D = false;
 
 	// Layout Views
 	//private TableLayout mSentencesTbl;

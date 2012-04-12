@@ -42,7 +42,7 @@ import backport.android.bluetooth.BluetoothAdapter;
 public class HttpHelper {
 	// Debugging
 	private static final String TAG = "HttpUtil";
-	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(HttpHelper.class);
+	private static final boolean D = false;
 
 	// Constants
 	public final String HTTP_USER_AGENT;

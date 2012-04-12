@@ -27,7 +27,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.ecocitizen.common.DebugFlagManager;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
@@ -37,7 +36,8 @@ import com.google.android.maps.Overlay;
 public class MapViewActivity extends MapActivity {
 	// Debugging
 	private static final String TAG = "MapViewActivity";
-	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(MapViewActivity.class);
+	private static final boolean D = false;
+	
 	private static final int INITIAL_ZOOM_LEVEL = 15;
 	private static final int DEFAULT_LAT = (int)(36.050252855791314 * 1e6); 
 	private static final int DEFAULT_LON = (int)(140.1186993117676 * 1e6);

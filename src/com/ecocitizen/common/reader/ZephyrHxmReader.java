@@ -23,12 +23,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import com.ecocitizen.common.DebugFlagManager;
-
 public class ZephyrHxmReader implements DeviceReader {
 	// Debugging
 	private static final String TAG = "ZephyrReader";
-	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(ZephyrHxmReader.class);
+	private static final boolean D = false;
 
 	private InputStream reader;
 

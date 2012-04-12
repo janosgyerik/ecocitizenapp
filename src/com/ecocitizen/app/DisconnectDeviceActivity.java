@@ -24,16 +24,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.ecocitizen.app.util.FinishActivityClickListener;
-import com.ecocitizen.common.DebugFlagManager;
 
 /**
  * This Activity appears as a dialog. It lists any paired devices and
@@ -44,7 +43,7 @@ import com.ecocitizen.common.DebugFlagManager;
 public class DisconnectDeviceActivity extends Activity {
 	// Debugging
 	private static final String TAG = "DisconnectDeviceActivity";
-	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(DisconnectDeviceActivity.class);
+	private static final boolean D = false;
 
 	// Return Intent extra
 	public static String DEVICE_ID = "device_id";

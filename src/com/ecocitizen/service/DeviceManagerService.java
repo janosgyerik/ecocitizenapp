@@ -40,7 +40,6 @@ import android.util.Log;
 import android.widget.Toast;
 import backport.android.bluetooth.BluetoothDevice;
 
-import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.MessageType;
 import com.ecocitizen.common.bundlewrapper.NoteBundleWrapper;
 import com.ecocitizen.common.bundlewrapper.SensorDataBundleWrapper;
@@ -49,7 +48,8 @@ import com.ecocitizen.common.bundlewrapper.SensorInfoBundleWrapper;
 public class DeviceManagerService extends Service {
 	// Debugging
 	private static final String TAG = "DeviceManagerService";
-	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(DeviceManagerService.class);
+	private static final boolean D = false;
+	
 	private static final boolean LOG_SENSOR_DATA = false;
 
 	/**

@@ -19,14 +19,13 @@
 
 package com.ecocitizen.service;
 
-import com.ecocitizen.common.DebugFlagManager;
-import com.ecocitizen.common.bundlewrapper.LocationBundleWrapper;
-
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+
+import com.ecocitizen.common.bundlewrapper.LocationBundleWrapper;
 
 /*
  * To test in emulator:
@@ -38,7 +37,7 @@ import android.util.Log;
 public class GpsLocationListener implements LocationListener {
 	// Debugging
 	private static final String TAG = "GpsLocationListener";
-	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(GpsLocationListener.class);
+	private static final boolean D = false;
 
 	private LocationManager mLocationManager = null;
 	private Location mLastLocation = null;

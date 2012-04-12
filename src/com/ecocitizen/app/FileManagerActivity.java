@@ -40,13 +40,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.service.FileSaverService;
 
 abstract class FileManagerActivity extends Activity {
 	// Debugging
 	private static final String TAG = "FileManagerActivity";
-	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(FileManagerActivity.class);
+	private static final boolean D = false;
 	
 	protected List<String> internalFilenames;
 	protected List<String> externalFilenames;

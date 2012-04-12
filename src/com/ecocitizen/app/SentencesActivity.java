@@ -19,9 +19,6 @@
 
 package com.ecocitizen.app;
 
-import com.ecocitizen.common.DebugFlagManager;
-import com.ecocitizen.common.bundlewrapper.SensorDataBundleWrapper;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,10 +26,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.ecocitizen.common.bundlewrapper.SensorDataBundleWrapper;
+
 public class SentencesActivity extends SimpleDeviceManagerClient {
 	// Debugging
 	private static final String TAG = "SentencesActivity";
-	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(SentencesActivity.class);
+	private static final boolean D = false;
 
 	// Layout Views
 	private ListView mSentencesView;

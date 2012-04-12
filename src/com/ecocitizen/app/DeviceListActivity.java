@@ -19,8 +19,6 @@ package com.ecocitizen.app;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.ecocitizen.common.DebugFlagManager;
-
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -29,14 +27,14 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 import backport.android.bluetooth.BluetoothAdapter;
 import backport.android.bluetooth.BluetoothDevice;
 
@@ -49,7 +47,7 @@ import backport.android.bluetooth.BluetoothDevice;
 public class DeviceListActivity extends Activity {
 	// Debugging
 	private static final String TAG = "DeviceListActivity";
-	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(DeviceListActivity.class);
+	private static final boolean D = false;
 
 	// Return Intent extra
 	public static String EXTRA_BLUETOOTH_MAC = "bt_mac";

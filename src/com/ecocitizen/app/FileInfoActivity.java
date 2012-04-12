@@ -39,12 +39,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
-import com.ecocitizen.common.DebugFlagManager;
-
 public class FileInfoActivity extends Activity {
 	// Debugging
 	private static final String TAG = "FileInfoActivity";
-	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(FileInfoActivity.class);
+	private static final boolean D = false;
 	
 	// Members
 	protected File mFile;

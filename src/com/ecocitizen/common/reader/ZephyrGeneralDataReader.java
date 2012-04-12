@@ -25,12 +25,10 @@ import java.io.OutputStream;
 
 import android.util.Log;
 
-import com.ecocitizen.common.DebugFlagManager;
-
 public class ZephyrGeneralDataReader implements DeviceReader {
 	// Debugging
 	private static final String TAG = "ZephyrGeneralDataReader";
-	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(ZephyrGeneralDataReader.class);
+	private static final boolean D = false;
 
 	private InputStream inStream;
 	private OutputStream outStream;

@@ -22,12 +22,10 @@ package com.ecocitizen.service;
 import android.os.Handler;
 import android.util.Log;
 
-import com.ecocitizen.common.DebugFlagManager;
-
 public class DummySensorManager extends SensorManager {
 	// Debugging
 	private static final String TAG = "DummyService";
-	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(DummySensorManager.class);
+	private static final boolean D = false;
 	
 	public static final String SENSOR_ID = "DUMMY";
 	public static final String SENSOR_NAME = "DUMMY";

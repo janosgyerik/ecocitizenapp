@@ -44,7 +44,6 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.DeviceManagerServiceCallback;
 import com.ecocitizen.common.MessageType;
 import com.ecocitizen.common.bundlewrapper.NoteBundleWrapper;
@@ -53,7 +52,7 @@ import com.ecocitizen.common.bundlewrapper.SensorDataBundleWrapper;
 public class FileSaverService extends Service {
 	// Debugging
 	private static final String TAG = "FileSaverService";
-	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(FileSaverService.class);
+	private static final boolean D = false;
 
 	private boolean shouldStartSession = true;
 	

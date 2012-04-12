@@ -31,7 +31,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ecocitizen.common.DebugFlagManager;
 import com.ecocitizen.common.DeviceHandlerFactory;
 import com.ecocitizen.common.bundlewrapper.SensorDataBundleWrapper;
 import com.ecocitizen.common.parser.SensorData;
@@ -42,7 +41,7 @@ import com.ecocitizen.common.parser.SensorDataType;
 public class TreeViewActivity extends AbstractMainActivity {
 	// Debugging
 	private static final String TAG = "TreeViewActivity";
-	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(TreeViewActivity.class);
+	private static final boolean D = false;
 
 	// Layout Views
 	private TextView mCO2Val_1View;
