@@ -120,24 +120,16 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 		this.outStream = outStream;
 	}
 	
-	private void sendEnableGeneralDataPacket() {
-		byte[] buffer = ZephyrConstants.createSetGeneralDataPacketTransmitEnabledMessage();
+	private void sendEnableGeneralDataPacket() throws IOException {
 		Log.d(TAG, "Enable general data packet messages");
-		try {
-			outStream.write(buffer);
-			outStream.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		byte[] buffer = ZephyrConstants.createSetGeneralDataPacketTransmitEnabledMessage();
+		outStream.write(buffer);
+		outStream.flush();
 	}
 	
-	private void sendLifeSignal() {
-		try {
-			outStream.write(new byte[]{0});
-			outStream.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	private void sendLifeSignal() throws IOException {
+		outStream.write(new byte[]{0});
+		outStream.flush();
 	}
 
 	@Override
