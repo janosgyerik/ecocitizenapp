@@ -33,70 +33,71 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 	private InputStream inStream;
 	private OutputStream outStream;
 
-	private final int STX = 0x02;
-	private final int MSGID = 0x20;
-	private final int DLC = 53;
-	private final int ETX = 0x03;
-
 	@Override
 	public String readNextData() throws IOException {
+		return new String(readNextMessage());
+	}
 
-		byte[] buffer = new byte[1024];
+	private byte[] readNextMessage() throws IOException {
+		byte[] buffer = new byte[255];
 		byte b = 0;
 		int i = 0;
 
 		while (true) {
-			i = 0;
+			sendLifeSignal();
 			
-			Log.d(TAG, "seek STX ...");
-			//sendLifeSignal();
-			sendEnableGeneralDataPacket();
-
 			// skip until the message start marker
-			while ((b = (byte)inStream.read()) != STX) {
-				Log.d(TAG, "got: " + b);
-			}
+			while ((b = (byte)inStream.read()) != ZephyrConstants.STX) ;
 
-			Log.d(TAG, "found STX at pos=" + i);
-			
+			i = 0;
 			buffer[i++] = b; // STX
 
 			// the next byte must be the message ID 
-			if ((b = (byte)inStream.read()) != MSGID) {
-				Log.d(TAG, "hm, next byte is not MSGID: " + b + " != " + MSGID);
+			b = (byte)inStream.read();
+			
+			switch (b) {
+			case ZephyrConstants.MSG_LIFE_SIGNAL:
+				if (D) Log.d(TAG, "Received MSG_LIFE_SIGNAL");
+				continue;
+			case ZephyrConstants.MSG_SET_GENERAL_DATA_PACKET_TRANSMIT_STATE:
+				if (D) Log.d(TAG, "Received MSG_SET_GENERAL_DATA_PACKET_TRANSMIT_STATE");
+				break;
+			case ZephyrConstants.MSG_GENERAL_DATA_PACKET:
+				if (D) Log.d(TAG, "Received MSG_GENERAL_DATA_PACKET");
+				break;
+			default:
+				if (D) Log.d(TAG, "Received unknown message: " + b);
 				continue;
 			}
 
 			buffer[i++] = b; // MSGID
 
-			// the next byte must be the data length, 
-			// but for our current sensor it's always the same
-			if ((b = (byte)inStream.read()) != DLC) {
-				continue;
-			}
-
-			buffer[i++] = b; // DLC
+			int dlc = inStream.read(); // DLC
+			buffer[i++] = (byte)dlc;
 
 			// read payload in bulk
 			int cnt;
-			if ((cnt = inStream.read(buffer, i, DLC)) < 0) {
+			if ((cnt = inStream.read(buffer, i, dlc)) < 0) {
 				break;
 			}
 			i += cnt;
 
 			// read until the end of text marker
-			while ((b = (byte)inStream.read()) != ETX) {
+			while ((b = (byte)inStream.read()) != ZephyrConstants.ETX) {
 				buffer[i++] = b;                                                         
 			}
 
 			buffer[i++] = b;
 			
+			if (D) Log.d(TAG, "Total bytes read = " + i);
+			
 			break;
 		}
-		
-		if (D) Log.d(TAG, "readNextData - read " + i + " bytes");
-		
-		return new String(buffer);
+
+		byte[] compact = new byte[buffer.length];
+		System.arraycopy(buffer, 0, compact, 0, compact.length);
+
+		return compact;
 	}
 
 	@Override
@@ -107,12 +108,10 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 	@Override
 	public void setOutputStream(OutputStream outStream) {
 		this.outStream = outStream;
-		sendEnableGeneralDataPacket();
 	}
 	
 	private void sendEnableGeneralDataPacket() {
-		byte[] payload = new byte[]{1};
-		byte[] buffer = ZephyrConstants.createMessage((byte)0x14, payload);
+		byte[] buffer = ZephyrConstants.createSetGeneralDataPacketTransmitEnabledMessage();
 		Log.d(TAG, "Enable general data packet messages");
 		try {
 			outStream.write(buffer);
@@ -133,7 +132,12 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 
 	@Override
 	public void initialize() {
-		// TODO Auto-generated method stub
-		
+		sendEnableGeneralDataPacket();
+		try {
+			readNextMessage();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

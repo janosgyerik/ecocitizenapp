@@ -7,12 +7,16 @@ experiment essential
 ====================
 ! bug: build does not work in a clean dir
 ! bug: add back find gps, important for experiment
-! bug: zephyr reader should not be buffered
 ! bug: when zephyr reader not online it gets in bad state on second connection attempt
+minor: rename DeviceReader to DeviceDriver
 
 
 experiment good to have
 =======================
+- after delete file return to list
+- use binary reader by default
+    - designate a new bundle type for binary data
+- hexa mode should signal to the service to use a binary reader
 - show connected sensors, somewhere...
 - release in marketpace
 - autoconnect

@@ -25,7 +25,9 @@ public abstract class ZephyrConstants {
 	public static final byte STX = 0x02;
 	public static final byte ETX = 0x03;
 
-	public static final byte MSG_SET_GENERAL_PACKET_TRANSMIT_STATE = 0x14;
+	public static final byte MSG_SET_GENERAL_DATA_PACKET_TRANSMIT_STATE = 0x14;
+	public static final byte MSG_GENERAL_DATA_PACKET = 0x20;
+	public static final byte MSG_LIFE_SIGNAL = 0x23;
 
 	public static byte getCRC(byte[] buffer) {
 		int crc = 0;
@@ -63,6 +65,10 @@ public abstract class ZephyrConstants {
 		message[j] = getCRC(payload);
 		message[j+1] = ETX;
 		return message;
+	}
+	
+	public static byte[] createSetGeneralDataPacketTransmitEnabledMessage() {
+		return createMessage(MSG_SET_GENERAL_DATA_PACKET_TRANSMIT_STATE, new byte[]{1});
 	}
 
 }
