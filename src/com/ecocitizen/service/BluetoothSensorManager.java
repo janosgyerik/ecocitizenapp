@@ -223,6 +223,7 @@ public class BluetoothSensorManager extends SensorManager {
 			DeviceReader deviceReader = DeviceHandlerFactory.getInstance().getReader(getDeviceName(), getDeviceId());
 			deviceReader.setInputStream(mmInStream);
 			deviceReader.setOutputStream(mmOutStream);
+			deviceReader.initialize();
 			
 			BluetoothSensorManager.this.sendConnectedMsg();
 			

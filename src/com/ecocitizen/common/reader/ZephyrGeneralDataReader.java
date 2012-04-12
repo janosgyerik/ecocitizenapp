@@ -130,4 +130,10 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public void initialize() {
+		// TODO Auto-generated method stub
+		
+	}
 }

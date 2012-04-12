@@ -43,4 +43,8 @@ public class SimpleSentenceReader implements DeviceReader {
 	public void setOutputStream(OutputStream outStream) {
 	}
 
+	@Override
+	public void initialize() {
+	}
+
 }

@@ -99,4 +99,8 @@ public class ZephyrHxmReader implements DeviceReader {
 	@Override
 	public void setOutputStream(OutputStream outStream) {
 	}
+
+	@Override
+	public void initialize() {
+	}
 }

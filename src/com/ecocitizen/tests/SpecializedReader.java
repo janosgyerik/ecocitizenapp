@@ -21,4 +21,8 @@ public class SpecializedReader implements DeviceReader {
 	public void setOutputStream(OutputStream outStream) {
 	}
 
+	@Override
+	public void initialize() {
+	}
+
 }

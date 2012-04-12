@@ -50,5 +50,14 @@ public interface DeviceReader {
 	 * @param outStream
 	 */
 	void setOutputStream(OutputStream outStream);
+	
+	/**
+	 * Initialize the driver, this can be sending control messages
+	 * to enable broadcast messages on the device, or just a NOP.
+	 * 
+	 * Implementations can assume that this is called after
+	 * input and output streams are set.
+	 */
+	void initialize();
 
 }
