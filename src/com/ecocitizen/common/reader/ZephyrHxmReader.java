@@ -21,6 +21,7 @@ package com.ecocitizen.common.reader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.Reader;
 
 import android.util.Log;
@@ -39,6 +40,7 @@ public class ZephyrHxmReader implements DeviceReader {
 	private final int DLC = 55;
 	private final int ETX = 0x03;
 
+	@Override
 	public String readNextData() throws IOException {
 
 		char[] buffer = new char[1024];
@@ -90,7 +92,12 @@ public class ZephyrHxmReader implements DeviceReader {
 		return new String(buffer);
 	}
 
+	@Override
 	public void setBufferedReader(BufferedReader reader) {
 		this.reader = reader;
+	}
+
+	@Override
+	public void setOutputStream(OutputStream outStream) {
 	}
 }

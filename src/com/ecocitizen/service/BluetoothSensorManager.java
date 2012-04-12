@@ -26,14 +26,15 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.UUID;
 
-import com.ecocitizen.common.DebugFlagManager;
-import com.ecocitizen.common.DeviceHandlerFactory;
-import com.ecocitizen.common.reader.DeviceReader;
-
 import android.os.Handler;
 import android.util.Log;
 import backport.android.bluetooth.BluetoothDevice;
 import backport.android.bluetooth.BluetoothSocket;
+
+import com.ecocitizen.common.DebugFlagManager;
+import com.ecocitizen.common.DeviceHandlerFactory;
+import com.ecocitizen.common.reader.DeviceReader;
+import com.ecocitizen.common.reader.ZephyrGeneralDataReader;
 
 /**
  * This class does all the work for setting up and managing Bluetooth
@@ -226,7 +227,8 @@ public class BluetoothSensorManager extends SensorManager {
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(mmInStream));
 			
 			DeviceReader deviceReader = DeviceHandlerFactory.getInstance().getReader(getDeviceName(), getDeviceId());
-			deviceReader.setBufferedReader(bufferedReader); 
+			deviceReader.setBufferedReader(bufferedReader);
+			deviceReader.setOutputStream(mmOutStream);
 			
 			BluetoothSensorManager.this.sendConnectedMsg();
 			

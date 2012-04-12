@@ -6,6 +6,9 @@ release notes
 experiment essential
 ====================
 ! bug: build does not work in a clean dir
+! bug: add back find gps, important for experiment
+! bug: zephyr reader should not be buffered
+! bug: when zephyr reader not online it gets in bad state on second connection attempt
 
 
 experiment good to have

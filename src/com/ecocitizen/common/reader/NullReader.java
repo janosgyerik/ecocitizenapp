@@ -21,6 +21,7 @@ package com.ecocitizen.common.reader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * This reader will read nothing.
@@ -29,11 +30,17 @@ import java.io.IOException;
  */
 public class NullReader implements DeviceReader {
 
+	@Override
 	public String readNextData() throws IOException {
 		return null;
 	}
 
+	@Override
 	public void setBufferedReader(BufferedReader reader) {
+	}
+
+	@Override
+	public void setOutputStream(OutputStream outStream) {
 	}
 
 }

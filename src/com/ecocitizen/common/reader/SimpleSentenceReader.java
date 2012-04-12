@@ -21,6 +21,7 @@ package com.ecocitizen.common.reader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.OutputStream;
 
 public class SimpleSentenceReader implements DeviceReader {
 	
@@ -32,6 +33,9 @@ public class SimpleSentenceReader implements DeviceReader {
 
 	public void setBufferedReader(BufferedReader reader) {
 		this.reader = reader;
+	}
+
+	public void setOutputStream(OutputStream outStream) {
 	}
 
 }

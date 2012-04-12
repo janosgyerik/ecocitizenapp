@@ -21,7 +21,8 @@ package com.ecocitizen.common.reader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Reader;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import android.util.Log;
 
@@ -32,41 +33,52 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 	private static final String TAG = "ZephyrGeneralDataReader";
 	private static final boolean D = DebugFlagManager.getInstance().getDebugFlag(ZephyrGeneralDataReader.class);
 
-	private Reader reader;
+	private InputStream reader;
+	private OutputStream outStream;
 
 	private final int STX = 0x02;
 	private final int MSGID = 0x20;
 	private final int DLC = 53;
 	private final int ETX = 0x03;
 
+	@Override
 	public String readNextData() throws IOException {
 
-		char[] buffer = new char[1024];
-		int b = 0;
+		byte[] buffer = new byte[1024];
+		byte b = 0;
 		int i = 0;
 
 		while (true) {
 			i = 0;
+			
+			Log.d(TAG, "seek STX ...");
+			//sendLifeSignal();
+			sendEnableGeneralDataPacket();
 
 			// skip until the message start marker
-			while ((b = reader.read()) != STX) ;
+			while ((b = (byte)reader.read()) != STX) {
+				Log.d(TAG, "got: " + b);
+			}
 
-			buffer[i++] = (char) b; // STX
+			Log.d(TAG, "found STX at pos=" + i);
+			
+			buffer[i++] = b; // STX
 
 			// the next byte must be the message ID 
-			if ((b = reader.read()) != MSGID) {
+			if ((b = (byte)reader.read()) != MSGID) {
+				Log.d(TAG, "hm, next byte is not MSGID: " + b + " != " + MSGID);
 				continue;
 			}
 
-			buffer[i++] = (char) b; // MSGID
+			buffer[i++] = b; // MSGID
 
 			// the next byte must be the data length, 
 			// but for our current sensor it's always the same
-			if ((b = reader.read()) != DLC) {
+			if ((b = (byte)reader.read()) != DLC) {
 				continue;
 			}
 
-			buffer[i++] = (char) b; // DLC
+			buffer[i++] = b; // DLC
 
 			// read payload in bulk
 			int cnt;
@@ -76,11 +88,11 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 			i += cnt;
 
 			// read until the end of text marker
-			while ((b = reader.read()) != ETX) {
-				buffer[i++] = (char) b;                                                         
+			while ((b = (byte)reader.read()) != ETX) {
+				buffer[i++] = b;                                                         
 			}
 
-			buffer[i++] = (char) b;
+			buffer[i++] = b;
 			
 			break;
 		}
@@ -90,7 +102,39 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 		return new String(buffer);
 	}
 
+	@Override
 	public void setBufferedReader(BufferedReader reader) {
-		this.reader = reader;
+		//this.reader = reader;
+	}
+	
+	public void setInputStream(InputStream inStream) {
+		this.reader = inStream;
+	}
+
+	@Override
+	public void setOutputStream(OutputStream outStream) {
+		this.outStream = outStream;
+		sendEnableGeneralDataPacket();
+	}
+	
+	private void sendEnableGeneralDataPacket() {
+		byte[] payload = new byte[]{1};
+		byte[] buffer = ZephyrConstants.createMessage((byte)0x14, payload);
+		Log.d(TAG, "Enable general data packet messages");
+		try {
+			outStream.write(buffer);
+			outStream.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void sendLifeSignal() {
+		try {
+			outStream.write(new byte[]{0});
+			outStream.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

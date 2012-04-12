@@ -21,6 +21,7 @@ package com.ecocitizen.common.reader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.OutputStream;
 
 public interface DeviceReader {
 
@@ -42,5 +43,13 @@ public interface DeviceReader {
 	 * @param bufferedReader
 	 */
 	void setBufferedReader(BufferedReader reader);
+
+	/**
+	 * Set the output stream to use to write data.
+	 * For many sensor types this is optional and can be blank.
+	 * 
+	 * @param outStream
+	 */
+	void setOutputStream(OutputStream outStream);
 
 }
