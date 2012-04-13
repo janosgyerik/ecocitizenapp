@@ -5,20 +5,19 @@ release notes
 
 experiment essential
 ====================
-! bug: upload of binary data cannot work without encoding the binary data
-! bug: pass byte[] instead of string, and convert to int with (int)(bytes[i]&0xff)
+- show last connected sensor in title
+- bug: add some checking mechanism to prevent connecting to dead devices
+- bug: make disconnect work from dead devices
 ! bug: add back find gps, important for experiment
-! bug: when zephyr reader not online it gets in bad state on second connection attempt
-minor: rename DeviceReader to DeviceDriver
+- minor: rename DeviceReader to DeviceDriver
+- note: byte can be converted to int with: (int)(bytes[i] & 0xff)
 
 
 experiment good to have
 =======================
-- after delete file return to list
 - use binary reader by default
     - designate a new bundle type for binary data
 - hexa mode should signal to the service to use a binary reader
-- show connected sensors, somewhere...
 - release in marketpace
 - autoconnect
     - new activity to configure some paired devices for autoconnect

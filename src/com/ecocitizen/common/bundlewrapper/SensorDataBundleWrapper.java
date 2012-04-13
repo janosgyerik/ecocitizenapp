@@ -21,6 +21,8 @@ package com.ecocitizen.common.bundlewrapper;
 
 import java.util.Formatter;
 
+import com.ecocitizen.common.Base64;
+
 import android.location.Location;
 import android.os.Bundle;
 
@@ -105,10 +107,10 @@ public class SensorDataBundleWrapper extends AbstractBundleWrapper {
 	
 	public String toString() {
 		String datarecord = new Formatter().format(
-				"SENTENCE,%s,%s,%s,_",
+				"SENSORDATA,%s,%s,%s,_",
 				getSensorId(),
 				getDtz(),
-				getSensorData()
+				Base64.encodeBytes(getSensorData())
 		).toString();
 		
 		if (!locationBundleWrapper.isNull()) {
