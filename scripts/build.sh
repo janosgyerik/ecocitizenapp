@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 #
 # SCRIPT: build.sh
 # AUTHOR: Janos Gyerik <info@titan2x.com>
