@@ -68,6 +68,7 @@ public class FileInfoWithUploadActivity extends FileInfoActivity {
 				.setPositiveButton(R.string.btn_yes, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						performDeleteFile();
+						finish();
 					}
 				})
 				.setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
