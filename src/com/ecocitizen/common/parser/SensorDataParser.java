@@ -32,7 +32,7 @@ public interface SensorDataParser {
 	 * @param bytes
 	 * @return
 	 */
-	List<SensorData> getSensorData(String bytes);
+	List<SensorData> getSensorData(byte[] bytes);
 
 	/**
 	 * Parse the data bytes and return data times that
@@ -45,6 +45,6 @@ public interface SensorDataParser {
 	 * @param filters
 	 * @return
 	 */
-	List<SensorData> getSensorData(String bytes, SensorDataFilter filter);
+	List<SensorData> getSensorData(byte[] bytes, SensorDataFilter filter);
 
 }

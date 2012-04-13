@@ -36,9 +36,10 @@ public class ZephyrHxmParser implements SensorDataParser {
 	static final int INST_SPEED_POS = 52;
 	static final int STRIDES_POS = 54;
 
-	public List<SensorData> getSensorData(String bytes, SensorDataFilter filter) {
+	public List<SensorData> getSensorData(byte[] bytes, SensorDataFilter filter) {
 		List<SensorData> sensorDataList = new LinkedList<SensorData>();
 		
+		/*
 		for (SensorDataType dataType : filter.dataTypes) {
 			SensorData data = null;
 			
@@ -68,11 +69,12 @@ public class ZephyrHxmParser implements SensorDataParser {
 				sensorDataList.add(data);
 			}
 		}
+		*/
 		
 		return sensorDataList;
 	}
 	
-	public List<SensorData> getSensorData(String bytes) {
+	public List<SensorData> getSensorData(byte[] bytes) {
 		return getSensorData(bytes, filter);
 	}
 		

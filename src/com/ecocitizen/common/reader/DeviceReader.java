@@ -34,7 +34,7 @@ public interface DeviceReader {
 	 * @return
 	 * @throws IOException 
 	 */
-	String readNextData() throws IOException;
+	byte[] readNextData() throws IOException;
 
 	/**
 	 * Set the input stream to read data from. 

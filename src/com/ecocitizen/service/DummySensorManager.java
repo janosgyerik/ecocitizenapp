@@ -29,7 +29,7 @@ public class DummySensorManager extends SensorManager {
 	
 	public static final String SENSOR_ID = "DUMMY";
 	public static final String SENSOR_NAME = "DUMMY";
-	public static final String SENSOR_LINE = "$PSEN,DUMMY,N.A.,0";
+	public static final byte[] SENSOR_LINE = "$PSEN,DUMMY,N.A.,0".getBytes();
 
 	// Member fields
 	private ConnectedThread mConnectedThread;

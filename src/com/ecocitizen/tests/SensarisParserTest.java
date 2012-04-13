@@ -16,14 +16,14 @@ import com.ecocitizen.common.parser.SensorDataType;
 
 public class SensarisParserTest {
 	
-	static final String CO2_LINE = "$PSEN,CO2,ppm, 0479";
-	static final String COx_LINE = "$PSEN,COx,V,1.625";
-	static final String NOx_LINE = "$PSEN,NOx,V,2.591";
-	static final String Noise_LINE = "$PSEN,Noise,dB,039";
-	static final String Humidity_LINE = "$PSEN,Hum,H,50.93,T,30.88";
-	static final String Temperature_LINE = "$PSEN,Hum,H,50.93,T,30.88";
-	static final String Battery_LINE = "$PSEN,Batt,V,3.97";
-	static final String GPRMC_LINE = "$GPRMC,011514.127,V,8960.0000,N,00000.0000,E,0.00,0.00,280910,,,N*77";
+	static final byte[] CO2_LINE = "$PSEN,CO2,ppm, 0479".getBytes();
+	static final byte[] COx_LINE = "$PSEN,COx,V,1.625".getBytes();
+	static final byte[] NOx_LINE = "$PSEN,NOx,V,2.591".getBytes();
+	static final byte[] Noise_LINE = "$PSEN,Noise,dB,039".getBytes();
+	static final byte[] Humidity_LINE = "$PSEN,Hum,H,50.93,T,30.88".getBytes();
+	static final byte[] Temperature_LINE = "$PSEN,Hum,H,50.93,T,30.88".getBytes();
+	static final byte[] Battery_LINE = "$PSEN,Batt,V,3.97".getBytes();
+	static final byte[] GPRMC_LINE = "$GPRMC,011514.127,V,8960.0000,N,00000.0000,E,0.00,0.00,280910,,,N*77".getBytes();
 	
 	SensorDataParser parser;
 	

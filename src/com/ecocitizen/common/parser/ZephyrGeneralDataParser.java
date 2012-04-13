@@ -40,8 +40,7 @@ public class ZephyrGeneralDataParser implements SensorDataParser {
 	static final int ACTIVITY_POS = 20;
 	static final int BLOOD_PRESSURE_POS = 50;
 
-	public List<SensorData> getSensorData(String buffer, SensorDataFilter filter) {
-		byte[] bytes = buffer.getBytes();
+	public List<SensorData> getSensorData(byte[] bytes, SensorDataFilter filter) {
 		List<SensorData> sensorDataList = new LinkedList<SensorData>();
 		
 		for (SensorDataType dataType : filter.dataTypes) {
@@ -107,7 +106,7 @@ public class ZephyrGeneralDataParser implements SensorDataParser {
 		return sensorDataList;
 	}
 	
-	public List<SensorData> getSensorData(String bytes) {
+	public List<SensorData> getSensorData(byte[] bytes) {
 		return getSensorData(bytes, filter);
 	}
 	

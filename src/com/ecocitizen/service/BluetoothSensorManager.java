@@ -233,7 +233,7 @@ public class BluetoothSensorManager extends SensorManager {
 			
 			while (! stop) {
 				try {
-					String data = deviceReader.readNextData();
+					byte[] data = deviceReader.readNextData();
 					if (data != null) {
 						sendSensorDataMsg(++sequenceNumber, data);
 					}

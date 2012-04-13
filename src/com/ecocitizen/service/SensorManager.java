@@ -84,12 +84,12 @@ abstract public class SensorManager {
 	 * and additional information such as time, location and 
 	 * the ID of the originating sensor.
 	 * 
-	 * @param sensorData
+	 * @param data
 	 * @return
 	 */
-	private Bundle getSensorDataBundle(long sequenceNumber, String sensorData) {
+	private Bundle getSensorDataBundle(long sequenceNumber, byte[] data) {
 		return SensorDataBundleWrapper.makeBundle(sequenceNumber, mSensorId, mSensorName, 
-				sensorData, mGpsLocationListener.getLastLocationBundle());
+				data, mGpsLocationListener.getLastLocationBundle());
 	}
 	
 	/**
@@ -109,8 +109,8 @@ abstract public class SensorManager {
 		}
 	}
 	
-	void sendSensorDataMsg(long sequenceNumber, String line) {
-		Bundle bundle = getSensorDataBundle(sequenceNumber, line);
+	void sendSensorDataMsg(long sequenceNumber, byte[] data) {
+		Bundle bundle = getSensorDataBundle(sequenceNumber, data);
 		mHandler.obtainMessage(MessageType.SENSOR_DATA, bundle).sendToTarget();
 	}
 

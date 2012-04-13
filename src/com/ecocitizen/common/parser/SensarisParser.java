@@ -40,8 +40,8 @@ public class SensarisParser implements SensorDataParser {
 	    return buffer.toString();
 	}
 	
-	public List<SensorData> getSensorData(String bytes, SensorDataFilter filter) {
-		String line = bytes;
+	public List<SensorData> getSensorData(byte[] bytes, SensorDataFilter filter) {
+		String line = new String(bytes);
 		List<SensorData> sensorDataList = new LinkedList<SensorData>();
 		
 		Set<String> psenTypes = new HashSet<String>(); 
@@ -121,7 +121,7 @@ public class SensarisParser implements SensorDataParser {
 		return sensorDataList;
 	}
 	
-	public List<SensorData> getSensorData(String bytes) {
+	public List<SensorData> getSensorData(byte[] bytes) {
 		return getSensorData(bytes, new SensorDataFilter());
 	}
 		

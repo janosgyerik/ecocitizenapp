@@ -31,7 +31,7 @@ import java.io.OutputStream;
 public class NullReader implements DeviceReader {
 
 	@Override
-	public String readNextData() throws IOException {
+	public byte[] readNextData() throws IOException {
 		return null;
 	}
 

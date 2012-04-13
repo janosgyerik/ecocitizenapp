@@ -30,8 +30,8 @@ public class SimpleSentenceReader implements DeviceReader {
 	private BufferedReader reader;
 
 	@Override
-	public String readNextData() throws IOException {
-		return reader.readLine();
+	public byte[] readNextData() throws IOException {
+		return reader.readLine().getBytes();
 	}
 
 	@Override

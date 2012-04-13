@@ -42,7 +42,6 @@ import backport.android.bluetooth.BluetoothDevice;
 
 import com.ecocitizen.common.MessageType;
 import com.ecocitizen.common.bundlewrapper.NoteBundleWrapper;
-import com.ecocitizen.common.bundlewrapper.SensorDataBundleWrapper;
 import com.ecocitizen.common.bundlewrapper.SensorInfoBundleWrapper;
 
 public class DeviceManagerService extends Service {
@@ -50,8 +49,6 @@ public class DeviceManagerService extends Service {
 	private static final String TAG = "DeviceManagerService";
 	private static final boolean D = false;
 	
-	private static final boolean LOG_SENSOR_DATA = false;
-
 	/**
 	 * List of callbacks that will receive notification on events:
 	 * - sensor connected, disconnected, lost, ...
@@ -321,10 +318,6 @@ public class DeviceManagerService extends Service {
 				// Broadcast to all clients
 				final int N = mCallbacks.beginBroadcast();
 				final Bundle bundle = (Bundle)msg.obj;
-				if (LOG_SENSOR_DATA) {
-					final String sensorData = new SensorDataBundleWrapper(bundle).getSensorData();
-					if (D) Log.d(TAG, "SENSOR_DATA = " + sensorData);
-				}
 				for (int i = 0; i < N; ++i) {
 					try {
 						mCallbacks.getBroadcastItem(i).receivedSensorDataBundle(bundle);

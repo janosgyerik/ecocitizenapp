@@ -28,7 +28,7 @@ import android.util.Log;
 public class ZephyrGeneralDataReader implements DeviceReader {
 	// Debugging
 	private static final String TAG = "ZephyrGeneralDataReader";
-	private static final boolean D = true;
+	private static final boolean D = false;
 
 	private InputStream inStream;
 	private OutputStream outStream;
@@ -36,11 +36,7 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 	private int lifeSignalCounter = 99;
 
 	@Override
-	public String readNextData() throws IOException {
-		return new String(readNextMessage());
-	}
-
-	private byte[] readNextMessage() throws IOException {
+	public byte[] readNextData() throws IOException {
 		byte[] buffer = new byte[255];
 		byte b = 0;
 		int i = 0;

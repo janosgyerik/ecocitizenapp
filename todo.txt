@@ -5,6 +5,7 @@ release notes
 
 experiment essential
 ====================
+! bug: upload of binary data cannot work without encoding the binary data
 ! bug: pass byte[] instead of string, and convert to int with (int)(bytes[i]&0xff)
 ! bug: add back find gps, important for experiment
 ! bug: when zephyr reader not online it gets in bad state on second connection attempt

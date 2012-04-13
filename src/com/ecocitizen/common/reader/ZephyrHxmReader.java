@@ -36,7 +36,7 @@ public class ZephyrHxmReader implements DeviceReader {
 	private final int ETX = 0x03;
 
 	@Override
-	public String readNextData() throws IOException {
+	public byte[] readNextData() throws IOException {
 
 		/* TODO ZephyrGeneralDataParser should be generalized
 		 * and share this logic.
