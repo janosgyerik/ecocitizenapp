@@ -7,7 +7,6 @@ experiment essential
 ====================
 - show last connected sensor in title
 - implement error checking of Zephyr data
-    - msg length
     - crc check
 - finalize zephyr parser
     - resp: /10 + %10

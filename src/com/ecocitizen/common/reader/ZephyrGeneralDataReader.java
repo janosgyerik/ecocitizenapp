@@ -32,7 +32,7 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 
 	private InputStream inStream;
 	private OutputStream outStream;
-	
+
 	private int lifeSignalCounter = 99;
 
 	@Override
@@ -40,7 +40,7 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 		byte[] buffer = new byte[255];
 		byte b = 0;
 		int i = 0;
-		
+
 		while (true) {
 			if (lifeSignalCounter > 3) {
 				lifeSignalCounter = 0;
@@ -49,7 +49,7 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 			else {
 				sendLifeSignal();
 			}
-			
+
 			// skip until the message start marker
 			while ((b = (byte)inStream.read()) != ZephyrConstants.STX) ;
 
@@ -58,7 +58,7 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 
 			// the next byte must be the message ID 
 			b = (byte)inStream.read();
-			
+
 			switch (b) {
 			case ZephyrConstants.MSG_LIFE_SIGNAL:
 				if (D) Log.d(TAG, "Received MSG_LIFE_SIGNAL");
@@ -83,20 +83,17 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 
 			// read payload in bulk
 			int cnt;
-			if ((cnt = inStream.read(buffer, i, dlc)) < 0) {
+			if ((cnt = inStream.read(buffer, i, dlc)) != dlc) {
+				Log.w(TAG, String.format("Less than DLC bytes were read: %d < %d", cnt, dlc));
 				break;
 			}
 			i += cnt;
 
-			// read until the end of text marker
-			while ((b = (byte)inStream.read()) != ZephyrConstants.ETX) {
-				buffer[i++] = b;                                                         
-			}
+			int crc = inStream.read();
+			buffer[i++] = (byte)crc;
 
-			buffer[i++] = b;
-			
-			if (D) Log.d(TAG, "Total bytes read = " + i);
-			
+			buffer[i++] = (byte)inStream.read(); // ETX
+
 			break;
 		}
 
@@ -115,14 +112,14 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 	public void setOutputStream(OutputStream outStream) {
 		this.outStream = outStream;
 	}
-	
+
 	private void sendEnableGeneralDataPacket() throws IOException {
 		Log.d(TAG, "Enable general data packet messages");
 		byte[] buffer = ZephyrConstants.createSetGeneralDataPacketTransmitEnabledMessage();
 		outStream.write(buffer);
 		outStream.flush();
 	}
-	
+
 	private void sendLifeSignal() throws IOException {
 		outStream.write(new byte[]{0});
 		outStream.flush();
