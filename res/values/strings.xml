@@ -5,7 +5,6 @@
     <string name="settings_activity">Settings</string>
     <string name="sentences_activity">Sentences</string>
     <string name="console_activity">Console</string>
-    <string name="tabularview_activity">Tabular View</string>
     <string name="tabularviewplus_activity">Tabular View+</string>
     <string name="treeview_activity">Tree View</string>
     <string name="waitforgps_activity">Wait for GPS</string>
@@ -59,7 +58,6 @@
     <string name="menu_close">Close</string>
     <string name="menu_sentences">Sentences</string>
     <string name="menu_console">Console</string>
-    <string name="menu_tabularview">Tabular View</string>
     <string name="menu_tabularviewplus">Tabular View+</string>
     
 	<!-- Settings, preferences -->

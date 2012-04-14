@@ -63,10 +63,6 @@
             android:label="@string/settings_activity" >
         </activity>
         <activity
-            android:name=".TabularViewActivity"
-            android:label="@string/tabularview_activity" >
-        </activity>
-        <activity
             android:name=".TabularViewPlusActivity"
             android:label="@string/tabularviewplus_activity" >
         </activity>

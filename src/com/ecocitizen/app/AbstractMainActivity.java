@@ -59,6 +59,7 @@ public abstract class AbstractMainActivity extends DeviceManagerClient {
 	@Override
 	void onConnectedDevicesUpdated() {
 		super.onConnectedDevicesUpdated();
+		((MainActivity)getParent()).updateConnectedSensorName(mConnectedSensorName);
 		if (mConnectedDevices.isEmpty()) {
 			mBtnAddNote.setVisibility(View.GONE);
 		}

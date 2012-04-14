@@ -6,7 +6,7 @@ release notes
 experiment essential
 ====================
 - make it possible to replay zephyr log
-- show last connected sensor in title
+- add '[...]' in the title if more then one sensors are connected
 - bug: add some checking mechanism to prevent connecting to dead devices
 - bug: make disconnect work from dead devices
 - implement crc of Zephyr data
@@ -20,6 +20,7 @@ experiment good to have
     - designate a new bundle type for binary data
 - hexa mode should signal to the service to use a binary reader
 - release in marketpace
+    - remove the tree images
 - autoconnect
     - new activity to configure some paired devices for autoconnect
     - new button to connect to autoconnect devices

@@ -22,14 +22,27 @@ package com.ecocitizen.app;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 public class MainActivity extends TabActivity {
+	private TextView mConnectedSensorNameView;
+	
+	public void updateConnectedSensorName(String connectedSensorName) {
+		mConnectedSensorNameView.setText(connectedSensorName);
+	}
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.main);		
 		
+		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
+		mConnectedSensorNameView = (TextView) findViewById(R.id.connected_sensor_name);
+
 		TabHost tabHost = getTabHost();
 		tabHost.setup();
 		TabHost.TabSpec spec;

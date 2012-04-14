@@ -20,7 +20,6 @@
 package com.ecocitizen.app;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import android.app.Activity;
@@ -37,7 +36,6 @@ import android.os.Process;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 import backport.android.bluetooth.BluetoothAdapter;
 import backport.android.bluetooth.BluetoothDevice;
@@ -65,14 +63,18 @@ public abstract class DeviceManagerClient extends Activity {
 	private final static String PREFS_RTUPLOAD = "rtupload";
 	private final static String PREFS_FILESAVER = "filesaver";
 
-	// Layout Views
-	TextView mDeviceListTextView;
-
 	// Local Bluetooth adapter
 	BluetoothAdapter mBluetoothAdapter = null;
 	
 	Map<String, SensorInfoBundleWrapper> mConnectedDevices = 
 		new HashMap<String, SensorInfoBundleWrapper>();
+
+	/**
+	 * The name of the most recently connected sensor.
+	 * If it gets disconnected, it will take the name of
+	 * one of the still connected sensors, or null.
+	 */
+	protected String mConnectedSensorName;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -520,45 +522,30 @@ public abstract class DeviceManagerClient extends Activity {
 
 	void addConnectedDevice(SensorInfoBundleWrapper sensorInfo) {
 		mConnectedDevices.put(sensorInfo.getSensorId(), sensorInfo);
+		mConnectedSensorName = sensorInfo.getSensorName();
 		onConnectedDevicesUpdated();
 	}
 	
 	void removeConnectedDevice(String sensorId) {
 		mConnectedDevices.remove(sensorId);
+		if (! mConnectedDevices.isEmpty()) {
+			mConnectedSensorName = mConnectedDevices.values().iterator().next().getSensorName();
+		}
+		else {
+			mConnectedSensorName = "";
+		}
 		onConnectedDevicesUpdated();
 	}
 	
 	void clearConnectedDevices() {
 		mConnectedDevices.clear();
+		mConnectedSensorName = "";
 		onConnectedDevicesUpdated();
 	}
 	
 	void onConnectedDevicesUpdated() {
-		updateDeviceListTextView();
 	}
 	
-	void updateDeviceListTextView() {
-		// Skip this, if the activity does not support such view.
-		if (mDeviceListTextView == null) return;
-		
-		String newTitle;
-		if (mConnectedDevices.isEmpty()) {
-			newTitle = getString(R.string.title_not_connected);
-		}
-		else if (mConnectedDevices.size() == 1) {
-			String deviceName = mConnectedDevices.values().iterator().next().getSensorName();
-			newTitle = getString(R.string.title_connected_to) + deviceName;
-		}
-		else {
-			Iterator<SensorInfoBundleWrapper> iterator = mConnectedDevices.values().iterator();
-			newTitle = iterator.next().getSensorName();
-			while (iterator.hasNext()) {
-				newTitle += ", " + iterator.next().getSensorName();
-			}
-		}
-		mDeviceListTextView.setText(newTitle);
-	}
-
 	void startAddNoteActivity() {
 		startActivity(new Intent(this, AddNoteActivity.class));
 	}
