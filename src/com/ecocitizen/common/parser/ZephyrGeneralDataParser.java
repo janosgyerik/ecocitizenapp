@@ -28,7 +28,7 @@ public class ZephyrGeneralDataParser implements SensorDataParser {
 			SensorDataType.HeartRate,
 			SensorDataType.RespirationRate,
 			SensorDataType.SkinTemperature,
-			SensorDataType.BloodPressure,
+			//SensorDataType.BloodPressure,
 			SensorDataType.Posture,
 			SensorDataType.Activity
 			);
@@ -45,56 +45,32 @@ public class ZephyrGeneralDataParser implements SensorDataParser {
 		
 		for (SensorDataType dataType : filter.dataTypes) {
 			SensorData data = null;
-			int pos = 0;
+			String value;
 			
 			switch (dataType) {
 			case HeartRate:
-				pos = HEART_RATE_POS;
-				data = new SensorData(SensorDataType.HeartRate, "BPM", Integer.toString(bytes[pos]) + " " + Integer.toString(bytes[pos+1]));
-				/*
-				int heartRate = getTwoByteData(bytes, HEART_RATE_POS);
-				data = new SensorData(SensorDataType.HeartRate, "BPM", Integer.toString(heartRate));
-				*/
+				value = getValue(bytes, HEART_RATE_POS, 1);
+				data = new SensorData(SensorDataType.HeartRate, "BPM", value);
 				break;
 			case RespirationRate:
-				pos = RESPIRATION_RATE_POS;
-				data = new SensorData(SensorDataType.RespirationRate, "BPM", Integer.toString(bytes[pos]) + " " + Integer.toString(bytes[pos+1]));
-				/*
-				int respirationRate = getTwoByteData(bytes, RESPIRATION_RATE_POS);
-				data = new SensorData(SensorDataType.RespirationRate, "BPM", Integer.toString(respirationRate));
-				*/
+				value = getValue(bytes, RESPIRATION_RATE_POS, 2, .1f);
+				data = new SensorData(SensorDataType.RespirationRate, "BPM", value);
 				break;
 			case SkinTemperature:
-				pos = SKIN_TEMPERATURE_POS;
-				data = new SensorData(SensorDataType.SkinTemperature, "ºC", Integer.toString(bytes[pos]) + " " + Integer.toString(bytes[pos+1]));
-				/*
-				int skinTemperature = getTwoByteData(bytes, SKIN_TEMPERATURE_POS);
-				data = new SensorData(SensorDataType.SkinTemperature, "ºC", Integer.toString(skinTemperature));
-				*/
+				value = getValue(bytes, SKIN_TEMPERATURE_POS, 2, .1f);
+				data = new SensorData(SensorDataType.SkinTemperature, "ºC", value);
 				break;
 			case Posture:
-				pos = POSTURE_POS;
-				data = new SensorData(SensorDataType.Posture, "deg", Integer.toString(bytes[pos]) + " " + Integer.toString(bytes[pos+1]));
-				/*
-				int posture = getTwoByteData(bytes, POSTURE_POS);
-				data = new SensorData(SensorDataType.Posture, "deg", Integer.toString(posture));
-				*/
+				value = getSignedValue(bytes, POSTURE_POS, 2);
+				data = new SensorData(SensorDataType.Posture, "deg", value);
 				break;
 			case Activity:
-				pos = ACTIVITY_POS;
-				data = new SensorData(SensorDataType.Activity, "VMU/s", Integer.toString(bytes[pos]) + " " + Integer.toString(bytes[pos+1]));
-				/*
-				int activity = getTwoByteData(bytes, ACTIVITY_POS);
-				data = new SensorData(SensorDataType.Activity, "VMU/s", Integer.toString(activity));
-				*/
+				value = getValue(bytes, ACTIVITY_POS, 2, .01f);
+				data = new SensorData(SensorDataType.Activity, "VMU/s", value);
 				break;
 			case BloodPressure:
-				pos = BLOOD_PRESSURE_POS;
-				data = new SensorData(SensorDataType.BloodPressure, "Hg", Integer.toString(bytes[pos]) + " " + Integer.toString(bytes[pos+1]));
-				/*
-				int bloodPressure = getTwoByteData(bytes, BLOOD_PRESSURE_POS);
-				data = new SensorData(SensorDataType.BloodPressure, "Hg", Integer.toString(bloodPressure));
-				*/
+				value = getValue(bytes, BLOOD_PRESSURE_POS, 2, 0.001f);
+				data = new SensorData(SensorDataType.BloodPressure, "Hg", value);
 				break;
 			}
 			
@@ -106,12 +82,41 @@ public class ZephyrGeneralDataParser implements SensorDataParser {
 		return sensorDataList;
 	}
 	
+	private int getIntValue(byte[] buffer, int pos, int bytes) {
+		int value;
+		if (bytes == 1) {
+			value = buffer[pos] & 0xff;
+		}
+		else if (bytes == 2) {
+			value = (buffer[pos] & 0xff) + 256 * (buffer[pos+1] & 0xff);
+		}
+		else {
+			value = 0;
+		}
+		return value;
+	}
+	
+	private String getValue(byte[] buffer, int pos, int bytes) {
+		return "" + getIntValue(buffer, pos, bytes);
+	}
+	
+	private String getValue(byte[] buffer, int pos, int bytes, float resolution) {
+		return String.format("%.1f", getIntValue(buffer, pos, bytes) * resolution);
+	}
+	
+	private String getSignedValue(byte[] buffer, int pos, int bytes) {
+		int value = getIntValue(buffer, pos, bytes);
+		if (bytes == 1) {
+			if (value > 127) value -= 256;
+		}
+		else if (bytes == 2) {
+			if (value > 256*256/2-1) value -= 256*256;
+		}
+		return "" + value;
+	}
+
 	public List<SensorData> getSensorData(byte[] bytes) {
 		return getSensorData(bytes, filter);
 	}
 	
-	private int getTwoByteData(byte[] bytes, int pos) {
-		return bytes[pos] + 256 * bytes[pos];
-	}
-		
 }
