@@ -19,6 +19,9 @@
 
 package com.ecocitizen.common.parser;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum SensorDataType {
 	UNKNOWN,
 	
@@ -42,5 +45,22 @@ public enum SensorDataType {
 	BloodPressure, 
 	Posture,
 	Activity,
+	;
+
+	static Map<Integer, String> names;
+	static {
+		names = new HashMap<Integer, String>();
+		names.put(Temperature.ordinal(), "T");
+		names.put(Humidity.ordinal(), "RH");
+		names.put(HeartRate.ordinal(), "HR");
+		names.put(RespirationRate.ordinal(), "RR");
+		names.put(SkinTemperature.ordinal(), "SkinT");
+	}
+	public String getShortName() {
+		if (names.containsKey(ordinal())) {
+			return names.get(ordinal());
+		}
+		return name();
+	}
 
 }
