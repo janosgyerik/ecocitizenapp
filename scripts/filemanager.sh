@@ -36,7 +36,7 @@ usage() {
 args=
 #arg=
 #flag=off
-mode=download
+mode=list
 #param=
 while [ $# != 0 ]; do
     case $1 in
@@ -80,16 +80,16 @@ pull() {
 
 case $mode in
     download)
-	mkdir -p "$download_dir"
-	list | while read file; do pull $file; done
-	rmdir "$download_dir" 2>/dev/null
-	;;
+        mkdir -p "$download_dir"
+        list | while read file; do pull $file; done
+        rmdir "$download_dir" 2>/dev/null
+        ;;
     list)
-	list
-	;;
+        list
+        ;;
     delete)
-	list | while read file; do delete $file; done
-	;;
+        list | while read file; do delete $file; done
+        ;;
 esac
 
 # eof

@@ -8,12 +8,12 @@ experiment essential
 - make it possible to replay zephyr log
 - bug: add some checking mechanism to prevent connecting to dead devices
 - bug: make disconnect work from dead devices
-- implement crc of Zephyr data
-- minor: rename DeviceReader to DeviceDriver
+- implement crc check of Zephyr data
 
 
 experiment good to have
 =======================
+- trim the byte[] when saving, probably need to pass message length of bin data
 - automatically pair with sensors
 - use binary reader by default
     - designate a new bundle type for binary data
