@@ -137,6 +137,9 @@ public class WaitForGpsActivity extends Activity implements LocationListener {
 
 		TextView bearing_value = (TextView) gpsTbl.findViewById(R.id.bearing_value);
 		bearing_value.setText(String.valueOf(location.getBearing()));
+
+		TextView speed_value = (TextView) gpsTbl.findViewById(R.id.speed_value);
+		speed_value.setText(String.valueOf(location.getSpeed()));
 	}
 
 	public void onProviderDisabled(String provider) {

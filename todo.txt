@@ -5,15 +5,12 @@ release notes
 
 experiment essential
 ====================
-- show last connected sensor in title
-- implement error checking of Zephyr data
-    - crc check
-- bug: add some checking mechanism to prevent connecting to dead devices
 - make it possible to replay zephyr log
+- show last connected sensor in title
+- bug: add some checking mechanism to prevent connecting to dead devices
 - bug: make disconnect work from dead devices
-! bug: add back find gps, important for experiment
+- implement crc of Zephyr data
 - minor: rename DeviceReader to DeviceDriver
-- note: byte can be converted to int with: (int)(bytes[i] & 0xff)
 
 
 experiment good to have

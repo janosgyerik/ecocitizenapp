@@ -36,14 +36,6 @@ public class DebugToolsActivity extends TabActivity {
 		TabHost.TabSpec spec;
 		Intent intent; 
 
-		/*
-		intent = new Intent().setClass(this, TabularViewPlusActivity.class);
-		spec = tabHost.newTabSpec("tabularView+").setIndicator("TabularView",
-				res.getDrawable(R.drawable.tab_tabularviewplus))
-				.setContent(intent);
-		tabHost.addTab(spec);
-		*/
-
 		intent = new Intent().setClass(this, SentencesActivity.class);
 		spec = tabHost.newTabSpec("sentences").setIndicator("Sentences",
 				res.getDrawable(R.drawable.tab_sentences))
@@ -72,6 +64,6 @@ public class DebugToolsActivity extends TabActivity {
 		tabHost.addTab(spec);
 		*/
 
-		tabHost.setCurrentTabByTag("tabularView+");
+		tabHost.setCurrentTabByTag("sentences");
 	}
 }
