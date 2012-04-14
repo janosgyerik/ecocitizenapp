@@ -41,6 +41,7 @@ public class SensorDataBundleWrapper extends AbstractBundleWrapper {
 	private String sensorName;
 	private String dtz;
 	private byte[] sensorData;
+	private boolean binary;
 	
 	private LocationBundleWrapper locationBundleWrapper;
 
@@ -58,11 +59,14 @@ public class SensorDataBundleWrapper extends AbstractBundleWrapper {
 		dtz = bundle.getString(BB_DTZ);
 
 		sensorData = bundle.getByteArray(BB_SENSOR_DATA);
-		String line = new String(sensorData);
-		int indexOf_dollar = line.indexOf('$'); 
-		if (indexOf_dollar > -1) {
-			line = line.substring(indexOf_dollar);
-			sensorData = line.getBytes();
+		binary = bundle.getBoolean(BB_IS_BINARY);
+		if (! binary) {
+			String line = new String(sensorData);
+			int indexOf_dollar = line.indexOf('$'); 
+			if (indexOf_dollar > -1) {
+				line = line.substring(indexOf_dollar);
+				sensorData = line.getBytes();
+			}
 		}
 		
 		locationBundleWrapper = 
@@ -102,6 +106,10 @@ public class SensorDataBundleWrapper extends AbstractBundleWrapper {
 	public byte[] getSensorData() {
 		return sensorData;
 	}
+	
+	public boolean isBinary() {
+		return binary;
+	}
 
 	public Location getLocation() {
 		return locationBundleWrapper.getLocation();
@@ -109,10 +117,11 @@ public class SensorDataBundleWrapper extends AbstractBundleWrapper {
 	
 	public String toString() {
 		String datarecord = new Formatter().format(
-				"SENSORDATA,%s,%s,%s,_",
+				"%s,%s,%s,%s,_",
+				isBinary() ? "BASE64" : "SENTENCE",
 				getSensorId(),
 				getDtz(),
-				Base64.encodeBytes(getSensorData())
+				isBinary() ? Base64.encodeBytes(getSensorData()) : new String(getSensorData())
 		).toString();
 		
 		if (!locationBundleWrapper.isNull()) {
