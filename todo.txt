@@ -6,7 +6,6 @@ release notes
 experiment essential
 ====================
 - make it possible to replay zephyr log
-- add '[...]' in the title if more then one sensors are connected
 - bug: add some checking mechanism to prevent connecting to dead devices
 - bug: make disconnect work from dead devices
 - implement crc of Zephyr data

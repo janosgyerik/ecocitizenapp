@@ -528,6 +528,9 @@ public abstract class DeviceManagerClient extends Activity {
 	void addConnectedDevice(SensorInfoBundleWrapper sensorInfo) {
 		mConnectedDevices.put(sensorInfo.getSensorId(), sensorInfo);
 		mConnectedSensorName = sensorInfo.getSensorName();
+		if (mConnectedDevices.size() > 1) {
+			mConnectedSensorName += " [..]";
+		}
 		onConnectedDevicesUpdated();
 	}
 	
@@ -535,6 +538,9 @@ public abstract class DeviceManagerClient extends Activity {
 		mConnectedDevices.remove(sensorId);
 		if (! mConnectedDevices.isEmpty()) {
 			mConnectedSensorName = mConnectedDevices.values().iterator().next().getSensorName();
+			if (mConnectedDevices.size() > 1) {
+				mConnectedSensorName += " [..]";
+			}
 		}
 		else {
 			mConnectedSensorName = "";
