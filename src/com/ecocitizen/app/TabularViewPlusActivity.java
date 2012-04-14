@@ -67,8 +67,8 @@ public class TabularViewPlusActivity extends AbstractMainActivity {
 		
 		mSentencesTbl = (TableLayout)findViewById(R.id.tblsentencesplus);
 		
-		// Set up the button to connect/disconnect sensors
-		setupCommonButtons();
+		// perform common initializations
+		initMainActivity();
 	}
 
 	@Override

@@ -33,7 +33,7 @@ public abstract class AbstractMainActivity extends DeviceManagerClient {
 	private ImageButton mBtnConnect;
 	private ImageButton mBtnAddNote;
 
-	public void setupCommonButtons() {
+	public void initMainActivity() {
 		mBtnConnect = (ImageButton)findViewById(R.id.btn_connect_device);
 		mBtnConnect.setOnClickListener(new View.OnClickListener(){   
 			public void onClick(View v) {   
@@ -48,12 +48,7 @@ public abstract class AbstractMainActivity extends DeviceManagerClient {
 			}
 		});
 		
-		//change requirement as follows
-		//it is true when there is no connected device. 
-		//TODO get list of connected devices when initializing view
-		if (true) {
-			mBtnAddNote.setVisibility(View.GONE);
-		}
+		onConnectedDevicesUpdated();
 	}
 	
 	@Override

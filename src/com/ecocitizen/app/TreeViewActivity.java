@@ -23,13 +23,10 @@ import java.text.DecimalFormat;
 
 import android.location.Location;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ecocitizen.common.DeviceHandlerFactory;
 import com.ecocitizen.common.bundlewrapper.SensorDataBundleWrapper;
@@ -67,11 +64,8 @@ public class TreeViewActivity extends AbstractMainActivity {
 		super.onCreate(savedInstanceState);
 		if (D) Log.d(TAG, "+++ ON CREATE +++");
 
-		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-
 		// Set up the window layout
 		setContentView(R.layout.treeview);
-		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
 
 		// Set up layout components
 		mCO2Val_1View = (TextView)findViewById(R.id.co2val_1);
@@ -83,19 +77,8 @@ public class TreeViewActivity extends AbstractMainActivity {
 		mLonNameView = (TextView)findViewById(R.id.lonname);
 		mLonValView = (TextView)findViewById(R.id.lonval);
 
-		// Set up the button to connect/disconnect sensors
-		setupCommonButtons();
-
-		// If the adapter is null, then Bluetooth is not supported
-		if (mBluetoothAdapter == null) {
-			Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
-		}
-	}
-
-	@Override
-	public void onStart() {
-		super.onStart();
-		if (D) Log.d(TAG, "++ ON START ++");
+		// perform common initializations
+		initMainActivity();
 	}
 
 	private static SensorDataFilter filter = 

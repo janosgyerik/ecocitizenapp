@@ -98,7 +98,8 @@ public class MultiSensorViewActivity extends AbstractMainActivity {
             mBoxImage[i].setImageResource(R.drawable.tree_min);
 		}
 		
-		setupCommonButtons();
+		// perform common initializations
+		initMainActivity();
 	}
 
 	@Override
