@@ -84,7 +84,7 @@ public class DummySensorManager extends SensorManager {
 			long sequenceNumber = 0;
 
 			while (! stop) {
-				sendSensorDataMsg(++sequenceNumber, SENSOR_LINE);
+				sendSensorDataMsg(++sequenceNumber, SENSOR_LINE, false);
 				try {
 					Thread.sleep(mMessageInterval);
 				}

@@ -224,6 +224,7 @@ public class BluetoothSensorManager extends SensorManager {
 			deviceReader.setInputStream(mmInStream);
 			deviceReader.setOutputStream(mmOutStream);
 			deviceReader.initialize();
+			boolean isBinary = deviceReader.isBinary();
 			
 			BluetoothSensorManager.this.sendConnectedMsg();
 			
@@ -235,7 +236,7 @@ public class BluetoothSensorManager extends SensorManager {
 				try {
 					byte[] data = deviceReader.readNextData();
 					if (data != null) {
-						sendSensorDataMsg(++sequenceNumber, data);
+						sendSensorDataMsg(++sequenceNumber, data, isBinary);
 					}
 				} catch (Exception e) {
 					Log.e(TAG, "disconnected", e);

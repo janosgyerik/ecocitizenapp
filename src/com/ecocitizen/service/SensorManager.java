@@ -85,11 +85,12 @@ abstract public class SensorManager {
 	 * the ID of the originating sensor.
 	 * 
 	 * @param data
+	 * @param isBinary 
 	 * @return
 	 */
-	private Bundle getSensorDataBundle(long sequenceNumber, byte[] data) {
+	private Bundle getSensorDataBundle(long sequenceNumber, byte[] data, boolean isBinary) {
 		return SensorDataBundleWrapper.makeBundle(sequenceNumber, mSensorId, mSensorName, 
-				data, mGpsLocationListener.getLastLocationBundle());
+				data, isBinary, mGpsLocationListener.getLastLocationBundle());
 	}
 	
 	/**
@@ -109,8 +110,8 @@ abstract public class SensorManager {
 		}
 	}
 	
-	void sendSensorDataMsg(long sequenceNumber, byte[] data) {
-		Bundle bundle = getSensorDataBundle(sequenceNumber, data);
+	void sendSensorDataMsg(long sequenceNumber, byte[] data, boolean isBinary) {
+		Bundle bundle = getSensorDataBundle(sequenceNumber, data, isBinary);
 		mHandler.obtainMessage(MessageType.SENSOR_DATA, bundle).sendToTarget();
 	}
 

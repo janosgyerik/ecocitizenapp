@@ -6,6 +6,16 @@ release notes
 experiment essential
 ====================
 - show last connected sensor in title
+- implement error checking of Zephyr data
+    - msg length
+    - crc check
+- finalize zephyr parser
+    - resp: /10 + %10
+    - skin: /10 + %10
+    - activity: String::Format("{0:F2}", (float)val/100)
+    - heart rate: byte 0
+    - posture: byte 0
+    - blood: do not show if zero, /1000
 - bug: add some checking mechanism to prevent connecting to dead devices
 - bug: make disconnect work from dead devices
 ! bug: add back find gps, important for experiment
@@ -15,6 +25,7 @@ experiment essential
 
 experiment good to have
 =======================
+- automatically pair with sensors
 - use binary reader by default
     - designate a new bundle type for binary data
 - hexa mode should signal to the service to use a binary reader
@@ -38,6 +49,7 @@ release in marketplace
 
 current focus
 =============
+- later: it will be good to eliminate duplication of sensor id and name in bundles
 R make the tree not squeezed
 x file uploader: progress indicator with percentage
 R? about page in the app

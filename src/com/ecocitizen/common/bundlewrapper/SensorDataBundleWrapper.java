@@ -28,12 +28,13 @@ import android.os.Bundle;
 
 public class SensorDataBundleWrapper extends AbstractBundleWrapper {
 	
-	private final static String BB_SEQUENCE_NUMBER = "10";
-	private final static String BB_SENSOR_ID = "20";
-	private final static String BB_SENSOR_NAME = "30";
-	private final static String BB_DTZ = "40";
-	private final static String BB_SENSOR_DATA = "50";
-	private final static String BB_LOCATION = "60";
+	private static final String BB_SEQUENCE_NUMBER = "10";
+	private static final String BB_SENSOR_ID = "20";
+	private static final String BB_SENSOR_NAME = "30";
+	private static final String BB_DTZ = "40";
+	private static final String BB_SENSOR_DATA = "50";
+	private static final String BB_IS_BINARY = "60";
+	private static final String BB_LOCATION = "70";
 	
 	private long sequenceNumber;
 	private String sensorId;
@@ -69,13 +70,14 @@ public class SensorDataBundleWrapper extends AbstractBundleWrapper {
 	}
 
 	public static Bundle makeBundle(long sequenceNumber, String sensorId, String sensorName, 
-			byte[] data, Bundle locationBundle) {
+			byte[] data, boolean isBinary, Bundle locationBundle) {
 		Bundle bundle = new Bundle();
 		bundle.putLong(BB_SEQUENCE_NUMBER, sequenceNumber);
 		bundle.putString(BB_SENSOR_ID, sensorId);
 		bundle.putString(BB_SENSOR_NAME, sensorName);
 		bundle.putString(BB_DTZ, getCurrentDTZ());
 		bundle.putByteArray(BB_SENSOR_DATA, data);
+		bundle.putBoolean(BB_IS_BINARY, isBinary);
 		bundle.putParcelable(BB_LOCATION, locationBundle);
 		
 		return bundle;
