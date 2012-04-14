@@ -27,6 +27,8 @@ import java.io.InputStreamReader;
 import android.os.Handler;
 import android.util.Log;
 
+import com.ecocitizen.common.Base64;
+
 public class LogplayerSensorManager extends SensorManager {
 	// Debugging
 	private static final String TAG = "LogplayerService";
@@ -35,6 +37,7 @@ public class LogplayerSensorManager extends SensorManager {
 	// Member fields
 	private InputStream mmInStream = null;
 	private ConnectedThread mConnectedThread;
+	private boolean mIsBinary = false;
 
 	private final int mMessageInterval;
 
@@ -48,6 +51,7 @@ public class LogplayerSensorManager extends SensorManager {
 
 		mMessageInterval = messageInterval;
 		mmInStream = instream;
+		mIsBinary = filename.endsWith(".base64");
 	}
 
 	public boolean connect() {
@@ -96,7 +100,8 @@ public class LogplayerSensorManager extends SensorManager {
 					String line = reader.readLine();
 					if (line != null) {
 						hasReadAnything = true;
-						sendSensorDataMsg(++sequenceNumber, line.getBytes(), false);
+						byte[] bytes = mIsBinary ? Base64.decode(line) : line.getBytes();
+						sendSensorDataMsg(++sequenceNumber, bytes, mIsBinary);
 						try {
 							Thread.sleep(mMessageInterval);
 						}

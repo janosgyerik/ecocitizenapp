@@ -104,11 +104,11 @@ public class DeviceListActivity extends Activity {
 			logfileListView.setOnItemClickListener(mSpecialDeviceClickListener);
 
 			mSpecialDevicesArrayAdapter.add(new SpecialDeviceSpec(
-					EXTRA_LOGFILENAME, getString(R.string.logfile_co2sample1)));
+					EXTRA_LOGFILENAME, getString(R.string.logfile_co21)));
 			mSpecialDevicesArrayAdapter.add(new SpecialDeviceSpec(
-					EXTRA_LOGFILENAME, getString(R.string.logfile_co2sample2)));
+					EXTRA_LOGFILENAME, getString(R.string.logfile_zephyr_bioharness1)));
 			mSpecialDevicesArrayAdapter.add(new SpecialDeviceSpec(
-					EXTRA_LOGFILENAME, getString(R.string.logfile_pollutionsample1)));
+					EXTRA_LOGFILENAME, getString(R.string.logfile_pollution1)));
 		}
 		
 		// Get the local Bluetooth adapter

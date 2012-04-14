@@ -36,9 +36,9 @@
     <string name="button_scan">Scan for devices</string>
     <string name="title_special_devices">Special Devices</string>
     <string name="dummy_device">GPS only (no sensor/dummy)</string>
-    <string name="logfile_co2sample1">CO2Sample1.txt</string>
-    <string name="logfile_co2sample2">CO2Sample2.txt</string>
-	<string name="logfile_pollutionsample1">PollutionSample1.txt</string>
+    <string name="logfile_co21">CO2Sample1.txt</string>
+	<string name="logfile_pollution1">PollutionSample1.txt</string>
+    <string name="logfile_zephyr_bioharness1">ZephyrBioHarnessSample1.base64</string>
 
     <!-- DisconnectDevice -->
     <string name="disconnect_all">Disconnect All</string>

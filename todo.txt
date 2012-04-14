@@ -5,7 +5,6 @@ release notes
 
 experiment essential
 ====================
-- make it possible to replay zephyr log
 - bug: add some checking mechanism to prevent connecting to dead devices
 - bug: make disconnect work from dead devices
 - implement crc check of Zephyr data
