@@ -114,7 +114,7 @@ public class SensarisParser implements SensorDataParser {
 			}
 			else {
 				dataType = SensorDataType.UNKNOWN;
-				sensorDataList.add(new SensorData(name, dataType, unit, strValue));
+				sensorDataList.add(new SensorData(dataType, unit, strValue));
 			}
 		}
 		

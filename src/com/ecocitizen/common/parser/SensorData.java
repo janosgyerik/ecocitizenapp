@@ -29,13 +29,8 @@ public class SensorData {
 	int level;
 	
 	public SensorData(SensorDataType dataType, String unit, String strValue) {
-		this(dataType.name(), dataType, unit, strValue);
-	}
-	
-	public SensorData(String name, SensorDataType dataType,
-			String unit, String strValue) {
 		this.dataType = dataType;
-		this.name = name;
+		this.name = dataType.name();
 		this.unit = unit;
 		
 		float floatValue;
