@@ -59,5 +59,13 @@ public interface DeviceReader {
 	 * input and output streams are set.
 	 */
 	void initialize();
+	
+	/**
+	 * Return true if the data messages are in binary format,
+	 * for example the Zephyr sensors.
+	 * 
+	 * @return
+	 */
+	boolean isBinary();
 
 }

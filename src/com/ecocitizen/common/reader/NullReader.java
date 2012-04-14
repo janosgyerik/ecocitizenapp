@@ -47,4 +47,9 @@ public class NullReader implements DeviceReader {
 	public void initialize() {
 	}
 
+	@Override
+	public boolean isBinary() {
+		return false;
+	}
+
 }

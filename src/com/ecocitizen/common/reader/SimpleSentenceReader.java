@@ -25,6 +25,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 
+/**
+ * This class will read data line by line,
+ * suitable for sensors that send text (readable) data line by line. 
+ * 
+ * @author janos
+ *
+ */
 public class SimpleSentenceReader implements DeviceReader {
 	
 	private BufferedReader reader;
@@ -45,6 +52,11 @@ public class SimpleSentenceReader implements DeviceReader {
 
 	@Override
 	public void initialize() {
+	}
+
+	@Override
+	public boolean isBinary() {
+		return false;
 	}
 
 }

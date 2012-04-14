@@ -103,4 +103,9 @@ public class ZephyrHxmReader implements DeviceReader {
 	@Override
 	public void initialize() {
 	}
+
+	@Override
+	public boolean isBinary() {
+		return true;
+	}
 }

@@ -132,4 +132,9 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 	public void initialize() {
 		lifeSignalCounter = 99;
 	}
+
+	@Override
+	public boolean isBinary() {
+		return true;
+	}
 }
