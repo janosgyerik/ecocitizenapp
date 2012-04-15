@@ -459,6 +459,9 @@ public abstract class DeviceManagerClient extends Activity {
 			case MessageType.SM_DEVICE_LOST:
 				removeConnectedDevice((String)msg.obj);
 				break;
+			case MessageType.SM_CONNECTION_FAILED:
+				Toast.makeText(DeviceManagerClient.this, "Could not connect to sensor", Toast.LENGTH_LONG).show();
+				break;
 			default:
 				// drop all other message types
 				break;
