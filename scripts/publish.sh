@@ -25,6 +25,6 @@ apk_release=EcoCitizen-$build_id.apk
 remote_host=titan2x
 remote_dir=webapps/blog.ecomobilecitizen.com/download
 
-scp -v $apk $remote_host:$remote_dir/$apk_release
+rsync --progress -v $apk $remote_host:$remote_dir/$apk_release
 
 # eof
