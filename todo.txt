@@ -5,9 +5,7 @@ release notes
 
 experiment essential
 ====================
-? trim the byte[] when saving, probably need to pass message length of bin data
 - upload file as attachment
-- implement crc check of Zephyr data
 
 
 experiment good to have

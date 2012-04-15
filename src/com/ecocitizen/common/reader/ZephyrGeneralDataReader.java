@@ -85,7 +85,7 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 			int cnt;
 			if ((cnt = inStream.read(buffer, i, dlc)) != dlc) {
 				Log.w(TAG, String.format("Less than DLC bytes were read: %d < %d", cnt, dlc));
-				break;
+				continue;
 			}
 			i += cnt;
 
