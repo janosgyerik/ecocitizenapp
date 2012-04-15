@@ -526,6 +526,7 @@ public abstract class DeviceManagerClient extends Activity {
 	}
 
 	void addConnectedDevice(SensorInfoBundleWrapper sensorInfo) {
+		Toast.makeText(this, "Connected to " + sensorInfo.getSensorName(), Toast.LENGTH_LONG).show();
 		mConnectedDevices.put(sensorInfo.getSensorId(), sensorInfo);
 		mConnectedSensorName = sensorInfo.getSensorName();
 		if (mConnectedDevices.size() > 1) {
@@ -535,6 +536,13 @@ public abstract class DeviceManagerClient extends Activity {
 	}
 	
 	void removeConnectedDevice(String sensorId) {
+		try {
+			String sensorName = mConnectedDevices.get(sensorId).getSensorName();
+			Toast.makeText(this, "Disconnected from " + sensorName, Toast.LENGTH_LONG).show();
+		}
+		catch (Exception e) {
+			Toast.makeText(this, "Disconnected from sensor", Toast.LENGTH_LONG).show();
+		}
 		mConnectedDevices.remove(sensorId);
 		if (! mConnectedDevices.isEmpty()) {
 			mConnectedSensorName = mConnectedDevices.values().iterator().next().getSensorName();
