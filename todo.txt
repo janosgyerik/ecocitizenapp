@@ -5,44 +5,33 @@ release notes
 
 experiment essential
 ====================
-- bug: add some checking mechanism to prevent connecting to dead devices
-- bug: make disconnect work from dead devices
+- upload file as attachment
 - implement crc check of Zephyr data
-
-
-experiment good to have
-=======================
 - trim the byte[] when saving, probably need to pass message length of bin data
-- automatically pair with sensors
-- use binary reader by default
-    - designate a new bundle type for binary data
-- hexa mode should signal to the service to use a binary reader
-- release in marketpace
-    - remove the tree images
 - autoconnect
     - new activity to configure some paired devices for autoconnect
     - new button to connect to autoconnect devices
 
 
-release in marketplace
-======================
+experiment good to have
+=======================
+- automatically pair with sensors
+- beta-release on marketpace (see below)
+
+
+beta-release in marketplace
+===========================
+- remove the tree images
 - create branch for new API version
 - install on motorola
 - create Android marketplace page
+    - make it clear this is beta
 - release on marketplace
-- announce the release
-	- project blog
-	- twitter
-	- launchpad
 
 
-current focus
-=============
-- later: it will be good to eliminate duplication of sensor id and name in bundles
-R make the tree not squeezed
-x file uploader: progress indicator with percentage
+release on marketplace
+======================
 R? about page in the app
-R create "red" style for buttons
 R+ user registration activity
 	- requires HttpUtil
 	- username
@@ -53,19 +42,25 @@ R+ user registration activity
 	- upload app reminds
 		- if not logged in
 		- if in anon mode
-V design new dedicated screen for zephyr health sensors
+- rewrite SensorMapUploaderService to use HttpUtil
+- create documentation (see section below)
+- upload new apk to marketplace
+- update info on marketplace
+- announce the release
+	- project blog
+	- twitter
+	- launchpad
+
+
+tasks
+=====
+- use binary reader by default
+    - designate a new bundle type for binary data
+- hexa mode should signal to the service to use a binary reader
 - do not duplicate the button definitions in the main activities but make them share code somehow
-- make the title show the last connected sensor
-	- if possible to manipulate the title in a tabbed app....
-! add support for the other Zephyr device
-- combine FileUploader, SensorMapUploaderService, Util in a single HttpUtil
-- bulk upload: an entire file as attachment
-- add a zephyr logfile for testing/debugging purposes
-- review comments in entire code, especially service code
-- improve data uploading throughput
-	test slowness, confirm and quantify
-	pack multiple messages in one transmission
-	repeat test, confirm improvement
+- add map tab, it probably still works somewhat even without the map tiles
+- eliminate duplication of sensor id and name in bundles passed around
+R create "red" style for buttons
 - performance issues? consider the Dev Guide: 'Designing for Performance'
 
 
@@ -74,7 +69,6 @@ bugs
 ! bug: app gets into strange state after connection lost, sending session id 'null'
 - bug: wrong pin is quietly ignored when pairing. NOT good!
 - bug: filemanager.sh is not friendly
-	- should show help when no args were entered
 	- should show error if permission is denied (no sdcard)
 	- what happens when usb debugging not enabled?
 - bug: it seems two GpsLocationListeners are created, why?
@@ -99,21 +93,10 @@ optimization
 - clean up variable visibility in .app
 
 
-later
-=====
-- show data on local map
-
-
 obscure bugs
 ============
 ? bug: android uploader gets killed
 ? bug: java.net.UnknownHostException
-
-
-nice to have
-============
-- consider using ViewStubs
-- try to rewrite nested linearlayouts with relativelayout
 
 
 possibly bluetooth backport bugs
