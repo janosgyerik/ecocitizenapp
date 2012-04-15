@@ -97,7 +97,7 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 			break;
 		}
 
-		byte[] compact = new byte[buffer.length];
+		byte[] compact = new byte[i];
 		System.arraycopy(buffer, 0, compact, 0, compact.length);
 
 		return compact;
