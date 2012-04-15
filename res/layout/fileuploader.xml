@@ -18,33 +18,55 @@
     along with EcoCitizen.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    >
+    android:orientation="vertical" >
 
-	<LinearLayout android:id="@+id/internal_storage_section"
-		style="@style/weighted_list_section">
-		<TextView android:text="@string/title_internal_storage"
-			style="@style/list_title" />
-		<ListView android:id="@+id/internal_storage" style="@style/fill_width" />
-		<Button android:id="@+id/btn_upload_all_internal" 
-			android:visibility="gone"
-			style="@style/wideButton"
-			/>
+    <LinearLayout
+        android:id="@+id/internal_storage_section"
+        style="@style/weighted_list_section" >
+
+        <TextView
+            style="@style/list_title"
+            android:text="@string/title_internal_storage" />
+
+        <ListView
+            android:id="@+id/internal_storage"
+            style="@style/fill_width" />
+
+        <Button
+            android:id="@+id/btn_upload_all_internal"
+            style="@style/wideButton"
+            android:visibility="gone" />
     </LinearLayout>
 
-	<LinearLayout android:id="@+id/external_storage_section"
-		style="@style/weighted_list_section">
-		<TextView android:text="@string/title_external_storage"
-			style="@style/list_title" />
-		<ListView android:id="@+id/external_storage" style="@style/fill_width" />
-		<Button android:id="@+id/btn_upload_all_external" 
-			android:visibility="gone"
-			style="@style/wideButton"
-			/>
-	</LinearLayout>
+    <LinearLayout
+        android:id="@+id/external_storage_section"
+        style="@style/weighted_list_section" >
 
-	<Button android:id="@+id/btn_close" android:text="@string/btn_close"
-		style="@style/wideButton" />
+        <TextView
+            style="@style/list_title"
+            android:text="@string/title_external_storage" />
+
+        <ListView
+            android:id="@+id/external_storage"
+            style="@style/fill_width" />
+
+        <Button
+            android:id="@+id/btn_upload_all_external"
+            style="@style/wideButton"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <TextView
+        style="@style/message"
+        android:id="@+id/msg_no_files"
+        android:text="@string/msg_no_files"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/btn_close"
+        style="@style/wideButton"
+        android:text="@string/btn_close" />
+
 </LinearLayout>

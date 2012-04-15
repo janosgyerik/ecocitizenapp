@@ -44,6 +44,8 @@ public class FileUploaderActivity extends FileManagerActivity {
 	// Members
 	private StorageType mCurrentStorageType;
 	private File mCurrentFile;
+	private ListView mInternalFilesListView;
+	private ListView mExternalFilesListView;
 	
 	@Override
 	protected int getLayoutResID() {
@@ -55,11 +57,13 @@ public class FileUploaderActivity extends FileManagerActivity {
 		super.onCreate(savedInstanceState);
 		if (D) Log.d(TAG, "+++ ON CREATE +++");
 		
-		ListView internalFilesListView = (ListView)findViewById(R.id.internal_storage);
-		internalFilesListView.setOnItemClickListener(new ItemClickListener(StorageType.INTERNAL, internalFilesArrayAdapter, getFilesDir()));
+		mInternalFilesListView = (ListView)findViewById(R.id.internal_storage);
+		mInternalFilesListView.setOnItemClickListener(new ItemClickListener(StorageType.INTERNAL, internalFilesArrayAdapter, getFilesDir()));
 
-		ListView externalFilesListView = (ListView)findViewById(R.id.external_storage);
-		externalFilesListView.setOnItemClickListener(new ItemClickListener(StorageType.EXTERNAL, externalFilesArrayAdapter, externalDir));
+		mExternalFilesListView = (ListView)findViewById(R.id.external_storage);
+		mExternalFilesListView.setOnItemClickListener(new ItemClickListener(StorageType.EXTERNAL, externalFilesArrayAdapter, externalDir));
+		
+		//mMsgNoFilesView = (TextView)findViewById(R.id.msg_no_files);
 		
 		findViewById(R.id.btn_close).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -96,13 +100,26 @@ public class FileUploaderActivity extends FileManagerActivity {
 	}
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		boolean internalIsEmpty = mInternalFilesListView.getCount() == 0;
+		boolean externalIsEmpty = mExternalFilesListView.getCount() == 0;
 		if (!mCurrentFile.exists()) { 
 			if (mCurrentStorageType == StorageType.INTERNAL) {
 				internalFilesArrayAdapter.remove(mCurrentFile.getName());
+				internalIsEmpty = mInternalFilesListView.getCount() == 0;
+				if (internalIsEmpty) {
+					findViewById(R.id.internal_storage_section).setVisibility(View.GONE);
+				}
 			}
 			else if (mCurrentStorageType == StorageType.EXTERNAL) {
 				externalFilesArrayAdapter.remove(mCurrentFile.getName());
+				externalIsEmpty = mExternalFilesListView.getCount() == 0;
+				if (externalIsEmpty) {
+					findViewById(R.id.external_storage_section).setVisibility(View.GONE);
+				}
 			}
+		}
+		if (internalIsEmpty && externalIsEmpty) {
+			findViewById(R.id.msg_no_files).setVisibility(View.VISIBLE);
 		}
 	}
 }

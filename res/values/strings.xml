@@ -16,7 +16,7 @@
     <string name="multisensorview_activity">MultiSensor View</string>
     <string name="mapview_activity">Map View</string>
     <string name="msg_are_you_sure">Are you sure?</string> 
-    <string name="msg_no_files">There are no files.</string>
+    <string name="msg_no_files">(There are no files)</string>
     <string name="fileinfo_activity">File Info</string>
     <string name="disconnect_device_activity">disconnect device</string> 
     

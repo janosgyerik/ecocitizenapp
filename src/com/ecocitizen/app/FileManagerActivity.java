@@ -28,9 +28,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -64,7 +62,7 @@ abstract class FileManagerActivity extends Activity {
 	protected ArrayAdapter<String> internalFilesArrayAdapter;
 
 	abstract protected int getLayoutResID();
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -77,31 +75,24 @@ abstract class FileManagerActivity extends Activity {
 		createDummyFiles();
 
 		if (internalFilenames.isEmpty() && externalFilenames.isEmpty()) {
-			new AlertDialog.Builder(FileManagerActivity.this)
-			.setMessage(R.string.msg_no_files)
-			.setCancelable(false)
-			.setPositiveButton(R.string.btn_close, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					FileManagerActivity.this.finish();
-				}
-			})
-			.show();
+			findViewById(R.id.msg_no_files).setVisibility(View.VISIBLE);
 		}
+		else {
+			if (!internalFilenames.isEmpty()) {
+				internalFilesArrayAdapter = new ArrayAdapter<String>(this, R.layout.filename);
+				configureArrayAdapter(internalFilesArrayAdapter, internalFilenames);
+				ListView internalFilesListView = (ListView)findViewById(R.id.internal_storage);
+				internalFilesListView.setAdapter(internalFilesArrayAdapter);
+				findViewById(R.id.internal_storage_section).setVisibility(View.VISIBLE);
+			}
 
-		if (!internalFilenames.isEmpty()) {
-			internalFilesArrayAdapter = new ArrayAdapter<String>(this, R.layout.filename);
-			configureArrayAdapter(internalFilesArrayAdapter, internalFilenames);
-			ListView internalFilesListView = (ListView)findViewById(R.id.internal_storage);
-			internalFilesListView.setAdapter(internalFilesArrayAdapter);
-			findViewById(R.id.internal_storage_section).setVisibility(View.VISIBLE);
-		}
-
-		if (!externalFilenames.isEmpty()) {
-			externalFilesArrayAdapter = new ArrayAdapter<String>(this, R.layout.filename);
-			configureArrayAdapter(externalFilesArrayAdapter, externalFilenames);
-			ListView externalFilesListView = (ListView)findViewById(R.id.external_storage);
-			externalFilesListView.setAdapter(externalFilesArrayAdapter);
-			findViewById(R.id.external_storage_section).setVisibility(View.VISIBLE);
+			if (!externalFilenames.isEmpty()) {
+				externalFilesArrayAdapter = new ArrayAdapter<String>(this, R.layout.filename);
+				configureArrayAdapter(externalFilesArrayAdapter, externalFilenames);
+				ListView externalFilesListView = (ListView)findViewById(R.id.external_storage);
+				externalFilesListView.setAdapter(externalFilesArrayAdapter);
+				findViewById(R.id.external_storage_section).setVisibility(View.VISIBLE);
+			}
 		}
 	}
 	
