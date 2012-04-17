@@ -96,7 +96,7 @@ projectname=$(grep project.name build.xml | head -n 1 | sed -e 's/.*project name
 
 test -f local.properties -a -f build.xml || {
     msg local.properties or build.xml missing, runnig android update command
-    android update project --path .
+    android update project --path . --target "$(grep target= project.properties | cut -f2 -d=)"
 }
 
 if test $setup_keys = on; then
