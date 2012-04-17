@@ -9,3 +9,4 @@ ext
 push.sh
 tmp
 ./keys
+proguard-project.txt
