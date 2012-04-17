@@ -5,7 +5,6 @@ release notes
 
 experiment essential
 ====================
-- bug: dark theme does not look good on api7
 - bug: cannot connect to bluetooth sensors
 - bug: connection failure is not detected
 - upload file as attachment
