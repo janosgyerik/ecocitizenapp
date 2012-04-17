@@ -37,7 +37,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import backport.android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothAdapter;
 
 public class HttpHelper {
 	// Debugging

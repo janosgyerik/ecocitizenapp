@@ -19,7 +19,7 @@
  
 package com.ecocitizen.service;
 
-import backport.android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothDevice;
 import com.ecocitizen.service.IDeviceManagerServiceCallback;
 
 interface IDeviceManagerService {

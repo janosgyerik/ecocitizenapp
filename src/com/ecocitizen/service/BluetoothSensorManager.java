@@ -33,8 +33,8 @@ import java.util.concurrent.TimeoutException;
 
 import android.os.Handler;
 import android.util.Log;
-import backport.android.bluetooth.BluetoothDevice;
-import backport.android.bluetooth.BluetoothSocket;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 
 import com.ecocitizen.common.DeviceHandlerFactory;
 import com.ecocitizen.common.reader.DeviceReader;
