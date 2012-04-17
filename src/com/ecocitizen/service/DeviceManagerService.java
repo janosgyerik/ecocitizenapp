@@ -38,7 +38,7 @@ import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.util.Log;
 import android.widget.Toast;
-import backport.android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothDevice;
 
 import com.ecocitizen.common.MessageType;
 import com.ecocitizen.common.bundlewrapper.NoteBundleWrapper;

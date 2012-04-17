@@ -5,6 +5,9 @@ release notes
 
 experiment essential
 ====================
+- bug: dark theme does not look good on api7
+- bug: cannot connect to bluetooth sensors
+- bug: connection failure is not detected
 - upload file as attachment
 
 
@@ -20,7 +23,6 @@ experiment good to have
 beta-release in marketplace
 ===========================
 - remove the tree images
-- create branch for new API version
 - install on motorola
 - create Android marketplace page
     - make it clear this is beta
