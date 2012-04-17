@@ -51,11 +51,6 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/category_storage" >
         <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="rtupload"
-            android:summary="@string/summary_rtupload_preference"
-            android:title="@string/title_rtupload_preference" />
-        <CheckBoxPreference
             android:defaultValue="true"
             android:key="filesaver"
             android:summary="@string/summary_filesaver_preference"
@@ -65,6 +60,11 @@
             android:key="use_external_storage"
             android:summary="@string/summary_externalstorage_preference"
             android:title="@string/title_externalstorage_preference" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="rtupload"
+            android:summary="@string/summary_rtupload_preference"
+            android:title="@string/title_rtupload_preference" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/category_reset" >
         <com.ecocitizen.app.ResetSettingsPreference
