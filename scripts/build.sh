@@ -92,7 +92,7 @@ randstring() {
 
 cd $(dirname "$0")/..
 
-projectname=$(basename "$PWD")
+projectname=$(grep project.name build.xml | head -n 1 | sed -e 's/.*project name="\([^"]*\)".*/\1/')
 
 test -f local.properties -a -f build.xml || {
     msg local.properties or build.xml missing, runnig android update command
