@@ -42,7 +42,7 @@ public class ZephyrGeneralDataReader implements DeviceReader {
 		int i = 0;
 
 		while (true) {
-			if (lifeSignalCounter > 3) {
+			if (lifeSignalCounter > 2) {
 				lifeSignalCounter = 0;
 				sendEnableGeneralDataPacket();
 			}

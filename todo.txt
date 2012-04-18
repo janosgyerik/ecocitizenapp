@@ -21,8 +21,6 @@ experiment good to have
 
 beta-release in marketplace
 ===========================
-- remove the tree images
-- install on motorola
 - create Android marketplace page
     - make it clear this is beta
 - release on marketplace
@@ -30,6 +28,7 @@ beta-release in marketplace
 
 release on marketplace
 ======================
+- remove the tree images
 R? about page in the app
 R+ user registration activity
 	- requires HttpUtil
