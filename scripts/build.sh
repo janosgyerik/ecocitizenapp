@@ -126,7 +126,7 @@ if test $build = on; then
     fi
     if test $release = on; then
         build_id=$(date +%Y%m%d_%H%M)_r$(bzr revno)
-        sed -i .bak 's/<string name="build_id.*/<string name="build_id">'$build_id'<\/string>/' res/values/props.xml && rm res/values/props.xml.bak
+        sed -i .bak -e 's/<string name="build_id.*/<string name="build_id">'$build_id'<\/string>/' res/values/props.xml && rm res/values/props.xml.bak
         msg ant build
         ant release
         msg jarsigner
