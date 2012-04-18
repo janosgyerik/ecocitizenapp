@@ -71,52 +71,52 @@ public class BluetoothSensorManager extends SensorManager {
 	public BluetoothSensorManager(Handler handler, GpsLocationListener gpsLocationListener, 
 			BluetoothDevice device) {
 		super(getDeviceId(device), device.getName(), handler, gpsLocationListener);
-		
+
 		mDevice = device;
 	}
-	
+
 	protected static String getDeviceId(BluetoothDevice device) {
 		return device.getAddress().replaceAll(":", "_");
 	}
-	
+
 	public synchronized void connect() throws Exception {
-        // Cancel any thread attempting to make a connection
-        if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
+		// Cancel any thread attempting to make a connection
+		if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
 
-        // Cancel any thread currently running a connection
-        if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
+		// Cancel any thread currently running a connection
+		if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
 
-        try {
+		try {
 			mConnectThread = new ConnectThread();
-	    	mConnectThread.start();
-        }
-        catch (Exception e) {
-        	this.sendConnectFailedMsg();
-        	throw e; // propagate to caller
-        }
+			mConnectThread.start();
+		}
+		catch (Exception e) {
+			this.sendConnectFailedMsg();
+			throw e; // propagate to caller
+		}
 	}
 
-    private synchronized void connected(BluetoothSocket socket) {
-        // Cancel the thread that completed the connection
-        if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
+	private synchronized void connected(BluetoothSocket socket) {
+		// Cancel the thread that completed the connection
+		if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
 
-        // Cancel any thread currently running a connection
-        if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
+		// Cancel any thread currently running a connection
+		if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
 
-        try {
-	        // Start the thread to manage the connection and perform transmissions
-	        mConnectedThread = new ConnectedThread(socket);
-	        mConnectedThread.start();
-        }
-        catch (Exception e) {
-        	this.sendConnectFailedMsg();
-        }
-    }
-    
+		try {
+			// Start the thread to manage the connection and perform transmissions
+			mConnectedThread = new ConnectedThread(socket);
+			mConnectedThread.start();
+		}
+		catch (Exception e) {
+			this.sendConnectFailedMsg();
+		}
+	}
+
 	@Override
 	public void shutdown() {
 		if (D) Log.d(TAG, "stop");
-        if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
+		if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
 		if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
 	}
 
@@ -125,60 +125,60 @@ public class BluetoothSensorManager extends SensorManager {
 	 * It shuts itself down after successful connection.
 	 */
 	private class ConnectThread extends Thread {
-        private final BluetoothSocket mmSocket;
+		private final BluetoothSocket mmSocket;
 
-        public ConnectThread() throws Exception {
-            BluetoothSocket tmp = null;
+		public ConnectThread() throws Exception {
+			BluetoothSocket tmp = null;
 
-            // Get a BluetoothSocket for a connection with the
-            // given BluetoothDevice
-            try {
-                tmp = mDevice.createRfcommSocketToServiceRecord(MY_UUID);
-                Method m = mDevice.getClass().getMethod("createRfcommSocket", new Class[] {int.class});
-                tmp = (BluetoothSocket) m.invoke(mDevice, 1);
-            } catch (IOException e) {
-                Log.e(TAG, "create() failed", e);
-                throw new Exception("failed to create bluetooth socket");
-            }
-            mmSocket = tmp;
-        }
+			// Get a BluetoothSocket for a connection with the
+			// given BluetoothDevice
+			try {
+				tmp = mDevice.createRfcommSocketToServiceRecord(MY_UUID);
+				Method m = mDevice.getClass().getMethod("createRfcommSocket", new Class[] {int.class});
+				tmp = (BluetoothSocket) m.invoke(mDevice, 1);
+			} catch (IOException e) {
+				Log.e(TAG, "create() failed", e);
+				throw new Exception("failed to create bluetooth socket");
+			}
+			mmSocket = tmp;
+		}
 
-        public void run() {
-            Log.i(TAG, "BEGIN mConnectThread");
-            setName("ConnectThread");
+		public void run() {
+			Log.i(TAG, "BEGIN mConnectThread");
+			setName("ConnectThread");
 
-            // Make a connection to the BluetoothSocket
-            try {
-                // This is a blocking call and will only return on a
-                // successful connection or an exception
-                mmSocket.connect();
-            } catch (IOException e) {
-            	Log.e(TAG, "mmSocket.connect() failed", e);
-                // Close the socket
-                try {
-                    mmSocket.close();
-                } catch (IOException e2) {
-                    Log.e(TAG, "unable to close() socket during connection failure", e2);
-                }
-                return;
-            }
+			// Make a connection to the BluetoothSocket
+			try {
+				// This is a blocking call and will only return on a
+				// successful connection or an exception
+				mmSocket.connect();
+			} catch (IOException e) {
+				Log.e(TAG, "mmSocket.connect() failed", e);
+				// Close the socket
+				try {
+					mmSocket.close();
+				} catch (IOException e2) {
+					Log.e(TAG, "unable to close() socket during connection failure", e2);
+				}
+				return;
+			}
 
-            // Reset the ConnectThread because we're done
-            synchronized (BluetoothSensorManager.this) {
-                mConnectThread = null;
-            }
+			// Reset the ConnectThread because we're done
+			synchronized (BluetoothSensorManager.this) {
+				mConnectThread = null;
+			}
 
-            // Start the connected thread
-            connected(mmSocket);
-        }
+			// Start the connected thread
+			connected(mmSocket);
+		}
 
-        public void cancel() {
-            try {
-                mmSocket.close();
-            } catch (IOException e) {
-                Log.e(TAG, "close() of connect socket failed", e);
-            }
-        }
+		public void cancel() {
+			try {
+				mmSocket.close();
+			} catch (IOException e) {
+				Log.e(TAG, "close() of connect socket failed", e);
+			}
+		}
 	}
 
 	/**
@@ -189,7 +189,7 @@ public class BluetoothSensorManager extends SensorManager {
 		private final BluetoothSocket mmSocket;
 		private final InputStream mmInStream;
 		private final OutputStream mmOutStream;
-		
+
 		private boolean stop;
 
 		public ConnectedThread(BluetoothSocket socket) throws Exception {
@@ -220,7 +220,7 @@ public class BluetoothSensorManager extends SensorManager {
 			deviceReader.setOutputStream(mmOutStream);
 			deviceReader.initialize();
 			boolean isBinary = deviceReader.isBinary();
-			
+
 			Log.i(TAG, "Sanity check if sensor is alive: " + getDeviceName());
 			ExecutorService executor = Executors.newFixedThreadPool(1);
 			Callable<Boolean> isAliveTest = new Callable<Boolean>() {
@@ -238,20 +238,20 @@ public class BluetoothSensorManager extends SensorManager {
 			} catch (TimeoutException e2) {
 				isAlive = false;
 			}
-			
+
 			if (! isAlive) {
 				Log.w(TAG, "Device appears to be DEAD: " + getDeviceName());
 				BluetoothSensorManager.this.sendConnectFailedMsg();
 				closeFileHandles();
 				return;
 			}
-			
+
 			BluetoothSensorManager.this.sendConnectedMsg();
-			
+
 			stop = false;
 
 			long sequenceNumber = 0;
-			
+
 			while (! stop) {
 				try {
 					byte[] data = deviceReader.readNextData();
@@ -263,9 +263,9 @@ public class BluetoothSensorManager extends SensorManager {
 					break;
 				}
 			}
-			
+
 			closeFileHandles();
-			
+
 			if (stop) {
 				// clean disconnect
 				BluetoothSensorManager.this.sendConnectionClosedMsg();
@@ -275,7 +275,7 @@ public class BluetoothSensorManager extends SensorManager {
 				BluetoothSensorManager.this.sendConnectionLostMsg();
 			}
 		}
-		
+
 		private void closeFileHandles() {
 			try {
 				mmInStream.close();
@@ -283,14 +283,14 @@ public class BluetoothSensorManager extends SensorManager {
 			catch (IOException e) {
 				Log.e(TAG, "close() of InputStream failed.");
 			}
-			
+
 			try {
 				mmOutStream.close();
 			} 
 			catch (IOException e) {
 				Log.e(TAG, "close() of OutputStream failed.");
 			}
-			
+
 			try {
 				mmSocket.close();
 			} 
