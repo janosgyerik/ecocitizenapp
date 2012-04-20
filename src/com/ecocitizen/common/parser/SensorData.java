@@ -22,13 +22,19 @@ package com.ecocitizen.common.parser;
 public class SensorData {
 
 	SensorDataType dataType;
+	String name;
 	String unit;
 	float floatValue;
 	String strValue;
 	int level;
-	
+
 	public SensorData(SensorDataType dataType, String unit, String strValue) {
+		this(dataType.name(), dataType, unit, strValue);
+	}
+
+	public SensorData(String name, SensorDataType dataType, String unit, String strValue) {
 		this.dataType = dataType;
+		this.name = name;
 		this.unit = unit;
 		
 		float floatValue;
@@ -67,7 +73,7 @@ public class SensorData {
 	}
 
 	public String getName() {
-		return dataType.getShortName();
+		return name;
 	}
 
 }
