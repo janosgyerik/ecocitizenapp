@@ -19,6 +19,7 @@
 
 package com.ecocitizen.common;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -29,15 +30,20 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpHead;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.FormBodyPart;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.ContentBody;
+import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.bluetooth.BluetoothAdapter;
 
 public class HttpHelper {
 	// Debugging
@@ -57,6 +63,7 @@ public class HttpHelper {
 	private final String SENSORMAP_STARTSESSION_URL;
 	private final String SENSORMAP_STORE_URL;
 	private final String SENSORMAP_ENDSESSION_URL;
+	private final String SENSORMAP_UPLOADFILE_URL;
 	private final String SENSORMAP_API_VERSION = "4";
 	
 	public enum Status {
@@ -120,6 +127,8 @@ public class HttpHelper {
 				String.format("%s/store/%s/", map_server_url, username);
 		SENSORMAP_ENDSESSION_URL = 
 				String.format("%s/endsession/%s/", map_server_url, username);
+		SENSORMAP_UPLOADFILE_URL =
+				String.format("%s/uploadfile/%s/%s/", map_server_url, username, api_key);
 
 	}
 	
@@ -169,6 +178,38 @@ public class HttpHelper {
 	
 	public void sendEndSession() {
 		waitForSendHttpHead(mEndSessionURL);
+	}
+	
+	public boolean sendUploadFile(File file) {
+		String url = SENSORMAP_UPLOADFILE_URL;
+		if (D) Log.d(TAG, url);
+		HttpClient client = new DefaultHttpClient();
+		HttpPost request = new HttpPost(url);
+		request.setHeader("User-Agent", HTTP_USER_AGENT);
+		MultipartEntity entity = new MultipartEntity();
+		ContentBody contentBody = new FileBody(file);
+		FormBodyPart bodyPart = new FormBodyPart("file", contentBody);
+		entity.addPart(bodyPart);
+		request.setEntity(entity);
+
+		try {
+			HttpResponse response = client.execute(request);
+			StatusLine status = response.getStatusLine();
+			if (status.getStatusCode() == HTTP_STATUS_OK) {
+				mLastStatus = Status.SUCCESS;
+				return true;
+			}
+		} catch (ClientProtocolException e) {
+			mLastStatus = Status.EXCEPTION;
+			e.printStackTrace();
+			Log.e(TAG, "Exception in sendUploadFile");
+		} catch (IOException e) {
+			mLastStatus = Status.EXCEPTION;
+			e.printStackTrace();
+			Log.e(TAG, "Exception in sendUploadFile");
+		}
+		
+		return false;
 	}
 	
 	/**

@@ -19,17 +19,10 @@
 
 package com.ecocitizen.app;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 import com.ecocitizen.common.HttpHelper;
 import com.ecocitizen.common.HttpHelper.Status;
-import com.ecocitizen.common.bundlewrapper.SummaryBundleWrapper;
-import com.ecocitizen.service.FileSaverService;
 
 public class FileUploader {
 	// Debugging
@@ -64,49 +57,12 @@ public class FileUploader {
 	}
 
 	public Status upload() {
-		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(mFile)));
-			try {
-				String line = reader.readLine();
-				if (line != null) {
-					if (!mHttpHelper.isServerReachable()) return mHttpHelper.getLastStatus(); 
-					
-					if (!mHttpHelper.isLoginOK()) return mHttpHelper.getLastStatus();
-					
-					if (!mHttpHelper.isStartSessionOK()) return mHttpHelper.getLastStatus();
-					
-					String summary = mFile.getName()
-						.replace(FileSaverService.FILENAME_PREFIX, "")
-						.replace("." + FileSaverService.FILENAME_EXTENSION, "");
-					waitForSendHttpHead(SummaryBundleWrapper.formatMessage(summary));
-				}
-				else {
-					return mHttpHelper.getLastStatus();
-				}
-				do {
-					line = line.replace(" ", "");
-					if (!waitForSendHttpHead(line)) {
-						return mHttpHelper.getLastStatus();
-					}
-				}
-				while ((line = reader.readLine()) != null && ! mCancelRequested);
-				
-				if (mCancelRequested) {
-					return mHttpHelper.getLastStatus();
-				}
-				
-				mHttpHelper.sendEndSession();
-			} 
-			catch (IOException e) {
-				e.printStackTrace();
-				return Status.EXCEPTION;
-			}
-		} 
-		catch (FileNotFoundException e) {
-			e.printStackTrace();
-			return Status.EXCEPTION;
-		}
-
+		if (!mHttpHelper.isServerReachable()) return mHttpHelper.getLastStatus(); 
+		
+		if (!mHttpHelper.isLoginOK()) return mHttpHelper.getLastStatus();
+		
+		if (!mHttpHelper.sendUploadFile(mFile)) return mHttpHelper.getLastStatus();
+		
 		return Status.SUCCESS;
 	}
 

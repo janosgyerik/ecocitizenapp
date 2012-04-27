@@ -7,7 +7,8 @@ experiment essential
 ====================
 - bug: cannot connect to bluetooth sensors
 - bug: connection failure is not detected
-- upload file as attachment
+- bug: remote service crashes a lot when installing / reinstalling app
+- check for File.length before trying to send
 
 
 experiment good to have
