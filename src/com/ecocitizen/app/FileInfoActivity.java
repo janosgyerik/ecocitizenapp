@@ -137,6 +137,7 @@ public class FileInfoActivity extends Activity {
 							.replace("." + FileSaverService.FILENAME_EXTENSION, "");
 					String summaryLine = SummaryBundleWrapper.formatMessage(summary);
 					buffer2.append(summaryLine);
+					buffer2.append('\n');
 					OutputStream writer = new FileOutputStream(file, true);
 					writer.write(summaryLine.getBytes());
 					writer.flush();
