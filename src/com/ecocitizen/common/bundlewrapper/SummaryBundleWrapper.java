@@ -27,6 +27,8 @@ import com.ecocitizen.common.Base64;
 
 public class SummaryBundleWrapper extends AbstractBundleWrapper {
 	
+	public static final String MESSAGE_ID = "SUMMARY";
+	
 	private static final String BB_DTZ = "1";
 	private static final String BB_SUMMARY = "2";
 	
@@ -65,7 +67,8 @@ public class SummaryBundleWrapper extends AbstractBundleWrapper {
 	
 	public static String formatMessage(String dtz, String summary) {
 		String datarecord = new Formatter().format(
-				"SUMMARY,%s,%s,_",
+				"%s,%s,%s,_",
+				MESSAGE_ID,
 				dtz,
 				Base64.encodeBytes(summary.getBytes())
 				).toString();

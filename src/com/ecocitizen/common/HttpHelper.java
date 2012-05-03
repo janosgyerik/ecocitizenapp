@@ -183,6 +183,7 @@ public class HttpHelper {
 	public boolean sendUploadFile(File file) {
 		String url = SENSORMAP_UPLOADFILE_URL;
 		if (D) Log.d(TAG, url);
+		
 		HttpClient client = new DefaultHttpClient();
 		HttpPost request = new HttpPost(url);
 		request.setHeader("User-Agent", HTTP_USER_AGENT);

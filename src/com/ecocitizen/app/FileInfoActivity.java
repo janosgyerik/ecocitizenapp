@@ -23,8 +23,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,6 +40,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+
+import com.ecocitizen.common.bundlewrapper.SummaryBundleWrapper;
+import com.ecocitizen.service.FileSaverService;
 
 public class FileInfoActivity extends Activity {
 	// Debugging
@@ -122,6 +127,20 @@ public class FileInfoActivity extends Activity {
 				}
 				if (recordnum > PREVIEWLINES * 2) {
 					buffer1.append("...\n");
+				}
+				// TODO: this *cheat* should be removed after all pending data 
+				// on current devices has been uploaded
+				if (buffer1.indexOf(SummaryBundleWrapper.MESSAGE_ID) == -1 &&
+						buffer2.indexOf(SummaryBundleWrapper.MESSAGE_ID) == -1) {
+					String summary = file.getName()
+							.replace(FileSaverService.FILENAME_PREFIX, "")
+							.replace("." + FileSaverService.FILENAME_EXTENSION, "");
+					String summaryLine = SummaryBundleWrapper.formatMessage(summary);
+					buffer2.append(summaryLine);
+					OutputStream writer = new FileOutputStream(file, true);
+					writer.write(summaryLine.getBytes());
+					writer.flush();
+					writer.close();
 				}
 				return buffer1.toString() + buffer2.toString();
 			} catch (IOException e) {
