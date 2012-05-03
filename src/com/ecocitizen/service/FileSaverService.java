@@ -48,6 +48,7 @@ import com.ecocitizen.common.DeviceManagerServiceCallback;
 import com.ecocitizen.common.MessageType;
 import com.ecocitizen.common.bundlewrapper.NoteBundleWrapper;
 import com.ecocitizen.common.bundlewrapper.SensorDataBundleWrapper;
+import com.ecocitizen.common.bundlewrapper.SummaryBundleWrapper;
 
 public class FileSaverService extends Service {
 	// Debugging
@@ -241,16 +242,20 @@ public class FileSaverService extends Service {
 		
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 
+		String basename = DATEFORMAT.format(new Date());
 		if (settings.getBoolean(PREFS_EXTERNAL_STORAGE, false)
 				&& Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-			startSession_externalStorage();
+			startSession_externalStorage(basename);
 		} 
 		else {
-			startSession_internalStorage();
+			startSession_internalStorage(basename);
 		}
+		
+		String summaryLine = SummaryBundleWrapper.formatMessage(basename);
+		saveDataRecord(summaryLine);
 	}
 	
-	private void startSession_externalStorage() {
+	private void startSession_externalStorage(String basename) {
 		String basedirectoryPath = String.format(
 				"%s/%s",
 				Environment.getExternalStorageDirectory().getPath(),
@@ -259,16 +264,15 @@ public class FileSaverService extends Service {
 		File directory = new File(basedirectoryPath); 
 		if (!directory.exists()) { 
 			if (!directory.mkdirs()) {
-				startSession_internalStorage();
+				startSession_internalStorage(basename);
 				return; 
 			}
 		}       
-		String datestr  = DATEFORMAT.format(new Date());
 		String filename = String.format(
 				"%s/%s%s.%s",
 				basedirectoryPath,
 				FILENAME_PREFIX,
-				datestr,
+				basename,
 				FILENAME_EXTENSION
 		);
 		try {
@@ -276,16 +280,15 @@ public class FileSaverService extends Service {
 			if (D) Log.d(TAG, "STARTSESSION " + filename);
 		} catch (IOException e) {
 			e.printStackTrace();
-			startSession_internalStorage();
+			startSession_internalStorage(basename);
 		}
 	}
 
-	private void startSession_internalStorage() {
-		String datestr  = DATEFORMAT.format(new Date());
+	private void startSession_internalStorage(String basename) {
 		String filename = String.format(
 				"%s%s.%s",
 				FILENAME_PREFIX,
-				datestr,
+				basename,
 				FILENAME_EXTENSION
 		);
 		try {
