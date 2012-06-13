@@ -3,6 +3,12 @@ release notes
 -
 
 
+next
+====
+- sort out this todo file (see below)
+- merge to backport and check if button color is fixed
+
+
 experiment essential
 ====================
 - bug: cannot connect to bluetooth sensors

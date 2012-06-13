@@ -18,95 +18,85 @@
     along with EcoCitizen.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:id="@+id/content"
-	>
-	<TableLayout
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:stretchColumns="1"
-		>
-		<TableRow>
-		    <TextView 
-		    	android:text="@string/fileinfo_filename"
-				style="@style/fileInfoLabelCol" 
-			/>
-		    <TextView 
-		    	android:id="@+id/fileinfo_filename"
-			/>
-		</TableRow>
+    android:id="@+id/content"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-		<TableRow>
-		    <TextView 
-		    	android:text="@string/fileinfo_date"
-				style="@style/fileInfoLabelCol" 
-			/>
-		    <TextView 
-		    	android:id="@+id/fileinfo_date"
-			/>
-		</TableRow>
-		
-		<TableRow>
-		    <TextView 
-		    	android:text="@string/fileinfo_size"
-				style="@style/fileInfoLabelCol" 
-			/>
-		    <TextView 
-		    	android:id="@+id/fileinfo_size"
-			/>
-		</TableRow>
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1" >
 
-		<TableRow>
-		    <TextView 
-		    	android:text="@string/fileinfo_recordnum"
-				style="@style/fileInfoLabelCol" 
-			/>
-		    <TextView 
-		    	android:id="@+id/fileinfo_recordnum"
-			/>
-		</TableRow>
-	</TableLayout>
-	
-	<TextView
-		android:id="@+id/fileinfo_content"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_weight="1"
-		android:scrollbars="horizontal"
-		android:scrollHorizontally="true"
-	/>
+        <TableRow>
 
-	<LinearLayout
-	    android:orientation="horizontal"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-	>
-		<Button 
-			android:id="@+id/btn_delete"
-			android:text="@string/btn_delete"
-			android:visibility="gone"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-		/>
-		
-		<Button 
-			android:id="@+id/btn_upload"
-			android:text="@string/btn_upload"
-			android:visibility="gone"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-		/>
-		
-		<Button 
-			android:id="@+id/btn_close" 
-			android:text="@string/btn_close"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-		/>
-	</LinearLayout>
+            <TextView
+                style="@style/fileInfoLabelCol"
+                android:text="@string/fileinfo_filename" />
+
+            <TextView android:id="@+id/fileinfo_filename" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                style="@style/fileInfoLabelCol"
+                android:text="@string/fileinfo_date" />
+
+            <TextView android:id="@+id/fileinfo_date" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                style="@style/fileInfoLabelCol"
+                android:text="@string/fileinfo_size" />
+
+            <TextView android:id="@+id/fileinfo_size" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                style="@style/fileInfoLabelCol"
+                android:text="@string/fileinfo_recordnum" />
+
+            <TextView android:id="@+id/fileinfo_recordnum" />
+        </TableRow>
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/fileinfo_content"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:scrollHorizontally="true"
+        android:scrollbars="horizontal" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_delete"
+            style="@style/button"
+            android:layout_weight="1"
+            android:text="@string/btn_delete"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_upload"
+            style="@style/button"
+            android:layout_weight="1"
+            android:text="@string/btn_upload"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_close"
+            style="@style/button"
+            android:layout_weight="1"
+            android:text="@string/btn_close" />
+    </LinearLayout>
+
 </LinearLayout>
